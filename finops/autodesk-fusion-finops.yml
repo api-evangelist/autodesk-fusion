@@ -1,0 +1,121 @@
+name: Autodesk Fusion FinOps
+description: >-
+  Financial operations guidance for Autodesk Fusion API consumers. Autodesk
+  Fusion uses two distinct cost models: (1) subscription-based licensing for
+  software access and (2) consumption-based Flex token billing for Premium
+  cloud APIs such as the Fusion Automation (Design Automation) API. Managing
+  costs requires understanding both models and monitoring Flex token burn rate
+  for automated workloads.
+url: https://aps.autodesk.com/pricing
+created: "2026-06-13"
+modified: "2026-06-13"
+
+costModels:
+  - name: Subscription Licensing
+    description: >-
+      Access to the Autodesk Fusion desktop application and most APS APIs
+      (Manufacturing Data Model, Fusion Operations, Data Management) is covered
+      under a Fusion software subscription. Costs are fixed and predictable —
+      annual subscriptions at ~$680/user/year or monthly at $85/user/month.
+      No variable API call fees apply for standard REST/GraphQL usage.
+    type: fixed
+    billingCycle: monthly-or-annual
+    costDrivers:
+      - Number of named users
+      - Subscription tier (Personal vs. Commercial)
+      - Contract term (annual vs. monthly)
+
+  - name: Flex Token Consumption (Premium APIs)
+    description: >-
+      The Fusion Automation (Design Automation) API is a Premium API billed
+      via Autodesk Flex tokens — prepaid credits purchased in bulk. The
+      Automation API consumes 3.0 Flex tokens per processing hour, covering
+      the entire duration of cloud job execution including file transfer time.
+      Unused Flex tokens expire and must be tracked carefully.
+    type: consumption
+    unit: Flex tokens
+    rate: 3.0
+    rateUnit: per-processing-hour
+    billingCycle: prepaid-consumption
+    costDrivers:
+      - Number and duration of automation jobs
+      - File size (affects transfer time billed as processing time)
+      - Script complexity and compute intensity
+      - Failed jobs that still consume partial tokens
+
+recommendations:
+  - name: Prefer Annual Subscriptions for Predictable Workloads
+    description: >-
+      For teams with consistent Fusion usage, annual subscriptions reduce
+      per-month cost by ~33% compared to monthly billing. Evaluate seat counts
+      against actual active users to avoid paying for unused licenses.
+    category: cost-optimization
+
+  - name: Monitor Flex Token Burn Rate
+    description: >-
+      Track Flex token consumption per automation job using the Token Flex
+      Usage Data API. Set alerts when token balance drops below a threshold.
+      Pre-purchase tokens in quantities aligned with projected monthly job
+      volumes to avoid stockouts.
+    category: cost-monitoring
+    referenceUrl: https://aps.autodesk.com/en/docs/tokenflex/v1/developers_guide/rate-limits
+
+  - name: Optimize Automation Job File Size
+    description: >-
+      Flex token billing starts when a job begins processing including file
+      upload/download time. Minimize file sizes passed to the Fusion Automation
+      API by stripping unused components, references, and assets before
+      submission to reduce per-job token consumption.
+    category: cost-optimization
+
+  - name: Avoid Polling — Use Webhooks
+    description: >-
+      Polling the Design Automation GET /workitems/:id endpoint burns both
+      rate limits (150 RPM cap enforced) and developer time. Use APS webhook
+      notifications for job completion events to eliminate polling overhead
+      and associated API call costs.
+    category: operational-efficiency
+    referenceUrl: >-
+      https://aps.autodesk.com/en/docs/webhooks/v1/developers_guide/rate-limits/webhooks-rate-limits
+
+  - name: Use the Startup Program for Early-Stage Companies
+    description: >-
+      Qualifying startups can access Autodesk Fusion at $150 per user for a
+      3-year term (vs. $680/user/year standard commercial rate), providing
+      significant savings during product development phases when API usage
+      patterns are still being established.
+    category: cost-optimization
+    referenceUrl: https://www.autodesk.com/campaigns/startups
+
+  - name: Request Rate Limit Increases Through ADN
+    description: >-
+      Rather than implementing complex retry/backoff logic for sustained
+      high-volume workloads, ADN members should proactively request rate limit
+      increases. This reduces engineering overhead and avoids 429 error
+      handling complexity in production systems.
+    category: operational-efficiency
+    referenceUrl: https://aps.autodesk.com/blog/rate-limiting
+
+  - name: Evaluate Flex vs. Subscription for Automation Workloads
+    description: >-
+      For very high-volume Fusion Automation usage, compare the total Flex
+      token cost against enterprise licensing options. At 3.0 tokens/hour,
+      sustained automation workloads (hundreds of hours/month) may warrant
+      a direct conversation with Autodesk about volume pricing or enterprise
+      agreements.
+    category: cost-optimization
+
+observability:
+  - name: Token Flex Usage Data API
+    description: >-
+      Use the APS Token Flex Usage Data API to programmatically retrieve
+      token consumption history, balance, and per-application breakdown for
+      cost allocation and chargeback reporting.
+    url: https://aps.autodesk.com/en/docs/tokenflex/v1/developers_guide/rate-limits
+
+  - name: Autodesk Health Dashboard
+    description: >-
+      Monitor Autodesk service health to correlate service incidents with
+      unexpected API failures that might trigger unnecessary job retries
+      and excess token consumption.
+    url: https://health.autodesk.com

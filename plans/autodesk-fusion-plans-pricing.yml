@@ -1,0 +1,107 @@
+name: Autodesk Fusion Plans and Pricing
+description: >-
+  Autodesk Fusion offers subscription-based pricing for its cloud CAD/CAM/CAE
+  platform, plus consumption-based (Flex token) pricing for Premium APIs such
+  as the Fusion Automation (Design Automation) API. Software subscriptions
+  include access to the Fusion scripting and add-in APIs at no additional cost.
+  Premium API usage (automation jobs) is billed per Flex token consumed.
+url: https://www.autodesk.com/products/fusion-360/overview
+created: "2026-06-13"
+modified: "2026-06-13"
+
+plans:
+  - name: Fusion Personal (Free)
+    description: >-
+      Free access to Autodesk Fusion for personal, non-commercial use by
+      individuals earning under $1,000/year from projects. Includes core CAD,
+      basic CAM, and API scripting capabilities with limited cloud storage and
+      compute.
+    url: https://www.autodesk.com/products/fusion-360/personal
+    price: 0
+    currency: USD
+    billingCycle: free
+    features:
+      - Core CAD modeling
+      - Basic CAM (2-axis)
+      - Fusion scripting API (desktop)
+      - Limited cloud storage (10 documents)
+      - Personal use only
+
+  - name: Fusion Subscription (Annual)
+    description: >-
+      Full-featured annual subscription for commercial use of Autodesk Fusion.
+      Includes unlimited cloud storage, advanced CAM, simulation (CAE), PCB
+      design, generative design, and full access to Fusion APIs, add-ins, and
+      the Autodesk Platform Services developer ecosystem.
+    url: https://www.autodesk.com/products/fusion-360/overview
+    price: 680
+    currency: USD
+    billingCycle: annual
+    features:
+      - Full CAD/CAM/CAE/PCB capabilities
+      - Fusion scripting and add-in APIs
+      - Autodesk Platform Services (APS) API access
+      - Manufacturing Data Model (GraphQL) API
+      - Fusion Operations API access
+      - Unlimited cloud storage
+      - Collaboration and data management
+      - Autodesk Generative Design
+      - Advanced simulation
+
+  - name: Fusion Subscription (Monthly)
+    description: >-
+      Month-to-month commercial subscription for Autodesk Fusion with full
+      feature access identical to the annual plan but billed monthly at a
+      higher per-month rate.
+    url: https://www.autodesk.com/products/fusion-360/overview
+    price: 85
+    currency: USD
+    billingCycle: monthly
+    features:
+      - Full CAD/CAM/CAE/PCB capabilities
+      - Fusion scripting and add-in APIs
+      - Autodesk Platform Services (APS) API access
+      - Manufacturing Data Model (GraphQL) API
+      - Fusion Operations API access
+      - Unlimited cloud storage
+      - No annual commitment
+
+  - name: Fusion Startup Program
+    description: >-
+      Discounted access for qualifying young businesses and startups. Eligible
+      companies can access Autodesk Fusion for three years at a substantially
+      reduced rate, supporting up to 10 users per company.
+    url: https://www.autodesk.com/campaigns/startups
+    price: 150
+    currency: USD
+    billingCycle: "3-year-term"
+    features:
+      - Full Fusion feature set
+      - Up to 10 users
+      - 3-year term
+      - Startup eligibility required
+
+  - name: Fusion Automation API (Flex Tokens)
+    description: >-
+      Consumption-based Premium API pricing for the Fusion Automation (Design
+      Automation) API. Billed per processing hour of cloud job execution
+      including file transfer time. Flex tokens are prepaid credits purchased
+      separately through Autodesk.
+    url: https://aps.autodesk.com/pricing
+    price: 3.0
+    currency: FlexTokens
+    billingCycle: per-processing-hour
+    features:
+      - Cloud-based Fusion script execution
+      - Parametric design automation
+      - Advanced packing algorithms
+      - CNC toolpath generation in cloud
+      - Pay-per-use, no minimum commitment
+      - Scales to any job volume
+
+notes: >-
+  Pricing reflects information available as of June 2026. Annual subscription
+  pricing may vary by region and reseller channel. Flex token pricing for the
+  Automation API covers the full duration of job processing including file
+  transfer time. Contact Autodesk sales for volume licensing or enterprise
+  agreements.

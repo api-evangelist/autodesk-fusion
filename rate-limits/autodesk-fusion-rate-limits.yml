@@ -1,0 +1,111 @@
+name: Autodesk Fusion Rate Limits
+description: >-
+  Autodesk Platform Services (APS) applies rate limiting across all APIs
+  including Fusion-related services. Rate limits control the maximum number
+  of API calls an application can make within a time window. When limits are
+  exceeded, APIs return HTTP 429 (Too Many Requests) with a Retry-After header.
+  Specific per-endpoint limits are documented in each API's reference;
+  ADN members may request higher limits for production workloads.
+url: https://aps.autodesk.com/blog/rate-limiting
+created: "2026-06-13"
+modified: "2026-06-13"
+
+rateLimits:
+  - api: All APS APIs (General Policy)
+    description: >-
+      The general APS rate limiting framework applies a per-minute request
+      cap per application (client credentials). Requests exceeding the limit
+      receive HTTP 429 with a Retry-After response header indicating seconds
+      to wait before retrying.
+    type: requests-per-minute
+    limit: varies-by-endpoint
+    window: 60
+    windowUnit: seconds
+    errorCode: 429
+    retryAfterHeader: true
+    notes: >-
+      Specific limits vary by API product. Consult individual API documentation
+      for exact values. ADN members can request increased limits.
+
+  - api: Design Automation API (Fusion Automation)
+    description: >-
+      The GET /workitems/:id endpoint for the Fusion (and other) Design
+      Automation APIs is rate-limited to 150 requests per minute (RPM).
+      This limit is enforced to prevent polling abuse and encourage
+      webhook-based completion notifications.
+    type: requests-per-minute
+    limit: 150
+    window: 60
+    windowUnit: seconds
+    endpoint: GET /design/v3/workitems/:id
+    errorCode: 429
+    retryAfterHeader: true
+    notes: >-
+      Autodesk recommends webhook-based notifications instead of polling
+      GET workitem status to avoid hitting this rate limit.
+    referenceUrl: >-
+      https://aps.autodesk.com/blog/automation-get-workitemsid-will-be-enforced-rate-limit-150-rate-minute-rpm
+
+  - api: Data Management API
+    description: >-
+      Rate limits apply to Data Management API calls for hubs, projects,
+      folders, and files. Specific limits are documented in the Data Management
+      API developer guide and vary by endpoint type (read vs. write).
+    type: requests-per-minute
+    limit: varies-by-endpoint
+    window: 60
+    windowUnit: seconds
+    errorCode: 429
+    retryAfterHeader: true
+    referenceUrl: https://aps.autodesk.com/en/docs/data/v2/developers_guide/rate-limiting
+
+  - api: Webhooks API
+    description: >-
+      Webhook-related API endpoints for Fusion and other APS services are
+      rate-limited. The Webhooks API documentation specifies limits around
+      creating and managing webhook subscriptions.
+    type: requests-per-minute
+    limit: 300
+    window: 60
+    windowUnit: seconds
+    errorCode: 429
+    retryAfterHeader: true
+    referenceUrl: >-
+      https://aps.autodesk.com/en/docs/webhooks/v1/developers_guide/rate-limits/webhooks-rate-limits
+
+  - api: Parameters API
+    description: >-
+      The Parameters API (used with Fusion parametric models) has its own
+      rate limit quotas documented in the APS developer portal.
+    type: requests-per-minute
+    limit: varies-by-endpoint
+    window: 60
+    windowUnit: seconds
+    errorCode: 429
+    retryAfterHeader: true
+    referenceUrl: >-
+      https://aps.autodesk.com/en/docs/parameters/v1/overview/rate-limits/Parameters-API-rate-limits/
+
+policies:
+  - name: HTTP 429 Response
+    description: >-
+      When any APS API rate limit is exceeded, the service returns HTTP 429
+      Too Many Requests with a Retry-After header specifying the number of
+      seconds to wait before the next attempt.
+    errorCode: 429
+    headerName: Retry-After
+    headerUnit: seconds
+
+  - name: Increasing Rate Limits
+    description: >-
+      Autodesk Developer Network (ADN) members can request higher rate limits
+      for production applications by submitting a rate limit change request
+      form and a support ticket with documented usage data and a justified
+      target limit.
+    url: https://aps.autodesk.com/blog/rate-limiting
+
+  - name: Fusion Operations API Sunset Rate Limiting
+    description: >-
+      Previous versions of the Fusion Operations API enter a sunset phase with
+      phased rate-limit reductions before retirement. Developers should migrate
+      to the latest API version to avoid hitting reduced limits.
