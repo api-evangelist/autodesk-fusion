@@ -1,0 +1,82 @@
+{
+  "@context": "https://schema.org/",
+  "@type": "SoftwareApplication",
+  "@id": "https://raw.githubusercontent.com/api-evangelist/autodesk-fusion/refs/heads/main/apis.yml",
+  "name": "Autodesk Fusion",
+  "description": "Autodesk Fusion is a cloud-based CAD/CAM/CAE/PCB platform that provides REST and GraphQL APIs for design data access, manufacturing automation, simulation, and shop-floor operations within the Autodesk Platform Services (APS) ecosystem. Developers can build scripts, add-ins, and integrations that automate workflows, sync production data, and connect Fusion with ERP, PLM, and BI systems.",
+  "applicationCategory": "CAD/CAM/CAE Software",
+  "url": "https://www.autodesk.com/products/fusion-360/overview",
+  "sameAs": [
+    "https://aps.autodesk.com/developer/overview/autodesk-fusion-api",
+    "https://github.com/autodesk-platform-services"
+  ],
+  "offers": {
+    "@type": "Offer",
+    "url": "https://www.autodesk.com/products/fusion-360/overview"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Autodesk",
+    "url": "https://www.autodesk.com",
+    "sameAs": [
+      "https://www.linkedin.com/company/autodesk",
+      "https://x.com/autodeskaps"
+    ]
+  },
+  "featureList": [
+    "Parametric CAD modeling",
+    "CAM toolpath generation",
+    "CAE simulation",
+    "PCB design",
+    "Manufacturing Data Model (GraphQL)",
+    "Design Automation (cloud)",
+    "Shop-floor / MES integration",
+    "OAuth 2.0 authentication",
+    "Webhook event subscriptions",
+    "Object Storage Service (OSS)",
+    "Data Management",
+    "Model Derivative translation"
+  ],
+  "hasPart": [
+    {
+      "@type": "WebAPI",
+      "name": "Autodesk Fusion API",
+      "url": "https://aps.autodesk.com/developer/overview/autodesk-fusion-api",
+      "documentation": "https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-A92A4B10-3781-4925-94C6-47DA85A4F65A",
+      "termsOfService": "https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics"
+    },
+    {
+      "@type": "WebAPI",
+      "name": "Fusion Automation API (Design Automation)",
+      "url": "https://aps.autodesk.com/blog/design-automation-api-fusion-now-generally-available",
+      "documentation": "https://aps.autodesk.com/en/docs/design-automation/v3/developers_guide/overview/"
+    },
+    {
+      "@type": "WebAPI",
+      "name": "Fusion Operations API",
+      "url": "https://aps.autodesk.com/developer/overview/fusion-operations-api",
+      "documentation": "https://aps.autodesk.com/en/docs/fusion-operations/v2/developers_guide/overview/"
+    },
+    {
+      "@type": "WebAPI",
+      "name": "Manufacturing Data Model API (Fusion Data API)",
+      "url": "https://aps.autodesk.com/en/docs/mfgdataapi/v2/developers_guide/explorer/",
+      "documentation": "https://aps.autodesk.com/en/docs/mfgdataapi/v1/developers_guide/about-graphql"
+    }
+  ],
+  "keywords": [
+    "CAD",
+    "CAM",
+    "CAE",
+    "Manufacturing",
+    "Design Automation",
+    "GraphQL",
+    "REST",
+    "Autodesk Platform Services",
+    "Fusion 360",
+    "PCB",
+    "simulation",
+    "ERP integration"
+  ],
+  "dateModified": "2026-06-13"
+}

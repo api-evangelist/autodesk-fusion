@@ -1,0 +1,145 @@
+{
+  "aid": "autodesk-fusion",
+  "name": "Autodesk Fusion API Vocabulary",
+  "description": "Key domain terms and concepts from Autodesk Fusion and Autodesk Platform Services (APS) APIs.",
+  "terms": [
+    {
+      "term": "APS",
+      "label": "Autodesk Platform Services",
+      "definition": "The developer platform formerly known as Forge that underpins Autodesk cloud APIs including authentication, data management, model derivative, OSS, webhooks, and Fusion-specific services.",
+      "source": "https://aps.autodesk.com"
+    },
+    {
+      "term": "Hub",
+      "label": "Hub",
+      "definition": "A top-level container in APS Data Management representing an Autodesk account or BIM 360/ACC account grouping projects.",
+      "source": "https://aps.autodesk.com/en/docs/data/v2/reference/http/hubs-GET/"
+    },
+    {
+      "term": "Project",
+      "label": "Project",
+      "definition": "A collaborative workspace within a Hub containing folders, items, and versions of design files.",
+      "source": "https://aps.autodesk.com/en/docs/data/v2/reference/http/projects-GET/"
+    },
+    {
+      "term": "Item",
+      "label": "Item",
+      "definition": "A persistent design file entity within a project folder that can have multiple versions.",
+      "source": "https://aps.autodesk.com/en/docs/data/v2/reference/http/items-GET/"
+    },
+    {
+      "term": "Version",
+      "label": "Version",
+      "definition": "A specific revision of an Item, referencing a storage object in OSS.",
+      "source": "https://aps.autodesk.com/en/docs/data/v2/reference/http/versions-GET/"
+    },
+    {
+      "term": "OSS",
+      "label": "Object Storage Service",
+      "definition": "APS service for storing and retrieving raw binary files (PDFs, DWGs, RVTs, etc.) organised in buckets.",
+      "source": "https://aps.autodesk.com/en/docs/data/v2/reference/http/buckets-GET/"
+    },
+    {
+      "term": "Bucket",
+      "label": "Bucket",
+      "definition": "A named OSS container that holds uploaded objects. Buckets can have transient, temporary, or persistent retention policies.",
+      "source": "https://aps.autodesk.com/en/docs/oss/v2/reference/http/buckets-GET/"
+    },
+    {
+      "term": "Model Derivative",
+      "label": "Model Derivative",
+      "definition": "APS service that translates source CAD files into viewer-ready SVF2, glTF, STL, and other derivative formats and extracts metadata.",
+      "source": "https://aps.autodesk.com/en/docs/model-derivative/v2/developers_guide/overview/"
+    },
+    {
+      "term": "Manifest",
+      "label": "Derivative Manifest",
+      "definition": "A JSON document returned by the Model Derivative API describing all derivatives generated for a source design, including their URNs and processing status.",
+      "source": "https://aps.autodesk.com/en/docs/model-derivative/v2/reference/http/urn-manifest-GET/"
+    },
+    {
+      "term": "URN",
+      "label": "Uniform Resource Name",
+      "definition": "A base64-encoded identifier used in APS to reference stored objects, derivatives, and design versions.",
+      "source": "https://aps.autodesk.com/en/docs/model-derivative/v2/developers_guide/prep-file4transl/"
+    },
+    {
+      "term": "Webhook",
+      "label": "Webhook",
+      "definition": "An HTTP callback registered via the APS Webhooks API that delivers event notifications for data management, derivative processing, and other APS events.",
+      "source": "https://aps.autodesk.com/en/docs/webhooks/v1/developers_guide/overview/"
+    },
+    {
+      "term": "Design Automation",
+      "label": "Design Automation",
+      "definition": "APS service that runs Fusion (and AutoCAD/Revit/Inventor) automation tasks in the cloud without desktop software, using Activities and WorkItems.",
+      "source": "https://aps.autodesk.com/en/docs/design-automation/v3/developers_guide/overview/"
+    },
+    {
+      "term": "Activity",
+      "label": "Activity",
+      "definition": "A Design Automation definition specifying the engine, app bundle, script, and input/output parameters for an automation job.",
+      "source": "https://aps.autodesk.com/en/docs/design-automation/v3/reference/http/activities-GET/"
+    },
+    {
+      "term": "WorkItem",
+      "label": "WorkItem",
+      "definition": "A Design Automation job instance that executes an Activity with specific input files and produces output files.",
+      "source": "https://aps.autodesk.com/en/docs/design-automation/v3/reference/http/workitems-POST/"
+    },
+    {
+      "term": "Flex Tokens",
+      "label": "Flex Tokens",
+      "definition": "Autodesk's pay-per-use consumption credit used to meter premium APS services such as Fusion Automation API (3.0 tokens per processing hour).",
+      "source": "https://aps.autodesk.com/pricing"
+    },
+    {
+      "term": "Manufacturing Data Model",
+      "label": "Manufacturing Data Model API",
+      "definition": "GraphQL API providing cloud-based read and write access to Fusion component properties, Bill of Materials, model hierarchy, and thumbnail assets.",
+      "source": "https://aps.autodesk.com/en/docs/mfgdataapi/v2/developers_guide/explorer/"
+    },
+    {
+      "term": "BOM",
+      "label": "Bill of Materials",
+      "definition": "A structured list of components, sub-assemblies, and raw materials that make up a Fusion design, accessible via the Manufacturing Data Model GraphQL API.",
+      "source": "https://aps.autodesk.com/en/docs/mfgdataapi/v1/developers_guide/about-graphql"
+    },
+    {
+      "term": "Fusion Operations",
+      "label": "Fusion Operations API",
+      "definition": "REST API (V2 Public Beta) for integrating Autodesk Fusion Operations MES data — production orders, inventory, machine status, downtime, punch-clock, and workers — with ERP and BI systems.",
+      "source": "https://aps.autodesk.com/developer/overview/fusion-operations-api"
+    },
+    {
+      "term": "OAuth 2.0",
+      "label": "OAuth 2.0",
+      "definition": "The authentication standard used by all APS APIs, supporting both 2-legged (client credentials) and 3-legged (authorization code) flows.",
+      "source": "https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics"
+    },
+    {
+      "term": "3-Legged Token",
+      "label": "3-Legged OAuth Token",
+      "definition": "An APS access token obtained via authorization code flow on behalf of an end user, required for accessing user-owned data in Data Management and Fusion APIs.",
+      "source": "https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics"
+    },
+    {
+      "term": "2-Legged Token",
+      "label": "2-Legged OAuth Token",
+      "definition": "An APS access token obtained via client credentials flow for server-to-server calls not requiring end-user consent.",
+      "source": "https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics"
+    },
+    {
+      "term": "Secure Service Account",
+      "label": "Secure Service Account",
+      "definition": "APS service for managing service-account credentials and short-lived exchange tokens for server-to-server integrations.",
+      "source": "https://aps.autodesk.com/en/docs/"
+    },
+    {
+      "term": "Add-in",
+      "label": "Fusion Add-in",
+      "definition": "A plugin written in Python or C++ that extends the Fusion desktop application by adding commands, panels, and automated workflows using the Fusion API.",
+      "source": "https://aps.autodesk.com/developer/overview/autodesk-fusion-api"
+    }
+  ]
+}
