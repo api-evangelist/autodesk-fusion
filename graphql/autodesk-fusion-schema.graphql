@@ -1,0 +1,1853 @@
+"""
+Autodesk Fusion Manufacturing Data Model API - GraphQL Schema
+Source: https://aps.autodesk.com/en/docs/mfgdataapi/v2/developers_guide/explorer/
+Endpoint: https://developer.api.autodesk.com/mfg/v3/graphql/public
+
+This schema is a conceptual representation derived from the Autodesk Fusion API
+documentation, the Manufacturing Data Model API reference, the APS SDK OpenAPI
+specs (https://github.com/autodesk-platform-services/aps-sdk-openapi), and the
+Fusion API object model reference. It covers the full design-to-manufacturing
+data model including topology, features, parameters, assemblies, data management,
+CAM, simulation, and rendering.
+"""
+
+# ---------------------------------------------------------------------------
+# Scalars
+# ---------------------------------------------------------------------------
+
+scalar DateTime
+scalar JSON
+scalar URL
+scalar UUID
+
+# ---------------------------------------------------------------------------
+# Enums
+# ---------------------------------------------------------------------------
+
+enum DistanceUnits {
+  MILLIMETERS
+  CENTIMETERS
+  METERS
+  INCHES
+  FEET
+}
+
+enum AngleUnits {
+  DEGREES
+  RADIANS
+}
+
+enum MassUnits {
+  GRAMS
+  KILOGRAMS
+  POUNDS
+  OUNCES
+}
+
+enum BodyType {
+  SOLID_BODY
+  SURFACE_BODY
+  MESH_BODY
+  WIRE_BODY
+}
+
+enum FeatureType {
+  EXTRUDE
+  REVOLVE
+  SWEEP
+  LOFT
+  HOLE
+  FILLET
+  CHAMFER
+  SHELL
+  DRAFT
+  SCALE
+  MIRROR
+  PATTERN_RECTANGULAR
+  PATTERN_CIRCULAR
+  COMBINE
+  SPLIT_BODY
+  SPLIT_FACE
+  THICKEN
+  OFFSET_FACE
+  MOVE
+  COPY
+  REPLACE_FACE
+  TRIM
+  EXTEND
+  RULED_SURFACE
+  PATCH
+  STITCH
+  UNSTITCH
+  DIRECT_EDIT
+  BASE_FEATURE
+  THREAD
+  EMBOSS
+  FORM
+  FORM_BODY
+}
+
+enum OperationType {
+  JOIN
+  CUT
+  INTERSECT
+  NEW_BODY
+  NEW_COMPONENT
+}
+
+enum SketchConstraintType {
+  HORIZONTAL
+  VERTICAL
+  PERPENDICULAR
+  PARALLEL
+  EQUAL
+  COINCIDENT
+  CONCENTRIC
+  COLLINEAR
+  TANGENT
+  SMOOTH
+  MIDPOINT
+  SYMMETRIC
+  FIXED
+}
+
+enum JointType {
+  RIGID
+  REVOLUTE
+  SLIDER
+  CYLINDRICAL
+  PIN_SLOT
+  PLANAR
+  BALL
+}
+
+enum ParameterType {
+  REAL
+  INTEGER
+  BOOLEAN
+  STRING
+  UNIT
+}
+
+enum ProjectRole {
+  OWNER
+  EDITOR
+  VIEWER
+}
+
+enum ItemVersionStatus {
+  PROCESSING
+  SUCCEEDED
+  FAILED
+  TIMEOUT
+  INPROGRESS
+}
+
+enum ExportFormat {
+  F3D
+  F3Z
+  IGES
+  STEP
+  SAT
+  SMT
+  OBJ
+  STL
+  FBX
+  GLTF
+  GLB
+  WIRE
+  CSV
+  DXF
+  DWG
+  PDF
+  THUMBNAIL
+}
+
+enum SimulationType {
+  STATIC_STRESS
+  MODAL_FREQUENCIES
+  THERMAL
+  THERMAL_STRESS
+  SHAPE_OPTIMIZATION
+  EVENT_SIMULATION
+  STRUCTURAL_BUCKLING
+  NONLINEAR_STATIC_STRESS
+  COMPUTATIONAL_FLUID_DYNAMICS
+}
+
+enum SimulationStatus {
+  PENDING
+  RUNNING
+  SUCCEEDED
+  FAILED
+  CANCELLED
+}
+
+enum CamStrategy {
+  ADAPTIVE_CLEARING
+  POCKET_CLEARING
+  FLAT
+  SCALLOP
+  PARALLEL
+  CONTOUR
+  RAMP
+  DRILL
+  CIRCULAR
+  THREAD
+  BORE
+  BORE_MILLING
+  FACING
+  SLOT
+  TRACE
+  RADIAL
+  SPIRAL
+  MORPH
+  PROJECT_CURVES
+  PENCIL
+  HORIZONTAL
+  STEEP_AND_SHALLOW
+  MULTI_AXIS_CONTOUR
+  MULTI_AXIS_SWARF
+  FOUR_AXIS_ROTARY
+  TURNING_FACING
+  TURNING_CONTOUR
+  TURNING_GROOVING
+  TURNING_THREADING
+  TURNING_CUTOFF
+  TURNING_PROFILE
+}
+
+enum RenderQuality {
+  DRAFT
+  LOW
+  MEDIUM
+  HIGH
+  FINAL
+}
+
+enum AppearanceFinish {
+  MATTE
+  SEMI_GLOSS
+  GLOSS
+  POLISHED
+  BRUSHED
+  ANODIZED
+  POWDER_COAT
+  PAINTED
+  TEXTURED
+}
+
+# ---------------------------------------------------------------------------
+# Pagination
+# ---------------------------------------------------------------------------
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+# ---------------------------------------------------------------------------
+# Data Management: Hubs, Projects, Items, Versions
+# ---------------------------------------------------------------------------
+
+"""
+A Hub represents a top-level container for projects — typically an Autodesk
+account or BIM 360/ACC team. All data management operations are scoped to a Hub.
+"""
+type Hub {
+  id: ID!
+  name: String!
+  region: String
+  type: String
+  attributes: HubAttributes!
+  projects(
+    filter: ProjectFilter
+    first: Int
+    after: String
+  ): ProjectConnection!
+}
+
+type HubAttributes {
+  name: String!
+  region: String
+  extension: JSON
+}
+
+type HubConnection {
+  nodes: [Hub!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+type ProjectFilter {
+  name: String
+}
+
+input ProjectFilter {
+  name: String
+  role: ProjectRole
+}
+
+"""
+A Project within a Hub. Contains items (design files, folders, etc.).
+"""
+type Project {
+  id: ID!
+  hubId: ID!
+  hub: Hub!
+  name: String!
+  type: String
+  attributes: ProjectAttributes!
+  created: DateTime
+  modified: DateTime
+  topFolder: Folder
+  items(
+    filter: ItemFilter
+    first: Int
+    after: String
+  ): ItemConnection!
+}
+
+type ProjectAttributes {
+  name: String!
+  scopes: [String!]
+  extension: JSON
+}
+
+type ProjectConnection {
+  nodes: [Project!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+input ItemFilter {
+  type: String
+  name: String
+}
+
+"""
+A Folder inside a project; can contain sub-folders or items.
+"""
+type Folder {
+  id: ID!
+  name: String!
+  type: String
+  parentFolder: Folder
+  items(first: Int, after: String): ItemConnection!
+  folders(first: Int, after: String): FolderConnection!
+}
+
+type FolderConnection {
+  nodes: [Folder!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+"""
+An Item is a versioned file or asset inside a Project (e.g. a Fusion design).
+"""
+type Item {
+  id: ID!
+  projectId: ID!
+  project: Project!
+  name: String!
+  type: String
+  hidden: Boolean
+  reserved: Boolean
+  parentFolder: Folder
+  created: DateTime
+  modified: DateTime
+  tip: Version
+  versions(first: Int, after: String): VersionConnection!
+}
+
+type ItemConnection {
+  nodes: [Item!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+"""
+A specific version of an Item. The Fusion design data model is accessed through
+a Version's derivatives (components, assemblies, BOM, etc.).
+"""
+type Version {
+  id: ID!
+  itemId: ID!
+  item: Item!
+  versionNumber: Int!
+  displayName: String
+  type: String
+  status: ItemVersionStatus!
+  fileType: String
+  fileSize: Int
+  created: DateTime
+  modified: DateTime
+  createdBy: String
+  lastModifiedBy: String
+  storageLocation: Storage
+  derivatives: VersionDerivatives
+  thumbnail: Thumbnail
+  design: Design
+  exports(first: Int, after: String): ExportConnection!
+}
+
+type VersionConnection {
+  nodes: [Version!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+"""
+Information about where a version's raw file data is stored (OSS object storage).
+"""
+type Storage {
+  id: ID!
+  type: String
+  objectKey: String
+  bucketKey: String
+  size: Int
+  contentType: String
+  downloadUrl: URL
+}
+
+"""
+Derivative outputs generated from a version (e.g. SVF, OBJ, thumbnail).
+"""
+type VersionDerivatives {
+  status: ItemVersionStatus
+  progress: String
+  children: [Derivative!]
+}
+
+type Derivative {
+  name: String
+  role: String
+  mime: String
+  status: ItemVersionStatus
+  progress: String
+  children: [Derivative!]
+}
+
+type Thumbnail {
+  status: ItemVersionStatus
+  sizes: [ThumbnailSize!]
+}
+
+type ThumbnailSize {
+  width: Int!
+  height: Int!
+  url: URL!
+}
+
+# ---------------------------------------------------------------------------
+# Core Design Data Model
+# ---------------------------------------------------------------------------
+
+"""
+The root design object. A Design corresponds to a Fusion .f3d file and contains
+the component tree, timeline, parameters, and all modeling entities.
+"""
+type Design {
+  id: ID!
+  versionId: ID!
+  version: Version!
+  name: String!
+  description: String
+  units: DistanceUnits!
+  rootComponent: Component!
+  allComponents(first: Int, after: String): ComponentConnection!
+  timeline: Timeline!
+  parameters(first: Int, after: String): ParameterConnection!
+  materials(first: Int, after: String): MaterialConnection!
+  appearances(first: Int, after: String): AppearanceConnection!
+  unitsManager: UnitsManager!
+  created: DateTime
+  modified: DateTime
+}
+
+type DesignConnection {
+  nodes: [Design!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+"""
+A Component is the fundamental building block of a Fusion design. It holds
+geometry (B-Rep bodies, meshes), sketches, construction geometry, features,
+joints, and sub-component occurrences.
+"""
+type Component {
+  id: ID!
+  designId: ID!
+  name: String!
+  description: String
+  partNumber: String
+  material: Material
+  appearance: Appearance
+  isRoot: Boolean!
+  isSaved: Boolean
+  physicalProperties: PhysicalProperties
+  boundingBox: BoundingBox3D
+  bRepBodies(first: Int, after: String): BRepBodyConnection!
+  meshBodies(first: Int, after: String): MeshBodyConnection!
+  sketches(first: Int, after: String): SketchConnection!
+  features(first: Int, after: String): FeatureConnection!
+  occurrences(first: Int, after: String): OccurrenceConnection!
+  joints(first: Int, after: String): JointConnection!
+  jointOrigins(first: Int, after: String): JointOriginConnection!
+  asBuiltJoints(first: Int, after: String): AsBuiltJointConnection!
+  constructionPlanes(first: Int, after: String): ConstructionPlaneConnection!
+  constructionAxes(first: Int, after: String): ConstructionAxisConnection!
+  constructionPoints(first: Int, after: String): ConstructionPointConnection!
+  parameters(first: Int, after: String): ParameterConnection!
+  attributes: [ComponentAttribute!]
+}
+
+type ComponentConnection {
+  nodes: [Component!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+type ComponentAttribute {
+  groupName: String!
+  name: String!
+  value: String!
+  units: String
+}
+
+# ---------------------------------------------------------------------------
+# Assembly / Occurrences
+# ---------------------------------------------------------------------------
+
+"""
+An Occurrence is an instance of a Component placed within a parent Component.
+Multiple occurrences can reference the same component (reuse/instancing).
+"""
+type Occurrence {
+  id: ID!
+  name: String!
+  fullPath: String!
+  isGrounded: Boolean!
+  isLightBulbOn: Boolean!
+  isSelectable: Boolean!
+  transform: Matrix3D!
+  component: Component!
+  parentComponent: Component!
+  childOccurrences(first: Int, after: String): OccurrenceConnection!
+  joints(first: Int, after: String): JointConnection!
+  physicalProperties: PhysicalProperties
+  appearance: Appearance
+  isProxy: Boolean
+}
+
+type OccurrenceConnection {
+  nodes: [Occurrence!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+"""
+An Assembly groups related occurrences. The root component of a design is itself
+the top-level assembly.
+"""
+type Assembly {
+  id: ID!
+  name: String!
+  rootComponent: Component!
+  occurrences(first: Int, after: String): OccurrenceConnection!
+  billOfMaterials(options: BomOptions): BillOfMaterials!
+}
+
+input BomOptions {
+  includeSubassemblies: Boolean
+  includeExternalComponents: Boolean
+  levelOfDetail: Int
+}
+
+type BillOfMaterials {
+  rows(first: Int, after: String): BomRowConnection!
+  totalCount: Int
+}
+
+type BomRow {
+  componentId: ID!
+  component: Component!
+  partNumber: String
+  description: String
+  material: String
+  quantity: Int!
+  level: Int!
+  parentRowId: ID
+  thumbnailUrl: URL
+  attributes: JSON
+}
+
+type BomRowConnection {
+  nodes: [BomRow!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+# ---------------------------------------------------------------------------
+# B-Rep Topology
+# ---------------------------------------------------------------------------
+
+"""
+A B-Rep (Boundary Representation) body is a solid or surface body defined by
+its topological faces, edges, and vertices.
+"""
+type BRepBody {
+  id: ID!
+  name: String!
+  componentId: ID!
+  component: Component!
+  isLightBulbOn: Boolean!
+  isSolid: Boolean!
+  bodyType: BodyType!
+  material: Material
+  appearance: Appearance
+  physicalProperties: PhysicalProperties
+  boundingBox: BoundingBox3D
+  faces(first: Int, after: String): BRepFaceConnection!
+  edges(first: Int, after: String): BRepEdgeConnection!
+  vertices(first: Int, after: String): BRepVertexConnection!
+  shells(first: Int, after: String): BRepShellConnection!
+  lumps(first: Int, after: String): BRepLumpConnection!
+  wireCount: Int
+  faceCount: Int!
+  edgeCount: Int!
+  vertexCount: Int!
+}
+
+type BRepBodyConnection {
+  nodes: [BRepBody!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+"""
+A face of a B-Rep body, bounded by edges. Carries surface geometry and area.
+"""
+type BRepFace {
+  id: ID!
+  bodyId: ID!
+  area: Float!
+  isParamReversed: Boolean
+  geometry: SurfaceGeometry
+  edges(first: Int, after: String): BRepEdgeConnection!
+  loops(first: Int, after: String): BRepLoopConnection!
+  appearance: Appearance
+  pointOnFace: Point3D
+  evaluator: SurfaceEvaluator
+}
+
+type BRepFaceConnection {
+  nodes: [BRepFace!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+type BRepLoopConnection {
+  nodes: [BRepLoop!]!
+  pageInfo: PageInfo!
+}
+
+type BRepLoop {
+  id: ID!
+  isOuter: Boolean!
+  coEdges: [BRepCoEdge!]!
+}
+
+type BRepCoEdge {
+  edge: BRepEdge!
+  isOpposedToEdge: Boolean!
+}
+
+"""
+A topological edge of a B-Rep body, bounded by two vertices.
+"""
+type BRepEdge {
+  id: ID!
+  bodyId: ID!
+  length: Float!
+  isDegenerate: Boolean
+  geometry: CurveGeometry
+  startVertex: BRepVertex
+  endVertex: BRepVertex
+  faces(first: Int, after: String): BRepFaceConnection!
+  evaluator: CurveEvaluator
+}
+
+type BRepEdgeConnection {
+  nodes: [BRepEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+"""
+A topological vertex (point) in a B-Rep body.
+"""
+type BRepVertex {
+  id: ID!
+  bodyId: ID!
+  geometry: Point3D!
+  edges(first: Int, after: String): BRepEdgeConnection!
+}
+
+type BRepVertexConnection {
+  nodes: [BRepVertex!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+type BRepShell {
+  id: ID!
+  isVoid: Boolean!
+  faces(first: Int, after: String): BRepFaceConnection!
+}
+
+type BRepShellConnection {
+  nodes: [BRepShell!]!
+  pageInfo: PageInfo!
+}
+
+type BRepLump {
+  id: ID!
+  shells(first: Int, after: String): BRepShellConnection!
+}
+
+type BRepLumpConnection {
+  nodes: [BRepLump!]!
+  pageInfo: PageInfo!
+}
+
+# ---------------------------------------------------------------------------
+# Geometry primitives
+# ---------------------------------------------------------------------------
+
+type Point3D {
+  x: Float!
+  y: Float!
+  z: Float!
+}
+
+type Vector3D {
+  x: Float!
+  y: Float!
+  z: Float!
+}
+
+type Matrix3D {
+  """Column-major 4x4 transform matrix as a flat 16-element array."""
+  values: [Float!]!
+}
+
+type BoundingBox3D {
+  minPoint: Point3D!
+  maxPoint: Point3D!
+}
+
+type SurfaceGeometry {
+  surfaceType: String
+  normal: Vector3D
+}
+
+type CurveGeometry {
+  curveType: String
+  startPoint: Point3D
+  endPoint: Point3D
+}
+
+type SurfaceEvaluator {
+  getPointAtParameter(u: Float!, v: Float!): Point3D
+  getNormalAtParameter(u: Float!, v: Float!): Vector3D
+}
+
+type CurveEvaluator {
+  getPointAtParameter(t: Float!): Point3D
+  getTangentAtParameter(t: Float!): Vector3D
+}
+
+# ---------------------------------------------------------------------------
+# Mesh Bodies
+# ---------------------------------------------------------------------------
+
+type MeshBody {
+  id: ID!
+  name: String!
+  componentId: ID!
+  nodeCount: Int!
+  faceCount: Int!
+  edgeCount: Int!
+  isLightBulbOn: Boolean!
+  appearance: Appearance
+  boundingBox: BoundingBox3D
+}
+
+type MeshBodyConnection {
+  nodes: [MeshBody!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+# ---------------------------------------------------------------------------
+# Sketches
+# ---------------------------------------------------------------------------
+
+"""
+A 2D sketch on a plane or face. Contains curves, points, dimensions, and constraints.
+"""
+type Sketch {
+  id: ID!
+  componentId: ID!
+  name: String!
+  isVisible: Boolean!
+  isFullyConstrained: Boolean!
+  sketchPlane: SketchPlane!
+  sketchCurves(first: Int, after: String): SketchCurveConnection!
+  sketchPoints(first: Int, after: String): SketchPointConnection!
+  sketchDimensions(first: Int, after: String): SketchDimensionConnection!
+  geometricConstraints(first: Int, after: String): SketchConstraintConnection!
+  profiles(first: Int, after: String): SketchProfileConnection!
+  transform: Matrix3D
+}
+
+type SketchConnection {
+  nodes: [Sketch!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+type SketchPlane {
+  origin: Point3D!
+  normal: Vector3D!
+  uDirection: Vector3D!
+  vDirection: Vector3D!
+  constructionPlane: ConstructionPlane
+  planarFace: BRepFace
+}
+
+type SketchCurve {
+  id: ID!
+  isFixed: Boolean!
+  isConstruction: Boolean!
+  startSketchPoint: SketchPoint
+  endSketchPoint: SketchPoint
+  geometryType: String
+  length: Float
+}
+
+type SketchCurveConnection {
+  nodes: [SketchCurve!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+type SketchPoint {
+  id: ID!
+  geometry: Point3D!
+  isFixed: Boolean!
+  isFullyConstrained: Boolean!
+  connectedEntities: [SketchCurve!]
+}
+
+type SketchPointConnection {
+  nodes: [SketchPoint!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+type SketchDimension {
+  id: ID!
+  dimensionType: String!
+  value: Float!
+  parameter: Parameter
+}
+
+type SketchDimensionConnection {
+  nodes: [SketchDimension!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+type SketchConstraint {
+  id: ID!
+  constraintType: SketchConstraintType!
+  entityOne: SketchCurve
+  entityTwo: SketchCurve
+}
+
+type SketchConstraintConnection {
+  nodes: [SketchConstraint!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+type SketchProfile {
+  id: ID!
+  profileLoops: [SketchProfileLoop!]!
+  areaProperties: AreaProperties
+}
+
+type SketchProfileLoop {
+  profileCurves: [SketchProfileCurve!]!
+  isOuter: Boolean!
+}
+
+type SketchProfileCurve {
+  sketchCurve: SketchCurve!
+  isParamReversed: Boolean!
+}
+
+type SketchProfileConnection {
+  nodes: [SketchProfile!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+type AreaProperties {
+  area: Float
+  centroid: Point3D
+  perimeter: Float
+}
+
+# ---------------------------------------------------------------------------
+# Construction Geometry
+# ---------------------------------------------------------------------------
+
+type ConstructionPlane {
+  id: ID!
+  name: String!
+  componentId: ID!
+  isLightBulbOn: Boolean!
+  geometry: Plane3D
+}
+
+type ConstructionPlaneConnection {
+  nodes: [ConstructionPlane!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+type ConstructionAxis {
+  id: ID!
+  name: String!
+  componentId: ID!
+  isLightBulbOn: Boolean!
+  geometry: Line3D
+}
+
+type ConstructionAxisConnection {
+  nodes: [ConstructionAxis!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+type ConstructionPoint {
+  id: ID!
+  name: String!
+  componentId: ID!
+  isLightBulbOn: Boolean!
+  geometry: Point3D
+}
+
+type ConstructionPointConnection {
+  nodes: [ConstructionPoint!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+type Plane3D {
+  origin: Point3D!
+  normal: Vector3D!
+}
+
+type Line3D {
+  origin: Point3D!
+  direction: Vector3D!
+}
+
+# ---------------------------------------------------------------------------
+# Features
+# ---------------------------------------------------------------------------
+
+"""
+A Feature is a parametric modeling operation recorded in the design timeline
+(e.g. extrude, fillet, hole). Features reference sketches, bodies, and faces.
+"""
+interface Feature {
+  id: ID!
+  componentId: ID!
+  name: String!
+  featureType: FeatureType!
+  isSuppressed: Boolean!
+  timelineIndex: Int!
+  healthState: String
+  errorOrWarningMessage: String
+  bodies(first: Int, after: String): BRepBodyConnection!
+  faces(first: Int, after: String): BRepFaceConnection!
+}
+
+type FeatureConnection {
+  nodes: [Feature!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+"""
+An extrude feature — the most common feature type; sweeps a profile along a direction.
+"""
+type ExtrudeFeature implements Feature {
+  id: ID!
+  componentId: ID!
+  name: String!
+  featureType: FeatureType!
+  isSuppressed: Boolean!
+  timelineIndex: Int!
+  healthState: String
+  errorOrWarningMessage: String
+  bodies(first: Int, after: String): BRepBodyConnection!
+  faces(first: Int, after: String): BRepFaceConnection!
+  profile: SketchProfile
+  operation: OperationType!
+  extentOne: ExtentDefinition!
+  extentTwo: ExtentDefinition
+  taperAngleOne: Float
+  taperAngleTwo: Float
+  isSolid: Boolean!
+  startExtent: ExtentDefinition
+}
+
+type ExtentDefinition {
+  extentType: String!
+  distance: Float
+  toEntity: String
+  isChained: Boolean
+}
+
+type RevolveFeature implements Feature {
+  id: ID!
+  componentId: ID!
+  name: String!
+  featureType: FeatureType!
+  isSuppressed: Boolean!
+  timelineIndex: Int!
+  healthState: String
+  errorOrWarningMessage: String
+  bodies(first: Int, after: String): BRepBodyConnection!
+  faces(first: Int, after: String): BRepFaceConnection!
+  profile: SketchProfile
+  axis: ConstructionAxis
+  operation: OperationType!
+  angle: Float
+  extentType: String
+}
+
+type FilletFeature implements Feature {
+  id: ID!
+  componentId: ID!
+  name: String!
+  featureType: FeatureType!
+  isSuppressed: Boolean!
+  timelineIndex: Int!
+  healthState: String
+  errorOrWarningMessage: String
+  bodies(first: Int, after: String): BRepBodyConnection!
+  faces(first: Int, after: String): BRepFaceConnection!
+  radius: Float
+  isRollingBallCorner: Boolean
+  isTangentChain: Boolean
+  filletEdges: [BRepEdge!]
+}
+
+type ChamferFeature implements Feature {
+  id: ID!
+  componentId: ID!
+  name: String!
+  featureType: FeatureType!
+  isSuppressed: Boolean!
+  timelineIndex: Int!
+  healthState: String
+  errorOrWarningMessage: String
+  bodies(first: Int, after: String): BRepBodyConnection!
+  faces(first: Int, after: String): BRepFaceConnection!
+  chamferEdges: [BRepEdge!]
+  distance: Float
+  distance2: Float
+  angle: Float
+  chamferType: String
+}
+
+type HoleFeature implements Feature {
+  id: ID!
+  componentId: ID!
+  name: String!
+  featureType: FeatureType!
+  isSuppressed: Boolean!
+  timelineIndex: Int!
+  healthState: String
+  errorOrWarningMessage: String
+  bodies(first: Int, after: String): BRepBodyConnection!
+  faces(first: Int, after: String): BRepFaceConnection!
+  holeType: String
+  diameter: Float
+  depth: Float
+  isDefaultDirection: Boolean
+  tipAngle: Float
+  counterboreDiameter: Float
+  counterboreDepth: Float
+  countersinkDiameter: Float
+  countersinkAngle: Float
+  isThreaded: Boolean
+  threadInfo: ThreadInfo
+}
+
+type ThreadInfo {
+  isModeled: Boolean!
+  isRightHanded: Boolean!
+  threadType: String
+  threadDesignation: String
+  threadClass: String
+  threadSize: String
+  pitch: Float
+}
+
+# ---------------------------------------------------------------------------
+# Timeline
+# ---------------------------------------------------------------------------
+
+"""
+The design Timeline records the ordered sequence of features and operations
+that produced the design. Supports rollback (time-travel) and reorder.
+"""
+type Timeline {
+  designId: ID!
+  count: Int!
+  isParametric: Boolean!
+  markerPosition: Int!
+  timelineObjects(first: Int, after: String): TimelineObjectConnection!
+}
+
+type TimelineObject {
+  index: Int!
+  name: String!
+  entityType: String!
+  entityId: ID!
+  isSuppressed: Boolean!
+  isGroup: Boolean!
+  parentGroup: TimelineObject
+  rollTo: Boolean
+}
+
+type TimelineObjectConnection {
+  nodes: [TimelineObject!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+# ---------------------------------------------------------------------------
+# Parameters
+# ---------------------------------------------------------------------------
+
+"""
+A Parameter defines a named, formula-driven numeric value used throughout the
+design (e.g. wall thickness, hole diameter). Parameters can reference each other.
+"""
+type Parameter {
+  id: ID!
+  componentId: ID
+  designId: ID!
+  name: String!
+  expression: String!
+  value: Float!
+  unit: String
+  parameterType: ParameterType!
+  comment: String
+  isDeletable: Boolean!
+  dependentParameters: [Parameter!]
+  dependencyParameters: [Parameter!]
+}
+
+type ParameterConnection {
+  nodes: [Parameter!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+# ---------------------------------------------------------------------------
+# Materials & Appearances
+# ---------------------------------------------------------------------------
+
+"""
+A Material defines the physical material applied to a body or component.
+It controls structural simulation and physical property calculations.
+"""
+type Material {
+  id: ID!
+  name: String!
+  materialLibrary: String
+  description: String
+  subType: String
+  properties: MaterialProperties!
+  appearances(first: Int, after: String): AppearanceConnection!
+}
+
+type MaterialConnection {
+  nodes: [Material!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+type MaterialProperties {
+  density: Float
+  densityUnits: MassUnits
+  youngsModulus: Float
+  poissonsRatio: Float
+  yieldStrength: Float
+  ultimateTensileStrength: Float
+  thermalConductivity: Float
+  specificHeat: Float
+  thermalExpansionCoefficient: Float
+  electricalResistivity: Float
+}
+
+"""
+An Appearance controls the visual rendering of a body (color, texture, finish).
+Separate from Material (physical properties).
+"""
+type Appearance {
+  id: ID!
+  name: String!
+  appearanceLibrary: String
+  finish: AppearanceFinish
+  color: Color
+  opacity: Float
+  roughness: Float
+  metallic: Float
+  textureUrl: URL
+}
+
+type AppearanceConnection {
+  nodes: [Appearance!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+type Color {
+  r: Int!
+  g: Int!
+  b: Int!
+  a: Int
+}
+
+# ---------------------------------------------------------------------------
+# Physical Properties
+# ---------------------------------------------------------------------------
+
+type PhysicalProperties {
+  mass: Float
+  massUnits: MassUnits
+  volume: Float
+  density: Float
+  area: Float
+  centroid: Point3D
+  momentOfInertia: MomentOfInertia
+  accuracy: String
+}
+
+type MomentOfInertia {
+  ixx: Float
+  iyy: Float
+  izz: Float
+  ixy: Float
+  iyz: Float
+  ixz: Float
+}
+
+type UnitsManager {
+  internalUnits: DistanceUnits!
+  defaultLengthUnits: DistanceUnits!
+  defaultAngleUnits: AngleUnits!
+  defaultMassUnits: MassUnits!
+}
+
+# ---------------------------------------------------------------------------
+# Joints & Constraints
+# ---------------------------------------------------------------------------
+
+"""
+A Joint constrains the relative motion between two occurrences in an assembly.
+"""
+type Joint {
+  id: ID!
+  componentId: ID!
+  name: String!
+  jointType: JointType!
+  isLocked: Boolean!
+  isSuppressed: Boolean!
+  occurrenceOne: Occurrence!
+  occurrenceTwo: Occurrence!
+  geometryOrOriginOne: JointGeometry
+  geometryOrOriginTwo: JointGeometry
+  offset: Vector3D
+  angle: Float
+  jointMotion: JointMotion
+}
+
+type JointConnection {
+  nodes: [Joint!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+type JointMotion {
+  jointType: JointType!
+  rotationAxis: Vector3D
+  slideDirection: Vector3D
+  rotationValue: Float
+  slideValue: Float
+}
+
+type JointGeometry {
+  entityOne: String
+  entityTwo: String
+  keyPoint: Point3D
+  primaryAxisVector: Vector3D
+  secondaryAxisVector: Vector3D
+  geometryType: String
+}
+
+"""
+A JointOrigin defines a reusable point-of-attachment on a component for joints.
+"""
+type JointOrigin {
+  id: ID!
+  componentId: ID!
+  name: String!
+  geometry: JointOriginGeometry!
+  isLightBulbOn: Boolean!
+}
+
+type JointOriginConnection {
+  nodes: [JointOrigin!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+type JointOriginGeometry {
+  origin: Point3D!
+  primaryAxisVector: Vector3D!
+  secondaryAxisVector: Vector3D!
+}
+
+"""
+An AsBuiltJoint is a joint created from the current physical position of
+occurrences in the assembly (position-based rather than geometry-based).
+"""
+type AsBuiltJoint {
+  id: ID!
+  componentId: ID!
+  name: String!
+  jointType: JointType!
+  isLocked: Boolean!
+  isSuppressed: Boolean!
+  occurrenceOne: Occurrence!
+  occurrenceTwo: Occurrence!
+}
+
+type AsBuiltJointConnection {
+  nodes: [AsBuiltJoint!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+# ---------------------------------------------------------------------------
+# CAM Operations
+# ---------------------------------------------------------------------------
+
+"""
+A CAMSetup groups one or more CAM operations targeting a specific WCS
+(Work Coordinate System) and stock definition.
+"""
+type CAMSetup {
+  id: ID!
+  name: String!
+  designId: ID!
+  stockDefinition: StockDefinition
+  workCoordinateSystem: Matrix3D
+  model: [BRepBody!]
+  operations(first: Int, after: String): CAMOperationConnection!
+}
+
+type CAMSetupConnection {
+  nodes: [CAMSetup!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+type StockDefinition {
+  mode: String
+  x: Float
+  y: Float
+  z: Float
+  offsetX: Float
+  offsetY: Float
+  offsetZ: Float
+}
+
+"""
+A CAMOperation defines a single machining operation (strategy, tool, feeds/speeds,
+geometry selection, and toolpath parameters).
+"""
+type CAMOperation {
+  id: ID!
+  setupId: ID!
+  name: String!
+  strategy: CamStrategy!
+  isEnabled: Boolean!
+  isSuppressed: Boolean!
+  tool: CuttingTool
+  feedsAndSpeeds: FeedsAndSpeeds
+  geometry: CAMGeometry
+  passes: CAMPasses
+  linking: CAMLinking
+  estimatedMachiningTime: Float
+  estimatedCycleTime: Float
+  toolpathStatus: String
+}
+
+type CAMOperationConnection {
+  nodes: [CAMOperation!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+type CuttingTool {
+  id: ID!
+  description: String
+  vendor: String
+  productId: String
+  toolType: String
+  diameter: Float
+  numberOfFlutes: Int
+  fluteLength: Float
+  shankDiameter: Float
+  overallLength: Float
+  material: String
+}
+
+type FeedsAndSpeeds {
+  spindleSpeed: Float
+  spindleDirection: String
+  surfaceSpeed: Float
+  feedPerTooth: Float
+  cuttingFeedrate: Float
+  leadInFeedrate: Float
+  leadOutFeedrate: Float
+  plungeFeedrate: Float
+  rampFeedrate: Float
+}
+
+type CAMGeometry {
+  machiningBoundary: [BRepFace!]
+  stockContours: [BRepFace!]
+  checkSurfaces: [BRepFace!]
+}
+
+type CAMPasses {
+  tolerance: Float
+  stepover: Float
+  stepdown: Float
+  stockToLeave: Float
+  axialStockToLeave: Float
+  radialStockToLeave: Float
+  finishingOverlap: Float
+}
+
+type CAMLinking {
+  entryType: String
+  exitType: String
+  rampType: String
+  rampAngle: Float
+  rampHeight: Float
+  safetyHeight: Float
+  retractHeight: Float
+  clearanceHeight: Float
+}
+
+# ---------------------------------------------------------------------------
+# Simulation
+# ---------------------------------------------------------------------------
+
+"""
+A SimulationStudy defines a structural, thermal, or fluid simulation on a design.
+"""
+type SimulationStudy {
+  id: ID!
+  designId: ID!
+  name: String!
+  simulationType: SimulationType!
+  status: SimulationStatus!
+  meshSettings: MeshSettings
+  constraints: [SimulationConstraint!]
+  loads: [SimulationLoad!]
+  contacts: [SimulationContact!]
+  results: SimulationResults
+  created: DateTime
+  modified: DateTime
+}
+
+type SimulationStudyConnection {
+  nodes: [SimulationStudy!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+type MeshSettings {
+  absoluteSize: Float
+  averageElementSize: Float
+  minimumElementSize: Float
+  maxTurnAngle: Float
+  curvatureCorrection: Boolean
+}
+
+type SimulationConstraint {
+  id: ID!
+  constraintType: String!
+  faces: [BRepFace!]!
+  isFixed: Boolean
+  dx: Float
+  dy: Float
+  dz: Float
+}
+
+type SimulationLoad {
+  id: ID!
+  loadType: String!
+  faces: [BRepFace!]!
+  magnitude: Float!
+  direction: Vector3D
+  pressureValue: Float
+  temperature: Float
+}
+
+type SimulationContact {
+  id: ID!
+  contactType: String!
+  faces1: [BRepFace!]!
+  faces2: [BRepFace!]!
+  slideType: String
+}
+
+type SimulationResults {
+  studyId: ID!
+  vonMisesStress: ResultField
+  displacement: VectorResultField
+  safetyFactor: ResultField
+  reactionForces: [ReactionForce!]
+  naturalFrequencies: [Float!]
+  temperature: ResultField
+}
+
+type ResultField {
+  minimum: Float!
+  maximum: Float!
+  average: Float
+  unit: String
+}
+
+type VectorResultField {
+  minimumMagnitude: Float!
+  maximumMagnitude: Float!
+  unit: String
+}
+
+type ReactionForce {
+  constraintId: ID!
+  forceX: Float!
+  forceY: Float!
+  forceZ: Float!
+  momentX: Float
+  momentY: Float
+  momentZ: Float
+}
+
+# ---------------------------------------------------------------------------
+# Rendering & Exports
+# ---------------------------------------------------------------------------
+
+"""
+A RenderJob defines a photorealistic cloud render of the design.
+"""
+type RenderJob {
+  id: ID!
+  versionId: ID!
+  name: String!
+  quality: RenderQuality!
+  status: ItemVersionStatus!
+  width: Int!
+  height: Int!
+  cameraSettings: CameraSettings
+  environmentSettings: RenderEnvironment
+  outputUrl: URL
+  created: DateTime
+  completed: DateTime
+}
+
+type RenderJobConnection {
+  nodes: [RenderJob!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+type CameraSettings {
+  eye: Point3D!
+  target: Point3D!
+  up: Vector3D!
+  fieldOfView: Float
+  aspectRatio: Float
+  nearDistance: Float
+  farDistance: Float
+}
+
+type RenderEnvironment {
+  name: String
+  brightness: Float
+  rotation: Float
+  groundPlane: Boolean
+  groundShadow: Boolean
+  groundReflection: Boolean
+}
+
+"""
+An Export records a request to translate a design version to another file format.
+"""
+type Export {
+  id: ID!
+  versionId: ID!
+  format: ExportFormat!
+  status: ItemVersionStatus!
+  downloadUrl: URL
+  fileSize: Int
+  created: DateTime
+  completed: DateTime
+  options: ExportOptions
+}
+
+type ExportConnection {
+  nodes: [Export!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+type ExportOptions {
+  unit: DistanceUnits
+  includeSketchEntities: Boolean
+  sendEmailWhenDone: Boolean
+  geometry: String
+}
+
+# ---------------------------------------------------------------------------
+# Root Operations
+# ---------------------------------------------------------------------------
+
+type Query {
+  """Retrieve all hubs accessible to the current user."""
+  hubs(first: Int, after: String): HubConnection!
+
+  """Retrieve a single hub by ID."""
+  hub(id: ID!): Hub
+
+  """Retrieve a project by ID."""
+  project(hubId: ID!, projectId: ID!): Project
+
+  """Retrieve an item by ID."""
+  item(projectId: ID!, itemId: ID!): Item
+
+  """Retrieve a specific version of an item."""
+  version(itemId: ID!, versionId: ID!): Version
+
+  """Retrieve a design from a version."""
+  design(versionId: ID!): Design
+
+  """Retrieve a component by ID within a design."""
+  component(designId: ID!, componentId: ID!): Component
+
+  """Retrieve a B-Rep body by ID."""
+  bRepBody(designId: ID!, bodyId: ID!): BRepBody
+
+  """Retrieve a sketch by ID."""
+  sketch(designId: ID!, sketchId: ID!): Sketch
+
+  """Retrieve a parameter by name within a design."""
+  parameter(designId: ID!, name: String!): Parameter
+
+  """Retrieve a material by ID."""
+  material(id: ID!): Material
+
+  """Retrieve an appearance by ID."""
+  appearance(id: ID!): Appearance
+
+  """Retrieve a joint by ID within a design."""
+  joint(designId: ID!, jointId: ID!): Joint
+
+  """Retrieve all features of a specific type from a component."""
+  features(
+    designId: ID!
+    componentId: ID!
+    featureType: FeatureType
+    first: Int
+    after: String
+  ): FeatureConnection!
+
+  """Retrieve the timeline of a design."""
+  timeline(designId: ID!): Timeline
+
+  """Retrieve all CAM setups for a design version."""
+  camSetups(versionId: ID!, first: Int, after: String): CAMSetupConnection!
+
+  """Retrieve a CAM operation by ID."""
+  camOperation(setupId: ID!, operationId: ID!): CAMOperation
+
+  """Retrieve simulation studies for a design version."""
+  simulationStudies(
+    versionId: ID!
+    first: Int
+    after: String
+  ): SimulationStudyConnection!
+
+  """Retrieve a simulation study by ID."""
+  simulationStudy(id: ID!): SimulationStudy
+
+  """Retrieve render jobs for a version."""
+  renderJobs(versionId: ID!, first: Int, after: String): RenderJobConnection!
+
+  """Retrieve the Bill of Materials for a design version."""
+  billOfMaterials(versionId: ID!, options: BomOptions): BillOfMaterials
+
+  """Retrieve exports for a version."""
+  exports(versionId: ID!, first: Int, after: String): ExportConnection!
+}
+
+type Mutation {
+  """Update a parameter value or expression in a design."""
+  updateParameter(
+    designId: ID!
+    parameterId: ID!
+    expression: String!
+  ): Parameter!
+
+  """Suppress or unsuppress a feature in the design timeline."""
+  setFeatureSuppressed(
+    designId: ID!
+    featureId: ID!
+    isSuppressed: Boolean!
+  ): Feature!
+
+  """Assign a material to a component or body."""
+  assignMaterial(
+    targetId: ID!
+    targetType: String!
+    materialId: ID!
+  ): Boolean!
+
+  """Assign an appearance to a component, body, or face."""
+  assignAppearance(
+    targetId: ID!
+    targetType: String!
+    appearanceId: ID!
+  ): Boolean!
+
+  """Request an export of a design version to a specific format."""
+  createExport(
+    versionId: ID!
+    format: ExportFormat!
+    options: ExportOptionsInput
+  ): Export!
+
+  """Launch a cloud render job for a design version."""
+  createRenderJob(
+    versionId: ID!
+    quality: RenderQuality!
+    width: Int!
+    height: Int!
+    camera: CameraSettingsInput
+  ): RenderJob!
+
+  """Create a new simulation study for a design version."""
+  createSimulationStudy(
+    versionId: ID!
+    name: String!
+    simulationType: SimulationType!
+  ): SimulationStudy!
+
+  """Run a simulation study (triggers cloud solve)."""
+  runSimulationStudy(studyId: ID!): SimulationStudy!
+
+  """Update the name of a component."""
+  updateComponentName(
+    designId: ID!
+    componentId: ID!
+    name: String!
+  ): Component!
+
+  """Set the grounded state of an occurrence in an assembly."""
+  setOccurrenceGrounded(
+    designId: ID!
+    occurrenceId: ID!
+    isGrounded: Boolean!
+  ): Occurrence!
+
+  """Lock or unlock a joint."""
+  setJointLocked(
+    designId: ID!
+    jointId: ID!
+    isLocked: Boolean!
+  ): Joint!
+
+  """Generate a toolpath for a CAM operation."""
+  generateToolpath(operationId: ID!): CAMOperation!
+
+  """Post-process a CAM setup to NC code."""
+  postProcess(
+    setupId: ID!
+    postProcessorId: String!
+    outputFileName: String!
+  ): CAMPostResult!
+}
+
+type CAMPostResult {
+  success: Boolean!
+  ncCode: String
+  warnings: [String!]
+  errors: [String!]
+}
+
+input ExportOptionsInput {
+  unit: DistanceUnits
+  includeSketchEntities: Boolean
+  sendEmailWhenDone: Boolean
+}
+
+input CameraSettingsInput {
+  eye: Point3DInput!
+  target: Point3DInput!
+  up: Vector3DInput!
+  fieldOfView: Float
+}
+
+input Point3DInput {
+  x: Float!
+  y: Float!
+  z: Float!
+}
+
+input Vector3DInput {
+  x: Float!
+  y: Float!
+  z: Float!
+}

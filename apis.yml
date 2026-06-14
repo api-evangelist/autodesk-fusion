@@ -1,181 +1,166 @@
 aid: autodesk-fusion
 name: Autodesk Fusion
-description: >-
-  Autodesk Fusion is a cloud-based CAD/CAM/CAE/PCB platform that provides REST
-  and GraphQL APIs for design data access, manufacturing automation, simulation,
-  and shop-floor operations within the Autodesk Platform Services (APS)
-  ecosystem. Developers can build scripts, add-ins, and integrations that
-  automate workflows, sync production data, and connect Fusion with ERP, PLM,
-  and BI systems.
+description: Autodesk Fusion is a cloud-based CAD/CAM/CAE/PCB platform that provides
+  REST and GraphQL APIs for design data access, manufacturing automation, simulation,
+  and shop-floor operations within the Autodesk Platform Services (APS) ecosystem.
+  Developers can build scripts, add-ins, and integrations that automate workflows,
+  sync production data, and connect Fusion with ERP, PLM, and BI systems.
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
-url: >-
-  https://raw.githubusercontent.com/api-evangelist/autodesk-fusion/refs/heads/main/apis.yml
-created: "2026-06-13"
-modified: "2026-06-13"
-specificationVersion: "0.19"
+url: https://raw.githubusercontent.com/api-evangelist/autodesk-fusion/refs/heads/main/apis.yml
+created: '2026-06-13'
+modified: '2026-06-13'
+specificationVersion: '0.19'
 tags:
-  - CAD
-  - CAM
-  - CAE
-  - Manufacturing
-  - Design Automation
-  - GraphQL
-  - REST
-  - Autodesk Platform Services
+- CAD
+- CAM
+- CAE
+- Manufacturing
+- Design Automation
+- GraphQL
+- REST
+- Autodesk Platform Services
 apis:
-  - aid: autodesk-fusion:autodesk-fusion-api
-    name: Autodesk Fusion API
-    description: >-
-      The Autodesk Fusion API enables developers to create scripts, add-ins, and
-      cloud-connected applications that extend and automate Fusion design and
-      manufacturing workflows. Built on Autodesk Platform Services, it supports
-      OAuth 2.0 authentication and covers the entire design-to-manufacturing
-      process including parametric modeling, simulation, and toolpath generation.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
-    humanURL: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
-    baseURL: https://developer.api.autodesk.com
-    tags:
-      - CAD
-      - Scripting
-      - Design
-      - Automation
-    properties:
-      - type: Documentation
-        url: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
-      - type: Documentation
-        url: >-
-          https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-A92A4B10-3781-4925-94C6-47DA85A4F65A
-      - type: Authentication
-        url: https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics
-      - type: OpenAPI
-        url: https://github.com/autodesk-platform-services/aps-sdk-openapi
-    contact:
-      - FN: Autodesk Developer Network
-        url: https://aps.autodesk.com/developer/support
-        email: ""
-
-  - aid: autodesk-fusion:fusion-automation-api
-    name: Fusion Automation API (Design Automation)
-    description: >-
-      The Fusion Automation API is a cloud-based Premium API that runs Fusion
-      scripts and automation jobs at scale without requiring desktop software.
-      It supports parametric design customization, advanced manufacturing
-      algorithms (packing, toolpath generation), and end-to-end workflow
-      integration. Priced at 3.0 Flex tokens per processing hour on a
-      pay-per-use basis.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
-    humanURL: >-
-      https://aps.autodesk.com/blog/design-automation-api-fusion-now-generally-available
-    baseURL: https://developer.api.autodesk.com
-    tags:
-      - Design Automation
-      - Cloud
-      - Manufacturing
-      - Flex Tokens
-    properties:
-      - type: Documentation
-        url: https://aps.autodesk.com/en/docs/design-automation/v3/developers_guide/overview/
-      - type: Authentication
-        url: https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics
-      - type: Pricing
-        url: https://aps.autodesk.com/pricing
-    contact:
-      - FN: Autodesk Developer Network
-        url: https://aps.autodesk.com/developer/support
-        email: ""
-
-  - aid: autodesk-fusion:fusion-operations-api
-    name: Fusion Operations API
-    description: >-
-      The Fusion Operations API provides REST endpoints to integrate Autodesk
-      Fusion Operations (manufacturing execution system) production data with
-      external enterprise systems. Supports bidirectional sync of production
-      orders, inventory, machine status, downtime records, punch clock entries,
-      workers, and operations with ERP, PLM, accounting, and BI platforms.
-      Currently in Public Beta (V2).
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
-    humanURL: https://aps.autodesk.com/developer/overview/fusion-operations-api
-    baseURL: https://developer.api.autodesk.com
-    tags:
-      - Manufacturing Execution
-      - ERP Integration
-      - Production Data
-      - Shop Floor
-    properties:
-      - type: Documentation
-        url: https://aps.autodesk.com/developer/overview/fusion-operations-api
-      - type: Documentation
-        url: https://aps.autodesk.com/en/docs/fusion-operations/v2/developers_guide/overview/
-      - type: Authentication
-        url: https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics
-    contact:
-      - FN: Autodesk Developer Network
-        url: https://aps.autodesk.com/developer/support
-        email: ""
-
-  - aid: autodesk-fusion:manufacturing-data-model-api
-    name: Manufacturing Data Model API (Fusion Data API)
-    description: >-
-      The Manufacturing Data Model API exposes Fusion design and manufacturing
-      data through a GraphQL interface, enabling cloud-based read and write
-      access to component properties, Bill of Materials, model hierarchy,
-      and thumbnail assets. Allows programmatic access to granular design data
-      without requiring the Fusion desktop application. Generally available
-      since 2022.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
-    humanURL: https://aps.autodesk.com/en/docs/mfgdataapi/v2/developers_guide/explorer/
-    baseURL: https://developer.api.autodesk.com/mfg/v3/graphql/public
-    tags:
-      - GraphQL
-      - Manufacturing Data
-      - Design Data
-      - Bill of Materials
-    properties:
-      - type: Documentation
-        url: https://aps.autodesk.com/en/docs/mfgdataapi/v1/developers_guide/about-graphql
-      - type: Documentation
-        url: https://aps.autodesk.com/en/docs/mfgdataapi/v2/developers_guide/explorer/
-      - type: Authentication
-        url: https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics
-      - type: GitHubRepository
-        url: https://github.com/autodesk-platform-services/aps-fusion-data-samples
-    contact:
-      - FN: Autodesk Developer Network
-        url: https://aps.autodesk.com/developer/support
-        email: ""
-
-common:
-  - type: Website
-    url: https://www.autodesk.com/products/fusion-360/overview
+- aid: autodesk-fusion:autodesk-fusion-api
+  name: Autodesk Fusion API
+  description: The Autodesk Fusion API enables developers to create scripts, add-ins,
+    and cloud-connected applications that extend and automate Fusion design and manufacturing
+    workflows. Built on Autodesk Platform Services, it supports OAuth 2.0 authentication
+    and covers the entire design-to-manufacturing process including parametric modeling,
+    simulation, and toolpath generation.
+  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  humanURL: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  baseURL: https://developer.api.autodesk.com
+  tags:
+  - CAD
+  - Scripting
+  - Design
+  - Automation
+  properties:
   - type: Documentation
-    url: https://aps.autodesk.com/developer/documentation
-  - type: GitHubOrg
-    url: https://github.com/autodesk-platform-services
-  - type: LinkedIn
-    url: https://www.linkedin.com/company/autodesk
-  - type: Blog
-    url: https://aps.autodesk.com/blog
-  - type: Blog
-    url: https://www.autodesk.com/products/fusion-360/blog
-  - type: Pricing
-    url: https://www.autodesk.com/products/fusion-360/overview
-  - type: StatusPage
-    url: https://health.autodesk.com
-  - type: X
-    url: https://x.com/autodeskaps
-  - type: Plans
-    url: plans/autodesk-fusion-plans-pricing.yml
-  - type: RateLimits
-    url: rate-limits/autodesk-fusion-rate-limits.yml
-  - type: FinOps
-    url: finops/autodesk-fusion-finops.yml
+    url: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  - type: Documentation
+    url: https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-A92A4B10-3781-4925-94C6-47DA85A4F65A
   - type: Authentication
-    url: https://aps.autodesk.com/developer/overview/authentication-api
-  - type: Forum
-    url: https://forums.autodesk.com/t5/fusion-api-and-scripts-forum/bd-p/22
+    url: https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics
   - type: OpenAPI
     url: https://github.com/autodesk-platform-services/aps-sdk-openapi
-
+  - url: graphql/autodesk-fusion-graphql.md
+    type: GraphQL
+  contact:
+  - FN: Autodesk Developer Network
+    url: https://aps.autodesk.com/developer/support
+    email: ''
+- aid: autodesk-fusion:fusion-automation-api
+  name: Fusion Automation API (Design Automation)
+  description: The Fusion Automation API is a cloud-based Premium API that runs Fusion
+    scripts and automation jobs at scale without requiring desktop software. It supports
+    parametric design customization, advanced manufacturing algorithms (packing, toolpath
+    generation), and end-to-end workflow integration. Priced at 3.0 Flex tokens per
+    processing hour on a pay-per-use basis.
+  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  humanURL: https://aps.autodesk.com/blog/design-automation-api-fusion-now-generally-available
+  baseURL: https://developer.api.autodesk.com
+  tags:
+  - Design Automation
+  - Cloud
+  - Manufacturing
+  - Flex Tokens
+  properties:
+  - type: Documentation
+    url: https://aps.autodesk.com/en/docs/design-automation/v3/developers_guide/overview/
+  - type: Authentication
+    url: https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics
+  - type: Pricing
+    url: https://aps.autodesk.com/pricing
+  contact:
+  - FN: Autodesk Developer Network
+    url: https://aps.autodesk.com/developer/support
+    email: ''
+- aid: autodesk-fusion:fusion-operations-api
+  name: Fusion Operations API
+  description: The Fusion Operations API provides REST endpoints to integrate Autodesk
+    Fusion Operations (manufacturing execution system) production data with external
+    enterprise systems. Supports bidirectional sync of production orders, inventory,
+    machine status, downtime records, punch clock entries, workers, and operations
+    with ERP, PLM, accounting, and BI platforms. Currently in Public Beta (V2).
+  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  humanURL: https://aps.autodesk.com/developer/overview/fusion-operations-api
+  baseURL: https://developer.api.autodesk.com
+  tags:
+  - Manufacturing Execution
+  - ERP Integration
+  - Production Data
+  - Shop Floor
+  properties:
+  - type: Documentation
+    url: https://aps.autodesk.com/developer/overview/fusion-operations-api
+  - type: Documentation
+    url: https://aps.autodesk.com/en/docs/fusion-operations/v2/developers_guide/overview/
+  - type: Authentication
+    url: https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics
+  contact:
+  - FN: Autodesk Developer Network
+    url: https://aps.autodesk.com/developer/support
+    email: ''
+- aid: autodesk-fusion:manufacturing-data-model-api
+  name: Manufacturing Data Model API (Fusion Data API)
+  description: The Manufacturing Data Model API exposes Fusion design and manufacturing
+    data through a GraphQL interface, enabling cloud-based read and write access to
+    component properties, Bill of Materials, model hierarchy, and thumbnail assets.
+    Allows programmatic access to granular design data without requiring the Fusion
+    desktop application. Generally available since 2022.
+  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  humanURL: https://aps.autodesk.com/en/docs/mfgdataapi/v2/developers_guide/explorer/
+  baseURL: https://developer.api.autodesk.com/mfg/v3/graphql/public
+  tags:
+  - GraphQL
+  - Manufacturing Data
+  - Design Data
+  - Bill of Materials
+  properties:
+  - type: Documentation
+    url: https://aps.autodesk.com/en/docs/mfgdataapi/v1/developers_guide/about-graphql
+  - type: Documentation
+    url: https://aps.autodesk.com/en/docs/mfgdataapi/v2/developers_guide/explorer/
+  - type: Authentication
+    url: https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics
+  - type: GitHubRepository
+    url: https://github.com/autodesk-platform-services/aps-fusion-data-samples
+  contact:
+  - FN: Autodesk Developer Network
+    url: https://aps.autodesk.com/developer/support
+    email: ''
+common:
+- type: Website
+  url: https://www.autodesk.com/products/fusion-360/overview
+- type: Documentation
+  url: https://aps.autodesk.com/developer/documentation
+- type: GitHubOrg
+  url: https://github.com/autodesk-platform-services
+- type: LinkedIn
+  url: https://www.linkedin.com/company/autodesk
+- type: Blog
+  url: https://aps.autodesk.com/blog
+- type: Blog
+  url: https://www.autodesk.com/products/fusion-360/blog
+- type: Pricing
+  url: https://www.autodesk.com/products/fusion-360/overview
+- type: StatusPage
+  url: https://health.autodesk.com
+- type: X
+  url: https://x.com/autodeskaps
+- type: Plans
+  url: plans/autodesk-fusion-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/autodesk-fusion-rate-limits.yml
+- type: FinOps
+  url: finops/autodesk-fusion-finops.yml
+- type: Authentication
+  url: https://aps.autodesk.com/developer/overview/authentication-api
+- type: Forum
+  url: https://forums.autodesk.com/t5/fusion-api-and-scripts-forum/bd-p/22
+- type: OpenAPI
+  url: https://github.com/autodesk-platform-services/aps-sdk-openapi
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com
