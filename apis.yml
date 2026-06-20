@@ -5,7 +5,7 @@ description: Autodesk Fusion is a cloud-based CAD/CAM/CAE/PCB platform that prov
   and shop-floor operations within the Autodesk Platform Services (APS) ecosystem.
   Developers can build scripts, add-ins, and integrations that automate workflows,
   sync production data, and connect Fusion with ERP, PLM, and BI systems.
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 url: https://raw.githubusercontent.com/api-evangelist/autodesk-fusion/refs/heads/main/apis.yml
 created: '2026-06-13'
 modified: '2026-06-13'
@@ -27,7 +27,7 @@ apis:
     workflows. Built on Autodesk Platform Services, it supports OAuth 2.0 authentication
     and covers the entire design-to-manufacturing process including parametric modeling,
     simulation, and toolpath generation.
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
   baseURL: https://developer.api.autodesk.com
   tags:
@@ -57,7 +57,7 @@ apis:
     parametric design customization, advanced manufacturing algorithms (packing, toolpath
     generation), and end-to-end workflow integration. Priced at 3.0 Flex tokens per
     processing hour on a pay-per-use basis.
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://aps.autodesk.com/blog/design-automation-api-fusion-now-generally-available
   baseURL: https://developer.api.autodesk.com
   tags:
@@ -83,7 +83,7 @@ apis:
     enterprise systems. Supports bidirectional sync of production orders, inventory,
     machine status, downtime records, punch clock entries, workers, and operations
     with ERP, PLM, accounting, and BI platforms. Currently in Public Beta (V2).
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://aps.autodesk.com/developer/overview/fusion-operations-api
   baseURL: https://developer.api.autodesk.com
   tags:
@@ -109,7 +109,7 @@ apis:
     component properties, Bill of Materials, model hierarchy, and thumbnail assets.
     Allows programmatic access to granular design data without requiring the Fusion
     desktop application. Generally available since 2022.
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://aps.autodesk.com/en/docs/mfgdataapi/v2/developers_guide/explorer/
   baseURL: https://developer.api.autodesk.com/mfg/v3/graphql/public
   tags:
