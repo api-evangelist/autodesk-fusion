@@ -157,7 +157,7 @@ common:
   url: finops/autodesk-fusion-finops.yml
 - type: Authentication
   url: https://aps.autodesk.com/developer/overview/authentication-api
-- type: Forum
+- type: Forums
   url: https://forums.autodesk.com/t5/fusion-api-and-scripts-forum/bd-p/22
 - type: OpenAPI
   url: https://github.com/autodesk-platform-services/aps-sdk-openapi
