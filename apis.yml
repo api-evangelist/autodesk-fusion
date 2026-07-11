@@ -131,6 +131,10 @@ apis:
     url: https://aps.autodesk.com/developer/support
     email: ''
 common:
+- type: DomainSecurity
+  url: security/autodesk-fusion-domain-security.yml
+- type: Authentication
+  url: authentication/autodesk-fusion-authentication.yml
 - type: OAuthScopes
   url: scopes/autodesk-fusion-scopes.yml
 - type: Website

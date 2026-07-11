@@ -1,0 +1,56 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/accountadmin.yaml, openapi/authentication.yaml, openapi/datamanagement.yaml,
+  openapi/issues.yaml, openapi/modelderivative.yaml, openapi/oss.yaml, openapi/secureserviceaccount.yaml,
+  openapi/webhooks.yaml
+summary:
+  types:
+  - http
+  - oauth2
+  oauth2_flows:
+  - authorizationCode
+  - clientCredentials
+  - implicit
+schemes:
+- name: 2-legged
+  type: oauth2
+  flows:
+  - flow: clientCredentials
+    scopes: 0
+  sources:
+  - openapi/accountadmin.yaml
+  - openapi/authentication.yaml
+  - openapi/datamanagement.yaml
+  - openapi/issues.yaml
+  - openapi/modelderivative.yaml
+  - openapi/oss.yaml
+  - openapi/secureserviceaccount.yaml
+  - openapi/webhooks.yaml
+- name: 3-legged-implicit
+  type: oauth2
+  flows:
+  - flow: implicit
+    scopes: 0
+  sources:
+  - openapi/accountadmin.yaml
+  - openapi/issues.yaml
+- name: 3-legged
+  type: oauth2
+  flows:
+  - flow: authorizationCode
+    scopes: 0
+  sources:
+  - openapi/accountadmin.yaml
+  - openapi/authentication.yaml
+  - openapi/datamanagement.yaml
+  - openapi/issues.yaml
+  - openapi/modelderivative.yaml
+  - openapi/oss.yaml
+  - openapi/webhooks.yaml
+- name: client-credentials
+  type: http
+  scheme: basic
+  description: Basic Authorization by providing client id and client secret.
+  sources:
+  - openapi/authentication.yaml
+  - openapi/secureserviceaccount.yaml
