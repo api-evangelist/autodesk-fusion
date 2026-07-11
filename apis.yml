@@ -131,6 +131,8 @@ apis:
     url: https://aps.autodesk.com/developer/support
     email: ''
 common:
+- type: OAuthScopes
+  url: scopes/autodesk-fusion-scopes.yml
 - type: Website
   url: https://www.autodesk.com/products/fusion-360/overview
 - type: Documentation

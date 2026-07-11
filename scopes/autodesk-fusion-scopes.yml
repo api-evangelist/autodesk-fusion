@@ -1,0 +1,199 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/accountadmin.yaml, openapi/authentication.yaml, openapi/datamanagement.yaml,
+  openapi/issues.yaml, openapi/modelderivative.yaml, openapi/oss.yaml, openapi/secureserviceaccount.yaml,
+  openapi/webhooks.yaml
+schemes:
+- name: 2-legged
+  source: openapi/accountadmin.yaml
+  flows:
+  - flow: clientCredentials
+- name: 3-legged-implicit
+  source: openapi/accountadmin.yaml
+  flows:
+  - flow: implicit
+- name: 3-legged
+  source: openapi/accountadmin.yaml
+  flows:
+  - flow: authorizationCode
+- name: 3-legged
+  source: openapi/authentication.yaml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://developer.api.autodesk.com/authentication/v2/authorize
+    tokenUrl: https://developer.api.autodesk.com/authentication/v2/token
+  description: User context required.
+- name: 2-legged
+  source: openapi/authentication.yaml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://developer.api.autodesk.com/authentication/v2/token
+  description: Application context required.
+- name: 3-legged
+  source: openapi/datamanagement.yaml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://developer.api.autodesk.com/authentication/v2/authorize
+    tokenUrl: https://developer.api.autodesk.com/authentication/v2/token
+  description: User context required.
+- name: 2-legged
+  source: openapi/datamanagement.yaml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://developer.api.autodesk.com/authentication/v2/token
+  description: Application context required.
+- name: 2-legged
+  source: openapi/issues.yaml
+  flows:
+  - flow: clientCredentials
+- name: 3-legged
+  source: openapi/issues.yaml
+  flows:
+  - flow: authorizationCode
+- name: 3-legged-implicit
+  source: openapi/issues.yaml
+  flows:
+  - flow: implicit
+- name: 3-legged
+  source: openapi/modelderivative.yaml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://developer.api.autodesk.com/authentication/v2/authorize
+    tokenUrl: https://developer.api.autodesk.com/authentication/v2/token
+  description: User context required.
+- name: 2-legged
+  source: openapi/modelderivative.yaml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://developer.api.autodesk.com/authentication/v2/token
+  description: Application context required.
+- name: oauth2_application
+  source: openapi/oss.yaml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: /authentication/v1/authenticate
+- name: 3-legged
+  source: openapi/oss.yaml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://developer.api.autodesk.com/authentication/v2/authorize
+    tokenUrl: https://developer.api.autodesk.com/authentication/v2/token
+  description: User context required.
+- name: 2-legged
+  source: openapi/oss.yaml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://developer.api.autodesk.com/authentication/v2/token
+  description: Application context required.
+- name: 2-legged
+  source: openapi/secureserviceaccount.yaml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://developer.api.autodesk.com/authentication/v2/token
+  description: Application context required.
+- name: 3-legged
+  source: openapi/webhooks.yaml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://developer.api.autodesk.com/authentication/v2/authorize
+    tokenUrl: https://developer.api.autodesk.com/authentication/v2/token
+  description: User context required.
+- name: 2-legged
+  source: openapi/webhooks.yaml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://developer.api.autodesk.com/authentication/v2/token
+  description: Application context required.
+scopes:
+- scope: application:service_account:read
+  description: Grant read access to Service Accounts
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/secureserviceaccount.yaml
+- scope: application:service_account:write
+  description: Grant write access to Service Accounts
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/secureserviceaccount.yaml
+- scope: application:service_account_key:read
+  description: Grant read access to Service Account Keys
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/secureserviceaccount.yaml
+- scope: application:service_account_key:write
+  description: Grant write access to Service Account Keys
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/secureserviceaccount.yaml
+- scope: bucket:create
+  description: The application will be able to create an OSS bucket it will own.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/oss.yaml
+- scope: bucket:delete
+  description: The application will be able to delete an OSS bucket it will own.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/oss.yaml
+- scope: bucket:read
+  description: The application will be able to read the metadata and list contents for OSS buckets
+    that it has access to.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/oss.yaml
+- scope: bucket:update
+  description: The application will be able to set permissions and entitlements for OSS buckets
+    that it has permission to modify.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/oss.yaml
+- scope: data:create
+  description: create new data
+  flows:
+  - authorizationCode
+  - clientCredentials
+  sources:
+  - openapi/authentication.yaml
+  - openapi/datamanagement.yaml
+  - openapi/modelderivative.yaml
+  - openapi/oss.yaml
+  - openapi/webhooks.yaml
+- scope: data:read
+  description: read your data
+  flows:
+  - authorizationCode
+  - clientCredentials
+  sources:
+  - openapi/authentication.yaml
+  - openapi/datamanagement.yaml
+  - openapi/modelderivative.yaml
+  - openapi/oss.yaml
+  - openapi/webhooks.yaml
+- scope: data:search
+  sources:
+  - openapi/datamanagement.yaml
+- scope: data:write
+  description: modify your data
+  flows:
+  - authorizationCode
+  - clientCredentials
+  sources:
+  - openapi/authentication.yaml
+  - openapi/datamanagement.yaml
+  - openapi/modelderivative.yaml
+  - openapi/oss.yaml
+  - openapi/webhooks.yaml
+- scope: viewable:read
+  sources:
+  - openapi/modelderivative.yaml
+- scope: viewables:read
+  sources:
+  - openapi/oss.yaml
