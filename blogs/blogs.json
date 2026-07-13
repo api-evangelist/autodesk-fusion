@@ -2,18 +2,21 @@
   "repo": "autodesk-fusion",
   "feeds": [
     {
-      "source": "https://aps.autodesk.com/blog",
-      "feed_url": "",
+      "source": "https://www.linkedin.com/company/autodesk",
+      "feed_url": "https://www.linkedin.com/company/autodesk",
+      "title": "",
       "saved": 0,
-      "method": "agent-scrape"
+      "method": "none"
     },
     {
-      "source": "https://www.autodesk.com/products/fusion-360/blog",
+      "source": "https://aps.autodesk.com/blog",
+      "feed_url": "https://aps.autodesk.com/blog",
+      "title": "",
       "saved": 0,
-      "error": "HTTP 403 Forbidden"
+      "method": "none"
     }
   ],
-  "fetched": "2026-06-27T12:26:19Z",
+  "fetched": "2026-07-11T11:50:51Z",
   "post_count": 0,
-  "agent_pulled": "2026-06-27"
+  "agent_pulled": "2026-07-04"
 }
