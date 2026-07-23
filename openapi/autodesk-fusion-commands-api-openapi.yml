@@ -1,0 +1,1740 @@
+openapi: 3.0.0
+info:
+  title: Construction.Account.Admin Account Management Commands API
+  version: '1.0'
+  contact:
+    name: Autodesk Plaform Services
+    url: https://aps.autodesk.com/
+    email: aps.help@autodesk.com
+  termsOfService: https://www.autodesk.com/company/legal-notices-trademarks/terms-of-service-autodesk360-web-services/forge-platform-web-services-api-terms-of-service
+  x-support: https://stackoverflow.com/questions/tagged/autodesk-platform-services
+  description: 'The Account Admin API automates creating and managing projects, assigning and managing project users, and managing member and partner company directories. You can also synchronize data with external systems.
+
+    '
+servers:
+- url: https://developer.api.autodesk.com
+security:
+- 2-legged: []
+- 3-legged: []
+tags:
+- name: Commands
+paths:
+  /data/v1/projects/{project_id}/commands:
+    parameters:
+    - $ref: '#/components/parameters/project_id'
+    post:
+      tags:
+      - Commands
+      operationId: executeCommand
+      description: "Executes the command that you specify in the request body. Commands enable you to perform general operations on multiple resources.\n\nFor example, you can check whether a user has permission to delete a collection of versions, items, and folders.\n\nThe command as well as the input data for the command are specified using the ``data`` object of the request body. \n\nFor more information about commands see the [Commands](/en/docs/data/v2/overview/commands/) section in the Developer's Guide.\n"
+      security:
+      - 2-legged:
+        - data:read
+        - data:create
+        - data:write
+      - 3-legged:
+        - data:read
+        - data:create
+        - data:write
+      parameters:
+      - $ref: '#/components/parameters/x-user-id'
+      responses:
+        '200':
+          description: 'The command was executed successfully.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Command'
+        '400':
+          $ref: '#/components/responses/400-general'
+        '403':
+          $ref: '#/components/responses/403-general'
+        '404':
+          $ref: '#/components/responses/404-general'
+      requestBody:
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/CommandPayload'
+        description: The request body's ``data`` object defines the command to execute and contains any required input data.
+      summary: Execute a Command
+components:
+  responses:
+    403-general:
+      description: The request was successfully validated but permission is not granted, or the application has not been allowed access. Do not try again unless you resolve permissions first.
+      content:
+        application/json:
+          schema:
+            type: object
+            x-examples:
+              Example 1:
+                jsonapi: {}
+                links: {}
+                data: []
+                meta:
+                  warnings:
+                  - Id: null
+                    HttpStatusCode: '403'
+                    ErrorCode: BIM360DM_ERROR
+                    Title: Unable to get hubs from BIM360DM APAC.
+                    Detail: You don't have permission to access this API
+                    AboutLink: null
+                    Source: null
+                    meta: null
+            properties:
+              jsonapi:
+                type: object
+                description: The JSON API object.
+              links:
+                type: object
+                description: An object intended to contain the URI of a resource. Empty in this case, because an error has occurred.
+              data:
+                type: array
+                description: An object intended to contain the return data. Empty in this case, because an error has occurred.
+                items:
+                  type: object
+              meta:
+                type: object
+                description: Contains information about the error that occurred.
+                properties:
+                  warnings:
+                    type: array
+                    description: An array of objects, where each element of the array represents a warning.
+                    items:
+                      type: object
+                      properties:
+                        Id:
+                          description: An ID assigned to the warning.
+                          nullable: true
+                        HttpStatusCode:
+                          type: string
+                          description: The HTTP status code returned in response to the request.
+                        ErrorCode:
+                          type: string
+                          description: A code that indicates what went wrong.
+                        Title:
+                          type: string
+                          description: A quick summary of the issue, at a glance.
+                        Detail:
+                          type: string
+                          description: A more comprehensive explanation of the issue, providing specific information and potential solutions, if any.
+                        AboutLink:
+                          description: A hyperlink to documentation about the issue.
+                          nullable: true
+                        Source:
+                          description: Information about the service that detected the issue.
+                          nullable: true
+                        meta:
+                          description: Additional information about the issue.
+                          nullable: true
+    404-general:
+      description: The specified resource was not found.
+      content:
+        application/json:
+          schema:
+            properties:
+              id:
+                type: string
+    400-general:
+      description: The request could not be understood by the server due to malformed syntax or missing request headers. The client SHOULD NOT repeat the request without modifications. The response body may give an indication of what is wrong with the request.
+      content:
+        application/json:
+          schema:
+            properties:
+              id:
+                type: string
+  schemas:
+    type_commandtype_ListRefs:
+      type: string
+      x-stoplight:
+        id: nr8yl9km15c8s
+      enum:
+      - commands:autodesk.core:ListRefs
+      description: The Type ID of the schema used for extending properties. Must be ``commands:autodesk.core:ListRefs`` for the ListRefs command.
+      title: ''
+    json_api_meta_link:
+      title: json_api_meta_link
+      x-stoplight:
+        id: 6c1450io6o3zx
+      type: object
+      description: Meta-information on links to this resource.
+      properties:
+        link:
+          $ref: '#/components/schemas/json_api_link'
+          x-stoplight:
+            id: haazb0d04arzm
+    type_commandtype_publishmodel:
+      type: string
+      x-stoplight:
+        id: 592celhicrm0j
+      enum:
+      - commands:autodesk.bim360:C4RModelPublish
+      description: The Type ID of the schema used for extending properties. Must be ``commands:autodesk.bim360:C4RModelPublish`` for the PublishModel command.
+      title: ''
+    type_commandtype_PublishWithoutLinks:
+      type: string
+      x-stoplight:
+        id: tkmblkn2zi5z0
+      enum:
+      - commands:autodesk.bim360:C4RPublishWithoutLinks
+      description: The Type ID of the schema used for extending properties. Must be ``commands:autodesk.bim360:C4RPublishWithoutLinks`` for the PublishWithoutLinks command.
+      title: ''
+    type_commandtype_CheckPermission:
+      type: string
+      x-stoplight:
+        id: 0yup2qfa5lihf
+      enum:
+      - commands:autodesk.core:CheckPermission
+      description: The Type ID of the schema used for extending properties. Must be ``commands:autodesk.core:CheckPermission`` for the CheckPermission command.
+      title: ''
+    type_entity:
+      type: string
+      enum:
+      - folders
+      - items
+      - versions
+      description: The type of the resource. Possible values are ``folders``, ``items``, ``versions``.
+    PublishModel:
+      type: object
+      x-stoplight:
+        id: qpahxdkrbaxti
+      x-examples:
+        Example 1:
+          data:
+            type: commands
+            id: d3bbe753-ae0a-450d-bbe3-cfd4648f0437
+            attributes:
+              status: committed
+              extension:
+                type: commands:autodesk.bim360:C4RModelPublish
+                version: 1.0.0
+          jsonapi:
+            version: '1.0'
+      description: The ``data`` object returned by the PublishModel command.
+      title: PublishModel Command
+      properties:
+        type:
+          $ref: '#/components/schemas/type_commands'
+        id:
+          type: string
+          description: A unique ID assigned to the process executing the command.
+        attributes:
+          type: object
+          description: 'Contains the properties of the response
+
+            to the PublishModel command.'
+          properties:
+            extension:
+              type: object
+              description: "An object that contains properties \nspecific to the PublishModel command,  \nextending the default properties of a command."
+              properties:
+                type:
+                  $ref: '#/components/schemas/type_commandtype_publishmodel'
+                version:
+                  type: string
+                  description: "The version of the schema. Always ``1.0.0`` \nfor the PublishModel command. "
+            status:
+              $ref: '#/components/schemas/command_execution_status'
+    web_view_link:
+      title: web_view_link
+      x-stoplight:
+        id: b0lyf514eksq4
+      type: object
+      description: An object containing a link that opens the resource in a browser.
+      properties:
+        href:
+          type: string
+          x-stoplight:
+            id: j0xj0hp05wo0l
+          description: The location (URL) of the resource the link points to.
+      required:
+      - href
+    type_commandtype_GetPublishModelJob:
+      type: string
+      x-stoplight:
+        id: cz7rxc7aalsu5
+      enum:
+      - commands:autodesk.bim360:C4RModelGetPublishJob
+      description: The Type ID of the schema used for extending properties. Must be ``commands:autodesk.bim360:C4RModelGetPublishJob`` for the GetPublishModelJob command.
+      title: ''
+    json_api_relationships_links_versions:
+      title: json_api_relationships_links_internal
+      x-stoplight:
+        id: da5pz40rvqocl
+      type: object
+      description: Information about the existing versions of the item.
+      properties:
+        links:
+          $ref: '#/components/schemas/json_api_links_related'
+          x-stoplight:
+            id: s7etnb8jkm02f
+      required:
+      - links
+    CheckPermissionPayload:
+      type: object
+      x-stoplight:
+        id: 422a773ceddf1
+      x-examples:
+        Example 1:
+          type: commands
+          attributes:
+            extension:
+              type: commands:autodesk.core:CheckPermission
+              version: 1.0.0
+              data:
+                requiredActions:
+                - download
+                - view
+                - write
+          relationships:
+            resources:
+              data:
+              - type: folders
+                id: urn:adsk.wipprod:dm.folder:hC6k4hndRWaeIVhIjvHu8w
+              - type: folders
+                id: urn:adsk.wipprod:dm.folder:iC6k4hndRW5eIVhIjvHu8n
+              - type: folders
+                id: urn:adsk.wipprod:dm.folder:jC6k4hndRW5eIVhIjvHu9x
+      title: CheckPermission Command
+      description: "An object that contains the input data required to execute the CheckPermission command.\n\nThe CheckPermission command checks if a user has permission to perform specified actions on specified resources.\nThe user’s identity is derived from the ``x-user-id`` header (in a 2-Legged call), or from the access token (in a 3-Legged call). \n\nSee the [Developer's Guide topic on the CheckPermission command](/en/docs/data/v2/developers_guide/commands/checkpermission/) for more information.\n"
+      properties:
+        type:
+          $ref: '#/components/schemas/type_commands'
+        attributes:
+          type: object
+          description: A container of the inputs for the command.
+          properties:
+            extension:
+              type: object
+              description: "An object that contains properties \nspecific to the CheckPermission command,  \nextending the default properties of a command."
+              properties:
+                type:
+                  $ref: '#/components/schemas/type_commandtype_CheckPermission'
+                version:
+                  type: string
+                  description: "The version of the schema. Must be ``1.0.0`` \nfor the CheckPermission command. "
+                data:
+                  type: object
+                  description: "Contains the properties specific to the \nCheckPermission command."
+                  properties:
+                    requiredActions:
+                      type: array
+                      description: "An array of keywords where each keyword \nis an action that permission must be checked\nfor. Possible values:\n\n- ``read`` - Download and view specified resource.\n- ``view`` - View specified resource without downloading.\n- ``download`` - Download and view specified resource.\n- ``collaborate`` - Add comments for the specified resource.\n- ``write`` - Write to the specified resource.\n- ``upload`` - Upload to the specified resource.\n- ``updateMetaData`` - Update metadata of the specified resource.\n- ``create`` - Write and upload to the specified resource.\n- ``delete`` - Delete the specified resource.\n- ``admin`` - Perform administrative operations on specified resource.\n- ``share``- Share the specified resource."
+                      items:
+                        type: string
+        relationships:
+          type: object
+          description: Contains a list of resources required for execution of the command.
+          properties:
+            resources:
+              type: object
+              description: 'Contains the list of resources
+
+                that permission must be checked for.'
+              properties:
+                data:
+                  type: array
+                  description: "An array of objects, where each object \nrepresents a resource. "
+                  items:
+                    type: object
+                    properties:
+                      type:
+                        $ref: '#/components/schemas/type_entity'
+                      id:
+                        type: string
+                        description: The URN of the resource to check.
+    base_attributes_extension_object_with_schema_link:
+      title: 'base_attributes_extension_object_with_schema_link:'
+      x-stoplight:
+        id: aj8zaihf7alzp
+      type: object
+      description: A container of additional properties that extends this resource.
+      properties:
+        type:
+          type: string
+          x-stoplight:
+            id: jdli2qhh88jq3
+          description: The Type ID of the schema that defines the structure of the ``extension.data`` object.
+        version:
+          type: string
+          x-stoplight:
+            id: x1l84lpe0ce01
+          description: The version of the schema that applies to the ``extension.data`` object.
+        schema:
+          type: object
+          x-stoplight:
+            id: el8fixpzd4k3a
+          description: A container for the hyperlink to the schema of the type.
+          required:
+          - href
+          properties:
+            href:
+              type: string
+              x-stoplight:
+                id: oh11qown58iob
+              description: A hypertext reference to the location of the referenced resource.
+        data:
+          type: object
+          x-stoplight:
+            id: 5h0r1ilaapxra
+          description: The object that contains the additional properties that extends this resource.
+          additionalProperties:
+            type: object
+            description: 'Key-value pairs that contain the name and data of additional properties.
+
+              '
+      required:
+      - type
+      - version
+      - schema
+    Command:
+      type: object
+      description: Commamd response
+      properties:
+        jsonapi:
+          $ref: '#/components/schemas/json_api_version'
+          x-stoplight:
+            id: u1z9qa2nxwbah
+        data:
+          x-stoplight:
+            id: jprem0an0kdj0
+          description: The ``data`` object that is returned will be one of the following, depending on the command that was executed.
+          oneOf:
+          - $ref: '#/components/schemas/CheckPermission'
+            x-stoplight:
+              id: 34h93kxobmo5c
+          - $ref: '#/components/schemas/PublishModel'
+            x-stoplight:
+              id: dv3pscfpo5igu
+          - $ref: '#/components/schemas/PublishWithoutLinks'
+            x-stoplight:
+              id: gyksyybvdyv1a
+          - $ref: '#/components/schemas/PublishModelJob'
+            x-stoplight:
+              id: alclrvbe4wlns
+          - $ref: '#/components/schemas/ListRefs'
+            x-stoplight:
+              id: mbmbxf6rur636
+          - $ref: '#/components/schemas/ListItems'
+            x-stoplight:
+              id: 567bnr2jj15ns
+          discriminator:
+            propertyName: attributes/extension/type
+            mapping:
+              commands:autodesk.core:CheckPermission: '#/components/schemas/CheckPermission'
+              commands:autodesk.bim360:C4RModelPublish: '#/components/schemas/PublishModel'
+              commands:autodesk.bim360:C4RPublishWithoutLinks: '#/components/schemas/PublishWithoutLinks'
+              commands:autodesk.bim360:C4RModelGetPublishJob: '#/components/schemas/PublishModelJob'
+              commands:autodesk.core:ListRefs: '#/components/schemas/ListRefs'
+              commands:autodesk.core:ListItems: '#/components/schemas/ListItems'
+    VersionData:
+      title: 'Version Data:'
+      description: A container of data describing a version.
+      x-stoplight:
+        id: eb2zg50zz7eul
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/type_version'
+        id:
+          type: string
+          minLength: 1
+          description: URN of the version object.
+        attributes:
+          $ref: '#/components/schemas/VersionAttributes'
+        relationships:
+          type: object
+          description: Contains information on other resources related to this resource.
+          required:
+          - item
+          - refs
+          - links
+          properties:
+            item:
+              type: object
+              description: Contains information about the item this is a version of.
+              properties:
+                links:
+                  $ref: '#/components/schemas/json_api_links_related'
+                  x-stoplight:
+                    id: fklud6hg20fwz
+                data:
+                  $ref: '#/components/schemas/json_api_type_id'
+                  x-stoplight:
+                    id: g661wq5zxnxxz
+            refs:
+              $ref: '#/components/schemas/json_api_relationships_links_refs'
+            links:
+              $ref: '#/components/schemas/json_api_relationships_links_links'
+            storage:
+              type: object
+              x-stoplight:
+                id: p77erscy2c106
+              description: Contains information about the storage location that contains the binary data of this version.
+              properties:
+                data:
+                  $ref: '#/components/schemas/json_api_type_id'
+                meta:
+                  $ref: '#/components/schemas/json_api_meta_link'
+            derivatives:
+              type: object
+              x-stoplight:
+                id: 1by3hohlaohio
+              description: Contains information you can use to retrieve the derivatives of this version.
+              properties:
+                data:
+                  $ref: '#/components/schemas/json_api_type_id'
+                meta:
+                  $ref: '#/components/schemas/json_api_meta_link'
+            thumbnails:
+              type: object
+              x-stoplight:
+                id: hrzlgcn3r896v
+              description: 'Contains the information required to retrieve thumbnails of this version from the Model Derivative service. '
+              properties:
+                data:
+                  $ref: '#/components/schemas/json_api_type_id'
+                meta:
+                  $ref: '#/components/schemas/json_api_meta_link'
+            downloadFormats:
+              type: object
+              x-stoplight:
+                id: r875g22qvyi3v
+              description: Contains the endpoint you can use to find out what formats the version can be downloaded as.
+              properties:
+                links:
+                  $ref: '#/components/schemas/json_api_links_related'
+                  x-stoplight:
+                    id: 41n0be6z8nbng
+        links:
+          $ref: '#/components/schemas/json_api_links_self_and_web_view'
+      required:
+      - type
+      - id
+      - attributes
+      - relationships
+    type_version:
+      type: string
+      x-stoplight:
+        id: f8e280dd63a5b
+      enum:
+      - versions
+      description: The type of the resource. Possible values are ``versions``.
+    type_item:
+      type: string
+      enum:
+      - items
+      description: The type of the resource. Possible values are ``items``.
+    MetaRefs:
+      description: Metadata on the resources referenced by this resource.
+      type: object
+      title: MetaRefs
+      properties:
+        refType:
+          $ref: '#/components/schemas/type_ref'
+        direction:
+          $ref: '#/components/schemas/metarefs_direction'
+        fromId:
+          type: string
+          x-stoplight:
+            id: u4hxp7i1mdfuh
+          description: The ID of the resource from where data flows.
+        fromType:
+          $ref: '#/components/schemas/type_entity'
+          x-stoplight:
+            id: e061oc1d2clmi
+        toId:
+          type: string
+          x-stoplight:
+            id: 4hwdw63giy88s
+          description: The ID of the resource to where the data flows.
+        toType:
+          $ref: '#/components/schemas/type_entity'
+          x-stoplight:
+            id: xnhp75ludslo9
+        extension:
+          $ref: '#/components/schemas/base_attributes_extension_object_with_schema_link'
+          x-stoplight:
+            id: wnoe4cjsepp56
+    json_api_link:
+      title: json_api_link
+      x-stoplight:
+        id: 0eyqmow1ie1is
+      type: object
+      description: An object containing the hyperlink to the referenced resource.
+      properties:
+        href:
+          type: string
+          x-stoplight:
+            id: d9k2el45bomh9
+          description: A hypertext reference to the location of the referenced resource.
+      required:
+      - href
+    json_api_links_related:
+      title: json_api_links_related
+      x-stoplight:
+        id: fgwxlu5412wa7
+      type: object
+      description: Contains the endpoint you can use to retrieve the related resources.
+      properties:
+        related:
+          type: object
+          x-stoplight:
+            id: o5ksk96io3pui
+          description: "An object containing the endpoint to retrieve \na list of related resources."
+          properties:
+            href:
+              type: string
+              x-stoplight:
+                id: n8345byjqrj4f
+              description: The URI of the endpoint that returns the related resources.
+    json_api_relationships_links_to_tip_version:
+      title: json_api_relationships_links_to_tip_version
+      x-stoplight:
+        id: qmmyfor4fmle9
+      type: object
+      description: Information about the latest version of the item.
+      properties:
+        links:
+          $ref: '#/components/schemas/json_api_links_related'
+          x-stoplight:
+            id: e35szkgp1o7b8
+        data:
+          $ref: '#/components/schemas/json_api_type_id'
+          x-stoplight:
+            id: zdowc6ik9vvcu
+    json_api_relationships_links_links:
+      type: object
+      required:
+      - links
+      description: Information on the link resources found in this resource.
+      properties:
+        links:
+          type: object
+          required:
+          - self
+          description: The object containing information on links to this resource.
+          properties:
+            self:
+              $ref: '#/components/schemas/json_api_link'
+    json_api_version:
+      title: json_api_version
+      x-stoplight:
+        id: wtcnivkdziwr7
+      type: object
+      description: The JSON API object.
+      properties:
+        version:
+          description: The version of JSON API. Will always be ``1.0``.
+          $ref: '#/components/schemas/json_api_version_value'
+      required:
+      - version
+    CommandPayload:
+      description: Command Payload
+      type: object
+      properties:
+        jsonapi:
+          $ref: '#/components/schemas/json_api_version'
+          x-stoplight:
+            id: 96m2c2hl7kv9e
+        data:
+          x-stoplight:
+            id: m8v239umu1y8b
+          oneOf:
+          - $ref: '#/components/schemas/CheckPermissionPayload'
+            x-stoplight:
+              id: il5xhl47n31aw
+          - $ref: '#/components/schemas/PublishModelPayload'
+            x-stoplight:
+              id: dv3pscfpo5igu
+          - $ref: '#/components/schemas/PublishWithoutLinksPayload'
+            x-stoplight:
+              id: gyksyybvdyv1a
+          - $ref: '#/components/schemas/PublishModelJobPayload'
+            x-stoplight:
+              id: bndi9i0mycesx
+          - $ref: '#/components/schemas/ListRefsPayload'
+            x-stoplight:
+              id: h4qn1w0kjjy4s
+          - $ref: '#/components/schemas/ListItemsPayload'
+            x-stoplight:
+              id: 34h93kxobmo5c
+          description: Pick one of the following data objects to capture the input data for the command you want to execute.
+    ListRefsPayload:
+      type: object
+      x-stoplight:
+        id: yldmhka0r8snp
+      title: ListRefs Command
+      description: 'An object that contains the input data required to execute the ListRefs command.
+
+
+        The ListRefs command retrieves the custom relationships between specified versions of items and other resources in the data domain service (folders, items, and versions). You can retrieve the relationships of up to 50 versions.'
+      properties:
+        type:
+          $ref: '#/components/schemas/type_commands'
+        attributes:
+          type: object
+          description: A container of the inputs for the command.
+          properties:
+            extension:
+              type: object
+              description: "An object that contains properties \nspecific to the ListRefs command,  \nextending the default properties of a command."
+              properties:
+                type:
+                  $ref: '#/components/schemas/type_commandtype_ListRefs'
+                version:
+                  type: string
+                  description: "The version of the schema. Must be ``1.0.0`` \nfor the ListRefs command. "
+        relationships:
+          type: object
+          description: Contains a list of resources required for execution of the command.
+          properties:
+            resources:
+              type: object
+              description: "Contains the list of versions \nto check. The list can contain up to\n50 versions."
+              properties:
+                data:
+                  type: array
+                  description: "An array of objects, where each object \nrepresents a version to check. "
+                  items:
+                    type: object
+                    properties:
+                      type:
+                        $ref: '#/components/schemas/type_version'
+                      id:
+                        type: string
+                        description: "The URN of the version to check. Use the \n[List all Versions of an Item](/en/docs/data/v2/reference/http/projects-project_id-items-item_id-versions-GET/) \noperation to verify the URN."
+    json_api_relationships_links_refs:
+      type: object
+      required:
+      - links
+      description: Information on other resources that have a custom relationship with this resource.
+      properties:
+        links:
+          type: object
+          required:
+          - self
+          - related
+          description: The object containing information on links of related resources that share a custom relationship with this resource.
+          properties:
+            self:
+              $ref: '#/components/schemas/json_api_link'
+            related:
+              $ref: '#/components/schemas/json_api_link'
+    metarefs_direction:
+      type: string
+      x-stoplight:
+        id: 506556039042a
+      enum:
+      - from
+      - to
+      description: 'Describes the direction of data flow in the relationship. Possible values are:
+
+
+        - ``to`` - Data flows from this resource to the related resource.
+
+        - ``from`` - Data flows from the related resource to this resource. '
+    PublishModelPayload:
+      type: object
+      x-stoplight:
+        id: bef2159153e21
+      x-examples:
+        Example 1:
+          jsonapi:
+            version: '1.0'
+          data:
+            type: commands
+            attributes:
+              extension:
+                type: commands:autodesk.bim360:C4RModelPublish
+                version: 1.0.0
+            relationships:
+              resources:
+                data:
+                - type: items
+                  id: urn:adsk.wip:dm.file:hC6k4hndRWaeIVhIjvHu8w
+      description: 'An object that contains the input required to execute the PublishModel command.
+
+
+        The PublishModel Command publishes the latest version of a Collaboration for Revit (C4R) model to BIM 360 Docs.  See the [Developer''s Guide topic on the PublishModel command](/en/docs/data/v2/developers_guide/commands/publishmodel/) for more information.
+
+        '
+      title: PublishModel Command
+      properties:
+        type:
+          $ref: '#/components/schemas/type_commands'
+        attributes:
+          type: object
+          description: A container of the inputs for the command.
+          properties:
+            extension:
+              type: object
+              description: "An object that contains properties \nspecific to the PublishModel command,  \nextending the default properties of a command."
+              properties:
+                type:
+                  $ref: '#/components/schemas/type_commandtype_publishmodel'
+                version:
+                  type: string
+                  description: "The version of the schema. Must be ``1.0.0`` \nfor the PublishModel command. "
+        relationships:
+          type: object
+          description: Contains a list of resources required for execution of the command.
+          properties:
+            resources:
+              type: object
+              description: Contains the list of resources to be published.
+              properties:
+                data:
+                  type: array
+                  description: "An array of objects where each object \nrepresents a resource that must be \npublished."
+                  items:
+                    type: object
+                    properties:
+                      type:
+                        $ref: '#/components/schemas/type_item'
+                      id:
+                        type: string
+                        description: "The URN of the resource. For information about \nfinding the URN, see the initial steps \nof the \n[Publish a C4R Model to BIM 360 Docs](/en/docs/data/v2/tutorials/publish-model/) \ntutorial."
+    version_extension_with_schema_link:
+      type: object
+      description: A container of additional properties that extends the default properties of a version.
+      properties:
+        type:
+          type: string
+          description: The Type ID of the schema that defines the structure of the ``extension.data`` object.
+        version:
+          type: string
+          description: The version of the schema that applies to the ``extension.data`` object.
+        schema:
+          $ref: '#/components/schemas/json_api_link'
+        data:
+          type: object
+          description: The object that contains the additional properties, which makes this resource extensible.
+          additionalProperties:
+            type: object
+            description: 'Key-value pairs that contain the name and data of additional properties.
+
+              '
+      required:
+      - type
+      - version
+      - schema
+      title: ''
+    item_extension_with_schema_link:
+      type: object
+      x-stoplight:
+        id: 7vkthmto6jc8p
+      description: A container of additional properties that extends the default properties of this resource.
+      properties:
+        type:
+          type: string
+          description: The Type ID of the schema that defines the structure of the ``extension.data`` object.
+        version:
+          type: string
+          description: The version of the schema that applies to the ``extension.data`` object.
+        schema:
+          $ref: '#/components/schemas/json_api_link'
+        data:
+          type: object
+          description: The object that contains the additional properties that extends this resource.
+          additionalProperties:
+            type: object
+            description: 'Key-value pairs that contain the name and data of additional properties.
+
+              '
+      required:
+      - type
+      - version
+      - schema
+    PublishModelJob:
+      type: object
+      x-stoplight:
+        id: zffth6sotwyhw
+      x-examples:
+        Example 1:
+          type: commands
+          id: d3bbe753-ae0a-450d-bbe3-cfd4648f0437
+          attributes:
+            status: complete
+            extension:
+              type: commands:autodesk.bim360:C4RModelGetPublishJob
+              version: 1.0.0
+      title: GetPublishModelJob Command
+      description: 'The ``data`` object returned by the GetPublishModelJob command, if the model needs publishing. If the model is already published, the ``data`` object will bed ``null``. '
+      properties:
+        type:
+          $ref: '#/components/schemas/type_commands'
+        id:
+          type: string
+          description: A unique ID assigned to the process executing the command.
+        attributes:
+          type: object
+          description: 'Contains the properties of the response
+
+            to the GetPublishModelJob command.'
+          properties:
+            status:
+              $ref: '#/components/schemas/command_execution_status'
+            extension:
+              type: object
+              description: "An object that contains properties \nspecific to the GetPublishModelJob command,  \nextending the default properties of a command."
+              properties:
+                type:
+                  $ref: '#/components/schemas/type_commandtype_publishmodel'
+                version:
+                  type: string
+                  description: "The version of the schema. Must be ``1.0.0`` \nfor the GetPublishModelJob command. "
+    command_execution_status:
+      title: command_execution_status
+      x-stoplight:
+        id: xklprqge1hu7k
+      type: string
+      enum:
+      - accepted
+      - committed
+      - complete
+      - failed
+      description: "The current stage of the command execution \nprocess. Possible values:\n\n- ``accepted`` - The command is ready to be executed. \n- ``committed`` - The command is currently being executed.\n- ``complete`` - The command was successfully executed.\n- ``failed`` - There was an error and command execution was stopped prematurely."
+    json_api_links_self_and_web_view:
+      title: json_api_links_self_and_web_view
+      x-stoplight:
+        id: go4472ydw5y6e
+      type: object
+      description: Information on links to this resource.
+      required:
+      - self
+      properties:
+        self:
+          $ref: '#/components/schemas/json_api_link'
+        webView:
+          $ref: '#/components/schemas/web_view_link'
+    PublishWithoutLinksPayload:
+      type: object
+      x-stoplight:
+        id: 7r6evucirhy56
+      x-examples:
+        Example 1:
+          jsonapi:
+            version: '1.0'
+          data:
+            type: commands
+            attributes:
+              extension:
+                type: commands:autodesk.bim360:C4RModelPublish
+                version: 1.0.0
+            relationships:
+              resources:
+                data:
+                - type: items
+                  id: urn:adsk.wip:dm.file:hC6k4hndRWaeIVhIjvHu8w
+      description: 'An object that contains the input data to execute the PublishWithoutLinks command.
+
+
+        The PublishWithoutLinks command publishes the latest version of a Collaboration for Revit (C4R) model without the links it contains to BIM 360 Docs. See the [Developer''s Guide topic on the PublishWithoutLinks command](/en/docs/data/v2/developers_guide/commands/publishwithoutlinks/) for more information.
+
+        '
+      title: PublishWithoutLinks Command
+      properties:
+        type:
+          $ref: '#/components/schemas/type_commands'
+        attributes:
+          type: object
+          description: A container of the inputs for the command.
+          properties:
+            extension:
+              type: object
+              description: "An object that contains properties \nspecific to the PublishWithoutLinks command,  \nextending the default properties of a command."
+              properties:
+                type:
+                  $ref: '#/components/schemas/type_commandtype_PublishWithoutLinks'
+                version:
+                  type: string
+                  description: "The version of the schema. Must be ``1.0.0`` \nfor the PublishWithoutLinks command. "
+        relationships:
+          type: object
+          description: Contains a list of resources required for execution of the command.
+          properties:
+            resources:
+              type: object
+              description: Contains the list of resources to be published.
+              properties:
+                data:
+                  type: array
+                  description: "An array of objects where each object \nrepresents a resource that must be \npublished."
+                  items:
+                    type: object
+                    properties:
+                      type:
+                        $ref: '#/components/schemas/type_item'
+                      id:
+                        type: string
+                        description: "The URN of the resource. For information about  \nfinding the URN, see the initial steps \nof the \n[Publish a C4R Model to BIM 360 Docs](/en/docs/data/v2/tutorials/publish-model/) \ntutorial."
+    json_api_relationships_links_folder_parent:
+      title: json_api_relationships_links_folder_parent
+      x-stoplight:
+        id: qmmyfor4fmle9
+      type: object
+      description: Information on the parent of this resource in the folder hierarchy.
+      properties:
+        links:
+          $ref: '#/components/schemas/json_api_links_related'
+          x-stoplight:
+            id: e35szkgp1o7b8
+        data:
+          $ref: '#/components/schemas/json_api_type_id'
+          x-stoplight:
+            id: zdowc6ik9vvcu
+    ItemAttributes:
+      description: Properties of an item.
+      title: 'Item Attributes:'
+      type: object
+      required:
+      - displayName
+      - createTime
+      - createUserId
+      - createUserName
+      - lastModifiedTime
+      - lastModifiedUserId
+      - lastModifiedUserName
+      - extension
+      properties:
+        displayName:
+          type: string
+          minLength: 1
+          description: "A human friendly name to identify the item. \nNote that for BIM 360 projects, this attribute is reserved for future releases and should not be used. Use a version's ``attributes.name`` for the file name."
+        createTime:
+          type: string
+          format: date-time
+          description: The time that the resource was created at.
+        createUserId:
+          type: string
+          minLength: 1
+          description: The ID of the user that created the version.
+        createUserName:
+          type: string
+          minLength: 1
+          description: The user name of the user that created the version.
+        lastModifiedTime:
+          type: string
+          format: date-time
+          description: The time that the version was last modified.
+        lastModifiedUserId:
+          type: string
+          minLength: 1
+          description: The ID of the user that last modified the version.
+        lastModifiedUserName:
+          type: string
+          minLength: 1
+          description: The user name of the user that last modified the version.
+        hidden:
+          type: boolean
+          description: "``true``: The file has been deleted. \n\n``false``: The file has not been deleted.\n"
+        reserved:
+          type: boolean
+          description: "``true``: The file is locked.\n\n``false`` The file is not locked. \n\n**Note:** You can lock BIM 360 Project Files folder files and A360 files, but you cannot lock BIM 360 Plans Folder files.\n"
+        reservedTime:
+          type: string
+          format: date-time
+          description: 'The time the item was reserved in the following format: ``YYYY-MM-DDThh:mm:ss.sz``.'
+        reservedUserId:
+          type: string
+          description: The unique identifier of the user who reserved the item.
+        reservedUserName:
+          type: string
+          description: The name of the user who reserved the item.
+        extension:
+          $ref: '#/components/schemas/item_extension_with_schema_link'
+        pathInProject:
+          type: string
+          x-stoplight:
+            id: weoan682ts8ft
+          description: The relative path of the item starting from project’s root folder.
+    json_api_version_value:
+      description: The version of JSON API. Will always be ``1.0``.
+      type: string
+      enum:
+      - '1.0'
+    type_commandtype_ListItems:
+      type: string
+      x-stoplight:
+        id: mln4sd1awtdwu
+      enum:
+      - commands:autodesk.core:ListItems
+      description: The Type ID of the schema used for extending properties. Must be ``commands:autodesk.core:ListItems`` for the ListItems command.
+      title: ''
+    CheckPermission:
+      type: object
+      x-stoplight:
+        id: 800c4853f77b4
+      x-examples:
+        Example 1:
+          type: commands
+          id: d3bbe753-ae0a-450d-bbe3-cfd4648f0437
+          attributes:
+            extension:
+              data:
+                permissions:
+                - type: folders
+                  id: urn:adsk.wipprod:dm.folder:hC6k4hndRWaeIVhIjvHu8w
+                  details:
+                    create: true
+                    download: true
+                    view: true
+                  permission: true
+                - type: folders
+                  id: urn:adsk.wipprod:dm.folder:iC6k4hndRW5eIVhIjvHu8n
+                  details:
+                    create: false
+                    download: true
+                    view: true
+                  permission: false
+                - type: folders
+                  id: urn:adsk.wipprod:dm.folder:jC6k4hndRW5eIVhIjvHu9x
+                  details:
+                    create: false
+                    download: false
+                    view: false
+                  permission: false
+                requiredActions:
+                - create
+                - download
+                - view
+              version: 1.0.0
+              type: commands:autodesk.core:CheckPermission
+              schema:
+                href: https://developer.api.autodesk.com/schema/v1/versions/commands:autodesk.core:CheckPermission-1.0.0
+          relationships:
+            resources:
+              data:
+              - type: folders
+                id: urn:adsk.wipprod:dm.folder:hC6k4hndRWaeIVhIjvHu8w
+              - type: folders
+                id: urn:adsk.wipprod:dm.folder:iC6k4hndRW5eIVhIjvHu8n
+              - type: folders
+                id: urn:adsk.wipprod:dm.folder:jC6k4hndRW5eIVhIjvHu9x
+      description: The ``data`` object returned by the CheckPermission command.
+      title: CheckPermission Command
+      properties:
+        type:
+          $ref: '#/components/schemas/type_commands'
+        id:
+          type: string
+          description: A unique ID assigned to the process executing the command.
+        attributes:
+          type: object
+          description: 'Contains the properties of the response
+
+            to the CheckPermission command.'
+          properties:
+            extension:
+              type: object
+              description: "An object that contains properties \nspecific to the CheckPermissions command,  \nextending the default properties of a command."
+              properties:
+                type:
+                  $ref: '#/components/schemas/type_commandtype_CheckPermission'
+                version:
+                  type: string
+                  description: "The version of the schema. Must be ``1.0.0`` \nfor the CheckPermission command. "
+                schema:
+                  type: object
+                  description: Contains the location of the schema.
+                  properties:
+                    href:
+                      type: string
+                      description: The hypertext reference to the location of the schema.
+                data:
+                  type: object
+                  description: 'A container of the results of the resources
+
+                    that were checked for permission.'
+                  properties:
+                    permissions:
+                      type: array
+                      description: "An array of objects, where each object \nrepresents a folder, item, or version that \npermission was checked for."
+                      items:
+                        type: object
+                        properties:
+                          type:
+                            $ref: '#/components/schemas/type_entity'
+                          id:
+                            type: string
+                            description: The URN of the resource.
+                          details:
+                            type: object
+                            description: "An object containing key value pairs, where \nthe key represents the type of permission \nthat was checked and the value is ``true`` \nif the user has permission."
+                            properties:
+                              create:
+                                type: boolean
+                              download:
+                                type: boolean
+                              view:
+                                type: boolean
+                          permission:
+                            type: boolean
+                            description: '``true`` - The user is permitted to perform all the actions checked for.
+
+
+                              ``false`` - The user is not permitted to perform at least one of the actions checked for.'
+                    requiredActions:
+                      type: array
+                      description: "An array of keywords where each keyword \nis an action that permission was checked\nfor. Possible values:\n\n- ``read`` - Download and view specified resource.\n- ``view`` - View specified resource without downloading.\n- ``download`` - Download and view specified resource.\n- ``collaborate`` - Add comments for the specified resource.\n- ``write`` - Write to the specified resource.\n- ``upload`` - Upload to the specified resource.\n- ``updateMetaData`` - Update metadata of the specified resource.\n- ``create`` - Write and upload to the specified resource.\n- ``delete`` - Delete the specified resource.\n- ``admin`` - Perform administrative operations on specified resource.\n- ``share``- Share the specified resource."
+                      items:
+                        type: string
+        relationships:
+          type: object
+          description: "Contains the list of resources checked for \npermission."
+          properties:
+            resources:
+              type: object
+              description: "Contains the list of resources checked for \npermission."
+              properties:
+                data:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      type:
+                        $ref: '#/components/schemas/type_entity'
+                      id:
+                        type: string
+                        description: The URN of the resource.
+    type_ref:
+      type: string
+      enum:
+      - derived
+      - dependencies
+      - auxiliary
+      - xrefs
+      - includes
+      description: The type of the resource. Possible values are ``derived``, ``dependencies``, ``auxiliary``, ``xrefs``, and ``includes``.
+    ListItems:
+      type: object
+      x-stoplight:
+        id: zax9zrof8wpdw
+      description: The ``data`` object returned by the ListItems command.
+      title: ListItems Command
+      properties:
+        type:
+          $ref: '#/components/schemas/type_commands'
+        id:
+          type: string
+          description: A unique ID assigned to the process executing the command.
+        attributes:
+          type: object
+          description: 'Contains the properties of the response
+
+            to the ListItems command.'
+          properties:
+            status:
+              $ref: '#/components/schemas/command_execution_status'
+              x-stoplight:
+                id: vmeuk1k3adj1e
+            extension:
+              type: object
+              description: "An object that contains properties \nspecific to the ListItems command,  \nextending the default properties of a command."
+              properties:
+                type:
+                  $ref: '#/components/schemas/type_commandtype_ListItems'
+                version:
+                  type: string
+                  description: "The version of the schema. Must be ``1.0.0`` \nfor the ListItems command. "
+        relationships:
+          type: object
+          description: "Contains the list of items that were \nchecked. "
+          properties:
+            resources:
+              type: object
+              description: "Contains the list of items that were \nchecked. "
+              properties:
+                data:
+                  type: array
+                  description: "An array of objects, where each object \nrepresents a item that was checked. "
+                  items:
+                    type: object
+                    properties:
+                      type:
+                        $ref: '#/components/schemas/type_item'
+                      id:
+                        type: string
+                        description: The URN of the item.
+                      meta:
+                        $ref: '#/components/schemas/ItemData'
+                        x-stoplight:
+                          id: pqzkd03jixlq1
+        included:
+          type: array
+          x-stoplight:
+            id: ec89t5hcbgudc
+          description: "An array of objects, which contains a single \nobject. The object represents the tip version \nof the item. "
+          items:
+            $ref: '#/components/schemas/VersionData'
+            x-stoplight:
+              id: tyrs780ae46um
+    VersionAttributes:
+      description: The properties of a version.
+      type: object
+      title: 'Version Attributes:'
+      required:
+      - name
+      - displayName
+      - versionNumber
+      - createTime
+      - createUserId
+      - createUserName
+      - lastModifiedTime
+      - lastModifiedUserId
+      - lastModifiedUserName
+      - extension
+      properties:
+        name:
+          type: string
+          minLength: 1
+          description: The file name to be used when synced to local disk.
+        displayName:
+          type: string
+          minLength: 1
+          description: A human friendly name to identify the version. Note that for BIM 360 projects, this field is reserved for future releases and should not be used. Use a version's ``attributes.name`` for the file name.
+        mimeType:
+          type: string
+          minLength: 1
+          description: The MIME type of the content of the version.
+        versionNumber:
+          type: integer
+          format: int32
+          description: Version number of this versioned file.
+        fileType:
+          type: string
+          x-stoplight:
+            id: yq6z1hqtgy95z
+          description: File type, only present if this version represents a file.
+        storageSize:
+          type: integer
+          x-stoplight:
+            id: ggffb602xjxgs
+            explicitProperties:
+            - type
+            - format
+            - description
+          format: int64
+          description: File size in bytes, only present if this version represents a file.
+        createTime:
+          type: string
+          format: date-time
+          description: The time that the resource was created at.
+        createUserId:
+          type: string
+          minLength: 1
+          description: The ID of the user that created the version.
+        createUserName:
+          type: string
+          minLength: 1
+          description: The user name of the user that created the version.
+        lastModifiedTime:
+          type: string
+          format: date-time
+          description: The time that the version was last modified.
+        lastModifiedUserId:
+          type: string
+          minLength: 1
+          description: The ID of the user that last modified the version.
+        lastModifiedUserName:
+          type: string
+          minLength: 1
+          description: The user name of the user that last modified the version.
+        extension:
+          $ref: '#/components/schemas/version_extension_with_schema_link'
+    json_api_type_id:
+      title: json_api_type_id
+      x-stoplight:
+        id: vj150c8bxpc9d
+      type: object
+      description: An object containing the ``id`` and ``type`` properties of a resource.
+      properties:
+        id:
+          type: string
+          description: The URN of the resource.
+        type:
+          type: string
+          x-stoplight:
+            id: j3iiuzs5pdley
+          description: The type of the resource.
+    type_commands:
+      type: string
+      x-stoplight:
+        id: zxlnrf71ucrs0
+      enum:
+      - commands
+      description: The type of this resource. Possible values are ``commands``.
+      title: ''
+    ListItemsPayload:
+      type: object
+      x-stoplight:
+        id: 62f5885084630
+      x-examples:
+        Example 1:
+          type: commands
+          attributes:
+            extension:
+              type: commands:autodesk.core:ListItems
+              version: 1.1.0
+              data:
+                includePathInProject: true
+          relationships:
+            resources:
+              data:
+              - type: items
+                id: urn:adsk.wipprod:dm.lineage:b909RzMKR4mhc3O7UBY_8g
+      description: 'An object that contains the input data required to execute the ListItems command.
+
+
+        The ListItems command retrieves metadata for up to 50 specified items. For example, an item name, or the date it was created. It also returns the tip (latest) version of the items.'
+      title: ListItems Command
+      properties:
+        type:
+          $ref: '#/components/schemas/type_commands'
+        attributes:
+          type: object
+          description: A container of the inputs for the command.
+          properties:
+            extension:
+              type: object
+              description: "An object that contains properties \nspecific to the ListItems command,  \nextending the default properties of a command."
+              properties:
+                type:
+                  $ref: '#/components/schemas/type_commandtype_ListItems'
+                version:
+                  type: string
+                  description: "The version of the schema. Must be ``1.0.0`` \nfor the ListItems command. "
+                data:
+                  type: object
+                  description: "Contains the custom properties specific to the \nListItems command."
+                  properties:
+                    includePathInProject:
+                      type: boolean
+                      description: "Specify whether to return the \n``pathInProject`` attribute in response \nfor BIM 360 Docs projects. \n``pathInProject`` is the path to \nthe item relative to the project’s root folder.\n\n- ``true``: Response will contain the ``pathInProject`` attribute for BIM 360 Docs projects.\n- ``false``: (Default) response will not contain the ``pathInProject`` attribute for BIM 360 Docs projects.\n\nSetting this parameter to ``true`` on a \nnon-BIM 360 Docs project results in an error."
+        relationships:
+          type: object
+          description: Contains a list of resources required for execution of the command.
+          properties:
+            resources:
+              type: object
+              description: "Contains the list of items \nto check. The list can contain up to\n50 versions."
+              properties:
+                data:
+                  type: array
+                  description: "An array of objects, where each object \nrepresents an item to check. "
+                  items:
+                    type: object
+                    properties:
+                      type:
+                        $ref: '#/components/schemas/type_item'
+                      id:
+                        type: string
+                        description: "The URN of the item to check. Use the  \n[Get an Item](/en/docs/data/v2/reference/http/projects-project_id-items-item_id-GET/) \noperation to verify the URN."
+    PublishWithoutLinks:
+      type: object
+      x-stoplight:
+        id: f3e99gnqzuv9s
+      x-examples:
+        Example 1:
+          data:
+            type: commands
+            id: d3bbe753-ae0a-450d-bbe3-cfd4648f0437
+            attributes:
+              status: committed
+              extension:
+                type: commands:autodesk.bim360:C4RModelPublish
+                version: 1.0.0
+          jsonapi:
+            version: '1.0'
+      description: The ``data`` object returned by the PublishWithoutLinks command.
+      title: PublishWithoutLinks Command
+      properties:
+        type:
+          $ref: '#/components/schemas/type_commands'
+        id:
+          type: string
+          description: A unique ID assigned to the process executing the command.
+        attributes:
+          type: object
+          description: 'Contains the properties of the response
+
+            to the PublishWithoutLinks command.'
+          properties:
+            extension:
+              type: object
+              description: "An object that contains properties \nspecific to the PublishWithoutLinks command,  \nextending the default properties of a command."
+              properties:
+                type:
+                  $ref: '#/components/schemas/type_commandtype_PublishWithoutLinks'
+                version:
+                  type: string
+                  description: "The version of the schema. Always ``1.0.0`` \nfor the PublishModel command. "
+            status:
+              $ref: '#/components/schemas/command_execution_status'
+    PublishModelJobPayload:
+      type: object
+      x-stoplight:
+        id: lx1hfwyhyg160
+      x-examples:
+        Example 1:
+          type: commands
+          attributes:
+            extension:
+              type: commands:autodesk.core:ListItems
+              version: 1.1.0
+              data:
+                includePathInProject: true
+          relationships:
+            resources:
+              data:
+              - type: items
+                id: urn:adsk.wipprod:dm.lineage:b909RzMKR4mhc3O7UBY_8g
+      description: 'An object that contains the input data required to execute the GetPublishModelJob command.
+
+
+        The ListRefs verifies whether a Collaboration for Revit (C4R) model needs to be published to BIM 360 Docs. For more information, see the [GetPublishModelJob topic in the overview section](/en/docs/data/v2/developers_guide/commands/getpublishmodeljob).'
+      title: GetPublishModelJob Command
+      properties:
+        type:
+          $ref: '#/components/schemas/type_commands'
+        id:
+          type: string
+          x-stoplight:
+            id: fgnkyol96qhpv
+          description: A unique ID assigned to the process executing the command.
+        attributes:
+          type: object
+          description: A container of the inputs for the command.
+          properties:
+            extension:
+              type: object
+              description: "An object that contains properties \nspecific to the GetPublishModelJob command,  \nextending the default properties of a command."
+              properties:
+                type:
+                  $ref: '#/components/schemas/type_commandtype_GetPublishModelJob'
+                version:
+                  type: string
+                  description: "The version of the schema. Must be ``1.0.0`` \nfor the GetPublishModelJob command. "
+        relationships:
+          type: object
+          description: Contains a list of resources required for execution of the command.
+          properties:
+            resources:
+              type: object
+              description: Contains the list of items to check.
+              properties:
+                data:
+                  type: array
+                  description: "An array of objects, where each object \nrepresents an item to check. "
+                  items:
+                    type: object
+                    properties:
+                      type:
+                        $ref: '#/components/schemas/type_item'
+                      id:
+                        type: string
+                        description: "The URN of the item to check. Use the \n[Get an Item](/en/docs/data/v2/reference/http/projects-project_id-items-item_id-GET/) \noperation to verify the URN."
+    ItemData:
+      title: 'Item Data:'
+      x-stoplight:
+        id: 9jpoyxqpibzmx
+      type: object
+      description: A container of data describing an item.
+      properties:
+        type:
+          $ref: '#/components/schemas/type_item'
+        id:
+          type: string
+          minLength: 1
+          description: The unique identifier of the item.
+        attributes:
+          $ref: '#/components/schemas/ItemAttributes'
+        relationships:
+          type: object
+          description: Contains links to resources that are directly related to this item.
+          required:
+          - parent
+          - tip
+          - versions
+          - refs
+          - links
+          properties:
+            parent:
+              $ref: '#/components/schemas/json_api_relationships_links_folder_parent'
+            tip:
+              $ref: '#/components/schemas/json_api_relationships_links_to_tip_version'
+            versions:
+              $ref: '#/components/schemas/json_api_relationships_links_versions'
+            refs:
+              $ref: '#/components/schemas/json_api_relationships_links_refs'
+            links:
+              $ref: '#/components/schemas/json_api_relationships_links_links'
+        links:
+          $ref: '#/components/schemas/json_api_links_self_and_web_view'
+      required:
+      - type
+      - id
+      - attributes
+      - relationships
+      - links
+    ListRefs:
+      type: object
+      x-stoplight:
+        id: osv16gf5xx585
+      x-examples:
+        Example 1:
+          type: commands
+          id: d3bbe753-ae0a-450d-bbe3-cfd4648f0437
+          attributes:
+            extension:
+              data:
+                permissions:
+                - type: folders
+                  id: urn:adsk.wipprod:dm.folder:hC6k4hndRWaeIVhIjvHu8w
+                  details:
+                    create: true
+                    download: true
+                    view: true
+                  permission: true
+                - type: folders
+                  id: urn:adsk.wipprod:dm.folder:iC6k4hndRW5eIVhIjvHu8n
+                  details:
+                    create: false
+                    download: true
+                    view: true
+                  permission: false
+                - type: folders
+                  id: urn:adsk.wipprod:dm.folder:jC6k4hndRW5eIVhIjvHu9x
+                  details:
+                    create: false
+                    download: false
+                    view: false
+                  permission: false
+                requiredActions:
+                - create
+                - download
+                - view
+              version: 1.0.0
+              type: commands:autodesk.core:CheckPermission
+              schema:
+                href: https://developer.api.autodesk.com/schema/v1/versions/commands:autodesk.core:CheckPermission-1.0.0
+          relationships:
+            resources:
+              data:
+              - type: folders
+                id: urn:adsk.wipprod:dm.folder:hC6k4hndRWaeIVhIjvHu8w
+              - type: folders
+                id: urn:adsk.wipprod:dm.folder:iC6k4hndRW5eIVhIjvHu8n
+              - type: folders
+                id: urn:adsk.wipprod:dm.folder:jC6k4hndRW5eIVhIjvHu9x
+      description: The ``data`` object returned by the ListRefs command.
+      title: ListRefs Command
+      properties:
+        type:
+          $ref: '#/components/schemas/type_commands'
+        id:
+          type: string
+          description: A unique ID assigned to the process executing the command.
+        attributes:
+          type: object
+          description: 'Contains the properties of the response
+
+            to the ListRefs command.'
+          properties:
+            status:
+              $ref: '#/components/schemas/command_execution_status'
+              x-stoplight:
+                id: a81ncl7rmmx75
+            extension:
+              type: object
+              description: "An object that contains properties \nspecific to the ListRefs command,  \nextending the default properties of a command."
+              properties:
+                type:
+                  $ref: '#/components/schemas/type_commandtype_ListRefs'
+                version:
+                  type: string
+                  description: "The version of the schema. Must be ``1.0.0`` \nfor the ListRefs command. "
+        relationships:
+          type: object
+          description: "Contains the list of versions that were \nchecked. "
+          properties:
+            resources:
+              type: object
+              description: "Contains the list of versions that were \nchecked. "
+              properties:
+                data:
+                  type: array
+                  description: "An array of objects, where each object \nrepresents a version that was checked. "
+                  items:
+                    type: object
+                    properties:
+                      type:
+                        $ref: '#/components/schemas/type_version'
+                      id:
+                        type: string
+                        description: The URN of the version.
+                      meta:
+                        $ref: '#/components/schemas/MetaRefs'
+                        x-stoplight:
+                          id: pqzkd03jixlq1
+        included:
+          type: array
+          x-stoplight:
+            id: ec89t5hcbgudc
+          description: "An array of objects, where each object \nrepresents a referenced resource."
+          items:
+            x-stoplight:
+              id: tyrs780ae46um
+            oneOf:
+            - $ref: '#/components/schemas/ItemData'
+            - $ref: '#/components/schemas/VersionData'
+              x-stoplight:
+                id: rvp2eydjhj628
+            discriminator:
+              propertyName: type
+              mapping:
+                items: '#/components/schemas/ItemData'
+                versions: '#/components/schemas/VersionData'
+  parameters:
+    x-user-id:
+      name: x-user-id
+      in: header
+      required: false
+      schema:
+        type: string
+      description: In a two-legged authentication context, an app has access to all users specified by the administrator in the SaaS integrations UI. By providing this header, the API call will be limited to act only on behalf of the specified user.
+    project_id:
+      name: project_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: "The unique identifier of a project. \n\nFor BIM 360 Docs and ACC Docs, a hub ID corresponds to an Account ID. To convert a BIM 360 or ACC Account ID to a hub ID, prefix the Account ID with ``b.``. For example, an Account ID of ```c8b0c73d-3ae9``` translates to a hub ID of ``b.c8b0c73d-3ae9``.\n\nSimilarly, to convert an ACC or BIM 360 project ID to a Data Management project ID prefix the ACC or BIM 360 project ID with ``b.``. For example, a project ID of ``c8b0c73d-3ae9`` translates to a project ID of ``b.c8b0c73d-3ae9``.\n"
+  securitySchemes:
+    2-legged:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+    3-legged-implicit:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: ''
+          refreshUrl: ''
+          scopes: {}
+    3-legged:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: ''
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+x-stoplight:
+  id: zm6m3b30rcbon

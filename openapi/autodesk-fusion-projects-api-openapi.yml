@@ -1,0 +1,3356 @@
+openapi: 3.0.0
+info:
+  title: Construction.Account.Admin Account Management Projects API
+  version: '1.0'
+  contact:
+    name: Autodesk Plaform Services
+    url: https://aps.autodesk.com/
+    email: aps.help@autodesk.com
+  termsOfService: https://www.autodesk.com/company/legal-notices-trademarks/terms-of-service-autodesk360-web-services/forge-platform-web-services-api-terms-of-service
+  x-support: https://stackoverflow.com/questions/tagged/autodesk-platform-services
+  description: 'The Account Admin API automates creating and managing projects, assigning and managing project users, and managing member and partner company directories. You can also synchronize data with external systems.
+
+    '
+servers:
+- url: https://developer.api.autodesk.com
+security:
+- 2-legged: []
+- 3-legged: []
+tags:
+- name: Projects
+paths:
+  /construction/admin/v1/accounts/{accountId}/projects:
+    parameters:
+    - schema:
+        type: string
+      name: accountId
+      in: path
+      required: true
+      description: The ID of the ACC account that contains the project being created or the projects being retrieved. This corresponds to the hub ID in the Data Management API. To convert a hub ID into an account ID, remove the “b.” prefix. For example, a hub ID of b.c8b0c73d-3ae9 translates to an account ID of c8b0c73d-3ae9.
+    get:
+      summary: Get Project in account
+      responses:
+        '200':
+          description: A list of requested projects.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectsPage'
+        '400':
+          description: The request could not be understood by the server due to malformed syntax.
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Resource Not Found
+        '406':
+          description: Not Acceptable
+        '410':
+          description: Access to the target resource is no longer available.
+        '429':
+          description: User has sent too many requests in a given amount of time.
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Service Unavailable
+      operationId: getProjects
+      description: Retrieves a list of the projects in the specified account.
+      parameters:
+      - schema:
+          type: string
+        in: header
+        name: Accept-Language
+        description: This header is not currently supported in the Account Admin API.
+      - schema:
+          $ref: '#/components/schemas/Region'
+        in: header
+        name: Region
+        description: 'The region where the bucket resides. Acceptable values: US, EMEA, AUS, CAN, DEU, IND, JPN, GBR.'
+      - schema:
+          type: string
+        in: header
+        name: User-Id
+        description: Note that this header is not relevant for Account Admin GET endpoints. The ID of a user on whose behalf your API request is acting. Required if you’re using a 2-legged authentication context, which must be 2-legged OAuth2 security with user impersonation.  Your app has access to all users specified by the administrator in the SaaS integrations UI. Provide this header value to identify the user to be affected by the request.  You can use either the user’s ACC ID (id), or their Autodesk ID (autodeskId).
+      - schema:
+          $ref: '#/components/schemas/fields_internal'
+        in: query
+        name: fields
+        description: 'A comma-separated list of the project fields to include in the response. Default value: all fields.'
+      - schema:
+          $ref: '#/components/schemas/filterClassification_internal'
+        in: query
+        name: filter[classification]
+        description: 'A list of the classifications of projects to include in the response. Possible values: production, template, component, sample.'
+      - schema:
+          $ref: '#/components/schemas/filterPlatform_internal'
+        in: query
+        name: filter[platform]
+        description: 'Filter resource by platform. Possible values: acc and bim360.'
+      - schema:
+          $ref: '#/components/schemas/products_internal'
+        in: query
+        name: filter[products]
+        description: A comma-separated list of the products that the returned projects must use. Only projects that use one or more of the listed products are returned.
+      - schema:
+          type: string
+        in: query
+        name: filter[name]
+        description: 'A project name or name pattern to filter projects by. Can be a partial match based on the value of filterTextMatch that you provide; for example: filter[name]=ABCco filterTextMatch=startsWith.  Max length: 255'
+      - schema:
+          $ref: '#/components/schemas/filterType'
+        in: query
+        name: filter[type]
+        description: A list of project types to filter projects by. To exclude a project type from the response, prefix it with - (a hyphen); for example, -Bridge excludes bridge projects.
+      - schema:
+          $ref: '#/components/schemas/status_internal'
+        in: query
+        name: filter[status]
+        description: 'A list of the statuses of projects to include in the response. Possible values:  active pending archived suspended'
+      - schema:
+          type: string
+        in: query
+        name: filter[businessUnitId]
+        description: The ID of the business unit that returned projects must be associated with.
+      - schema:
+          type: string
+        in: query
+        name: filter[jobNumber]
+        description: The user-defined identifier for a project to be returned. This ID was defined when the project was created. This filter accepts a partial match based on the value of filterTextMatch that you provide.
+      - schema:
+          type: string
+        in: query
+        name: filter[updatedAt]
+        description: A range of dates during which the desired projects were updated. The range must be specified with dates in ISO 8601 format with time required. Separate multiple values with commas.
+      - schema:
+          $ref: '#/components/schemas/filterTextMatch'
+        in: query
+        name: filterTextMatch
+        description: 'When filtering on a text-based field, this value indicates how to do the matching. Default value: contains. Possible values: contains, startsWith, endsWith and equals.'
+      - schema:
+          $ref: '#/components/schemas/sort_internal'
+        in: query
+        name: sort
+        description: A list of fields to sort the returned projects by. Multiple sort fields are applied in sequence order — each sort field produces groupings of projects with the same values of that field; the next sort field applies within the groupings produced by the previous sort field.
+      - schema:
+          type: integer
+        in: query
+        name: limit
+        description: 'The maximum number of records to return in a single request. Possible range: 1-200. Default value: 20.'
+      - schema:
+          type: integer
+        in: query
+        name: offset
+        description: The record number that the returned page should start with. When the total number of records exceeds the value of limit, increase the offset value in subsequent requests to continue getting the remaining results.
+      security:
+      - 2-legged: []
+      - 3-legged-implicit: []
+      - 3-legged: []
+      tags:
+      - Projects
+    post:
+      summary: Create new Project
+      responses:
+        '202':
+          description: APS has received the request but not yet completed it.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        '400':
+          description: The request could not be understood by the server due to malformed syntax.
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Resource Not Found
+        '406':
+          description: Not Acceptable
+        '410':
+          description: Access to the target resource is no longer available.
+        '415':
+          description: The server refuses to accept the request because the payload format is in an unsupported format.
+        '429':
+          description: User has sent too many requests in a given amount of time.
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Service Unavailable
+      operationId: createProject
+      description: Creates a new project in the specified account. You can create the project directly, or clone the project from a project template.
+      parameters:
+      - schema:
+          type: string
+        in: header
+        name: Accept-Language
+        description: This header is not currently supported in the Account Admin API.
+      - schema:
+          $ref: '#/components/schemas/Region'
+        in: header
+        name: Region
+        description: 'The region where the bucket resides. Acceptable values: US, EMEA, AUS, CAN, DEU, IND, JPN, GBR.'
+      - schema:
+          type: string
+        in: header
+        name: User-Id
+        description: Note that this header is not relevant for Account Admin GET endpoints. The ID of a user on whose behalf your API request is acting. Required if you’re using a 2-legged authentication context, which must be 2-legged OAuth2 security with user impersonation.  Your app has access to all users specified by the administrator in the SaaS integrations UI. Provide this header value to identify the user to be affected by the request.  You can use either the user’s ACC ID (id), or their Autodesk ID (autodeskId).
+      security:
+      - 2-legged: []
+      - 3-legged-implicit: []
+      - 3-legged: []
+      tags:
+      - Projects
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectPayload'
+  /construction/admin/v1/projects/{projectId}:
+    parameters:
+    - schema:
+        type: string
+      name: projectId
+      in: path
+      required: true
+    get:
+      summary: Get a project by ID
+      responses:
+        '200':
+          description: A list of requested projects.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        '400':
+          description: The request could not be understood by the server due to malformed syntax.
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Resource Not Found
+        '406':
+          description: Not Acceptable
+        '407':
+          description: Proxy Authentication Required
+        '410':
+          description: Access to the target resource is no longer available.
+        '429':
+          description: User has sent too many requests in a given amount of time.
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Service Unavailable
+      operationId: getProject
+      description: Retrieves a project specified by project ID.
+      parameters:
+      - schema:
+          type: string
+        in: header
+        name: Accept-Language
+        description: This header is not currently supported in the Account Admin API.
+      - schema:
+          $ref: '#/components/schemas/Region'
+        in: header
+        name: Region
+        description: 'The region where the bucket resides. Acceptable values: US, EMEA, AUS, CAN, DEU, IND, JPN, GBR.'
+      - schema:
+          type: string
+        in: header
+        name: User-Id
+        description: Note that this header is not relevant for Account Admin GET endpoints. The ID of a user on whose behalf your API request is acting. Required if you’re using a 2-legged authentication context, which must be 2-legged OAuth2 security with user impersonation.  Your app has access to all users specified by the administrator in the SaaS integrations UI. Provide this header value to identify the user to be affected by the request.  You can use either the user’s ACC ID (id), or their Autodesk ID (autodeskId).
+      - in: query
+        name: fields
+        description: 'A comma-separated list of the project fields to include in the response. Default value: all fields.'
+        schema:
+          $ref: '#/components/schemas/fields_internal'
+      security:
+      - 2-legged: []
+      - 3-legged: []
+      - 3-legged-implicit: []
+      tags:
+      - Projects
+  /hq/v1/accounts/{account_id}/projects/{project_id}/image:
+    parameters:
+    - schema:
+        type: string
+      name: project_id
+      in: path
+      required: true
+      description: The account ID of the project. This corresponds to hub ID in the Data Management API. To convert a hub ID into an account ID you need to remove the “b.” prefix. For example, a hub ID of b.c8b0c73d-3ae9 translates to an account ID of c8b0c73d-3ae9.
+    - schema:
+        type: string
+      name: account_id
+      in: path
+      required: true
+      description: The ID of the project. This corresponds to project ID in the Data Management API. To convert a project ID in the Data Management API into a project ID in the BIM 360 API you need to remove the “b.” prefix. For example, a project ID of b.a4be0c34a-4ab7 translates to a project ID of a4be0c34a-4ab7.
+    patch:
+      summary: Create or update a project’s image
+      operationId: createProjectImage
+      responses:
+        '200':
+          description: A list of requested projects.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectPatch'
+        '400':
+          description: The request could not be understood by the server due to malformed syntax.
+        '403':
+          description: Forbidden
+        '404':
+          description: Resource Not Found
+        '409':
+          description: Conflict
+        '422':
+          description: The request was unable to be followed due to restrictions.
+        '500':
+          description: Internal Server Error
+      description: Create or update a project’s image.
+      security:
+      - 2-legged: []
+      - 3-legged: []
+      - 3-legged-implicit: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              required:
+              - body
+              properties:
+                body:
+                  type: string
+                  description: The file to be uploaded as HTTP multipart (chunk) data. Supported MIME types are image/png, image/jpeg, image/jpg, image/bmp, and image/gif.
+                  format: binary
+      tags:
+      - Projects
+      parameters:
+      - schema:
+          $ref: '#/components/schemas/Region'
+        in: header
+        name: Region
+        description: 'The geographic area where the data is stored. Acceptable values: US, EMEA, AUS, CAN, DEU, IND, JPN, GBR. By default, it is set to US.'
+  /project/v1/hubs/{hub_id}/projects:
+    parameters:
+    - $ref: '#/components/parameters/hub_id'
+    get:
+      tags:
+      - Projects
+      operationId: getHubProjects
+      summary: Get Projects
+      description: "Returns a collection of active projects within the specified hub. The returned projects can be Autodesk Construction Cloud (ACC), BIM 360, BIM 360 Team, Fusion Team, and A360 Personal projects. \n\nFor BIM 360 and ACC projects a hub ID corresponds to an Account ID. To convert an Account ID to a hub ID, prefix the account ID with ``b.``. For example, a BIM 360 account ID of ```c8b0c73d-3ae9``` translates to a hub ID of ``b.c8b0c73d-3ae9``.\n\nSimilarly, to convert a BIM 360 and ACC project IDs to  Data Management project IDs prefix the BIM 360 or ACC Project ID with ``b.``. For example, a project ID of ``c8b0c73d-3ae9`` translates to a project ID of ``b.c8b0c73d-3ae9``.\n\n**Note:** This operation supports Autodesk Construction Cloud (ACC) Projects. For more information, see the [ACC Platform API documentation](https://en.docs.acc.v1/overview/introduction/). "
+      security:
+      - 2-legged:
+        - data:read
+      - 3-legged:
+        - data:read
+      parameters:
+      - $ref: '#/components/parameters/x-user-id'
+      - $ref: '#/components/parameters/filter_id'
+      - $ref: '#/components/parameters/filter_extension_type'
+      - $ref: '#/components/parameters/page_number'
+      - $ref: '#/components/parameters/page_limit'
+      responses:
+        '200':
+          description: 'The list of projects was successfully retrieved. '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Projects'
+        '400':
+          $ref: '#/components/responses/400-general'
+        '401':
+          $ref: '#/components/responses/401-general'
+        '403':
+          $ref: '#/components/responses/403-general'
+        '404':
+          $ref: '#/components/responses/404-general'
+  /project/v1/hubs/{hub_id}/projects/{project_id}:
+    parameters:
+    - $ref: '#/components/parameters/hub_id'
+    - $ref: '#/components/parameters/project_id'
+    get:
+      tags:
+      - Projects
+      operationId: getProject
+      summary: Get a Project
+      description: 'Returns the specified project from within the specified hub.
+
+
+        For BIM 360 Docs, a hub ID corresponds to a BIM 360 account ID. To convert a BIM 360 account ID to a hub ID, prefix the account ID with ``b.``. For example, an account ID of ```c8b0c73d-3ae9``` translates to a hub ID of ``b.c8b0c73d-3ae9``.
+
+
+        Similarly, to convert a BIM 360 project ID to a Data Management project ID prefix the BIM 360 Project ID with ``b.``. For example, a project ID of ``c8b0c73d-3ae9`` translates to a project ID of ``b.c8b0c73d-3ae9``.
+
+
+        **Note:** This operation supports Autodesk Construction Cloud (ACC) Projects. For more information, see the [ACC Platform API documentation](https://en.docs.acc.v1/overview/introduction/). '
+      security:
+      - 2-legged:
+        - data:read
+      - 3-legged:
+        - data:read
+      parameters:
+      - $ref: '#/components/parameters/x-user-id'
+      responses:
+        '200':
+          description: The project was successfully retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project_2'
+        '400':
+          $ref: '#/components/responses/400-general'
+        '403':
+          $ref: '#/components/responses/403-general'
+        '404':
+          $ref: '#/components/responses/404-general'
+  /project/v1/hubs/{hub_id}/projects/{project_id}/hub:
+    parameters:
+    - $ref: '#/components/parameters/hub_id'
+    - $ref: '#/components/parameters/project_id'
+    get:
+      tags:
+      - Projects
+      operationId: getProjectHub
+      summary: Get Hub for Project
+      description: 'Returns the hub that contains the project specified by the  ``project_id`` parameter.
+
+
+        **Note:** This operation supports Autodesk Construction Cloud (ACC) Projects. For more information, see the [ACC Platform API documentation](https://en.docs.acc.v1/overview/introduction/). '
+      security:
+      - 2-legged:
+        - data:read
+      - 3-legged:
+        - data:read
+      parameters:
+      - $ref: '#/components/parameters/x-user-id'
+      responses:
+        '200':
+          description: Information about the hub was successfully returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Hub'
+        '400':
+          $ref: '#/components/responses/400-general'
+        '403':
+          $ref: '#/components/responses/403-general'
+        '404':
+          $ref: '#/components/responses/404-general'
+  /project/v1/hubs/{hub_id}/projects/{project_id}/topFolders:
+    parameters:
+    - $ref: '#/components/parameters/hub_id'
+    - $ref: '#/components/parameters/project_id'
+    get:
+      tags:
+      - Projects
+      operationId: getProjectTopFolders
+      summary: List Top-level Project Folders
+      description: 'Returns the details of the highest level folders within a project that the user calling this operation has access to. The user must have at least read access to the folders.
+
+
+        If the user is a Project Admin, it returns all top-level folders in the project. Otherwise, it returns all the highest level folders in the folder hierarchy the user has access to.
+
+
+        Users with access permission to a folder has access permission to all its subfolders.
+
+
+        **Note:** This operation supports Autodesk Construction Cloud (ACC) Projects. For more information, see the [ACC Platform API documentation](https://en.docs.acc.v1/overview/introduction/). '
+      security:
+      - 2-legged:
+        - data:read
+      - 3-legged:
+        - data:read
+      parameters:
+      - $ref: '#/components/parameters/x-user-id'
+      - $ref: '#/components/parameters/excludeDeleted'
+      - $ref: '#/components/parameters/projectFilesOnly'
+      responses:
+        '200':
+          description: The top-level folders of the specified project were returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TopFolders'
+        '400':
+          $ref: '#/components/responses/400-general'
+        '403':
+          $ref: '#/components/responses/403-general'
+        '404':
+          $ref: '#/components/responses/404-general'
+  /data/v1/projects/{project_id}/storage:
+    parameters:
+    - $ref: '#/components/parameters/project_id'
+    post:
+      tags:
+      - Projects
+      operationId: createStorage
+      summary: Create a Storage Location in OSS
+      description: 'Creates a placeholder for an item or a version of an item in the OSS. Later, you can upload the binary content for the item or version to this storage location.
+
+
+        **Note:** This operation supports Autodesk Construction Cloud (ACC) Projects. For more information, see the [ACC Platform API documentation](https://en.docs.acc.v1/overview/introduction/). '
+      security:
+      - 2-legged:
+        - data:create
+      - 3-legged:
+        - data:create
+      parameters:
+      - $ref: '#/components/parameters/x-user-id'
+      responses:
+        '201':
+          description: The storage location was created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Storage'
+        '400':
+          $ref: '#/components/responses/400-general'
+        '403':
+          $ref: '#/components/responses/403-general'
+        '404':
+          $ref: '#/components/responses/404-general'
+      requestBody:
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/StoragePayload'
+        description: ''
+  /data/v1/projects/{project_id}/downloads/{download_id}:
+    parameters:
+    - $ref: '#/components/parameters/project_id'
+    - $ref: '#/components/parameters/download_id'
+    get:
+      tags:
+      - Projects
+      operationId: getDownload
+      summary: Get Download Details
+      description: 'Returns the details of a downloadable format of a version of an item.
+
+        '
+      security:
+      - 2-legged:
+        - data:read
+      - 3-legged:
+        - data:read
+      parameters:
+      - $ref: '#/components/parameters/x-user-id'
+      responses:
+        '200':
+          description: The details of the specified download were retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Download'
+        '400':
+          $ref: '#/components/responses/400-general'
+        '403':
+          $ref: '#/components/responses/403-general'
+        '404':
+          $ref: '#/components/responses/404-general'
+  /data/v1/projects/{project_id}/downloads:
+    parameters:
+    - $ref: '#/components/parameters/project_id'
+    post:
+      tags:
+      - Projects
+      operationId: createDownload
+      summary: Create Download
+      description: "Kicks off a job to generate the specified download format of the version. Once the job completes, the specified format becomes available for download. \n"
+      security:
+      - 2-legged:
+        - data:create
+      - 3-legged:
+        - data:create
+      parameters:
+      - $ref: '#/components/parameters/x-user-id'
+      responses:
+        '202':
+          description: A job to generate the download format was successfully started.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatedDownload'
+      requestBody:
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/DownloadPayload'
+        description: ''
+  /data/v1/projects/{project_id}/jobs/{job_id}:
+    parameters:
+    - $ref: '#/components/parameters/project_id'
+    - $ref: '#/components/parameters/job_id'
+    get:
+      tags:
+      - Projects
+      operationId: getDownloadJob
+      summary: Check Download Creation Progress
+      description: "Checks the status of a job that generates a downloadable format of a version of an item. \n\n**Note**: If the job has finished, this operation returns a HTTP status 303, with the ``location`` return header set to the URI that returns the details of the download.\n"
+      security:
+      - 2-legged:
+        - data:read
+      - 3-legged:
+        - data:read
+      parameters:
+      - $ref: '#/components/parameters/x-user-id'
+      responses:
+        '200':
+          description: Details of the specified job was returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+        '303':
+          description: The request has been redirected to a new location.
+        '400':
+          $ref: '#/components/responses/400-general'
+        '403':
+          $ref: '#/components/responses/403-general'
+        '404':
+          $ref: '#/components/responses/404-general'
+components:
+  schemas:
+    json_api_meta_link:
+      title: json_api_meta_link
+      x-stoplight:
+        id: 6c1450io6o3zx
+      type: object
+      description: Meta-information on links to this resource.
+      properties:
+        link:
+          $ref: '#/components/schemas/json_api_link'
+          x-stoplight:
+            id: haazb0d04arzm
+    web_view_link:
+      title: web_view_link
+      x-stoplight:
+        id: b0lyf514eksq4
+      type: object
+      description: An object containing a link that opens the resource in a browser.
+      properties:
+        href:
+          type: string
+          x-stoplight:
+            id: j0xj0hp05wo0l
+          description: The location (URL) of the resource the link points to.
+      required:
+      - href
+    type_folder:
+      type: string
+      enum:
+      - folders
+      description: The type of the resource. Possible values are ``folders``.
+    type_version:
+      type: string
+      x-stoplight:
+        id: f8e280dd63a5b
+      enum:
+      - versions
+      description: The type of the resource. Possible values are ``versions``.
+    TopFolderData:
+      title: 'Top-level Folder Data:'
+      x-stoplight:
+        id: 0crrh7a4rnsne
+      type: object
+      description: An object containing information about a top-level folder.
+      properties:
+        type:
+          $ref: '#/components/schemas/type_folder'
+        id:
+          type: string
+          minLength: 1
+          description: The unique identifier of the folder.
+        attributes:
+          $ref: '#/components/schemas/TopFolderAttributesWithExtensions'
+        links:
+          $ref: '#/components/schemas/json_api_links_self_and_web_view'
+        relationships:
+          type: object
+          required:
+          - parent
+          - refs
+          - links
+          - contents
+          properties:
+            parent:
+              $ref: '#/components/schemas/json_api_relationships_links_folder_parent'
+            refs:
+              $ref: '#/components/schemas/json_api_relationships_links_refs'
+            links:
+              $ref: '#/components/schemas/json_api_relationships_links_links'
+            contents:
+              $ref: '#/components/schemas/json_api_relationships_links_internal'
+      required:
+      - type
+      - id
+      - attributes
+      - links
+      - relationships
+    downloads_status:
+      title: downloads status
+      x-stoplight:
+        id: nhgyywqzurg06
+      description: 'The type of this resource. Possible values: queued, finished, failed, processing
+
+        '
+      enum:
+      - queued
+      - finished
+      - failed
+      - processing
+    Job:
+      description: Details of the specified job was returned successfully.
+      type: object
+      x-examples:
+        example-1:
+          jsonapi:
+            version: '1.0'
+          links:
+            self:
+              href: /data/v1/projects/{project_id}/jobs/{job_id}
+          data:
+            type: jobs
+            id: '{job_id}'
+            attributes:
+              status: queued
+            links:
+              self:
+                href: /data/v1/projects/{project_id}/jobs/{job_id}
+      title: Job
+      properties:
+        jsonapi:
+          $ref: '#/components/schemas/json_api_version'
+        links:
+          $ref: '#/components/schemas/json_api_links_self'
+        data:
+          type: object
+          description: Contains information about the download creation job.
+          properties:
+            type:
+              $ref: '#/components/schemas/type_job'
+            id:
+              type: string
+              minLength: 1
+              description: The Job ID of the job creating the download.
+            attributes:
+              type: object
+              description: Contains the properties that indicate the current status of the job.
+              properties:
+                status:
+                  type: string
+                  minLength: 1
+                  description: Indicates the current status of the job, while the job is ``queued``, ``processing``, or ``failed``. If the job is finished, the server returns a HTTP 303 status with the ``location`` header set to the URI to use to fetch the details of the download.
+            links:
+              $ref: '#/components/schemas/json_api_links_self'
+    PaginationInfo:
+      title: PaginationInfo
+      x-stoplight:
+        id: izgy4eslaw38w
+      type: object
+      description: An object that is returned with responses that can be split across multiple pages. "Next," "Previous," and "First" are available only if the response is split across multiple pages.
+      properties:
+        self:
+          type: object
+          x-stoplight:
+            id: dc46tnxbc2ulb
+          description: A container for the link to the current page of the response.
+          properties:
+            href:
+              type: string
+              x-stoplight:
+                id: ljxuu5c8q9luz
+              description: A hypertext reference to the location of the referenced resource.
+        first:
+          type: object
+          x-stoplight:
+            id: hnog0slu3ma0c
+          description: A container for the link to the first page of the response.
+          properties:
+            href:
+              type: string
+              x-stoplight:
+                id: g7npt0viv619d
+              description: A hypertext reference to the location of the referenced resource.
+        next:
+          type: object
+          x-stoplight:
+            id: dc46tnxbc2ulb
+          description: A container for the link to the next page of the response.
+          properties:
+            href:
+              type: string
+              x-stoplight:
+                id: ljxuu5c8q9luz
+              description: A hypertext reference to the location of the referenced resource.
+        prev:
+          type: object
+          x-stoplight:
+            id: dc46tnxbc2ulb
+          description: A container for the link to the previous page of the response.
+          properties:
+            href:
+              type: string
+              x-stoplight:
+                id: ljxuu5c8q9luz
+              description: A hypertext reference to the location of the referenced resource.
+      required:
+      - self
+    json_api_relationships_links_only_bim:
+      title: json_api_relationships_links_only_bim
+      x-stoplight:
+        id: 60tg8iovfggh5
+      type: object
+      description: Contains links to resources that are external to the data domain service. This is available only with BIM360.
+      properties:
+        meta:
+          $ref: '#/components/schemas/json_api_meta_link'
+          x-stoplight:
+            id: xm7qe4jjv1djj
+        data:
+          $ref: '#/components/schemas/json_api_type_id'
+          x-stoplight:
+            id: fcoobatm4empf
+      required:
+      - meta
+      - data
+    products:
+      title: products
+      x-stoplight:
+        id: qr6chlzpjohw0
+      type: string
+      enum:
+      - build
+      - docs
+      - takeoff
+      - cost
+      - autospecs
+      - financials
+      - buildingConnected
+      - capitalPlanning
+      - accountAdministration
+      - workshopxr
+      - insight
+      - projectAdministration
+      - modelCoordination
+      - designCollaboration
+      - cloudWorksharing
+      - fieldManagement
+      - costManagement
+      - glue
+      - documentManagement
+      - projectHome
+      - assets
+      - quantification
+      - plan
+      - field
+      - projectManagement
+      description: ''
+    ProjectData:
+      description: A container of data describing a project.
+      x-stoplight:
+        id: 451b000a5238b
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/type_project'
+          x-stoplight:
+            id: 4dv3p70oti08b
+        id:
+          type: string
+          x-stoplight:
+            id: dzcl5hfgt4r93
+          description: The ID that uniquely identifies the project.
+        attributes:
+          type: object
+          x-stoplight:
+            id: 6zye74w1eaxej
+          description: The properties of the project.
+          properties:
+            name:
+              type: string
+              x-stoplight:
+                id: jbrc4a2pdiax2
+              description: A human friendly name to identify the project.
+            scopes:
+              type: array
+              x-stoplight:
+                id: tw6kt8la7j04w
+              description: The array of scopes that apply to this project.
+              items:
+                x-stoplight:
+                  id: ucml78phoszx6
+                type: string
+            extension:
+              $ref: '#/components/schemas/project_extension_with_schema_link'
+              x-stoplight:
+                id: c52py6l7draj4
+        relationships:
+          type: object
+          x-stoplight:
+            id: cjtadsco0iygc
+          description: Contains links to resources related to this project.
+          properties:
+            hub:
+              $ref: '#/components/schemas/json_api_relationships_links_internal_resource'
+            rootFolder:
+              $ref: '#/components/schemas/json_api_relationships_links_root_folder'
+            topFolders:
+              type: object
+              x-stoplight:
+                id: 8cmoc0n8togwm
+              description: Information about the highest level folders you have access to.
+              properties:
+                links:
+                  $ref: '#/components/schemas/json_api_links_related'
+                  x-stoplight:
+                    id: id8zr6r4w6ttj
+            issues:
+              $ref: '#/components/schemas/json_api_relationships_links_only_bim'
+            submittals:
+              $ref: '#/components/schemas/json_api_relationships_links_only_bim'
+            rfis:
+              $ref: '#/components/schemas/json_api_relationships_links_only_bim'
+            markups:
+              $ref: '#/components/schemas/json_api_relationships_links_only_bim'
+            checklists:
+              $ref: '#/components/schemas/json_api_relationships_links_only_bim'
+            cost:
+              $ref: '#/components/schemas/json_api_relationships_links_only_bim'
+            locations:
+              $ref: '#/components/schemas/json_api_relationships_links_only_bim'
+        links:
+          $ref: '#/components/schemas/json_api_links_self_and_web_view'
+          x-stoplight:
+            id: w2gakle3ilykr
+      required:
+      - type
+      - id
+      - attributes
+    fields:
+      title: fields
+      x-stoplight:
+        id: 2u11626lmta32
+      type: string
+      enum:
+      - accountId
+      - addressLine1
+      - addressLine2
+      - businessUnitId
+      - city
+      - companyCount
+      - constructionType
+      - country
+      - createdAt
+      - deliveryMethod
+      - endDate
+      - imageUrl
+      - jobNumber
+      - lastSignIn
+      - latitude
+      - longitude
+      - memberCount
+      - name
+      - platform
+      - postalCode
+      - products
+      - projectValue
+      - sheetCount
+      - startDate
+      - stateOrProvince
+      - status
+      - thumbnailImageUrl
+      - timezone
+      - type
+      - updatedAt
+    status_internal:
+      title: status_internal
+      type: array
+      items:
+        $ref: '#/components/schemas/status'
+        x-stoplight:
+          id: 3sxoqp01jo0t2
+    type_hub:
+      type: string
+      x-stoplight:
+        id: f84280dd62b59
+      enum:
+      - hubs
+      description: The type of the resource. Possible values are ``hubs``.
+    DownloadData:
+      type: object
+      title: DownloadData
+      description: A container of the details of the download object.
+      properties:
+        type:
+          $ref: '#/components/schemas/type_downloads'
+        id:
+          type: string
+          minLength: 1
+          description: An ID to uniquely identify this download. It is identical to the Job ID that was used to generate this download.
+        attributes:
+          type: object
+          description: The properties of the download.
+          properties:
+            format:
+              type: object
+              description: A container of the file format of the download.
+              properties:
+                fileType:
+                  type: string
+                  description: The file name extension of the file format of the download.
+        links:
+          $ref: '#/components/schemas/json_api_links_self'
+        relationships:
+          type: object
+          description: Contains links to the resources directly related to the download.
+          properties:
+            storage:
+              type: object
+              x-stoplight:
+                id: cc3e3vp8dczsv
+              description: Contains information about the location of the download.
+              properties:
+                data:
+                  type: object
+                  x-stoplight:
+                    id: igosz8uo35vnf
+                  description: Contains information about the storage location of the download.
+                  properties:
+                    type:
+                      $ref: '#/components/schemas/type_object'
+                    id:
+                      type: string
+                      x-stoplight:
+                        id: g5hi1dz7htcfv
+                      description: The URN of the storage location.
+                meta:
+                  type: object
+                  description: Meta information about the storage location of the download.
+                  properties:
+                    link:
+                      $ref: '#/components/schemas/json_api_link'
+    json_api_relationships_links_internal:
+      title: json_api_relationships_links_internal
+      x-stoplight:
+        id: da5pz40rvqocl
+      type: object
+      description: Information on resources that are found under this resource.
+      properties:
+        links:
+          $ref: '#/components/schemas/json_api_links_related'
+          x-stoplight:
+            id: s7etnb8jkm02f
+      required:
+      - links
+    base_attributes_extension_object_with_schema_link:
+      title: 'base_attributes_extension_object_with_schema_link:'
+      x-stoplight:
+        id: aj8zaihf7alzp
+      type: object
+      description: A container of additional properties that extends this resource.
+      properties:
+        type:
+          type: string
+          x-stoplight:
+            id: jdli2qhh88jq3
+          description: The Type ID of the schema that defines the structure of the ``extension.data`` object.
+        version:
+          type: string
+          x-stoplight:
+            id: x1l84lpe0ce01
+          description: The version of the schema that applies to the ``extension.data`` object.
+        schema:
+          type: object
+          x-stoplight:
+            id: el8fixpzd4k3a
+          description: A container for the hyperlink to the schema of the type.
+          required:
+          - href
+          properties:
+            href:
+              type: string
+              x-stoplight:
+                id: oh11qown58iob
+              description: A hypertext reference to the location of the referenced resource.
+        data:
+          type: object
+          x-stoplight:
+            id: 5h0r1ilaapxra
+          description: The object that contains the additional properties that extends this resource.
+          additionalProperties:
+            type: object
+            description: 'Key-value pairs that contain the name and data of additional properties.
+
+              '
+      required:
+      - type
+      - version
+      - schema
+    Projects:
+      description: An object representing a collection of projects within a hub.
+      type: object
+      x-examples:
+        example-1:
+          jsonapi:
+            version: '1.0'
+          links:
+            self:
+              href: https://developer.api.autodesk.com/project/v1/hubs/b.622cb5d1-581b-4a46-a6d9-4ebc68ea4051/projects
+          data:
+          - type: projects
+            id: b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d
+            attributes:
+              name: my project
+              scopes:
+              - global
+              extension:
+                type: projects:autodesk.bim360:Project
+                version: '1.0'
+                schema:
+                  href: https://developer.api.autodesk.com/schema/v1/versions/projects:autodesk.bim360:Project-1.0
+                data:
+                  projectType: BIM360
+            links:
+              self:
+                href: https://developer.api.autodesk.com/project/v1/hubs/b.622cb5d1-581b-4a46-a6d9-4ebc68ea4051/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d
+              webView:
+                href: https://docs.b360.autodesk.com/projects/c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d
+            relationships:
+              hub:
+                data:
+                  type: hubs
+                  id: b.622cb5d1-581b-4a46-a6d9-4ebc68ea4051
+                links:
+                  related:
+                    href: https://developer.api.autodesk.com/project/v1/hubs/b.622cb5d1-581b-4a46-a6d9-4ebc68ea4051
+              rootFolder:
+                data:
+                  type: folders
+                  id: urn:adsk.wipprod:fs.folder:co.lw7b0sXUQ-6hWRgf34hBuw
+                meta:
+                  link:
+                    href: https://developer.api.autodesk.com/data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/folders/urn:adsk.wipprod:fs.folder:co.lw7b0sXUQ-6hWRgf34hBuw
+              topFolders:
+                links:
+                  related:
+                    href: https://developer.api.autodesk.com/project/v1/hubs/b.622cb5d1-581b-4a46-a6d9-4ebc68ea4051/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/topFolders
+              issues:
+                data:
+                  type: issueContainerId
+                  id: 93f8bd6a-2222-415c-8d58-c8fa7c292044
+                meta:
+                  link:
+                    href: https://developer.api.autodesk.com/issues/v1/containers/93f8bd6a-2222-415c-8d58-c8fa7c292044/issues
+              submittals:
+                data:
+                  type: submittalContainerId
+                  id: c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d
+                meta:
+                  link:
+                    href: https://developer.api.autodesk.com/submittals/v1/containers/c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/items
+              rfis:
+                data:
+                  type: rfisContainerId
+                  id: 93f8bd6a-2222-415c-8d58-c8fa7c292044
+                meta:
+                  link:
+                    href: https://developer.api.autodesk.com/bim360/rfis/v1/containers/93f8bd6a-2222-415c-8d58-c8fa7c292044/rfis
+              markups:
+                data:
+                  type: markupsContainerId
+                  id: 93f8bd6a-2222-415c-8d58-c8fa7c292044
+                meta:
+                  link:
+                    href: https://developer.api.autodesk.com/issues/v1/containers/93f8bd6a-2222-415c-8d58-c8fa7c292044/markups
+              checklists:
+                data:
+                  type: checklistsContainerId
+                  id: 93f8bd6a-2222-415c-8d58-c8fa7c292044
+                meta:
+                  link:
+                    href: https://developer.api.autodesk.com/bim360/checklists/v1/containers/93f8bd6a-2222-415c-8d58-c8fa7c292044/instances
+              cost:
+                data:
+                  type: costContainerId
+                  id: c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d
+                meta:
+                  link:
+                    href: https://developer.api.autodesk.com/cost/v1/containers/c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/budgets
+              locations:
+                data:
+                  type: locationsContainerId
+                  id: 5010258a-a341-4d95-8046-3905e1a983a6
+                meta:
+                  link:
+                    href: https://developer.api.autodesk.com/bim360/locations/v2/containers/5010258a-a341-4d95-8046-3905e1a983a6/trees/default/nodes
+      title: ProjectsResponse
+      properties:
+        jsonapi:
+          $ref: '#/components/schemas/json_api_version'
+        links:
+          $ref: '#/components/schemas/PaginationInfo'
+        data:
+          type: array
+          uniqueItems: true
+          minItems: 1
+          description: An array of objects where each object represents a project.
+          items:
+            $ref: '#/components/schemas/ProjectData'
+    type_project:
+      type: string
+      x-stoplight:
+        id: f84280dd62b59
+      enum:
+      - projects
+      description: The type of the resource. Possible values are ``projects``.
+    json_api_version:
+      title: json_api_version
+      x-stoplight:
+        id: wtcnivkdziwr7
+      type: object
+      description: The JSON API object.
+      properties:
+        version:
+          description: The version of JSON API. Will always be ``1.0``.
+          $ref: '#/components/schemas/json_api_version_value'
+      required:
+      - version
+    StoragePayload:
+      description: An object representing a placeholder (storage location) for data.
+      type: object
+      x-examples:
+        example-1:
+          jsonapi:
+            version: '1.0'
+          data:
+            type: objects
+            attributes:
+              name: drawing.dwg
+            relationships:
+              target:
+                data:
+                  type: folders
+                  id: urn:adsk.wipprod:fs.folder:co.mgS-lb-BThaTdHnhiN_mbA
+      title: StoragePayload
+      properties:
+        jsonapi:
+          $ref: '#/components/schemas/json_api_version'
+        data:
+          type: object
+          description: A container of data describing a storage location.
+          required:
+          - type
+          - attributes
+          - relationships
+          properties:
+            type:
+              $ref: '#/components/schemas/type_object'
+            attributes:
+              type: object
+              description: Properties of the storage location to be created.
+              required:
+              - name
+              properties:
+                name:
+                  type: string
+                  minLength: 1
+                  description: A human friendly name to identify the resource.
+            relationships:
+              type: object
+              description: Contains information on other resources related to this resource.
+              required:
+              - target
+              properties:
+                target:
+                  type: object
+                  description: Information about the target object.
+                  required:
+                  - data
+                  properties:
+                    data:
+                      type: object
+                      description: Contains information about the resources related to the item or version the storage location will contain.
+                      required:
+                      - type
+                      - id
+                      properties:
+                        type:
+                          $ref: '#/components/schemas/type_folder_items_for_storage'
+                        id:
+                          type: string
+                          minLength: 1
+                          description: The ID to uniquely identify the resource.
+      required:
+      - jsonapi
+      - data
+    timezone:
+      title: timezone
+      type: string
+      enum:
+      - Pacific/Honolulu
+      - America/Juneau
+      - America/Los_Angeles
+      - America/Phoenix
+      - America/Denver
+      - America/Chicago
+      - America/New_York
+      - America/Indiana/Indianapolis
+      - Pacific/Pago_Pago
+      - Pacific/Midway
+      - America/Tijuana
+      - America/Chihuahua
+      - America/Mazatlan
+      - America/Guatemala
+      - America/Mexico_City
+      - America/Monterrey
+      - America/Regina
+      - America/Bogota
+      - America/Lima
+      - America/Caracas
+      - America/Halifax
+      - America/Guyana
+      - America/La_Paz
+      - America/Santiago
+      - America/St_Johns
+      - America/Sao_Paulo
+      - America/Argentina/Buenos_Aires
+      - America/Godthab
+      - Atlantic/South_Georgia
+      - Atlantic/Azores
+      - Atlantic/Cape_Verde
+      - Africa/Casablanca
+      - Europe/Dublin
+      - Europe/Lisbon
+      - Europe/London
+      - Africa/Monrovia
+      - Etc/UTC
+      - Europe/Amsterdam
+      - Europe/Belgrade
+      - Europe/Berlin
+      - Europe/Bratislava
+      - Europe/Brussels
+      - Europe/Budapest
+      - Europe/Copenhagen
+      - Europe/Ljubljana
+      - Europe/Madrid
+      - Europe/Paris
+      - Europe/Prague
+      - Europe/Rome
+      - Europe/Sarajevo
+      - Europe/Skopje
+      - Europe/Stockholm
+      - Europe/Vienna
+      - Europe/Warsaw
+      - Africa/Algiers
+      - Europe/Zagreb
+      - Europe/Athens
+      - Europe/Bucharest
+      - Africa/Cairo
+      - Africa/Harare
+      - Europe/Helsinki
+      - Europe/Istanbul
+      - Asia/Jerusalem
+      - Europe/Kiev
+      - Africa/Johannesburg
+      - Europe/Riga
+      - Europe/Sofia
+      - Europe/Tallinn
+      - Europe/Vilnius
+      - Asia/Baghdad
+      - Asia/Kuwait
+      - Europe/Minsk
+      - Africa/Nairobi
+      - Asia/Riyadh
+      - Asia/Tehran
+      - Asia/Muscat
+      - Asia/Baku
+      - Europe/Moscow
+      - Asia/Tbilisi
+      - Asia/Yerevan
+      - Asia/Kabul
+      - Asia/Karachi
+      - Asia/Tashkent
+      - Asia/Kolkata
+      - Asia/Colombo
+      - Asia/Kathmandu
+      - Asia/Almaty
+      - Asia/Dhaka
+      - Asia/Yekaterinburg
+      - Asia/Rangoon
+      - Asia/Bangkok
+      - Asia/Jakarta
+      - Asia/Novosibirsk
+      - Asia/Shanghai
+      - Asia/Chongqing
+      - Asia/Hong_Kong
+      - Asia/Krasnoyarsk
+      - Asia/Kuala_Lumpur
+      - Australia/Perth
+      - Asia/Singapore
+      - Asia/Taipei
+      - Asia/Ulaanbaatar
+      - Asia/Urumqi
+      - Asia/Irkutsk
+      - Asia/Tokyo
+      - Asia/Seoul
+      - Australia/Adelaide
+      - Australia/Darwin
+      - Australia/Brisbane
+      - Australia/Melbourne
+      - Pacific/Guam
+      - Australia/Hobart
+      - Pacific/Port_Moresby
+      - Australia/Sydney
+      - Asia/Yakutsk
+      - Pacific/Noumea
+      - Asia/Vladivostok
+      - Pacific/Auckland
+      - Pacific/Fiji
+      - Asia/Kamchatka
+      - Asia/Magadan
+      - Pacific/Majuro
+      - Pacific/Guadalcanal
+      - Pacific/Tongatapu
+      - Pacific/Apia
+      - Pacific/Fakaofo
+    json_api_relationships_links_refs:
+      type: object
+      required:
+      - links
+      description: Information on other resources that have a custom relationship with this resource.
+      properties:
+        links:
+          type: object
+          required:
+          - self
+          - related
+          description: The object containing information on links of related resources that share a custom relationship with this resource.
+          properties:
+            self:
+              $ref: '#/components/schemas/json_api_link'
+            related:
+              $ref: '#/components/schemas/json_api_link'
+    TopFolderAttributesWithExtensions:
+      title: 'Folder Attributes:'
+      type: object
+      description: The properties of a folder.
+      required:
+      - name
+      - displayName
+      - objectCount
+      - createTime
+      - createUserId
+      - createUserName
+      - lastModifiedTime
+      - lastModifiedUserId
+      - lastModifiedUserName
+      - hidden
+      properties:
+        name:
+          type: string
+          minLength: 1
+          description: The name of the folder.
+        displayName:
+          type: string
+          minLength: 1
+          description: Reserved for future Use. Do not use. Use ``attributes.name`` for the folder name.
+        objectCount:
+          type: integer
+          format: int32
+          description: The number of objects inside the folder.
+        createTime:
+          type: string
+          format: date-time
+          description: 'The time the folder was created, in the following format: ``YYYY-MM-DDThh:mm:ss.sz``.'
+        createUserId:
+          type: string
+          minLength: 1
+          description: The unique identifier of the user who created the folder.
+        createUserName:
+          type: string
+          minLength: 1
+          description: The name of the user who created the folder.
+        lastModifiedTime:
+          type: string
+          description: 'The last time the folder was modified, in the following format: ``YYYY-MM-DDThh:mm:ss.sz``.'
+          format: date-time
+        lastModifiedUserId:
+          type: string
+          minLength: 1
+          description: 'The last time the folder was modified, in the following format: ``YYYY-MM-DDThh:mm:ss.sz``.'
+        lastModifiedUserName:
+          type: string
+          minLength: 1
+          description: The name of the user who last modified the folder.
+        lastModifiedTimeRollup:
+          type: string
+          minLength: 1
+          description: The date and time the folder or any of its children were last updated.
+        hidden:
+          type: boolean
+          description: The folder’s current visibility state.
+        extension:
+          $ref: '#/components/schemas/top_folder_extension_with_schema_link'
+    filterPlatform_internal:
+      title: filterPlatform_internal
+      x-stoplight:
+        id: 07osm8uexhmzc
+      type: array
+      items:
+        $ref: '#/components/schemas/platform'
+        x-stoplight:
+          id: blbjael8tal1d
+    type_folder_items_for_storage:
+      type: string
+      x-stoplight:
+        id: cfr71euvqg9jb
+      enum:
+      - folders
+      - items
+      description: "The type of resource the storage location is related to. Possible values are:\n\n- ``folders`` - The storage location is for a new item. \n- ``items``   -  The storage location is for a new version of an existing item.\n"
+    DownloadPayload:
+      description: The payload for creating a download of a specified format.
+      type: object
+      x-examples:
+        example-1:
+          jsonapi:
+            version: '1.0'
+          data:
+            type: downloads
+            attributes:
+              format:
+                fileType: dwf
+            relationships:
+              source:
+                data:
+                  type: versions
+                  id: '{version_id}'
+      title: DownloadPayload
+      properties:
+        jsonapi:
+          $ref: '#/components/schemas/json_api_version'
+        data:
+          type: object
+          description: Contains information about the desired download format and the version of the item to convert to this format.
+          required:
+          - type
+          - attributes
+          - relationships
+          properties:
+            type:
+              $ref: '#/components/schemas/type_downloads'
+            attributes:
+              type: object
+              description: Contains information about the desired download format.
+              required:
+              - format
+              properties:
+                format:
+                  type: object
+                  description: Specifies the desired download format.
+                  required:
+                  - fileType
+                  properties:
+                    fileType:
+                      type: string
+                      minLength: 1
+                      description: The file name extension of the desired download format. Must be one of the supported file name extensions returned by the [List Supported Download Formats](/en/docs/data/v2/reference/http/projects-project_id-versions-version_id-downloadFormats-GET/) operation for the specified version.
+            relationships:
+              type: object
+              required:
+              - source
+              description: 'Contains information about the version the download format is being created for. '
+              properties:
+                source:
+                  type: object
+                  required:
+                  - data
+                  description: Contains information about the version the download format is being created for.
+                  properties:
+                    data:
+                      type: object
+                      required:
+                      - type
+                      - id
+                      description: Contains information about the version the download format is being created for.
+                      properties:
+                        type:
+                          $ref: '#/components/schemas/type_version'
+                        id:
+                          type: string
+                          minLength: 1
+                          description: "The URN of the version the download is being created for. \n\n**Note**: Must be the raw string, not the URL encoded string."
+      required:
+      - jsonapi
+      - data
+    json_api_version_value:
+      description: The version of JSON API. Will always be ``1.0``.
+      type: string
+      enum:
+      - '1.0'
+    region:
+      type: string
+      enum:
+      - US
+      - EMEA
+      - AUS
+      - CAN
+      - DEU
+      - IND
+      - JPN
+      - GBR
+      x-stoplight:
+        id: qy609yu6fbfsf
+      description: 'Specifies where the hub is stored. Possible values are:
+
+
+        - ``US`` - Data center for the US region.
+
+        - ``EMEA`` - Data center for the European Union, Middle East, and Africa regions.
+
+        - ``AUS`` - Data center for the Australia region.
+
+        - ``CAN`` - Data center for the Canada region.
+
+        - ``DEU`` - Data center for the Germany region.
+
+        - ``IND`` - Data center for the India region.
+
+        - ``JPN`` - Data center for the Japan region.
+
+        - ``GBR`` - Data center for the United Kingdom region.'
+    products_internal:
+      title: products_internal
+      x-stoplight:
+        id: 9c80166a5fe5a
+      type: array
+      items:
+        $ref: '#/components/schemas/products'
+        x-stoplight:
+          id: qeezmlysbidw9
+    type_object:
+      type: string
+      enum:
+      - objects
+      description: The type of this resource. Possible values are ``objects``.
+    platform:
+      title: platform
+      x-stoplight:
+        id: w4j4h1zy6fji2
+      type: string
+      enum:
+      - acc
+      - bim360
+    HubData:
+      title: HubData
+      x-stoplight:
+        id: nthprwqm1o6lv
+      type: object
+      description: The object containing information about the hub.
+      properties:
+        type:
+          $ref: '#/components/schemas/type_hub'
+          x-stoplight:
+            id: tc7fa3ac13r6h
+        id:
+          type: string
+          x-stoplight:
+            id: 9f2ogpb91zghy
+          description: The hub ID, which uniquely identifies the hub.
+        attributes:
+          type: object
+          x-stoplight:
+            id: xjchsug8c2rw7
+          description: The properties of the hub.
+          properties:
+            name:
+              type: string
+              x-stoplight:
+                id: vw18qagfrio57
+              description: A human friendly name to identify the hub.
+            extension:
+              $ref: '#/components/schemas/base_attributes_extension_object_with_schema_link'
+            region:
+              $ref: '#/components/schemas/region'
+              x-stoplight:
+                id: qy609yu6fbfsf
+        relationships:
+          type: object
+          x-stoplight:
+            id: 0skjm84h82gng
+          description: Contains links to resources that are directly related to this hub.
+          properties:
+            projects:
+              type: object
+              x-stoplight:
+                id: dj2kh2hqjxzuu
+              description: "Contains the endpoint you can use to \nlist the projects in this hub."
+              properties:
+                links:
+                  $ref: '#/components/schemas/json_api_links_related'
+            pimCollection:
+              type: object
+              x-stoplight:
+                id: q1erud678lf5y
+              description: Information on the ``id`` and ``type`` properties of a resource. This is available only for Fusion Team hubs and A360 Personal hubs.
+              properties:
+                data:
+                  $ref: '#/components/schemas/json_api_type_id'
+        links:
+          $ref: '#/components/schemas/json_api_links_self'
+      required:
+      - links
+    TopFolders:
+      description: An object that reporesents a top-level folder.
+      type: object
+      x-examples:
+        example-1:
+          jsonapi:
+            version: '1.0'
+          links:
+            self:
+              href: /project/v1/hubs/b.622cb5d1-581b-4a46-a6d9-4ebc68ea4051/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/topFolders
+          data:
+          - type: folders
+            id: urn:adsk.wipprod:dm.folder:hC6k4hndRWaeIVhIjvHu8w
+            attributes:
+              name: Plans
+              displayName: Plans
+              createTime: '2015-11-27T11:11:23.000Z'
+              createUserId: BW9RM76WZBGL
+              createUserName: John Doe
+              lastModifiedTime: '2015-11-27T11:11:27.000Z'
+              lastModifiedUserId: BW9RM76WZBGL
+              lastModifiedUserName: John Doe
+              lastModifiedTimeRollup: '2015-11-27T11:11:27.000Z'
+              objectCount: 4
+              hidden: false
+              extension:
+                type: folders:autodesk.bim360:Folder
+                version: '1.0'
+                schema:
+                  href: https://developer.api.autodesk.com/schema/v1/versions/folders%3Aautodesk.bim360%3AFolder-1.0
+                data:
+                  allowedTypes:
+                  - folders
+                  - items:autodesk.bim360:File
+                  - items:autodesk.bim360:Document
+                  - items:autodesk.bim360:TitleBlock
+                  visibleTypes:
+                  - folders
+                  - items:autodesk.bim360:Document
+                  isRoot: false
+                  folderType: normal
+                  folderParents:
+                  - urn: urn:adsk.wipprod:fs.folder:co.R3JhbmRwYXJlbnQK
+                    isRoot: true
+                    title: Project Files
+                    parentUrn: urn:adsk.wipprod:fs.folder:co.R3JlYXQgR3JhbmRwYXJlbnQK
+                  - urn: urn:adsk.wipprod:fs.folder:co.5-pCTuRbQI2fosqUJoNJ9w
+                    isRoot: false
+                    title: ViewOnlySupportTest
+                    parentUrn: urn:adsk.wipprod:fs.folder:co.UGFyZW50Cg
+                  namingStandardIds: []
+            links:
+              self:
+                href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/folders/urn%3Aadsk.wipprod%3Adm.folder%3AhC6k4hndRWaeIVhIjvHu8w
+              webView:
+                href: https://docs.b360.autodesk.com/projects/c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/folders/urn%3Aadsk.wipprod%3Adm.folder%3AhC6k4hndRWaeIVhIjvHu8w
+            relationships:
+              parent:
+                links:
+                  related:
+                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/folders/urn%3Aadsk.wipprod%3Adm.folder%3AhC6k4hndRWaeIVhIjvHu8w/parent
+                data:
+                  type: folders
+                  id: urn:adsk.wipprod:dm.folder:sdfedf8wefl
+              refs:
+                links:
+                  self:
+                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/folders/urn%3Aadsk.wipprod%3Adm.folder%3AhC6k4hndRWaeIVhIjvHu8w/relationships/refs
+                  related:
+                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/folders/urn%3Aadsk.wipprod%3Adm.folder%3AhC6k4hndRWaeIVhIjvHu8w/refs
+              links:
+                links:
+                  self:
+                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/folders/urn%3Aadsk.wipprod%3Adm.folder%3AhC6k4hndRWaeIVhIjvHu8w/relationships/links
+              contents:
+                links:
+                  related:
+                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/folders/urn%3Aadsk.wipprod%3Adm.folder%3AhC6k4hndRWaeIVhIjvHu8w/contents
+      title: TopFolders
+      properties:
+        jsonapi:
+          $ref: '#/components/schemas/json_api_version'
+        links:
+          $ref: '#/components/schemas/json_api_links_self'
+        data:
+          type: array
+          uniqueItems: true
+          minItems: 1
+          description: Array of objects where each object represents a top-level folder.
+          items:
+            $ref: '#/components/schemas/TopFolderData'
+      required:
+      - jsonapi
+      - links
+    status:
+      title: status
+      x-stoplight:
+        id: 7imcqgahx8744
+      type: string
+      enum:
+      - active
+      - pending
+      - archived
+      - suspended
+    json_api_relationships_links_internal_resource:
+      title: json_api_relationships_links_internal_resource
+      x-stoplight:
+        id: qmmyfor4fmle9
+      type: object
+      description: Information on the resources above this resource in the hierarchy.
+      properties:
+        links:
+          $ref: '#/components/schemas/json_api_links_related'
+          x-stoplight:
+            id: e35szkgp1o7b8
+        data:
+          $ref: '#/components/schemas/json_api_type_id'
+          x-stoplight:
+            id: zdowc6ik9vvcu
+    filterType:
+      title: filterType
+      type: array
+      items:
+        type: string
+    ProjectPayload:
+      title: ProjectPayload
+      x-stoplight:
+        id: ie1rcbkmjt2yc
+      type: object
+      properties:
+        name:
+          type: string
+          description: 'The name of the project.
+
+            Max length: 255'
+          x-stoplight:
+            id: 6cf9wq5ozzjck
+        startDate:
+          type: string
+          description: The estimated start date for the project, in ISO 8601 format.
+          x-stoplight:
+            id: qxtctrcqpzdim
+        endDate:
+          type: string
+          x-stoplight:
+            id: 0wy8z5fu7edd3
+          description: The estimated end date for the project, in ISO 8601 format.
+        type:
+          description: The type of the project.
+          x-stoplight:
+            id: 0rmvamrt2vu0p
+          type: string
+        classification:
+          $ref: '#/components/schemas/classification'
+          description: 'The project’s purpose. '
+          x-stoplight:
+            id: la722kcrq302p
+        projectValue:
+          type: object
+          description: The value of the project. When updating the project value, both the value and currency parameters are required.
+          x-stoplight:
+            id: 7jyuuuw47s1zg
+          properties:
+            value:
+              type: integer
+              x-stoplight:
+                id: uc6040iee54lw
+              description: The estimated value or cost of the project based on the currency specified in the currency field. The default value is 0.
+            currency:
+              $ref: '#/components/schemas/currency'
+              x-stoplight:
+                id: 3bhkzguqw0sv3
+              description: 'The currency of the project value for the project. Default value: USD.'
+        jobNumber:
+          type: string
+          description: 'A job identifier that’s defined for the project by the user. This ID was defined when the project was created.
+
+            Max length: 100'
+        addressLine1:
+          type: string
+          description: 'Address line 1 for the project.
+
+            Max length: 255'
+        addressLine2:
+          type: string
+          x-stoplight:
+            id: 1upgay7epgz9b
+          description: 'Address line 2 for the project.
+
+            Max length: 255'
+        city:
+          type: string
+          x-stoplight:
+            id: 0oc4qp1v0ftdm
+          description: The city in which the project is located.
+        stateOrProvince:
+          type: string
+          x-stoplight:
+            id: ubo3fqfnmgqug
+          description: The state or province in which the project is located. Only valid state/province names and ISO 3166-1 alpha-2 codes is accepted. The provided state or province must exist in the country of the project.
+        postalCode:
+          type: string
+          x-stoplight:
+            id: 5t24tmhaqskus
+          description: The zip or postal code in which the project is located.
+        country:
+          type: string
+          x-stoplight:
+            id: xg4z9ewblj1w5
+          description: The country in which the project is located. Only valid country names and ISO 3166-1 alpha-2 codes is accepted.
+        latitude:
+          type: string
+          x-stoplight:
+            id: qsply44us8h4h
+          description: The latitude of the location of the project.
+        longitude:
+          type: string
+          x-stoplight:
+            id: zp562dse6o7hj
+          description: The longitude of the location of the project.
+        timezone:
+          $ref: '#/components/schemas/timezone'
+          x-stoplight:
+            id: o53ui6vd71sgp
+          description: The time zone in which the project is located. Note that this field can be NULL.
+        constructionType:
+          type: string
+          x-stoplight:
+            id: f8bnng42rt1bj
+          description: The construction type of the project. Following is a list of recommended values; however, any value is accepted.
+        deliveryMethod:
+          type: string
+          x-stoplight:
+            id: 6bswlp8p3pzsa
+          description: The delivery method of the project. Following is a list of recommended values; however, any value is accepted.
+        contractType:
+          type: string
+          x-stoplight:
+            id: m9xai1gdvbprg
+          description: The contract type of the project. Following is a list of recommended values; however, any value is accepted.
+        currentPhase:
+          type: string
+          x-stoplight:
+            id: 5k6oorhq27hxk
+          description: The current phase of the project. Following is a list of recommended values; however, any value is accepted.
+        businessUnitId:
+          type: string
+          x-stoplight:
+            id: ww05qb8kr01ru
+          description: The ID of the business unit that the project is associated with.
+        sheetCount:
+          type: integer
+          x-stoplight:
+            id: r58ypjbag6lil
+          description: The total number of sheets associated with the project.
+        products:
+          type: array
+          x-stoplight:
+            id: 15j7grna78zar
+          description: An array of the product objects associated with the project.
+          items:
+            x-stoplight:
+              id: qv9mwsm0079v3
+            type: string
+        platform:
+          $ref: '#/components/schemas/platform'
+          x-stoplight:
+            id: l2bslup34ygq3
+          description: 'The APS platform that the project belongs to. Possible values: acc, bim360'
+        companyCount:
+          type: integer
+          x-stoplight:
+            id: hurzujkff3e2j
+          description: The total number of companies associated with the project.
+        memberCount:
+          type: integer
+          x-stoplight:
+            id: 4n7prnedw1mqu
+          description: The total number of members on the project.
+        template:
+          type: object
+          x-stoplight:
+            id: 24muiuk2wr82k
+          description: 'Information about a project in the current user’s account that is configured as a template from which to copy products and settings when creating a new project:
+
+            If you include this object in a POST accounts/:accountId/projects request, the cloned project’s products and settings will match those of the template project.
+
+            If you omit this object from a POST accounts/:accountId/projects request, all of the current ACC account’s products are added to the cloned project and activated.'
+          properties:
+            projectId:
+              type: string
+              x-stoplight:
+                id: zwze88rqhbow0
+              description: The ID of a project template in the current ACC account from which to clone the new project and copy products and settings.
+            options:
+              type: object
+              x-stoplight:
+                id: wigltykwfys3w
+              description: Information about what to include when cloning a project template.
+              properties:
+                field:
+                  type: object
+                  x-stoplight:
+                    id: jdnmtzcvswyqk
+                  description: Project template options specific to classic field.
+                  properties:
+                    includeCompanies:
+                      type: boolean
+                      x-stoplight:
+                        id: h6w5dse4kw4vu
+                      description: 'Indicates whether to include company data when copying from the project template.
+
+                        true: Include company data.
+
+                        false: Exclude company data.'
+                    includeLocations:
+                      type: boolean
+                      x-stoplight:
+                        id: zrg9252udrk4x
+                      description: 'Indicates whether to include location data when copying from the template project.
+
+                        true: Include location data.
+
+                        false: Exclude location data.'
+          required:
+          - projectId
+      required:
+      - name
+      - type
+    Project:
+      title: Project
+      x-stoplight:
+        id: ebkpy57pcvey6
+      type: object
+      properties:
+        id:
+          type: string
+          description: The internally generated ID for the project.
+        name:
+          type: string
+          description: 'The name of the project.
+
+            Max length: 255'
+          x-stoplight:
+            id: 6cf9wq5ozzjck
+        startDate:
+          type: string
+          description: The estimated start date for the project, in ISO 8601 format.
+          x-stoplight:
+            id: qxtctrcqpzdim
+        endDate:
+          type: string
+          x-stoplight:
+            id: 0wy8z5fu7edd3
+          description: The estimated end date for the project, in ISO 8601 format.
+        type:
+          description: The type of the project.
+          x-stoplight:
+            id: 0rmvamrt2vu0p
+          type: string
+        classification:
+          type: string
+          description: 'The project’s purpose. Possible values: production, template, component, sample'
+          x-stoplight:
+            id: la722kcrq302p
+        projectValue:
+          type: object
+          description: The value of the project. When updating the project value, both the value and currency parameters are required.
+          x-stoplight:
+            id: 7jyuuuw47s1zg
+        status:
+          type: string
+          description: The status of the project.
+          x-stoplight:
+            id: gr9ymnwepgsvy
+        jobNumber:
+          type: string
+          description: 'A job identifier that’s defined for the project by the user. This ID was defined when the project was created.
+
+            Max length: 100'
+        addressLine1:
+          type: string
+          description: 'Address line 1 for the project.
+
+            Max length: 255'
+        addressLine2:
+          type: string
+          x-stoplight:
+            id: 1upgay7epgz9b
+          description: 'Address line 2 for the project.
+
+            Max length: 255'
+        city:
+          type: string
+          x-stoplight:
+            id: 0oc4qp1v0ftdm
+          description: The city in which the project is located.
+        stateOrProvince:
+          type: string
+          x-stoplight:
+            id: ubo3fqfnmgqug
+          description: The state or province in which the project is located. Only valid state/province names and ISO 3166-1 alpha-2 codes is accepted. The provided state or province must exist in the country of the project.
+        postalCode:
+          type: string
+          x-stoplight:
+            id: 5t24tmhaqskus
+          description: The zip or postal code in which the project is located.
+        country:
+          type: string
+          x-stoplight:
+            id: xg4z9ewblj1w5
+          description: The country in which the project is located. Only valid country names and ISO 3166-1 alpha-2 codes is accepted.
+        latitude:
+          type: string
+          x-stoplight:
+            id: qsply44us8h4h
+          description: The latitude of the location of the project.
+        longitude:
+          type: string
+          x-stoplight:
+            id: zp562dse6o7hj
+          description: The longitude of the location of the project.
+        timezone:
+          type: string
+          x-stoplight:
+            id: o53ui6vd71sgp
+          description: The time zone in which the project is located. Note that this field can be NULL.
+        constructionType:
+          type: string
+          x-stoplight:
+            id: f8bnng42rt1bj
+          description: The construction type of the project. Following is a list of recommended values; however, any value is accepted.
+        deliveryMethod:
+          type: string
+          x-stoplight:
+            id: 6bswlp8p3pzsa
+          description: The delivery method of the project. Following is a list of recommended values; however, any value is accepted.
+        contractType:
+          type: string
+          x-stoplight:
+            id: m9xai1gdvbprg
+          description: The contract type of the project. Following is a list of recommended values; however, any value is accepted.
+        currentPhase:
+          type: string
+          x-stoplight:
+            id: 5k6oorhq27hxk
+          description: The current phase of the project. Following is a list of recommended values; however, any value is accepted.
+        businessUnitId:
+          type: string
+          x-stoplight:
+            id: ww05qb8kr01ru
+          description: The ID of the business unit that the project is associated with.
+        lastSignIn:
+          type: string
+          x-stoplight:
+            id: im38ovifkrbyv
+          description: The timestamp of the last time someone signed into the project.
+        imageUrl:
+          type: string
+          x-stoplight:
+            id: 8d45mnflzgs33
+          description: The URL of the project image.
+        thumbnailImageUrl:
+          type: string
+          x-stoplight:
+            id: pscimqfva5dqw
+          description: The URL of the project thumbnail image.
+        createdAt:
+          type: string
+          x-stoplight:
+            id: h4j1z55w3l122
+          description: The timestamp when the project was created, in ISO 8601 format.
+        updatedAt:
+          type: string
+          x-stoplight:
+            id: wxbzhsi71d8hl
+          description: The timestamp when the project was last updated, in ISO 8601 format. This reflects only changes to the project fields and not changes to any resources in the project.
+        memberGroupId:
+          type: string
+          x-stoplight:
+            id: 8v9h1l147em3f
+          description: Not relevant
+        adminGroupId:
+          type: string
+          x-stoplight:
+            id: mc5b6njjbon60
+          description: Not relevant
+        accountId:
+          type: string
+          x-stoplight:
+            id: ngfv3tuq4xk65
+          description: The ID of the account the project is associated with.
+        sheetCount:
+          type: integer
+          x-stoplight:
+            id: r58ypjbag6lil
+          description: The total number of sheets associated with the project.
+        products:
+          type: array
+          x-stoplight:
+            id: 15j7grna78zar
+          description: An array of the product objects associated with the project.
+          items:
+            x-stoplight:
+              id: qv9mwsm0079v3
+            type: object
+        platform:
+          type: string
+          x-stoplight:
+            id: l2bslup34ygq3
+          description: The APS platform that the project belongs to.
+        companyCount:
+          type: integer
+          x-stoplight:
+            id: hurzujkff3e2j
+          description: The total number of companies associated with the project.
+        memberCount:
+          type: integer
+          x-stoplight:
+            id: 4n7prnedw1mqu
+          description: The total number of members on the project.
+        templateId:
+          type: string
+          x-stoplight:
+            id: zpt9et6ahhjj8
+          description: The ID of the project that was used as a template to create this project.
+    Project_2:
+      description: An object that represents a project.
+      type: object
+      x-examples:
+        example-1:
+          jsonapi:
+            version: '1.0'
+          links:
+            self:
+              href: https://developer.api.autodesk.com/project/v1/hubs/b.622cb5d1-581b-4a46-a6d9-4ebc68ea4051/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d
+          data:
+            type: projects
+            id: b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d
+            attributes:
+              name: my project
+              scopes:
+              - global
+              extension:
+                type: projects:autodesk.bim360:Project
+                version: '1.0'
+                schema:
+                  href: https://developer.api.autodesk.com/schema/v1/versions/projects:autodesk.bim360:Project-1.0
+                data:
+                  projectType: BIM360
+            links:
+              self:
+                href: https://developer.api.autodesk.com/project/v1/hubs/b.622cb5d1-581b-4a46-a6d9-4ebc68ea4051/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d
+              webView:
+                href: https://docs.b360.autodesk.com/projects/c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d
+            relationships:
+              hub:
+                data:
+                  type: hubs
+                  id: b.622cb5d1-581b-4a46-a6d9-4ebc68ea4051
+                links:
+                  related:
+                    href: https://developer.api.autodesk.com/project/v1/hubs/b.622cb5d1-581b-4a46-a6d9-4ebc68ea4051
+              rootFolder:
+                data:
+                  type: folders
+                  id: urn:adsk.wipprod:fs.folder:co.lw7b0sXUQ-6hWRgf34hBuw
+                meta:
+                  link:
+                    href: https://developer.api.autodesk.com/data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/folders/urn:adsk.wipprod:fs.folder:co.lw7b0sXUQ-6hWRgf34hBuw
+              topFolders:
+                links:
+                  related:
+                    href: https://developer.api.autodesk.com/project/v1/hubs/b.622cb5d1-581b-4a46-a6d9-4ebc68ea4051/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/topFolders
+              issues:
+                data:
+                  type: issueContainerId
+                  id: 93f8bd6a-2222-415c-8d58-c8fa7c292044
+                meta:
+                  link:
+                    href: https://developer.api.autodesk.com/issues/v1/containers/93f8bd6a-2222-415c-8d58-c8fa7c292044/issues
+              submittals:
+                data:
+                  type: submittalContainerId
+                  id: c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d
+                meta:
+                  link:
+                    href: https://developer.api.autodesk.com/submittals/v1/containers/c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/items
+              rfis:
+                data:
+                  type: rfisContainerId
+                  id: 93f8bd6a-2222-415c-8d58-c8fa7c292044
+                meta:
+                  link:
+                    href: https://developer.api.autodesk.com/bim360/rfis/v1/containers/93f8bd6a-2222-415c-8d58-c8fa7c292044/rfis
+              markups:
+                data:
+                  type: markupsContainerId
+                  id: 93f8bd6a-2222-415c-8d58-c8fa7c292044
+                meta:
+                  link:
+                    href: https://developer.api.autodesk.com/issues/v1/containers/93f8bd6a-2222-415c-8d58-c8fa7c292044/markups
+              checklists:
+                data:
+                  type: checklistsContainerId
+                  id: 93f8bd6a-2222-415c-8d58-c8fa7c292044
+                meta:
+                  link:
+                    href: https://developer.api.autodesk.com/bim360/checklists/v1/containers/93f8bd6a-2222-415c-8d58-c8fa7c292044/instances
+              cost:
+                data:
+                  type: costContainerId
+                  id: c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d
+                meta:
+                  link:
+                    href: https://developer.api.autodesk.com/cost/v1/containers/c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/budgets
+              locations:
+                data:
+                  type: locationsContainerId
+                  id: 5010258a-a341-4d95-8046-3905e1a983a6
+                meta:
+                  link:
+                    href: https://developer.api.autodesk.com/bim360/locations/v2/containers/5010258a-a341-4d95-8046-3905e1a983a6/trees/default/nodes
+      title: Project
+      properties:
+        jsonapi:
+          $ref: '#/components/schemas/json_api_version'
+        links:
+          $ref: '#/components/schemas/json_api_links_self'
+        data:
+          $ref: '#/components/schemas/ProjectData'
+    classification:
+      title: classification
+      x-stoplight:
+        id: kiltb9wsm9iye
+      type: string
+      enum:
+      - production
+      - template
+      - component
+      - sample
+    type_downloads:
+      type: string
+      x-stoplight:
+        id: sxvvrm7e0pm4r
+      enum:
+      - downloads
+      description: The type of this resource. Possible values are ``downloads``.
+    Download:
+      description: An object that represents a download.
+      type: object
+      x-examples:
+        example-1:
+          jsonapi:
+            version: '1.0'
+          links:
+            self:
+              href: /data/v1/projects/{project_id}/jobs/{job_id}
+          data:
+            type: jobs
+            id: '{job_id}'
+            attributes:
+              status: queued
+            links:
+              self:
+                href: /data/v1/projects/{project_id}/jobs/{job_id}
+      title: Download
+      properties:
+        jsonapi:
+          $ref: '#/components/schemas/json_api_version'
+        links:
+          $ref: '#/components/schemas/json_api_links_self'
+        data:
+          $ref: '#/components/schemas/DownloadData'
+    json_api_relationships_links_root_folder:
+      title: json_api_relationships_links_root_folder
+      type: object
+      description: Information about the root folder of a project.
+      properties:
+        meta:
+          $ref: '#/components/schemas/json_api_meta_link'
+        data:
+          $ref: '#/components/schemas/json_api_type_id'
+    json_api_relationships_links_folder_parent:
+      title: json_api_relationships_links_folder_parent
+      x-stoplight:
+        id: qmmyfor4fmle9
+      type: object
+      description: Information on the parent of this resource in the folder hierarchy.
+      properties:
+        links:
+          $ref: '#/components/schemas/json_api_links_related'
+          x-stoplight:
+            id: e35szkgp1o7b8
+        data:
+          $ref: '#/components/schemas/json_api_type_id'
+          x-stoplight:
+            id: zdowc6ik9vvcu
+    json_api_type_id:
+      title: json_api_type_id
+      x-stoplight:
+        id: vj150c8bxpc9d
+      type: object
+      description: An object containing the ``id`` and ``type`` properties of a resource.
+      properties:
+        id:
+          type: string
+          description: The URN of the resource.
+        type:
+          type: string
+          x-stoplight:
+            id: j3iiuzs5pdley
+          description: The type of the resource.
+    json_api_links_self:
+      title: json_api_links_self
+      x-stoplight:
+        id: hedbm6v3pcz7k
+      type: object
+      description: An object containing the URI of the endpoint to access this resource.
+      properties:
+        self:
+          type: object
+          x-stoplight:
+            id: xjz8a6shpmaya
+          description: An object containing the URI of the endpoint to access this resource.
+          properties:
+            href:
+              type: string
+              x-stoplight:
+                id: jx2lmnxrl8f10
+              description: "The URI of the endpoint to access this \nresource."
+    CreatedDownload:
+      description: An object that represents the response to a Create Download request.
+      type: object
+      x-examples:
+        example-1:
+          jsonapi:
+            version: '1.0'
+          links:
+            self:
+              href: /data/v1/projects/{project_id}/jobs/{job_id}
+          data:
+            type: jobs
+            id: '{job_id}'
+            attributes:
+              status: queued
+            links:
+              self:
+                href: /data/v1/projects/{project_id}/jobs/{job_id}
+      title: CreatedDownload
+      properties:
+        jsonapi:
+          $ref: '#/components/schemas/json_api_version'
+        links:
+          $ref: '#/components/schemas/json_api_links_self'
+        data:
+          type: array
+          description: An array of objects containing a single object, which represents the job that was kicked off.
+          items:
+            x-stoplight:
+              id: 1m5aja70wjeef
+            type: object
+            properties:
+              type:
+                $ref: '#/components/schemas/type_job'
+              id:
+                type: string
+                x-stoplight:
+                  id: jmx3y9d5ri7xd
+                description: A unique ID assigned to identify the job that creates the download. This ID doubles up as the unique ID to identify the download.
+              attributes:
+                type: object
+                x-stoplight:
+                  id: o8v6dagb4p1et
+                description: Contains the properties that indicate the current status of the job.
+                properties:
+                  status:
+                    $ref: '#/components/schemas/downloads_status'
+              links:
+                $ref: '#/components/schemas/json_api_links_self'
+                x-stoplight:
+                  id: nyv6w8lt03j4a
+    sort_internal:
+      title: sort_internal
+      type: array
+      items:
+        $ref: '#/components/schemas/sortBy'
+        x-stoplight:
+          id: rco9c6oaws4eh
+    Storage:
+      description: An object representing a storage location.
+      type: object
+      x-examples:
+        example-1:
+          jsonapi:
+            version: '1.0'
+          links:
+            self:
+              href: /oss/v2/buckets/wipbucket/objects/830b7ac3-dc75-4e36-aa32-7a1cff7599a1.dwg
+          data:
+            type: objects
+            id: urn:adsk.objects:os.object:wip.dm.prod.temp/830b7ac3-dc75-4e36-aa32-7a1cff7599a1.dwg
+            relationships:
+              target:
+                links:
+                  related:
+                    href: /data/v1/projects/b.6f8813fe-31a7-4440-bc63-d8ca97c856b4/folders/urn%3Aadsk.wipprod%3Adm.folder%3Asdfedf8wefl
+                data:
+                  type: folders
+                  id: urn:adsk.wipprod:dm.folder:sdfedf8wefl
+      title: Storage
+      properties:
+        jsonapi:
+          $ref: '#/components/schemas/json_api_version'
+        links:
+          $ref: '#/components/schemas/json_api_links_self'
+        data:
+          type: object
+          description: An object containing information on the storage location.
+          properties:
+            type:
+              $ref: '#/components/schemas/type_object'
+            id:
+              type: string
+              minLength: 1
+              description: The ID to uniquely identify the storage location.
+            relationships:
+              type: object
+              description: Contains links to resources that are directly related to the storage location.
+              properties:
+                target:
+                  type: object
+                  description: Information about the target object.
+                  properties:
+                    links:
+                      $ref: '#/components/schemas/json_api_links_related'
+                    data:
+                      type: object
+                      description: Contains information about the folder containing the item or version the storage location is reserved for.
+                      properties:
+                        type:
+                          $ref: '#/components/schemas/type_folder'
+                        id:
+                          type: string
+                          minLength: 1
+                          description: The ID to uniquely identify the resource.
+    currency:
+      title: currency
+      type: string
+      enum:
+      - AED
+      - AFN
+      - ALL
+      - AMD
+      - ANG
+      - AOA
+      - ARS
+      - AUD
+      - AWG
+      - AZN
+      - BAM
+      - BBD
+      - BDT
+      - BGN
+      - BHD
+      - BIF
+      - BMD
+      - BND
+      - BOB
+      - BOV
+      - BRL
+      - BSD
+      - BTN
+      - BWP
+      - BYN
+      - BYR
+      - BZD
+      - CAD
+      - CDF
+      - CHE
+      - CHF
+      - CHW
+      - CLF
+      - CLP
+      - CNY
+      - COP
+      - COU
+      - CRC
+      - CUC
+      - CUP
+      - CVE
+      - CZK
+      - DJF
+      - DKK
+      - DOP
+      - DZD
+      - EEK
+      - EGP
+      - ERN
+      - ETB
+      - EUR
+      - FJD
+      - FKP
+      - GBP
+      - GEL
+      - GHS
+      - GIP
+      - GMD
+      - GNF
+      - GTQ
+      - GYD
+      - HKD
+      - HNL
+      - HRK
+      - HTG
+      - HUF
+      - IDR
+      - ILS
+      - INR
+      - IQD
+      - IRR
+      - ISK
+      - JMD
+      - JOD
+      - JPY
+      - KES
+      - KGS
+      - KHR
+      - KMF
+      - KPW
+      - KRW
+      - KWD
+      - KYD
+      - KZT
+      - LAK
+      - LBP
+      - LKR
+      - LRD
+      - LSL
+      - LTL
+      - LVL
+      - LYD
+      - MAD
+      - MDL
+      - MGA
+      - MKD
+      - MMK
+      - MNT
+      - MOP
+      - MRU
+      - MUR
+      - MVR
+      - MWK
+      - MXN
+      - MXV
+      - MYR
+      - MZN
+      - NAD
+      - NGN
+      - NIO
+      - NOK
+      - NPR
+      - NZD
+      - OMR
+      - PAB
+      - PEN
+      - PGK
+      - PHP
+      - PKR
+      - PLN
+      - PYG
+      - QAR
+      - RON
+      - RSD
+      - RUB
+      - RWF
+      - SAR
+      - SBD
+      - SCR
+      - SDG
+      - SEK
+      - SGD
+      - SHP
+      - SLE
+      - SLL
+      - SOS
+      - SRD
+      - SSP
+      - STN
+      - SVC
+      - SYP
+      - SZL
+      - THB
+      - TJS
+      - TMT
+      - TND
+      - TOP
+      - TRL
+      - TRY
+      - TTD
+      - TWD
+      - TZS
+      - UAH
+      - UGX
+      - USD
+      - USN
+      - UYI
+      - UYU
+      - UYW
+      - UZS
+      - VED
+      - VES
+      - VND
+      - VUV
+      - WST
+      - XAF
+      - XAG
+      - XAU
+      - XBA
+      - XBB
+      - XBC
+      - XBD
+      - XCD
+      - XDR
+      - XOF
+      - XPD
+      - XPF
+      - XPT
+      - XSU
+      - XTS
+      - XUA
+      - XXX
+      - YER
+      - ZAR
+      - ZMW
+      - ZWL
+    json_api_link:
+      title: json_api_link
+      x-stoplight:
+        id: 0eyqmow1ie1is
+      type: object
+      description: An object containing the hyperlink to the referenced resource.
+      properties:
+        href:
+          type: string
+          x-stoplight:
+            id: d9k2el45bomh9
+          description: A hypertext reference to the location of the referenced resource.
+      required:
+      - href
+    json_api_links_related:
+      title: json_api_links_related
+      x-stoplight:
+        id: fgwxlu5412wa7
+      type: object
+      description: Contains the endpoint you can use to retrieve the related resources.
+      properties:
+        related:
+          type: object
+          x-stoplight:
+            id: o5ksk96io3pui
+          description: "An object containing the endpoint to retrieve \na list of related resources."
+          properties:
+            href:
+              type: string
+              x-stoplight:
+                id: n8345byjqrj4f
+              description: The URI of the endpoint that returns the related resources.
+    json_api_relationships_links_links:
+      type: object
+      required:
+      - links
+      description: Information on the link resources found in this resource.
+      properties:
+        links:
+          type: object
+          required:
+          - self
+          description: The object containing information on links to this resource.
+          properties:
+            self:
+              $ref: '#/components/schemas/json_api_link'
+    top_folder_extension_with_schema_link:
+      type: object
+      x-stoplight:
+        id: b34ee9d385f4d
+      description: A container of additional properties that extends the default properties of this resource.
+      properties:
+        type:
+          type: string
+          minLength: 1
+          description: The type of folder the resource represents.
+        version:
+          type: string
+          minLength: 1
+          description: The version of the folder type.
+        schema:
+          $ref: '#/components/schemas/json_api_link'
+        data:
+          type: object
+          additionalProperties:
+            type: object
+            description: 'JSON objects that contain additional properties specific to the folder type.
+
+              '
+          description: The object that contains the additional properties, which makes this resource extensible.
+      required:
+      - type
+      - version
+      - schema
+    json_api_links_self_and_web_view:
+      title: json_api_links_self_and_web_view
+      x-stoplight:
+        id: go4472ydw5y6e
+      type: object
+      description: Information on links to this resource.
+      required:
+      - self
+      properties:
+        self:
+          $ref: '#/components/schemas/json_api_link'
+        webView:
+          $ref: '#/components/schemas/web_view_link'
+    ProjectsPage:
+      title: Projects
+      x-stoplight:
+        id: ikvjx87zn5n72
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        results:
+          type: array
+          description: The requested page of projects.
+          items:
+            $ref: '#/components/schemas/Project'
+    ProjectPatch:
+      title: ProjectPatch
+      x-stoplight:
+        id: g4k3if9lta3pg
+      type: object
+      properties:
+        id:
+          type: string
+          description: Project ID
+        account_id:
+          type: string
+          x-stoplight:
+            id: e67zvdyuagrvb
+          description: Account ID
+        name:
+          type: string
+          x-stoplight:
+            id: dmzvvk6gp4fvg
+          description: Name of the project
+        start_date:
+          type: string
+          x-stoplight:
+            id: xn0vpzsk6nrpn
+          description: 'The starting date of a project; must be earlier than end_date
+
+            Format: YYYY-MM-DD'
+        end_date:
+          type: string
+          x-stoplight:
+            id: 8k65nul995k5g
+          description: 'The ending date of a project; must be later than start_date
+
+            Format: YYYY-MM-DD'
+        project_type:
+          type: string
+          x-stoplight:
+            id: 0ougx4e12wc5e
+          description: The type of project; accepts preconfigured and customized project types
+        value:
+          type: number
+          x-stoplight:
+            id: 3gfeukdzeddnr
+          description: Monetary value of the project
+        currency:
+          type: string
+          x-stoplight:
+            id: e1jzwyjpobyt8
+          description: Currency for project value
+        status:
+          x-stoplight:
+            id: gruqhoco7k1hr
+          description: The status of project.
+          type: string
+        job_number:
+          type: string
+          x-stoplight:
+            id: x97wzdzwxscc8
+          description: Project job number to connect a BIM 360 project to project or job in a financial or ERP system.
+        address_line_1:
+          type: string
+          x-stoplight:
+            id: be7zse4sz643m
+          description: Project address line 1
+        address_line_2:
+          type: string
+          x-stoplight:
+            id: unu5zecux1alc
+          description: Project address line 2
+        city:
+          type: string
+          x-stoplight:
+            id: mcn6w0lvgnp20
+          description: City in which project is located
+        state_or_province:
+          type: string
+          x-stoplight:
+            id: w39x7lnnh9myp
+          description: State or province in which project is located
+        postal_code:
+          type: string
+          x-stoplight:
+            id: owsyshcr8hvna
+          description: Postal code for the project location
+        country:
+          type: string
+          x-stoplight:
+            id: 8p08o8arqn17l
+          description: Country for this project
+        business_unit_id:
+          type: string
+          x-stoplight:
+            id: 17xu7kyhn7del
+          description: The business unit ID of this project
+        timezone:
+          type: string
+          x-stoplight:
+            id: qs32hyvg8ajfy
+          description: Time zone for this project
+        language:
+          x-stoplight:
+            id: g6dvm8dmqd5yw
+          description: Language of the project; applicable to the BIM 360 Field service only
+          type: string
+        construction_type:
+          x-stoplight:
+            id: beot2pj6n3azw
+          description: Type of construction
+          type: string
+        contract_type:
+          x-stoplight:
+            id: ovt9kdgv1cqxh
+          description: Contract Type for your project
+          type: string
+        last_sign_in:
+          type: string
+          x-stoplight:
+            id: 10g0wn1qosciu
+          description: Timestamp of the last sign in, YYYY-MM-DDThh:mm:ss.sssZ format
+    fields_internal:
+      title: fields_internal
+      x-stoplight:
+        id: gllpnqude53mp
+      type: array
+      items:
+        $ref: '#/components/schemas/fields'
+        x-stoplight:
+          id: eak8q4id1p2i3
+    Region:
+      title: Region
+      x-stoplight:
+        id: 5rz8jxdpgo4zq
+      type: string
+      enum:
+      - US
+      - EMEA
+      - AUS
+      - CAN
+      - DEU
+      - IND
+      - JPN
+      - GBR
+      description: 'Specifies the region where your request should be routed. Possible values are:
+
+        - ``US`` - Data center for the US region.
+
+        - ``EMEA`` - Data center for the European Union, Middle East, and Africa regions.
+
+        - ``AUS`` - Data center for the Australia region.
+
+        - ``CAN`` - Data center for the Canada region.
+
+        - ``DEU`` - Data center for the Germany region.
+
+        - ``IND`` - Data center for the India region.
+
+        - ``JPN`` - Data center for the Japan region.
+
+        - ``GBR`` - Data center for the United Kingdom region.'
+    Pagination:
+      title: Pagination
+      x-stoplight:
+        id: q1bi13503pl18
+      type: object
+      properties:
+        limit:
+          type: integer
+          x-stoplight:
+            id: 8izi1f176ek68
+        offset:
+          type: integer
+          x-stoplight:
+            id: v1vdhhbk5vhtj
+        totalResults:
+          type: integer
+          x-stoplight:
+            id: o7y9s28pvovds
+        nextUrl:
+          type: string
+          x-stoplight:
+            id: egebyg74p2y51
+        previousUrl:
+          type: string
+          x-stoplight:
+            id: rhoc949ms1w0p
+      description: "\tContains pagination details for the records returned by the endpoint."
+    type_job:
+      type: string
+      x-stoplight:
+        id: 3h21lnid5ruxu
+      enum:
+      - downloads
+      description: The type of this resource. Possible values are ``jobs``.
+    sortBy:
+      title: sortBy
+      x-stoplight:
+        id: th8hud7fjoevd
+      type: string
+      enum:
+      - name asc
+      - startDate asc
+      - endDate asc
+      - type asc
+      - status asc
+      - jobNumber asc
+      - constructionType asc
+      - deliveryMethod asc
+      - contractType asc
+      - currentPhase asc
+      - companyCount asc
+      - memberCount asc
+      - createdAt asc
+      - updatedAt asc
+      - name desc
+      - startDate desc
+      - endDate desc
+      - type desc
+      - status desc
+      - jobNumber desc
+      - constructionType desc
+      - deliveryMethod desc
+      - contractType desc
+      - currentPhase desc
+      - companyCount desc
+      - memberCount desc
+      - createdAt desc
+      - updatedAt desc
+    filterClassification_internal:
+      title: filterClassification_internal
+      type: array
+      items:
+        $ref: '#/components/schemas/classification'
+    Hub:
+      description: An object representing a hub.
+      type: object
+      x-examples:
+        example-1:
+          jsonapi:
+            version: '1.0'
+          links:
+            self:
+              href: /project/v1/hubs/a.ZXhhbXBsZTp3aXAxZnFhYXV0b2Rlc2sxNjE
+          data:
+            type: hubs
+            id: a.ZXhhbXBsZTp3aXAxZnFhYXV0b2Rlc2sxNjE
+            attributes:
+              name: my hub
+              extension:
+                data: {}
+                version: '1.0'
+                type: hubs:autodesk.core:Hub
+                schema:
+                  href: /schema/v1/versions/hubs%3Aautodesk.core%3AHub-1.0
+              region: US
+            relationships:
+              projects:
+                links:
+                  related:
+                    href: /project/v1/hubs/a.ZXhhbXBsZTp3aXAxZnFhYXV0b2Rlc2sxNjE/projects
+              pimCollection:
+                data:
+                  type: collection
+                  id: co.d41d8cd00998ecf8427e
+            links:
+              self:
+                href: /project/v1/hubs/a.ZXhhbXBsZTp3aXAxZnFhYXV0b2Rlc2sxNjE
+      title: Hub
+      properties:
+        jsonapi:
+          $ref: '#/components/schemas/json_api_version'
+        links:
+          $ref: '#/components/schemas/json_api_links_self'
+        data:
+          $ref: '#/components/schemas/HubData'
+    project_extension_with_schema_link:
+      title: project_extension_with_schema_link
+      x-stoplight:
+        id: ztgeolnkjee8a
+      type: object
+      description: A container of additional properties that extends the default properties of this resource.
+      properties:
+        type:
+          type: string
+          x-stoplight:
+            id: 5shuvhdelpby4
+          description: The Type ID of the schema that defines the structure of the ``extension.data`` object.
+        version:
+          type: string
+          x-stoplight:
+            id: ikdod0rzbn88x
+          description: The version of the schema that applies to the ``extension.data`` object.
+        schema:
+          $ref: '#/components/schemas/json_api_link'
+        data:
+          type: object
+          x-stoplight:
+            id: 6if5zajaqx5gr
+          additionalProperties:
+            type: object
+            description: 'Key-value pairs that contain the name and data of additional properties.
+
+              '
+          description: The object that contains the additional properties, which makes this resource extensible.
+      required:
+      - type
+      - version
+      - schema
+    filterTextMatch:
+      title: filterTextMatch
+      x-stoplight:
+        id: l613i9qr8h8a6
+      type: string
+      enum:
+      - contains
+      - startsWith
+      - endsWith
+      - equals
+  parameters:
+    job_id:
+      name: job_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The unique identifier of a job.
+    hub_id:
+      name: hub_id
+      in: path
+      schema:
+        type: string
+      description: The unique identifier of a hub.
+      required: true
+    page_number:
+      name: page[number]
+      in: query
+      required: false
+      schema:
+        type: integer
+        format: int32
+      description: Specifies what page to return. Page numbers are 0-based (the first page is page 0).
+    projectFilesOnly:
+      name: projectFilesOnly
+      in: query
+      required: false
+      schema:
+        type: boolean
+      description: "Specifies what folders and subfolders to return for BIM 360 Docs projects, when user context is provided. \n\n- ``true``: Response will be restricted to folder and subfolders containing project files for BIM 360 Docs projects.  \n- ``false``: (Default) Response will include all available folders.\n"
+    project_id:
+      name: project_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: "The unique identifier of a project. \n\nFor BIM 360 Docs and ACC Docs, a hub ID corresponds to an Account ID. To convert a BIM 360 or ACC Account ID to a hub ID, prefix the Account ID with ``b.``. For example, an Account ID of ```c8b0c73d-3ae9``` translates to a hub ID of ``b.c8b0c73d-3ae9``.\n\nSimilarly, to convert an ACC or BIM 360 project ID to a Data Management project ID prefix the ACC or BIM 360 project ID with ``b.``. For example, a project ID of ``c8b0c73d-3ae9`` translates to a project ID of ``b.c8b0c73d-3ae9``.\n"
+    filter_extension_type:
+      name: filter[extension.type]
+      in: query
+      required: false
+      schema:
+        type: array
+        items:
+          type: string
+      description: "Filter by the extension type. \n"
+    download_id:
+      name: download_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The Job ID of the job used to generate the download.
+    page_limit:
+      name: page[limit]
+      in: query
+      required: false
+      schema:
+        type: integer
+      description: Specifies the maximum number of elements to return in the page. The default value is 200. The min value is 1. The max value is 200.
+    excludeDeleted:
+      name: excludeDeleted
+      in: query
+      required: false
+      schema:
+        type: boolean
+      description: "Specifies whether deleted folders are excluded from the response for BIM 360 Docs projects, when user context is provided. \n\n- ``true``: Response excludes deleted folders for BIM 360 Docs projects.  \n- ``false``: (Default) Response will not exclude deleted folders for BIM 360 Docs projects.\n"
+    filter_id:
+      name: filter[id]
+      in: query
+      required: false
+      schema:
+        type: array
+        items:
+          type: string
+      description: Filter by the ``id`` of the ``ref`` target.
+    x-user-id:
+      name: x-user-id
+      in: header
+      required: false
+      schema:
+        type: string
+      description: In a two-legged authentication context, an app has access to all users specified by the administrator in the SaaS integrations UI. By providing this header, the API call will be limited to act only on behalf of the specified user.
+  responses:
+    401-general:
+      description: The supplied Authorization header was not valid or the supplied token scope was not acceptable. Verify Authentication and try again.
+      content:
+        application/json:
+          schema:
+            properties:
+              id:
+                type: string
+    403-general:
+      description: The request was successfully validated but permission is not granted, or the application has not been allowed access. Do not try again unless you resolve permissions first.
+      content:
+        application/json:
+          schema:
+            type: object
+            x-examples:
+              Example 1:
+                jsonapi: {}
+                links: {}
+                data: []
+                meta:
+                  warnings:
+                  - Id: null
+                    HttpStatusCode: '403'
+                    ErrorCode: BIM360DM_ERROR
+                    Title: Unable to get hubs from BIM360DM APAC.
+                    Detail: You don't have permission to access this API
+                    AboutLink: null
+                    Source: null
+                    meta: null
+            properties:
+              jsonapi:
+                type: object
+                description: The JSON API object.
+              links:
+                type: object
+                description: An object intended to contain the URI of a resource. Empty in this case, because an error has occurred.
+              data:
+                type: array
+                description: An object intended to contain the return data. Empty in this case, because an error has occurred.
+                items:
+                  type: object
+              meta:
+                type: object
+                description: Contains information about the error that occurred.
+                properties:
+                  warnings:
+                    type: array
+                    description: An array of objects, where each element of the array represents a warning.
+                    items:
+                      type: object
+                      properties:
+                        Id:
+                          description: An ID assigned to the warning.
+                          nullable: true
+                        HttpStatusCode:
+                          type: string
+                          description: The HTTP status code returned in response to the request.
+                        ErrorCode:
+                          type: string
+                          description: A code that indicates what went wrong.
+                        Title:
+                          type: string
+                          description: A quick summary of the issue, at a glance.
+                        Detail:
+                          type: string
+                          description: A more comprehensive explanation of the issue, providing specific information and potential solutions, if any.
+                        AboutLink:
+                          description: A hyperlink to documentation about the issue.
+                          nullable: true
+                        Source:
+                          description: Information about the service that detected the issue.
+                          nullable: true
+                        meta:
+                          description: Additional information about the issue.
+                          nullable: true
+    404-general:
+      description: The specified resource was not found.
+      content:
+        application/json:
+          schema:
+            properties:
+              id:
+                type: string
+    400-general:
+      description: The request could not be understood by the server due to malformed syntax or missing request headers. The client SHOULD NOT repeat the request without modifications. The response body may give an indication of what is wrong with the request.
+      content:
+        application/json:
+          schema:
+            properties:
+              id:
+                type: string
+  securitySchemes:
+    2-legged:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+    3-legged-implicit:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: ''
+          refreshUrl: ''
+          scopes: {}
+    3-legged:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: ''
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+x-stoplight:
+  id: zm6m3b30rcbon

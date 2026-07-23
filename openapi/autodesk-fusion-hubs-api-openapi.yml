@@ -1,0 +1,574 @@
+openapi: 3.0.0
+info:
+  title: Construction.Account.Admin Account Management Hubs API
+  version: '1.0'
+  contact:
+    name: Autodesk Plaform Services
+    url: https://aps.autodesk.com/
+    email: aps.help@autodesk.com
+  termsOfService: https://www.autodesk.com/company/legal-notices-trademarks/terms-of-service-autodesk360-web-services/forge-platform-web-services-api-terms-of-service
+  x-support: https://stackoverflow.com/questions/tagged/autodesk-platform-services
+  description: 'The Account Admin API automates creating and managing projects, assigning and managing project users, and managing member and partner company directories. You can also synchronize data with external systems.
+
+    '
+servers:
+- url: https://developer.api.autodesk.com
+security:
+- 2-legged: []
+- 3-legged: []
+tags:
+- name: Hubs
+paths:
+  /project/v1/hubs:
+    parameters: []
+    get:
+      tags:
+      - Hubs
+      operationId: getHubs
+      summary: List Hubs
+      description: 'Returns a collection of hubs that the user of your app can access.
+
+
+        The returned hubs can be BIM 360 Team hubs, Fusion Team hubs (formerly known as A360 Team hubs), A360 Personal hubs, ACC Docs (Autodesk Docs) accounts, or BIM 360 Docs accounts. Only active hubs are returned.
+
+
+        For BIM 360 Docs and ACC Docs, a hub ID corresponds to an Account ID. To convert a BIM 360 or ACC Account ID to a hub ID, prefix the Account ID with ``b.``. For example, an Account ID of ```c8b0c73d-3ae9``` translates to a hub ID of ``b.c8b0c73d-3ae9``.
+
+
+        **Note:** This operation supports Autodesk Construction Cloud (ACC) Projects. For more information, see the [ACC Platform API documentation](https://en.docs.acc.v1/overview/introduction/). '
+      security:
+      - 2-legged:
+        - data:read
+      - 3-legged:
+        - data:read
+      parameters:
+      - $ref: '#/components/parameters/x-user-id'
+      - $ref: '#/components/parameters/filter_id'
+      - $ref: '#/components/parameters/filter_name'
+      - $ref: '#/components/parameters/filter_extension_type'
+      responses:
+        '200':
+          description: The list of hubs was successfully retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Hubs'
+        '401':
+          $ref: '#/components/responses/401-general'
+        '403':
+          $ref: '#/components/responses/403-general'
+  /project/v1/hubs/{hub_id}:
+    parameters:
+    - $ref: '#/components/parameters/hub_id'
+    get:
+      tags:
+      - Hubs
+      operationId: getHub
+      summary: Get a Hub
+      description: 'Returns the hub specified by the ``hub_id`` parameter.
+
+
+        For BIM 360 Docs, a hub ID corresponds to a BIM 360 account ID. To convert a BIM 360 account ID to a hub ID, prefix the account ID with ``b.``. For example, an account ID of ```c8b0c73d-3ae9``` translates to a hub ID of ``b.c8b0c73d-3ae9``.
+
+
+        **Note:** This operation supports Autodesk Construction Cloud (ACC) Projects. For more information, see the [ACC Platform API documentation](https://en.docs.acc.v1/overview/introduction/). '
+      security:
+      - 2-legged:
+        - data:read
+      - 3-legged:
+        - data:read
+      parameters:
+      - $ref: '#/components/parameters/x-user-id'
+      responses:
+        '200':
+          description: The hub was successfully retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Hub'
+        '400':
+          $ref: '#/components/responses/400-general'
+        '403':
+          $ref: '#/components/responses/403-general'
+        '404':
+          $ref: '#/components/responses/404-general'
+components:
+  responses:
+    403-general:
+      description: The request was successfully validated but permission is not granted, or the application has not been allowed access. Do not try again unless you resolve permissions first.
+      content:
+        application/json:
+          schema:
+            type: object
+            x-examples:
+              Example 1:
+                jsonapi: {}
+                links: {}
+                data: []
+                meta:
+                  warnings:
+                  - Id: null
+                    HttpStatusCode: '403'
+                    ErrorCode: BIM360DM_ERROR
+                    Title: Unable to get hubs from BIM360DM APAC.
+                    Detail: You don't have permission to access this API
+                    AboutLink: null
+                    Source: null
+                    meta: null
+            properties:
+              jsonapi:
+                type: object
+                description: The JSON API object.
+              links:
+                type: object
+                description: An object intended to contain the URI of a resource. Empty in this case, because an error has occurred.
+              data:
+                type: array
+                description: An object intended to contain the return data. Empty in this case, because an error has occurred.
+                items:
+                  type: object
+              meta:
+                type: object
+                description: Contains information about the error that occurred.
+                properties:
+                  warnings:
+                    type: array
+                    description: An array of objects, where each element of the array represents a warning.
+                    items:
+                      type: object
+                      properties:
+                        Id:
+                          description: An ID assigned to the warning.
+                          nullable: true
+                        HttpStatusCode:
+                          type: string
+                          description: The HTTP status code returned in response to the request.
+                        ErrorCode:
+                          type: string
+                          description: A code that indicates what went wrong.
+                        Title:
+                          type: string
+                          description: A quick summary of the issue, at a glance.
+                        Detail:
+                          type: string
+                          description: A more comprehensive explanation of the issue, providing specific information and potential solutions, if any.
+                        AboutLink:
+                          description: A hyperlink to documentation about the issue.
+                          nullable: true
+                        Source:
+                          description: Information about the service that detected the issue.
+                          nullable: true
+                        meta:
+                          description: Additional information about the issue.
+                          nullable: true
+    401-general:
+      description: The supplied Authorization header was not valid or the supplied token scope was not acceptable. Verify Authentication and try again.
+      content:
+        application/json:
+          schema:
+            properties:
+              id:
+                type: string
+    404-general:
+      description: The specified resource was not found.
+      content:
+        application/json:
+          schema:
+            properties:
+              id:
+                type: string
+    400-general:
+      description: The request could not be understood by the server due to malformed syntax or missing request headers. The client SHOULD NOT repeat the request without modifications. The response body may give an indication of what is wrong with the request.
+      content:
+        application/json:
+          schema:
+            properties:
+              id:
+                type: string
+  schemas:
+    base_attributes_extension_object_with_schema_link:
+      title: 'base_attributes_extension_object_with_schema_link:'
+      x-stoplight:
+        id: aj8zaihf7alzp
+      type: object
+      description: A container of additional properties that extends this resource.
+      properties:
+        type:
+          type: string
+          x-stoplight:
+            id: jdli2qhh88jq3
+          description: The Type ID of the schema that defines the structure of the ``extension.data`` object.
+        version:
+          type: string
+          x-stoplight:
+            id: x1l84lpe0ce01
+          description: The version of the schema that applies to the ``extension.data`` object.
+        schema:
+          type: object
+          x-stoplight:
+            id: el8fixpzd4k3a
+          description: A container for the hyperlink to the schema of the type.
+          required:
+          - href
+          properties:
+            href:
+              type: string
+              x-stoplight:
+                id: oh11qown58iob
+              description: A hypertext reference to the location of the referenced resource.
+        data:
+          type: object
+          x-stoplight:
+            id: 5h0r1ilaapxra
+          description: The object that contains the additional properties that extends this resource.
+          additionalProperties:
+            type: object
+            description: 'Key-value pairs that contain the name and data of additional properties.
+
+              '
+      required:
+      - type
+      - version
+      - schema
+    json_api_links_related:
+      title: json_api_links_related
+      x-stoplight:
+        id: fgwxlu5412wa7
+      type: object
+      description: Contains the endpoint you can use to retrieve the related resources.
+      properties:
+        related:
+          type: object
+          x-stoplight:
+            id: o5ksk96io3pui
+          description: "An object containing the endpoint to retrieve \na list of related resources."
+          properties:
+            href:
+              type: string
+              x-stoplight:
+                id: n8345byjqrj4f
+              description: The URI of the endpoint that returns the related resources.
+    json_api_version:
+      title: json_api_version
+      x-stoplight:
+        id: wtcnivkdziwr7
+      type: object
+      description: The JSON API object.
+      properties:
+        version:
+          description: The version of JSON API. Will always be ``1.0``.
+          $ref: '#/components/schemas/json_api_version_value'
+      required:
+      - version
+    Hubs:
+      description: Successful retrieval of the hubs collection.
+      type: object
+      x-examples:
+        example-1:
+          jsonapi:
+            version: '1.0'
+          links:
+            self:
+              href: /project/v1/hubs
+          data:
+          - type: hubs
+            id: a.ZXhhbXBsZTp3aXAxZnFhYXV0b2Rlc2sxNjE
+            attributes:
+              name: my team hub
+              extension:
+                type: hubs:autodesk.core:Hub
+                version: '1.0'
+                schema:
+                  href: /schema/v1/versions/hubs%3Aautodesk.core%3AHub-1.0
+                data: {}
+              region: US
+            links:
+              self:
+                href: /project/v1/hubs/a.ZXhhbXBsZTp3aXAxZnFhYXV0b2Rlc2sxNjE
+            relationships:
+              projects:
+                links:
+                  related:
+                    href: /project/v1/hubs/a.ZXhhbXBsZTp3aXAxZnFhYXV0b2Rlc2sxNjE/projects
+              pimCollection:
+                data:
+                  type: collection
+                  id: co.d41d8cd00998ecf8427e
+          - type: hubs
+            id: a.ZXhhbXBsZTp3aXAxZnFhYXV0b2Rlc2sxNjI=
+            attributes:
+              name: my personal hub
+              extension:
+                type: hubs:autodesk.a360:PersonalHub
+                version: '1.0'
+                schema:
+                  href: /schema/v1/versions/hubs%3Aautodesk.a360%3APersonalHub-1.0
+                data: {}
+              region: US
+            links:
+              self:
+                href: /project/v1/hubs/a.ZXhhbXBsZTp3aXAxZnFhYXV0b2Rlc2sxNjI=
+            relationships:
+              projects:
+                links:
+                  related:
+                    href: /project/v1/hubs/a.ZXhhbXBsZTp3aXAxZnFhYXV0b2Rlc2sxNjI=/projects
+              pimCollection:
+                data:
+                  type: collection
+                  id: co.368e3dc4144c0ff253d6
+      title: HubsResponse
+      properties:
+        jsonapi:
+          $ref: '#/components/schemas/json_api_version'
+        links:
+          $ref: '#/components/schemas/json_api_links_self'
+        data:
+          type: array
+          description: An array of objects where each object represents a hub.
+          items:
+            $ref: '#/components/schemas/HubData'
+    json_api_version_value:
+      description: The version of JSON API. Will always be ``1.0``.
+      type: string
+      enum:
+      - '1.0'
+    region:
+      type: string
+      enum:
+      - US
+      - EMEA
+      - AUS
+      - CAN
+      - DEU
+      - IND
+      - JPN
+      - GBR
+      x-stoplight:
+        id: qy609yu6fbfsf
+      description: 'Specifies where the hub is stored. Possible values are:
+
+
+        - ``US`` - Data center for the US region.
+
+        - ``EMEA`` - Data center for the European Union, Middle East, and Africa regions.
+
+        - ``AUS`` - Data center for the Australia region.
+
+        - ``CAN`` - Data center for the Canada region.
+
+        - ``DEU`` - Data center for the Germany region.
+
+        - ``IND`` - Data center for the India region.
+
+        - ``JPN`` - Data center for the Japan region.
+
+        - ``GBR`` - Data center for the United Kingdom region.'
+    type_hub:
+      type: string
+      x-stoplight:
+        id: f84280dd62b59
+      enum:
+      - hubs
+      description: The type of the resource. Possible values are ``hubs``.
+    json_api_type_id:
+      title: json_api_type_id
+      x-stoplight:
+        id: vj150c8bxpc9d
+      type: object
+      description: An object containing the ``id`` and ``type`` properties of a resource.
+      properties:
+        id:
+          type: string
+          description: The URN of the resource.
+        type:
+          type: string
+          x-stoplight:
+            id: j3iiuzs5pdley
+          description: The type of the resource.
+    json_api_links_self:
+      title: json_api_links_self
+      x-stoplight:
+        id: hedbm6v3pcz7k
+      type: object
+      description: An object containing the URI of the endpoint to access this resource.
+      properties:
+        self:
+          type: object
+          x-stoplight:
+            id: xjz8a6shpmaya
+          description: An object containing the URI of the endpoint to access this resource.
+          properties:
+            href:
+              type: string
+              x-stoplight:
+                id: jx2lmnxrl8f10
+              description: "The URI of the endpoint to access this \nresource."
+    Hub:
+      description: An object representing a hub.
+      type: object
+      x-examples:
+        example-1:
+          jsonapi:
+            version: '1.0'
+          links:
+            self:
+              href: /project/v1/hubs/a.ZXhhbXBsZTp3aXAxZnFhYXV0b2Rlc2sxNjE
+          data:
+            type: hubs
+            id: a.ZXhhbXBsZTp3aXAxZnFhYXV0b2Rlc2sxNjE
+            attributes:
+              name: my hub
+              extension:
+                data: {}
+                version: '1.0'
+                type: hubs:autodesk.core:Hub
+                schema:
+                  href: /schema/v1/versions/hubs%3Aautodesk.core%3AHub-1.0
+              region: US
+            relationships:
+              projects:
+                links:
+                  related:
+                    href: /project/v1/hubs/a.ZXhhbXBsZTp3aXAxZnFhYXV0b2Rlc2sxNjE/projects
+              pimCollection:
+                data:
+                  type: collection
+                  id: co.d41d8cd00998ecf8427e
+            links:
+              self:
+                href: /project/v1/hubs/a.ZXhhbXBsZTp3aXAxZnFhYXV0b2Rlc2sxNjE
+      title: Hub
+      properties:
+        jsonapi:
+          $ref: '#/components/schemas/json_api_version'
+        links:
+          $ref: '#/components/schemas/json_api_links_self'
+        data:
+          $ref: '#/components/schemas/HubData'
+    HubData:
+      title: HubData
+      x-stoplight:
+        id: nthprwqm1o6lv
+      type: object
+      description: The object containing information about the hub.
+      properties:
+        type:
+          $ref: '#/components/schemas/type_hub'
+          x-stoplight:
+            id: tc7fa3ac13r6h
+        id:
+          type: string
+          x-stoplight:
+            id: 9f2ogpb91zghy
+          description: The hub ID, which uniquely identifies the hub.
+        attributes:
+          type: object
+          x-stoplight:
+            id: xjchsug8c2rw7
+          description: The properties of the hub.
+          properties:
+            name:
+              type: string
+              x-stoplight:
+                id: vw18qagfrio57
+              description: A human friendly name to identify the hub.
+            extension:
+              $ref: '#/components/schemas/base_attributes_extension_object_with_schema_link'
+            region:
+              $ref: '#/components/schemas/region'
+              x-stoplight:
+                id: qy609yu6fbfsf
+        relationships:
+          type: object
+          x-stoplight:
+            id: 0skjm84h82gng
+          description: Contains links to resources that are directly related to this hub.
+          properties:
+            projects:
+              type: object
+              x-stoplight:
+                id: dj2kh2hqjxzuu
+              description: "Contains the endpoint you can use to \nlist the projects in this hub."
+              properties:
+                links:
+                  $ref: '#/components/schemas/json_api_links_related'
+            pimCollection:
+              type: object
+              x-stoplight:
+                id: q1erud678lf5y
+              description: Information on the ``id`` and ``type`` properties of a resource. This is available only for Fusion Team hubs and A360 Personal hubs.
+              properties:
+                data:
+                  $ref: '#/components/schemas/json_api_type_id'
+        links:
+          $ref: '#/components/schemas/json_api_links_self'
+      required:
+      - links
+  parameters:
+    hub_id:
+      name: hub_id
+      in: path
+      schema:
+        type: string
+      description: The unique identifier of a hub.
+      required: true
+    filter_id:
+      name: filter[id]
+      in: query
+      required: false
+      schema:
+        type: array
+        items:
+          type: string
+      description: Filter by the ``id`` of the ``ref`` target.
+    x-user-id:
+      name: x-user-id
+      in: header
+      required: false
+      schema:
+        type: string
+      description: In a two-legged authentication context, an app has access to all users specified by the administrator in the SaaS integrations UI. By providing this header, the API call will be limited to act only on behalf of the specified user.
+    filter_extension_type:
+      name: filter[extension.type]
+      in: query
+      required: false
+      schema:
+        type: array
+        items:
+          type: string
+      description: "Filter by the extension type. \n"
+    filter_name:
+      name: filter[name]
+      in: query
+      required: false
+      schema:
+        type: array
+        items:
+          type: string
+      description: Filter by the ``name`` of the ``ref`` target.
+  securitySchemes:
+    2-legged:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+    3-legged-implicit:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: ''
+          refreshUrl: ''
+          scopes: {}
+    3-legged:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: ''
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+x-stoplight:
+  id: zm6m3b30rcbon

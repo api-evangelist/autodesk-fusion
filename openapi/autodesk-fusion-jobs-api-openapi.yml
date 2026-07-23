@@ -1,0 +1,1118 @@
+openapi: 3.0.0
+info:
+  title: Construction.Account.Admin Account Management Jobs API
+  version: '1.0'
+  contact:
+    name: Autodesk Plaform Services
+    url: https://aps.autodesk.com/
+    email: aps.help@autodesk.com
+  termsOfService: https://www.autodesk.com/company/legal-notices-trademarks/terms-of-service-autodesk360-web-services/forge-platform-web-services-api-terms-of-service
+  x-support: https://stackoverflow.com/questions/tagged/autodesk-platform-services
+  description: 'The Account Admin API automates creating and managing projects, assigning and managing project users, and managing member and partner company directories. You can also synchronize data with external systems.
+
+    '
+servers:
+- url: https://developer.api.autodesk.com
+security:
+- 2-legged: []
+- 3-legged: []
+tags:
+- name: Jobs
+paths:
+  /modelderivative/v2/designdata/job:
+    parameters: []
+    post:
+      summary: Create Translation Job
+      tags:
+      - Jobs
+      responses:
+        '200':
+          description: The request was accepted and a translation job was successfully started.
+          headers:
+            x-ads-app-identifier:
+              $ref: '#/components/headers/x-ads-app-identifier'
+            x-ads-startup-time:
+              $ref: '#/components/headers/x-ads-startup-time'
+            x-ads-duration:
+              $ref: '#/components/headers/x-ads-duration'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+        '201':
+          description: The requested derivative already exists. So, a new derivative will not be generated.
+      operationId: start-job
+      description: "Creates a job to translate the specified source design to another format, generating derivatives of the source design. You can optionally:\n\n- Extract selected parts of a design and export the set of geometries in OBJ format.\n- Generate different-sized thumbnails.\n\nWhen the translation job runs, details about the process and generated derivatives are logged to a JSON file known as a manifest. This manifest is typically created during the first translation of a source design. Subsequently, the system updates the same manifest whenever a translation is performed for that design. \n\nIf necessary, you can set the ``x-ads-force`` parameter to ``true``. Then, the system will delete the existing manifest and create a new one. However, be aware that doing so will also delete all previously generated derivatives."
+      security:
+      - 2-legged:
+        - data:read
+        - data:write
+        - data:create
+      - 3-legged:
+        - data:read
+        - data:write
+        - data:create
+      parameters:
+      - $ref: '#/components/parameters/x-ads-force'
+      - $ref: '#/components/parameters/x-ads-derivative-format'
+      - $ref: '#/components/parameters/region'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobPayload'
+  /modelderivative/v2/designdata/{urn}/references:
+    parameters:
+    - name: urn
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The Base64 (URL Safe) encoded design URN.
+    post:
+      summary: Specify References
+      tags:
+      - Jobs
+      responses:
+        '200':
+          description: The locations of referenced files was successfully recorded.
+          headers:
+            x-ads-app-identifier:
+              $ref: '#/components/headers/x-ads-app-identifier'
+            x-ads-duration:
+              $ref: '#/components/headers/x-ads-duration'
+            x-ads-startup-time:
+              $ref: '#/components/headers/x-ads-startup-time'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpecifyReferences'
+      operationId: specify-references
+      description: 'Specifies the location of the files referenced by the specified source design.
+
+
+        When you call `Create Translation Job </en/docs/model-derivative/v2/reference/http/job-POST>`_, set  ``checkReferences`` to ``true``.   The Model Derivative service will then use the details you specify in this operation to locate and download the referenced files.
+
+        '
+      security:
+      - 2-legged:
+        - data:read
+        - data:write
+        - data:create
+      - 3-legged:
+        - data:read
+        - data:write
+        - data:create
+      parameters:
+      - $ref: '#/components/parameters/region'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SpecifyReferencesPayload'
+components:
+  schemas:
+    ApplicationProtocol:
+      type: string
+      x-stoplight:
+        id: e8b97471468f8
+      description: "Specifies the application protocol to use when the output type is STEP. Possible values are: \n\n- ``203`` - Configuration controlled design.\n- ``214`` - (Default) Core data for automotive mechanical design processes. \n- ``242`` - Managed model based 3D engineering. \n"
+      default: '214'
+      enum:
+      - '203'
+      - '214'
+      - '242'
+    JobPayloadFormatSVFAdvancedVUE:
+      type: object
+      x-stoplight:
+        id: 36da14c91473b
+      description: Contains advanced configuration settings for translation jobs processing VUE inputs.
+      properties:
+        hierarchy:
+          $ref: '#/components/schemas/Hierarchy'
+      title: VUE
+    SurfaceType:
+      type: string
+      x-stoplight:
+        id: 54bbe66ea757d
+      description: "Specifies the surface type to export as, when the output is IGES. Possible values are \n\n- ``bounded`` - (Default) Bounded surface\n- ``trimmed`` - Trimmed surface\n-  `wireframe`. Wireframe  surface.'\n"
+      default: bounded
+      enum:
+      - bounded
+      - trimmed
+      - wireframe
+    MaterialMode:
+      type: string
+      x-stoplight:
+        id: 7503c129e886f
+      description: 'Specifies the materials to apply to the generated SVF derivatives. Applicable only when the source design is of type RVT. Possible values are:
+
+
+        - ``auto`` - (Default) Use the current setting of the default view of the input file.
+
+        - ``basic`` - Use basic materials.
+
+        - ``autodesk`` - Use Autodesk materials.'
+      enum:
+      - auto
+      - basic
+      - autodesk
+    JobPayloadFormatSVFAdvancedDWG:
+      type: object
+      x-stoplight:
+        id: 0544ebc2cd021
+      description: Contains advanced configuration settings for translation jobs processing DWG inputs.
+      properties:
+        2dviews:
+          $ref: '#/components/schemas/2dView'
+      title: DWG
+    JobPayloadFormatAdvancedIFC:
+      title: IFC
+      x-stoplight:
+        id: 29jzaba5tepwr
+      type: object
+      properties:
+        exportSettingName:
+          type: string
+          description: The export settings should be one of the IFC Export settings pre-saved in the source design.
+      description: Contains advanced configuration settings for translation jobs producing IFC outputs.
+    ExtractorVersion:
+      type: string
+      x-stoplight:
+        id: 0ce6aa62598da
+      description: 'Specifies what version of the Revit translator/extractor to use. Applicable only when the source design is of type RVT. Possible values are:
+
+
+        - ``next`` - Makes the translation job use the newest available version of the translator/extractor. This option is meant to be used by beta testers who wish to test a pre-release version of the translator. If no pre-release version is available, the system uses the current official release version.
+
+        - ``previous`` - Makes the translation job use the previous official release version of the translator/extractor. This option is meant to be used as a workaround in case of regressions caused by a new official release of the translator/extractor. If this attribute is not specified, the system uses the current official release version.'
+      enum:
+      - next
+      - previous
+    Unit:
+      type: string
+      x-stoplight:
+        id: c8830955fe86d
+      description: "The units the models must be translated to, when the output type is OBJ. For example, from millimeters (10, 123, 31) to centimeters (1.0, 12.3, 3.1). If the source unit or the unit you are translating to is not supported, the values remain unchanged.\nPossible values are: \n\n- ``meter``\n- ``decimeter``\n- ``centimeter``\n- ``millimeter``\n- ``micrometer``\n- ``nanometer``\n- ``yard``\n- ``foot``\n- ``inch``\n- ``mil``\n- ``microinch``\n\n**Note:** Not supported when the source design is F3D."
+      enum:
+      - meter
+      - decimeter
+      - centimeter
+      - millimeter
+      - micrometer
+      - nanometer
+      - yard
+      - foot
+      - inch
+      - mil
+      - microinch
+    SpecifyReferencesPayload:
+      title: SpecifyReferencesPayload
+      x-stoplight:
+        id: i26rl2n7os594
+      type: object
+      properties:
+        urn:
+          type: string
+          description: The URL safe Base64 encoded URN of the source design. Mandatory if the Base64 encoded urn in the request URL is a logical URN.
+        region:
+          $ref: '#/components/schemas/Region'
+        filename:
+          type: string
+          minLength: 1
+          description: The file name of the top level component. By default, it is set to ``""`` and the file will be download with its ``urn``.
+        references:
+          type: array
+          uniqueItems: true
+          minItems: 1
+          description: An array of objects, where each object represents a referenced file.
+          items:
+            type: object
+            properties:
+              urn:
+                type: string
+                minLength: 1
+                description: The URN of the referenced file.
+              relativePath:
+                type: string
+                minLength: 1
+                description: The path to the referenced file, relative to the top level component. By default, it is set to ``""``, which means that the referenced file and top level component are in the same folder.
+              filename:
+                type: string
+                minLength: 1
+                description: The file name of the referenced file. By default, it is set to ``""`` and the referenced file will be downloaded by its ``urn`` and placed relative to the top-level component using ``relativePath``.
+              metadata:
+                type: object
+                additionalProperties:
+                  type: object
+                description: An object to hold custom metadata.
+            required:
+            - urn
+            - relativePath
+            - filename
+      required:
+      - urn
+      - filename
+      - references
+      description: Represents the request body of a Specify References operation.
+    OutputType:
+      title: OutputType
+      x-stoplight:
+        id: 2xuawbsgyqhuv
+      type: string
+      description: The requested output types. Possible values include `svf`, `svf2`, `thumbnail`, `stl`, `step`, `iges`, `obj`, `ifc` or `dwg`. For a list of supported types, call [List Supported Formats](/en/docs/model-derivative/v2/reference/http/formats-GET).
+      enum:
+      - svf
+      - svf2
+      - thumbnail
+      - stl
+      - step
+      - iges
+      - obj
+      - ifc
+      - dwg
+      - fbx
+    SolidType:
+      type: string
+      x-stoplight:
+        id: dd5831c11180b
+      description: "The solid body type to export as, when the output is IGES. Possible values are: \n\n- ``solid`` - (Default)\n- ``surface``\n- ``wireframe``\n"
+      default: solid
+      enum:
+      - solid
+      - surface
+      - wireframe
+    JobPayloadFormatSVF:
+      type: object
+      x-stoplight:
+        id: a17f6b6e90f6d
+      description: Describes the options for translation jobs producing SVF outputs.
+      properties:
+        views:
+          type: array
+          description: Specifies the type of view to generate. Possible values are `2d` and `3d`.
+          items:
+            $ref: '#/components/schemas/View'
+        type:
+          $ref: '#/components/schemas/OutputType'
+        advanced:
+          description: Contains advanced configuration settings for translation jobs producing ``svf`` outputs. The available options depend on the input type.
+          oneOf:
+          - $ref: '#/components/schemas/JobPayloadFormatSVFAdvancedRVT'
+          - $ref: '#/components/schemas/JobPayloadFormatSVFAdvancedDGN'
+          - $ref: '#/components/schemas/JobPayloadFormatSVFAdvancedDWG'
+          - $ref: '#/components/schemas/JobPayloadFormatSVFAdvancedIFC'
+          - $ref: '#/components/schemas/JobPayloadFormatSVFAdvancedNWD'
+          - $ref: '#/components/schemas/JobPayloadFormatSVFAdvancedVUE'
+          type: object
+      title: SVF Options
+    JobPayloadFormatOBJ:
+      type: object
+      x-stoplight:
+        id: f16ce1a277080
+      description: Describes the options for translation jobs producing  OBJ outputs.
+      properties:
+        type:
+          $ref: '#/components/schemas/OutputType'
+        advanced:
+          $ref: '#/components/schemas/JobPayloadFormatAdvancedOBJ'
+      title: OBJ Options
+    JobPayloadFormatSVF2AdvancedDGN:
+      type: object
+      x-stoplight:
+        id: r402odcqc0iau
+      description: Contains advanced configuration settings for translation jobs processing  DGN inputs.
+      properties:
+        requestedLinkageIDs:
+          type: array
+          description: An array containing user data linkage IDs of the linkage data to be extracted from the DGN file. Linkage data is not extracted if you do not specify this attribute.
+          items:
+            type: integer
+      title: DGN
+    JobPayloadFormatSVF2AdvancedIFC:
+      type: object
+      x-stoplight:
+        id: idy8w05irf07j
+      description: Contains advanced configuration settings for translation jobs processing IFC inputs.
+      properties:
+        conversionMethod:
+          $ref: '#/components/schemas/ConversionMethod'
+        buildingStoreys:
+          $ref: '#/components/schemas/BuildingStoreys'
+        spaces:
+          $ref: '#/components/schemas/Spaces'
+        openingElements:
+          $ref: '#/components/schemas/OpeningElements'
+      title: IFC
+    XAdsDerivativeFormat:
+      type: string
+      x-stoplight:
+        id: 143cf5356d397
+      title: XAdsDerivativeFormat
+      description: "Specifies what Object IDs to return, if the design has legacy SVF derivatives generated by the BIM Docs service. Possible values are: \n\n- ``latest`` - (Default) Return SVF2 Object IDs.\n- ``fallback`` - Return SVF Object IDs."
+      enum:
+      - latest
+      - fallback
+    JobPayloadFormatAdvancedThumbnail:
+      title: Thumbnail
+      x-stoplight:
+        id: mm1itiahwey1x
+      type: object
+      properties:
+        width:
+          $ref: '#/components/schemas/Width'
+        height:
+          $ref: '#/components/schemas/Height'
+      description: Contains advanced configuration settings for translation jobs producing thumbnail outputs.
+    JobPayloadFormatAdvancedOBJ:
+      title: OBJ
+      x-stoplight:
+        id: 1dabrvisp2r1d
+      type: object
+      properties:
+        type:
+          type: string
+          description: The requested output type. ``obj`` in this case.
+        advanced:
+          type: object
+          description: Contains advanced configuration settings for translation jobs producing `obj` outputs.
+          properties:
+            exportFileStructure:
+              $ref: '#/components/schemas/ExportFileStructure'
+            unit:
+              $ref: '#/components/schemas/Unit'
+            modelGuid:
+              type: string
+              description: Required for geometry extractions. Specifies the ID of the Model View that contains the geometry to extract.
+            objectIds:
+              type: array
+              description: 'Required for geometry extractions. Specifies the IDs of the objects (``objectID) to extract. -1 will extract the entire model.
+
+                '
+              items:
+                type: integer
+      description: Contains advanced configuration settings for translation jobs producing `obj` outputs.
+    Spaces:
+      type: string
+      x-stoplight:
+        id: 496cb45012e93
+      description: 'Specifies how spaces are translated. Applicable only when the source design is of type IFC. Possible values are:
+
+
+        - ``hide`` - (Default) spaces are translated but are not visible by default.
+
+        - ``show`` - Spaces are translated and are visible by default.
+
+        - ``skip`` - Spaces are not translated.
+
+
+        **Note:** These options are applicable only when ``conversionMethod`` is set to ``modern`` or ``v3``.'
+      enum:
+      - hide
+      - show
+      - skip
+    Job:
+      required:
+      - acceptedJobs
+      - result
+      - urn
+      type: object
+      properties:
+        result:
+          type: string
+          description: reporting success status
+        urn:
+          type: string
+          description: the urn identifier of the source file
+        acceptedJobs:
+          required:
+          - output
+          type: object
+          properties:
+            output:
+              type: object
+              properties: {}
+              description: Identical to the ``output`` object of the request body. For information on each attribute, see the request body structure description.
+          description: List of the requested outputs.
+      title: ''
+      description: Represents the successful response of a Create Translation Job operation.
+    OpeningElements:
+      type: string
+      x-stoplight:
+        id: 165e55ef212e5
+      description: 'Specifies how openings are translated. Applicable only when the source design is of type IFC. Possible values are:
+
+
+        - ``hide`` - (Default) Openings are translated but are not visible by default.
+
+        - ``show`` - Openings are translated and are visible by default.
+
+        - ``skip`` - Openings are not translated.
+
+
+        **Note:** These options are applicable only when conversionMethod is set to ``modern`` or ``v3``.
+
+        '
+      enum:
+      - hide
+      - show
+      - skip
+    JobPayloadFormatAdvancedSTEP:
+      title: STEP
+      x-stoplight:
+        id: 0g8yxewxprnob
+      type: object
+      properties:
+        applicationProtocol:
+          $ref: '#/components/schemas/ApplicationProtocol'
+        tolerance:
+          type: number
+          description: Possible values are between `0` and `1`. By default it is set at 0.001.
+          format: float
+          default: 0.001
+      description: Contains advanced configuration settings for translation jobs producing a STEP output.
+    JobPayload:
+      type: object
+      description: Represents the request body of a Create Translation Job operation.
+      required:
+      - input
+      - output
+      properties:
+        input:
+          type: object
+          description: Describes the attributes of the source design.
+          required:
+          - urn
+          properties:
+            urn:
+              type: string
+              description: "The URL safe Base64 encoded URN of the source design. \n\n**Note:** The URN is returned as the ``objectID`` once you complete uploading the source design to APS. This value must be converted to a `Base64 (URL Safe) encoded <http://www.freeformatter.com/base64-encoder.html>`_ string before you can specify it for this attribute.\n"
+            compressedUrn:
+              type: boolean
+              description: '- ``true``: The source design is compressed as a zip file. If set to ``true``, you need to define the `rootFilename`.''
+
+                - ``false``: (Default) The source design is not compressed.
+
+                '
+              default: false
+            rootFilename:
+              type: string
+              description: The file name of the top-level component of the source design.  Mandatory if  ``compressedUrn`` is set to ``true``.
+            checkReferences:
+              type: boolean
+              description: '- ``true`` - Instructs the system to check for references, and if any exist, download all referenced files. Setting this parameter to ``true`` is mandatory when translating source designs consisting of multiple files. For example, Autodesk Inventor assemblies.
+
+                - ``false`` - (Default) Instructs the system not to check for references.'
+        output:
+          type: object
+          description: Describes the attributes of the requested derivatives.
+          required:
+          - formats
+          properties:
+            destination:
+              type: object
+              description: '(Deprecated) Specifies where to store generated derivatives.
+
+
+                **Note:** Please use the ``region`` header instead of this attribute.'
+              deprecated: true
+              properties:
+                region:
+                  type: string
+                  description: "Specifies where to store generated derivatives. Possible values are:\n\n- ``US`` - (Default) Store derivatives at a data center for the United States of America.\n- ``EMEA`` - Store derivatives at a data center for the European Union. \n- ``AUS`` - (Beta) Store derivatives at a data center for the Australia region.\n- ``CAN`` - Data center for the Canada region.\n- ``DEU`` - Data center for the Germany region.\n- ``IND`` - Data center for the India region.\n- ``JPN`` - Data center for the Japan region.\n- ``GBR``  - Data center for the United Kingdom region.\n\n**Note**: \n\n- Please use the ``region`` header instead of this attribute.\n"
+                  deprecated: true
+            formats:
+              type: array
+              description: An array of objects, where each object represents a requested derivative format. You can request multiple derivatives.
+              items:
+                $ref: '#/components/schemas/JobPayloadFormat'
+        misc:
+          type: object
+          description: Contains webhook configuration settings for notifying external systems about translation job events.
+          properties:
+            workflow:
+              type: string
+              description: The workflow ID of the webhook that listens to Model Derivative events. It must be 36 characters or less and can only contain alphanumeric characters (A-Z, 0-9) and hyphens (-).
+            workflowAttribute:
+              type: object
+              description: A user-defined JSON object, which you can use to set some custom workflow information. It must be less than 1KB and is ignored if ``misc.workflow`` is not specified.
+    JobPayloadFormatDWG:
+      type: object
+      x-stoplight:
+        id: d433e7778ffba
+      x-examples:
+        example-1:
+          type: svf
+          views:
+          - 2d
+      description: Describes the options for translation jobs producing  DWG outputs.
+      properties:
+        type:
+          $ref: '#/components/schemas/OutputType'
+        advanced:
+          $ref: '#/components/schemas/JobPayloadFormatAdvancedDWG'
+      title: DWG Options
+    JobPayloadFormatSVFAdvancedDGN:
+      type: object
+      x-stoplight:
+        id: bbfec7ed23a45
+      description: Contains advanced configuration settings for translation jobs processing DGN inputs.
+      properties:
+        requestedLinkageIDs:
+          type: array
+          description: An array containing user data linkage IDs of the linkage data to be extracted from the DGN file. Linkage data is not extracted if you do not specify this attribute.
+          items:
+            type: integer
+      title: DGN
+    SheetType:
+      type: string
+      x-stoplight:
+        id: c82b15e3d6477
+      description: "The sheet body type to export as, when the output is IGES.  Possible values are:\n\n- ``open``\n-  ``shell`` \n- ``surface`` - (Default)\n- ``wireframe``\n"
+      default: surface
+      enum:
+      - open
+      - surface
+      - shell
+      - wireframe
+    JobPayloadFormatSVF2AdvancedNWD:
+      type: object
+      x-stoplight:
+        id: 0q0d2nshacu4f
+      description: Contains advanced configuration settings for translation jobs processing NWD inputs.
+      properties:
+        hiddenObjects:
+          type: boolean
+          description: 'Specifies whether hidden objects must be extracted or not. Applicable only when the source design type is Navisworks.
+
+
+            - ``true``: Extract hidden objects from the input file.
+
+            - ``false``: (Default) Do not extract hidden objects from the input file.
+
+            '
+        basicMaterialProperties:
+          type: boolean
+          description: 'Specifies whether basic material properties must be extracted or not.  Applicable only when the source design type is Navisworks.
+
+
+            - ``true``: Extract properties for basic materials.
+
+            - ``false``: (Default) Do not extract properties for basic materials.
+
+            '
+        autodeskMaterialProperties:
+          type: boolean
+          description: 'Specifies how to handle Autodesk material properties.  Applicable only when the source design type is Navisworks.
+
+
+            - ``true``: Extract properties for Autodesk materials.
+
+            - ``false``: (Default) Do not extract properties for Autodesk materials.
+
+            '
+        timelinerProperties:
+          type: boolean
+          description: 'Specifies whether timeliner properties must be extracted or not.  Applicable only when the source design type is Navisworks.
+
+
+            - ``true``: Extract timeliner properties.
+
+            - ``false``: (Default) Do not extract timeliner properties.
+
+            '
+      title: NWD
+    JobPayloadFormatSVF2AdvancedVUE:
+      type: object
+      x-stoplight:
+        id: tk5if2m78gyb6
+      description: Contains advanced configuration settings for translation jobs processing VUE inputs.
+      properties:
+        hierarchy:
+          $ref: '#/components/schemas/Hierarchy'
+      title: VUE
+    JobPayloadFormatSVFAdvancedNWD:
+      type: object
+      x-stoplight:
+        id: 703336cb624d3
+      description: Contains advanced configuration settings for translation jobs processing NWD inputs.
+      properties:
+        hiddenObjects:
+          type: boolean
+          description: 'Specifies whether hidden objects must be extracted or not. Applicable only when the source design type is Navisworks.
+
+
+            - ``true``: Extract hidden objects from the input file.
+
+            - ``false``: (Default) Do not extract hidden objects from the input file.
+
+            '
+        basicMaterialProperties:
+          type: boolean
+          description: 'Specifies whether basic material properties must be extracted or not.  Applicable only when the source design type is Navisworks.
+
+
+            - ``true``: Extract properties for basic materials.
+
+            - ``false``: (Default) Do not extract properties for basic materials.
+
+            '
+        autodeskMaterialProperties:
+          type: boolean
+          description: 'Specifies how to handle Autodesk material properties.  Applicable only when the source design type is Navisworks.
+
+
+            - ``true``: Extract properties for Autodesk materials.
+
+            - ``false``: (Default) Do not extract properties for Autodesk materials.
+
+            '
+        timelinerProperties:
+          type: boolean
+          description: 'Specifies whether timeliner properties must be extracted or not.  Applicable only when the source design type is Navisworks.
+
+
+            - ``true``: Extract timeliner properties.
+
+            - ``false``: (Default) Do not extract timeliner properties.
+
+            '
+      title: NWD
+    ConversionMethod:
+      type: string
+      x-stoplight:
+        id: 90905852a0d0b
+      enum:
+      - legacy
+      - modern
+      - v3
+      - v4
+      description: "Specifies what IFC loader to use during translation. Applicable only when the source design is of type IFC. Possible values are:\n\n- ``legacy`` - Use IFC loader version 1, which is based on the Navisworks IFC loader. \n- ``modern`` - Use IFC loader version 2, which is based on the Revit IFC loader. \n- ``v3`` - Use IFC loader version 3, which is based on the Revit IFC loader.\n- ``v4`` - **(Recommended)** Use IFC loader version 4, which is a native solution specifically designed for Autodesk Platform Services (APS). It does not depend on Navisworks or Revit. "
+    SpecifyReferences:
+      title: SpecifyReferences
+      x-stoplight:
+        id: l8fs6s60sjp1h
+      type: object
+      properties:
+        result:
+          type: string
+          x-stoplight:
+            id: tzjn0toa29oez
+          description: The result of the operation. Always ``success`` for status ``200``.
+        urn:
+          type: string
+          x-stoplight:
+            id: spmylg7ygsfez
+          description: The URN of the top level component.
+      description: 'Represents the successful response of a Specify References operation. '
+    JobPayloadFormatAdvancedSTL:
+      title: STL
+      x-stoplight:
+        id: v01n2fo2aa537
+      type: object
+      properties:
+        type:
+          type: string
+          description: The requested output type. ``stl`` in this case.
+        advanced:
+          type: object
+          description: Contains advanced configuration settings for translation jobs producing `stl` outputs.
+          properties:
+            format:
+              $ref: '#/components/schemas/Format'
+            exportColor:
+              type: boolean
+              description: '- ``true``- (Default) Exports color.
+
+                - ``false`` - Does not export color.
+
+                '
+              default: true
+            exportFileStructure:
+              $ref: '#/components/schemas/ExportFileStructure'
+      description: Contains advanced configuration settings for translation jobs producing `stl` outputs.
+    2dView:
+      type: string
+      x-stoplight:
+        id: 0a076028722fa
+      description: 'The format that 2D views must be rendered to. Possible values are:
+
+
+        - ``legacy`` - (Default) Render to a model derivative specific file format.
+
+        - ``pdf`` - Render to the PDF file format. When the source design is of type Revit, applies only to Revit 2022 files and newer. If the source design is of type DWG, only properties with semantic values are extracted. '
+      enum:
+      - legacy
+      - pdf
+    JobPayloadFormat:
+      description: Contains the configuration settings for each output type a translation job must produce. The available options depend on the output type.
+      anyOf:
+      - $ref: '#/components/schemas/JobPayloadFormatSVF'
+      - $ref: '#/components/schemas/JobPayloadFormatSVF2'
+      - $ref: '#/components/schemas/JobPayloadFormatThumbnail'
+      - $ref: '#/components/schemas/JobPayloadFormatSTL'
+      - $ref: '#/components/schemas/JobPayloadFormatSTEP'
+      - $ref: '#/components/schemas/JobPayloadFormatIGES'
+      - $ref: '#/components/schemas/JobPayloadFormatOBJ'
+      - $ref: '#/components/schemas/JobPayloadFormatDWG'
+      - $ref: '#/components/schemas/JobPayloadFormatIFC'
+    Region:
+      type: string
+      description: "Specifies where the referenced files are stored. Possible values are: \n    \n- ``US`` - Data center for the US region.\n- ``EMEA`` - Data center for the European Union, Middle East, and Africa. \n- ``AUS`` - (Beta) Data center for the Australia region.\n- ``CAN`` - Data center for the Canada region.\n- ``DEU`` - Data center for the Germany region.\n- ``IND`` - Data center for the India region.\n- ``JPN`` - Data center for the Japan region.\n- ``GBR``  - Data center for the United Kingdom region.\n"
+      enum:
+      - US
+      - EMEA
+      - AUS
+      - CAN
+      - DEU
+      - IND
+      - JPN
+      - GBR
+    Width:
+      type: integer
+      x-stoplight:
+        id: 538da198a6bd0
+      description: 'Width of thumbnail in pixels.  Possible values are: ``100``, ``200``, ``400``  If ``width`` is omitted, but ``height`` is specified, ``width`` defaults to ``height``. If both ``width`` and ``height`` are omitted, the server will return a thumbnail closest to ``200``, if such a thumbnail is available.'
+      enum:
+      - 100
+      - 200
+      - 400
+    JobPayloadFormatSVFAdvancedRVT:
+      type: object
+      x-stoplight:
+        id: 1e0705e0ff030
+      description: Contains advanced configuration settings for translation jobs processing Revit inputs.
+      properties:
+        2dviews:
+          $ref: '#/components/schemas/2dView'
+        extractorVersion:
+          $ref: '#/components/schemas/ExtractorVersion'
+        generateMasterViews:
+          type: boolean
+          description: 'Generates master views when translating from the Revit input format to SVF. This option is ignored for all other input formats. This attribute defaults to false.
+
+
+            Master views are 3D views that are generated for each phase of the Revit model. A master view contains all elements (including “room” elements) present in the host model for that phase. The display name of a master view defaults to the name of the phase it is generated from. However, if a view with that name already exists, the Model Derivative service appends a suffix to the default display name.
+
+
+            **Notes:**
+
+
+            1. Master views do not contain elements from linked models.
+
+            2. Enabling this option can increase the time it takes to translate the model.'
+        materialMode:
+          $ref: '#/components/schemas/MaterialMode'
+      title: Revit
+    JobPayloadFormatAdvancedDWG:
+      title: DWG
+      x-stoplight:
+        id: nkachm1v5oix2
+      type: object
+      properties:
+        exportSettingName:
+          type: string
+          description: The export settings should be one of the DWG Export settings pre-saved in the source design.
+      description: Contains advanced configuration settings for translation jobs producing DWG outputs.
+    JobPayloadFormatIGES:
+      type: object
+      x-stoplight:
+        id: adc41e926f420
+      x-examples:
+        example-1:
+          type: svf
+          advanced:
+            tolerance: 0.001
+            surfaceType: bounded
+            sheetType: surface
+            solidType: solid
+      description: Describes the options for translation jobs producing  IGES outputs.
+      properties:
+        type:
+          $ref: '#/components/schemas/OutputType'
+        advanced:
+          $ref: '#/components/schemas/JobPayloadFormatAdvancedIGES'
+      title: IGES Options
+    BuildingStoreys:
+      type: string
+      x-stoplight:
+        id: 9de4932445395
+      description: 'Specifies how storeys are translated. Applicable only when the source design is of type IFC. Possible values are:
+
+
+        - ``hide`` - (Default) Storeys are translated but not visible by default.
+
+        - ``show`` - Storeys are translated and are visible by default.
+
+        - ``skip`` - Storeys are not translated.
+
+
+        **Note:** These options are applicable only when ``conversionMethod`` is set to ``modern`` or ``v3``.'
+      enum:
+      - hide
+      - show
+      - skip
+    JobPayloadFormatSVF2:
+      type: object
+      x-stoplight:
+        id: e31c34513f0dc
+      description: Describes the options for translation jobs producing  SVF2 outputs.
+      properties:
+        views:
+          type: array
+          description: Specifies the type of view to generate. Possible values are `2d` and `3d`.
+          items:
+            $ref: '#/components/schemas/View'
+        type:
+          $ref: '#/components/schemas/OutputType'
+        advanced:
+          description: Contains advanced configuration settings for translation jobs producing ``svf2`` outputs. The available options depend on the input type.
+          anyOf:
+          - $ref: '#/components/schemas/JobPayloadFormatSVF2AdvancedRVT'
+          - $ref: '#/components/schemas/JobPayloadFormatSVF2AdvancedDGN'
+          - $ref: '#/components/schemas/JobPayloadFormatSVF2AdvancedDWG'
+          - $ref: '#/components/schemas/JobPayloadFormatSVF2AdvancedIFC'
+          - $ref: '#/components/schemas/JobPayloadFormatSVF2AdvancedNWD'
+          - $ref: '#/components/schemas/JobPayloadFormatSVF2AdvancedVUE'
+          type: object
+      title: SVF2 Options
+    ExportFileStructure:
+      type: string
+      x-stoplight:
+        id: 7de74ba445b4e
+      description: "Specifies the structure of the derivative, when the specified output is STL. Possible values are: \n\n- ``single`` (Default) Create one STL file for all the input files (assembly file).\n- ``multiple``: Create a separate STL file for each object\n"
+      default: single
+      enum:
+      - single
+      - multiple
+    JobPayloadFormatSVFAdvancedIFC:
+      type: object
+      x-stoplight:
+        id: 63cb7d72e76e6
+      description: Contains advanced configuration settings for translation jobs processing IFC inputs.
+      properties:
+        conversionMethod:
+          $ref: '#/components/schemas/ConversionMethod'
+        buildingStoreys:
+          $ref: '#/components/schemas/BuildingStoreys'
+        spaces:
+          $ref: '#/components/schemas/Spaces'
+        openingElements:
+          $ref: '#/components/schemas/OpeningElements'
+      title: IFC
+    JobPayloadFormatSTEP:
+      type: object
+      x-stoplight:
+        id: dcd571776a0eb
+      description: Describes the options for translation jobs producing  STEP outputs.
+      properties:
+        type:
+          $ref: '#/components/schemas/OutputType'
+        advanced:
+          $ref: '#/components/schemas/JobPayloadFormatAdvancedSTEP'
+      title: STEP Options
+    Height:
+      type: integer
+      x-stoplight:
+        id: 91ad401a43ef2
+      description: 'Height of thumbnails. Possible values are: ``100``, ``200``, ``400``.If ``height`` is omitted, but ``width`` is specified, ``height`` defaults to ``width``.  If both ``width`` and ``height`` are omitted, the server will return a thumbnail closest to ``200``, if such a thumbnail is available'
+      enum:
+      - 100
+      - 200
+      - 400
+    JobPayloadFormatThumbnail:
+      type: object
+      x-stoplight:
+        id: 0c629432cb001
+      description: Describes the options for translation jobs producing  thumbnail outputs.
+      properties:
+        type:
+          $ref: '#/components/schemas/OutputType'
+        advanced:
+          $ref: '#/components/schemas/JobPayloadFormatAdvancedThumbnail'
+      title: Thumbnail Options
+    Hierarchy:
+      type: string
+      x-stoplight:
+        id: 473b8ba8deab5
+      description: 'Specifies how the hierarchy of items are determined. Applicable only when the source design is of type VUE.
+
+
+        - ``Classic`` - (Default) Uses hardcoded rules to set the hierarchy of items.
+
+        - ``SystemPath`` - Uses a linked XML or MDB2 properties file to set hierarchy of items. You can use this option to make the organization of items consistent with SmartPlant 3D.
+
+
+        **Notes:**
+
+
+        1. The functioning of the SystemPath depends on the default setting of the property SP3D_SystemPath or System Path.
+
+        2. The pathing delimiter must be \.
+
+        3. If you want to customize further, import the VUE file to Navisworks. After that, use POST job on the resulting Navisworks (nwc/nwd) file.'
+      enum:
+      - Classic
+      - SystemPath
+    JobPayloadFormatSVF2AdvancedDWG:
+      type: object
+      x-stoplight:
+        id: t79xhi9ygp3nx
+      description: Contains advanced configuration settings for translation jobs processing DWG inputs.
+      properties:
+        2dviews:
+          $ref: '#/components/schemas/2dView'
+      title: DWG
+    JobPayloadFormatSTL:
+      type: object
+      x-stoplight:
+        id: b4ca77d74d566
+      description: Describes the options for translation jobs producing  STL outputs.
+      properties:
+        type:
+          $ref: '#/components/schemas/OutputType'
+        advanced:
+          $ref: '#/components/schemas/JobPayloadFormatAdvancedSTL'
+      title: STL Options
+    JobPayloadFormatSVF2AdvancedRVT:
+      type: object
+      x-stoplight:
+        id: evo9s66tdxtyo
+      description: Contains advanced configuration settings for translation jobs processing Revit inputs.
+      properties:
+        2dviews:
+          $ref: '#/components/schemas/2dView'
+        extractorVersion:
+          $ref: '#/components/schemas/ExtractorVersion'
+        generateMasterViews:
+          type: boolean
+          description: 'Generates master views when translating from the Revit input format to SVF. This option is ignored for all other input formats. This attribute defaults to false.
+
+
+            Master views are 3D views that are generated for each phase of the Revit model. A master view contains all elements (including “room” elements) present in the host model for that phase. The display name of a master view defaults to the name of the phase it is generated from. However, if a view with that name already exists, the Model Derivative service appends a suffix to the default display name.
+
+
+            **Notes:**
+
+
+            1. Master views do not contain elements from linked models.
+
+            2. Enabling this option can increase the time it takes to translate the model.'
+        materialMode:
+          $ref: '#/components/schemas/MaterialMode'
+      title: Revit
+    JobPayloadFormatIFC:
+      type: object
+      x-stoplight:
+        id: ee03a629a99da
+      x-examples:
+        example-1:
+          type: svf
+          views:
+          - 2d
+      description: Describes the options for translation jobs producing  IFC outputs.
+      properties:
+        type:
+          $ref: '#/components/schemas/OutputType'
+        advanced:
+          $ref: '#/components/schemas/JobPayloadFormatAdvancedIFC'
+      title: IFC Options
+    Format:
+      type: string
+      x-stoplight:
+        id: 4194abf8ad124
+      description: "Specifies the format of the file to create, when the specified output is STL.  Possible values are:\n\n- ``ascii`` - Create derivative as an ASCII STL file.\n- ``binary`` - (Default) Create derivative as a binary STL file.  \n"
+      default: binary
+      enum:
+      - binary
+      - ascii
+    View:
+      type: string
+      x-stoplight:
+        id: f25156ebd69f8
+      description: Required options for SVF type. Possible values are ``2d`` and ``3d``.
+      enum:
+      - 2d
+      - 3d
+      title: ''
+    JobPayloadFormatAdvancedIGES:
+      title: IGES
+      x-stoplight:
+        id: pd3e6fly05fox
+      type: object
+      properties:
+        tolerance:
+          type: number
+          description: Possible values are between `0` and `1`. By default it is set at 0.001.
+          format: float
+          default: 0.001
+        surfaceType:
+          $ref: '#/components/schemas/SurfaceType'
+        sheetType:
+          $ref: '#/components/schemas/SheetType'
+        solidType:
+          $ref: '#/components/schemas/SolidType'
+      description: Contains advanced configuration settings for translation jobs producing IGES outputs.
+  headers:
+    x-ads-startup-time:
+      description: 'The service startup time, in the following date format: ``EEE MMM dd HH:mm:ss Z yyyy``.'
+      schema:
+        type: string
+    x-ads-app-identifier:
+      description: The service identifier. Comprises of the service name, version, and environment.
+      schema:
+        type: string
+    x-ads-duration:
+      description: The amount of time spent servicing the request, in milliseconds.
+      schema:
+        type: string
+  parameters:
+    x-ads-derivative-format:
+      name: x-ads-derivative-format
+      in: header
+      required: false
+      schema:
+        $ref: '#/components/schemas/XAdsDerivativeFormat'
+      description: "Specifies what Object IDs to return, if the design has legacy SVF derivatives generated by the BIM Docs service. Possible values are:  \n\n- ``latest`` - (Default) Return SVF2 Object IDs. \n- ``fallback`` - Return SVF Object IDs.  \n\n**Note:**  \n\n1. This parameter applies only to designs with legacy SVF derivatives generated by the BIM 360 Docs service. \n2. The BIM 360 Docs service now generates SVF2 derivatives. SVF2 Object IDs may not be compatible with the SVF Object IDs previously generated by the BIM 360 Docs service. Setting this header to fallback may resolve backward compatibility issues resulting from Object IDs of legacy SVF derivatives being retained on the client side. \n3. If you use this parameter with one derivative (URN), you must use it consistently across the following: \n\n   - `Create Translation Job </en/docs/model-derivative/v2/reference/http/job-POST>`_ (for OBJ output) \n   - `Fetch Object Tree </en/docs/model-derivative/v2/reference/http/urn-metadata-modelguid-GET>`_\n   - `Fetch All Properties </en/docs/model-derivative/v2/reference/http/urn-metadata-guid-properties-GET>`_\n   - `Fetch Specific Properties <en/docs/model-derivative/v2/reference/http/metadata/urn-metadata-guid-properties-query-POST>`_\n"
+    x-ads-force:
+      name: x-ads-force
+      in: header
+      required: false
+      schema:
+        type: boolean
+      description: '- ``true``: Forces the system to parse property data all over again. Use this option to retrieve an object tree when previous attempts have failed.
+
+        - ``false``: (Default) Use previously parsed property data to extract the object tree.
+
+        '
+    region:
+      name: region
+      in: header
+      schema:
+        $ref: '#/components/schemas/Region'
+      description: "Specifies the data center where the manifest and derivatives of the specified source design are stored. Possible values are:\n\n- ``US`` - (Default) Data center for the US region.\n- ``EMEA`` - Data center for the European Union, Middle East, and Africa. \n- ``AUS`` - Data center for the Australia region.\n- ``CAN`` - Data center for the Canada region.\n- ``DEU`` - Data center for the Germany region.\n- ``IND`` - Data center for the India region.\n- ``JPN`` - Data center for the Japan region.\n- ``GBR``  - Data center for the United Kingdom region.\n"
+  securitySchemes:
+    2-legged:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+    3-legged-implicit:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: ''
+          refreshUrl: ''
+          scopes: {}
+    3-legged:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: ''
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+x-stoplight:
+  id: zm6m3b30rcbon

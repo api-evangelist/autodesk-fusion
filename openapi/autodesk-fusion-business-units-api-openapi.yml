@@ -1,0 +1,282 @@
+openapi: 3.0.0
+info:
+  title: Construction.Account.Admin Account Management Business Units API
+  version: '1.0'
+  contact:
+    name: Autodesk Plaform Services
+    url: https://aps.autodesk.com/
+    email: aps.help@autodesk.com
+  termsOfService: https://www.autodesk.com/company/legal-notices-trademarks/terms-of-service-autodesk360-web-services/forge-platform-web-services-api-terms-of-service
+  x-support: https://stackoverflow.com/questions/tagged/autodesk-platform-services
+  description: 'The Account Admin API automates creating and managing projects, assigning and managing project users, and managing member and partner company directories. You can also synchronize data with external systems.
+
+    '
+servers:
+- url: https://developer.api.autodesk.com
+security:
+- 2-legged: []
+- 3-legged: []
+tags:
+- name: Business Units
+paths:
+  /hq/v1/accounts/{account_id}/business_units_structure:
+    parameters:
+    - schema:
+        type: string
+      name: account_id
+      in: path
+      required: true
+      description: The account ID of the business unit. This corresponds to hub ID in the Data Management API. To convert a hub ID into an account ID you need to remove the “b.” prefix. For example, a hub ID of b.c8b0c73d-3ae9 translates to an account ID of c8b0c73d-3ae9.
+    get:
+      summary: Get Business Units
+      responses:
+        '200':
+          description: The request has succeeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessUnits'
+        '400':
+          description: The request could not be understood by the server due to malformed syntax.
+        '403':
+          description: Forbidden
+        '404':
+          description: Resource Not Found
+        '409':
+          description: The request could not be completed due to a conflict with the current state of the resource.
+        '422':
+          description: The request was unable to be followed due to restrictions
+        '500':
+          description: An unexpected error occurred on the server
+      operationId: getBusinessUnits
+      description: Query all the business units in a specific BIM 360 account.
+      security:
+      - 2-legged: []
+      - 3-legged-implicit: []
+      - 3-legged: []
+      tags:
+      - Business Units
+      parameters:
+      - schema:
+          $ref: '#/components/schemas/Region'
+        in: header
+        name: Region
+        description: 'The geographic area where the data is stored. Acceptable values: US, EMEA, AUS, CAN, DEU, IND, JPN, GBR. By default, it is set to US.'
+    put:
+      summary: Create Business Units
+      responses:
+        '200':
+          description: The request has succeeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessUnits'
+        '400':
+          description: The request could not be understood by the server due to malformed syntax.
+        '403':
+          description: Forbidden
+        '404':
+          description: Resource Not Found
+        '409':
+          description: The request could not be completed due to a conflict with the current state of the resource.
+        '422':
+          description: The request was unable to be followed due to restrictions
+        '500':
+          description: An unexpected error occurred on the server
+      operationId: createBusinessUnits
+      parameters:
+      - schema:
+          $ref: '#/components/schemas/Region'
+        in: header
+        name: Region
+        description: 'The geographic area where the data is stored. Acceptable values: US, EMEA, AUS, CAN, DEU, IND, JPN, GBR. By default, it is set to US.'
+      description: Query all the business units in a specific BIM 360 account.
+      security:
+      - 2-legged: []
+      - 3-legged-implicit: []
+      - 3-legged: []
+      tags:
+      - Business Units
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BusinessUnitsPayload'
+components:
+  schemas:
+    BusinessUnitsObject:
+      title: BusinessUnitsObject
+      x-stoplight:
+        id: ofwz7wxle2i79
+      type: object
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 1t6r79la6n8xx
+          description: 'Business unit ID
+
+
+            If specified and already existing, the existing business unit will be replaced
+
+            with the provided attributes.
+
+
+            If specified and not already existing, a new business unit will be created with the id.
+
+
+            If unspecified, a new business unit will be created with a server-generated id.'
+        parent_id:
+          type: string
+          x-stoplight:
+            id: vaqvh4gbvaq4i
+          description: 'The ID of the parent business unit
+
+
+            Note that an entire business unit hierarchy can be created by manually specifying the id
+
+            attribute for each business unit and using it as appropriate in other parent_id
+
+            attributes.'
+        name:
+          type: string
+          x-stoplight:
+            id: vp8m48lup86mn
+          description: The name of the business unit
+        description:
+          type: string
+          x-stoplight:
+            id: gjwcknccphtzc
+          description: The description of the business unit
+      required:
+      - name
+    BusinessUnit:
+      title: BusinessUnit
+      x-stoplight:
+        id: 2g2vpfiwr1evd
+      type: object
+      properties:
+        id:
+          type: string
+          description: Business unit ID
+        account_id:
+          type: string
+          x-stoplight:
+            id: 87d5kevscjst5
+          description: Account ID
+        parent_id:
+          type: string
+          x-stoplight:
+            id: ripvdy2jdxt5h
+          description: 'The ID of the parent business unit;
+
+            used to configure the tree structure of business units'
+        name:
+          type: string
+          x-stoplight:
+            id: e5y59vjyh9u3g
+          description: 'The name of the business unit
+
+            '
+        path:
+          type: string
+          x-stoplight:
+            id: y2vcp5y80gjjj
+          description: The path of the business unit in the tree structure
+        description:
+          type: string
+          x-stoplight:
+            id: wywguzh955t9m
+          description: The description of the business unit
+        created_at:
+          type: string
+          x-stoplight:
+            id: 4bta8t8vaq96a
+        updated_at:
+          type: string
+          x-stoplight:
+            id: epd0mv6uik60l
+    Region:
+      title: Region
+      x-stoplight:
+        id: 5rz8jxdpgo4zq
+      type: string
+      enum:
+      - US
+      - EMEA
+      - AUS
+      - CAN
+      - DEU
+      - IND
+      - JPN
+      - GBR
+      description: 'Specifies the region where your request should be routed. Possible values are:
+
+        - ``US`` - Data center for the US region.
+
+        - ``EMEA`` - Data center for the European Union, Middle East, and Africa regions.
+
+        - ``AUS`` - Data center for the Australia region.
+
+        - ``CAN`` - Data center for the Canada region.
+
+        - ``DEU`` - Data center for the Germany region.
+
+        - ``IND`` - Data center for the India region.
+
+        - ``JPN`` - Data center for the Japan region.
+
+        - ``GBR`` - Data center for the United Kingdom region.'
+    BusinessUnitsPayload:
+      title: BusinessUnitsPayload
+      x-stoplight:
+        id: vg238uncrewqq
+      type: object
+      properties:
+        business_units:
+          type: array
+          x-stoplight:
+            id: 9dce24721l40s
+          items:
+            $ref: '#/components/schemas/BusinessUnitsObject'
+            x-stoplight:
+              id: xmd2c1g2ax76z
+    BusinessUnits:
+      title: BusinessUnitsResponse
+      x-stoplight:
+        id: bje738qyuuz2v
+      type: object
+      properties:
+        business_units:
+          type: array
+          x-stoplight:
+            id: n5utlu9b7jz16
+          items:
+            $ref: '#/components/schemas/BusinessUnit'
+            x-stoplight:
+              id: 2sl170itvk70g
+  securitySchemes:
+    2-legged:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+    3-legged-implicit:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: ''
+          refreshUrl: ''
+          scopes: {}
+    3-legged:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: ''
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+x-stoplight:
+  id: zm6m3b30rcbon

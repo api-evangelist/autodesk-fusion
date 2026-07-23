@@ -1,0 +1,264 @@
+openapi: 3.0.0
+info:
+  title: Construction.Account.Admin Account Management Users API
+  version: '1.0'
+  contact:
+    name: Autodesk Plaform Services
+    url: https://aps.autodesk.com/
+    email: aps.help@autodesk.com
+  termsOfService: https://www.autodesk.com/company/legal-notices-trademarks/terms-of-service-autodesk360-web-services/forge-platform-web-services-api-terms-of-service
+  x-support: https://stackoverflow.com/questions/tagged/autodesk-platform-services
+  description: 'The Account Admin API automates creating and managing projects, assigning and managing project users, and managing member and partner company directories. You can also synchronize data with external systems.
+
+    '
+servers:
+- url: https://developer.api.autodesk.com
+security:
+- 2-legged: []
+- 3-legged: []
+tags:
+- name: Users
+paths:
+  /userinfo:
+    get:
+      summary: Get User Info
+      tags:
+      - Users
+      responses:
+        '200':
+          description: Information about the currently logged in user was successfully returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserInfo'
+      operationId: get-user-info
+      description: Retrieves information about the authenticated user.
+      security:
+      - 3-legged: []
+      parameters: []
+components:
+  schemas:
+    UserInfo:
+      type: object
+      x-stoplight:
+        id: 76f4f5a6324c0
+      properties:
+        sub:
+          type: string
+          description: The ID by which APS uniquely identifies the user.
+        name:
+          type: string
+          description: The full name of the user.
+        given_name:
+          type: string
+          description: The given name or first name of the user.
+        family_name:
+          type: string
+          description: The surname or last name of the user.
+        preferred_username:
+          type: string
+          description: The username by which the user prefers to be addressed.
+        email:
+          type: string
+          description: The email address by which the user prefers to be contacted.
+        email_verified:
+          type: boolean
+          description: '``true`` : The user''s preferred email address is verified.
+
+
+            ``false``: The user''s preferred email address is not verified.
+
+            '
+        profile:
+          type: string
+          description: The URL of the profile page of the user.
+        picture:
+          type: string
+          description: The URL of the profile picture of the user.
+        locale:
+          type: string
+          description: The preferred language settings of the user. This setting is typically specified as a combination of the ISO 639 language code in lower case, and the ISO 3166 country code in upper case, separated by a dash character. For example ``en-US``.
+        updated_at:
+          type: integer
+          description: The time the user's information was most recently updated, represented as a Unix timestamp.
+        is_2fa_enabled:
+          type: boolean
+          description: "``true``: Two-factor authentication is enabled for this user. \n\n``false``: Two-factor authentication is not enabled for this user.\n"
+        country_code:
+          type: string
+          description: The ISO 3166 country code that was assigned to the user when their profile was created.
+        address:
+          type: object
+          description: A JSON object containing information of the postal address of the user.
+          properties:
+            street_address:
+              type: string
+              description: The street address part of the address. Can contain the house number, street name, postal code, and so on.  New lines are represented as ``\n``.
+            locality:
+              type: string
+              description: The city or locality part of the address.
+            region:
+              type: string
+              description: The state, province, prefecture, or region part of the address.
+            postal_code:
+              type: string
+              description: The zip code or postal code part of the address.
+            country:
+              type: string
+              description: The country name part of the address.
+        phone_number:
+          type: string
+          description: The phone number by which the user prefers to be contacted.
+        phone_number_verified:
+          type: boolean
+          description: '``true`` : The phone number is verified.
+
+
+            ``false`` : The phone number is not verified.
+
+            '
+        ldap_enabled:
+          type: boolean
+          description: '``true`` :  Single sign-on using Lightweight Directory Access Protocol (LDAP) is enabled for this user.
+
+
+            ``false`` : LDAP is not enabled for this user.
+
+            '
+        ldap_domain:
+          type: string
+          description: The domain name used by the LDAP server for user authentication. ``null``, if ``ldap_enabled`` is ``false``.
+        job_title:
+          type: string
+          description: The job title of the user as specified in the user's profile.
+        industry:
+          type: string
+          description: The industry the user works in, as specified in the user's profile.
+        industry_code:
+          type: string
+          description: A code that corresponds to the industry.
+        about_me:
+          type: string
+          description: A short description written by the user to introduce themselves, as specified in the user's profile.
+        language:
+          type: string
+          description: The ISO 639 language code of the preferred language of the user.
+        company:
+          type: string
+          description: The company that the user works for, as specified in the user's profile.
+        created_date:
+          type: string
+          description: The time the user profile was created, represented as a Unix timestamp.
+        last_login_date:
+          type: string
+          description: The time the user most recently signed-in to APS successfully, represented as a Unix timestamp.
+        eidm_guid:
+          type: string
+          description: An ID to uniquely identify the user. For most users this will be the same as ``sub``. However, for users profiles created on the now retired EIDM system ``eidm_guid`` will be different from ``sub``.
+        opt_in:
+          type: boolean
+          description: '``true`` : The user has agreed to receive marketing information.
+
+
+            ``false``: The user does not want to receive marketing information.
+
+            '
+        social_userinfo_list:
+          type: array
+          description: An array of objects, where each object represents a social media account that can be used to verify the user's identity.
+          items:
+            type: object
+            properties:
+              socialUserId:
+                type: string
+                description: The ID of the user within the social media platform.
+              providerId:
+                type: string
+                description: The ID of the social media platform.
+              providerName:
+                type: string
+                description: The name of the social media platform.
+        thumbnails:
+          type: object
+          additionalProperties:
+            type: string
+          description: An array of key-value pairs containing image URLs for various thumbnail sizes of the user's profile picture. The key is named ``sizeX<NUMBER>`` where ``<NUMBER>`` is the width and height of the thumbnail, in pixels. The corresponding value is the URL pointing to the thumbnail. For example, ``sizeX200`` would contain the URL for the 200x200 pixel thumbnail.
+      x-examples:
+        Example 1:
+          sub: ABCDEFGH
+          name: First Last
+          given_name: First
+          family_name: Last
+          preferred_username: username
+          email: test@test.com
+          email_verified: true
+          profile: https://profile(-dev/-int/-stg/'').autodesk.com
+          picture: https://images.profile(-dev/-int/-stg/'').autodesk.com/ABCDEFGH/profilepictures/x120.jpg
+          locale: en-US
+          updated_at: 1662583480
+          is_2fa_enabled: false
+          country_code: US
+          address:
+            street_address: 'testaddress1
+
+              '
+            locality: testcity
+            region: ''
+            postal_code: ''
+            country: US
+          phone_number: '+1 1234567890 #123'
+          phone_number_verified: false
+          ldap_enabled: true
+          ldap_domain: autodesk.com
+          job_title: 3D generalist
+          industry: IT/Software development
+          industry_code: NoGroupOther
+          about_me: I'm completing a test right now.
+          language: en
+          company: Autodeskf
+          created_date: '2017-12-11T20:54:18Z'
+          last_login_date: '2020-05-10T04:00:29Z'
+          eidm_guid: ABCDEFGH
+          opt_in: false
+          social_userinfo_list:
+          - socialUserId: test.social_userid
+            providerId: test1.uid
+            providerName: Google
+          thumbnails:
+            sizeX20: https://images.profile-dev.autodesk.com/default/user_X20.png
+            sizeX40: https://images.profile-dev.autodesk.com/default/user_X40.png
+            sizeX50: https://images.profile-dev.autodesk.com/default/user_X50.png
+            sizeX58: https://images.profile-dev.autodesk.com/default/user_X58.png
+            sizeX80: https://images.profile-dev.autodesk.com/default/user_X80.png
+            sizeX120: https://images.profile-dev.autodesk.com/default/user_X120.png
+            sizeX160: https://images.profile-dev.autodesk.com/default/user_X160.png
+            sizeX176: https://images.profile-dev.autodesk.com/default/user_X176.png
+            sizeX240: https://images.profile-dev.autodesk.com/default/user_X240.png
+            sizeX360: https://images.profile-dev.autodesk.com/default/user_X360.png
+      title: UserInfo Response
+      description: Represents a successful response to a Get User Info operation.
+  securitySchemes:
+    2-legged:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+    3-legged-implicit:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: ''
+          refreshUrl: ''
+          scopes: {}
+    3-legged:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: ''
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+x-stoplight:
+  id: zm6m3b30rcbon

@@ -1,0 +1,264 @@
+openapi: 3.0.0
+info:
+  title: Construction.Account.Admin Account Management Issue Attribute Definitions API
+  version: '1.0'
+  contact:
+    name: Autodesk Plaform Services
+    url: https://aps.autodesk.com/
+    email: aps.help@autodesk.com
+  termsOfService: https://www.autodesk.com/company/legal-notices-trademarks/terms-of-service-autodesk360-web-services/forge-platform-web-services-api-terms-of-service
+  x-support: https://stackoverflow.com/questions/tagged/autodesk-platform-services
+  description: 'The Account Admin API automates creating and managing projects, assigning and managing project users, and managing member and partner company directories. You can also synchronize data with external systems.
+
+    '
+servers:
+- url: https://developer.api.autodesk.com
+security:
+- 2-legged: []
+- 3-legged: []
+tags:
+- name: Issue Attribute Definitions
+paths:
+  /construction/issues/v1/projects/{projectId}/issue-attribute-definitions:
+    parameters:
+    - schema:
+        type: string
+      name: projectId
+      in: path
+      required: true
+    get:
+      summary: Your GET endpoint
+      tags:
+      - Issue Attribute Definitions
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/attr_definition_page'
+        '400':
+          description: Bad Request
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      operationId: getAttributeDefinitions
+      security:
+      - 2-legged: []
+      - 3-legged: []
+      - 3-legged-implicit: []
+      description: Retrieves information about issue custom attributes (custom fields) for a project, including the custom attribute title, description and type.
+      parameters:
+      - $ref: '#/components/parameters/x-ads-region'
+      - schema:
+          type: integer
+        in: query
+        name: limit
+        description: 'The number of custom attribute definitions to return in the response payload. For example, limit=2. Acceptable values: 1-200. Default value: 200.'
+      - schema:
+          type: integer
+        in: query
+        name: offset
+        description: The number of custom attribute definitions you want to begin retrieving results from.
+      - schema:
+          type: string
+        in: query
+        name: filter[createdAt]
+        description: 'Retrieves items that were created at the specified date and time, in one of the following URL-encoded formats: YYYY-MM-DDThh:mm:ss.sz or YYYY-MM-DD. Separate multiple values with commas.'
+      - schema:
+          type: string
+        in: query
+        name: filter[updatedAt]
+        description: 'Retrieves items that were last updated at the specified date and time, in one of the following URL-encoded formats: YYYY-MM-DDThh:mm:ss.sz or YYYY-MM-DD. Separate multiple values with commas.'
+      - schema:
+          type: string
+        in: query
+        name: filter[deletedAt]
+        description: 'Retrieves types that were deleted at the specified date and time, in one of the following URL-encoded formats: YYYY-MM-DDThh:mm:ss.sz or YYYY-MM-DD. Separate multiple values with commas. '
+      - in: query
+        name: filter[dataType]
+        description: 'Retrieves issue custom attribute definitions with the specified data type. Possible values: list (this corresponds to dropdown in the UI), text, paragraph, numeric. For example, filter[dataType]=text,numeric.'
+        schema:
+          $ref: '#/components/schemas/filterdataType_internal'
+components:
+  parameters:
+    x-ads-region:
+      name: x-ads-region
+      in: header
+      schema:
+        $ref: '#/components/schemas/region'
+  schemas:
+    filterdataType_internal:
+      title: fields_internal
+      x-stoplight:
+        id: 56htsvb8tnfwo
+      type: array
+      items:
+        $ref: '#/components/schemas/dataType'
+    Pagination:
+      type: object
+      description: The pagination object.
+      properties:
+        limit:
+          type: integer
+          description: The number of items per page.
+        offset:
+          type: integer
+          description: The page number that the results begin from.
+        totalResults:
+          type: integer
+          description: The number of items in the response.
+    region:
+      title: region
+      x-stoplight:
+        id: pvg574irwjt8w
+      type: string
+      enum:
+      - US
+      - EMEA
+      - AUS
+      - CAN
+      - DEU
+      - IND
+      - JPN
+      - GBR
+      description: "Specifies where the bucket containing the object is stored. Possible values are:\n            - ``US`` - (Default) Data center for the US region.\n            - ``EMEA`` - Data center for the European Union, Middle East, and Africa.\n            - ``AUS`` -  Data center for Australia.\n            - ``CAN`` - Data center for the Canada region.\n            - ``DEU`` - Data center for the Germany region.\n            - ``IND`` - Data center for the India region.\n            - ``JPN`` - Data center for the Japan region.\n            - ``GBR`` - Data center for the United Kingdom region.\n**Note:** Beta features are subject to change. Please do not use in production environments."
+    attr_definition:
+      title: attr_definition
+      x-stoplight:
+        id: 3icmlmiozfuaj
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the custom attribute.
+        containerId:
+          type: string
+          description: Not relevant
+        description:
+          type: string
+          x-stoplight:
+            id: jcsrljuzc5ltj
+          description: The description of the custom attribute.
+        title:
+          type: string
+          x-stoplight:
+            id: zd4k05m5j6ifx
+          description: 'The title of the custom attribute.
+
+            '
+        dataType:
+          $ref: '#/components/schemas/dataType'
+        metadata:
+          type: object
+          x-stoplight:
+            id: vpa2pq35qsa00
+          description: The metadata object; only relevant for list custom attributes.
+          properties:
+            list:
+              type: object
+              x-stoplight:
+                id: rd1fhxgy7rswy
+              description: The list object.
+              properties:
+                options:
+                  type: array
+                  x-stoplight:
+                    id: 8zdw37ff98qva
+                  description: The options object.
+                  items:
+                    x-stoplight:
+                      id: ue5tmahyx0kgr
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        x-stoplight:
+                          id: 7eggkpbtz4wb9
+                        description: The id of the list option.
+                      value:
+                        type: string
+                        x-stoplight:
+                          id: 2dimim80rfccy
+                        description: The value of the list item.
+        permittedActions:
+          type: array
+          description: Not relevant
+          items:
+            type: string
+        permittedAttributes:
+          type: array
+          description: Not relevant
+          items:
+            type: string
+        createdAt:
+          type: string
+          description: 'The date and time the custom attribute was created, in the following format: YYYY-MM-DDThh:mm:ss.sz.'
+        createdBy:
+          type: string
+          description: The Autodesk ID of the user who created the custom attribute.
+        updatedAt:
+          type: string
+          description: 'The last date and time the custom attribute was updated, in the following format: YYYY-MM-DDThh:mm:ss.sz.'
+        updatedBy:
+          type: string
+          description: The Autodesk ID of the user who last updated the custom attribute.
+        deletedAt:
+          type: string
+          description: 'The date and time the custom attribute was deleted, in the following format: YYYY-MM-DDThh:mm:ss.sz.'
+        deletedBy:
+          type: string
+          description: The Autodesk ID of the user who deleted the custom attribute.
+    dataType:
+      title: filterdataType
+      x-stoplight:
+        id: szgoga8vkzknv
+      type: string
+      enum:
+      - list
+      - text
+      - paragraph
+      - numeric
+      description: Retrieves issue custom attribute definitions with the specified data type
+    attr_definition_page:
+      title: attr_definition
+      type: object
+      description: The pagination object.
+      x-stoplight:
+        id: bvhkdkasjb7j1
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        results:
+          type: array
+          description: A list of issue attribute definition.
+          items:
+            $ref: '#/components/schemas/attr_definition'
+  securitySchemes:
+    2-legged:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+    3-legged-implicit:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: ''
+          refreshUrl: ''
+          scopes: {}
+    3-legged:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: ''
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+x-stoplight:
+  id: zm6m3b30rcbon

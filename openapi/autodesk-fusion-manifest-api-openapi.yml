@@ -1,0 +1,505 @@
+openapi: 3.0.0
+info:
+  title: Construction.Account.Admin Account Management Manifest API
+  version: '1.0'
+  contact:
+    name: Autodesk Plaform Services
+    url: https://aps.autodesk.com/
+    email: aps.help@autodesk.com
+  termsOfService: https://www.autodesk.com/company/legal-notices-trademarks/terms-of-service-autodesk360-web-services/forge-platform-web-services-api-terms-of-service
+  x-support: https://stackoverflow.com/questions/tagged/autodesk-platform-services
+  description: 'The Account Admin API automates creating and managing projects, assigning and managing project users, and managing member and partner company directories. You can also synchronize data with external systems.
+
+    '
+servers:
+- url: https://developer.api.autodesk.com
+security:
+- 2-legged: []
+- 3-legged: []
+tags:
+- name: Manifest
+paths:
+  /modelderivative/v2/designdata/{urn}/manifest:
+    parameters:
+    - $ref: '#/components/parameters/source-design-urn'
+    get:
+      summary: Fetch Manifest
+      tags:
+      - Manifest
+      responses:
+        '200':
+          description: Manifest was retrieved successfully.
+          headers:
+            x-ads-app-identifier:
+              schema:
+                type: string
+            x-ads-startup-time:
+              schema:
+                type: string
+            x-ads-duration:
+              schema:
+                type: string
+            x-ads-troubleshooting:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Manifest'
+      operationId: get-manifest
+      description: "Retrieves the manifest of the specified source design.\n\nThe manifest is a JSON file containing information about all the derivatives translated from the specified source design. It contains information such as the URNs of the derivatives, the translation status of each derivative, and much more.\n\nThe first time you translate a source design, the Model Derivative service creates a manifest for that design. Thereafter, every time you translate that source design, even to a different format, the Model Derivative service updates the same manifest. It does not create a new manifest. Instead, the manifest acts like a central registry for all the derivatives of your source design created through the Model Derivative service.  \n\nWhen the Model Derivative service starts a translation job (as a result of a request you make using `Create Translation Job </en/docs/model-derivative/v2/reference/http/jobs/job-POST/>`_), it keeps on updating the manifest at regular intervals. So, you can use the manifest to check the status and progress of each derivative that is being generated. When multiple derivatives have been requested each derivative may complete at a different time. So, each derivative has its own ``status`` attribute. The manifest also contains an overall ``status`` attribute. The overall ``status`` becomes ``complete`` when the ``status`` of all individual derivatives become complete.\n\nOnce the translation status of a derivative is ``complete`` you can download the derivative.\n\n**Note:** You cannot download 3D SVF2 derivatives."
+      security:
+      - 2-legged:
+        - data:read
+        - viewable:read
+      - 3-legged:
+        - data:read
+        - viewable:read
+      parameters:
+      - $ref: '#/components/parameters/accept-encoding'
+      - $ref: '#/components/parameters/region'
+    delete:
+      summary: Delete Manifest
+      tags:
+      - Manifest
+      responses:
+        '200':
+          description: Success.
+          headers:
+            x-ads-app-identifier:
+              $ref: '#/components/headers/x-ads-app-identifier'
+            x-ads-startup-time:
+              $ref: '#/components/headers/x-ads-startup-time'
+            x-ads-duration:
+              $ref: '#/components/headers/x-ads-duration'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteManifest'
+      operationId: delete-manifest
+      description: 'Deletes the manifest of the specified source design. It also deletes all derivatives (translated output files) generated from the source design. However, it does not delete the source design.
+
+
+        **Note:** This operation is idempotent. So, if you call it multiple times, even when no manifest exists, will still return a successful response (200).
+
+        '
+      security:
+      - 2-legged:
+        - data:write
+        - data:read
+      - 3-legged:
+        - data:write
+        - data:read
+      parameters:
+      - $ref: '#/components/parameters/region'
+components:
+  schemas:
+    ManifestDerivative:
+      type: object
+      description: Represents a derivative generated for the source design.
+      required:
+      - name
+      - hasThumbnail
+      - progress
+      - outputType
+      - status
+      properties:
+        name:
+          type: string
+          minLength: 1
+          description: The name of the source design.
+        hasThumbnail:
+          type: string
+          minLength: 1
+          description: '- ``true``: The derivative has a thumbnail.
+
+            - ``false``: The derivative does not have a thumbnail.
+
+            '
+        progress:
+          type: string
+          minLength: 1
+          description: Indicates the progress of the process generating this derivative, as a percentage. Once complete, the value changes to ``complete``.
+        outputType:
+          type: string
+          minLength: 1
+          description: 'The file type/format of the derivative. Possible values are: ``dwg``, ``fbx``, ``ifc``, ``iges``, ``obj`` , ``step``, ``stl``, ``svf``, ``svf2``,  ``thumbnail``.'
+        properties:
+          type: object
+          x-stoplight:
+            id: 67dws24oqffyw
+          description: 'A JSON object containing metadata extracted from the source design. This metadata provides valuable information about the model, such as its author, client name, project status, and other relevant details.
+
+
+            **Note:** This metadata is currently returned for the following source design types:
+
+
+            - RVT - Revit models
+
+            - NWD - Navisworks models
+
+            - DWG - AutoCAD models'
+        status:
+          type: string
+          minLength: 1
+          description: 'Status of the task generating this derivative. Possible values are: ``pending``, ``inprogress``, ``success``, ``failed``, ``timeout``.'
+        messages:
+          type: array
+          description: An array of objects where each object represents a message logged to the manifest during translation. For example, error messages and warning messages.
+          x-stoplight:
+            id: u09lec1rp7fpa
+          items:
+            $ref: '#/components/schemas/Messages'
+        children:
+          type: array
+          description: An array of objects, where each object represents a resource generated for the derivative. For example, a Model View (Viewable) of the source design.
+          items:
+            $ref: '#/components/schemas/ManifestResources'
+    ManifestResources:
+      type: object
+      description: Represents a resource generated for a derivative.
+      properties:
+        guid:
+          type: string
+          minLength: 1
+          description: An ID that uniquely identifies the resource.
+        type:
+          type: string
+          minLength: 1
+          description: Type of resource this JSON object represents.
+        urn:
+          type: string
+          minLength: 1
+          description: The URN that you can use to access the resource.
+        role:
+          type: string
+          minLength: 1
+          description: File type of the resource.
+        mime:
+          type: string
+          minLength: 1
+          description: MIME type of the content of the resource.
+        viewableID:
+          type: string
+          minLength: 1
+          description: An ID assigned to a resource that can be displayed in a viewer.
+        name:
+          type: string
+          minLength: 1
+          description: The name of the resource.
+        status:
+          type: string
+          minLength: 1
+          description: 'Status of the task generating this resource; Possible values are:  ``pending``, ``inprogress``, ``success``, ``failed``, ``timeout``'
+        hasThumbnail:
+          type: string
+          minLength: 1
+          description: '- ``true``: There is a thumbnail for the resource.
+
+            - ``false``: There is no thumbnail for the resource.
+
+            '
+        progress:
+          type: string
+          minLength: 1
+          description: Indicates the progress of the process generating this resource, as a percentage. Once complete, the value changes to ``complete``.
+        phaseNames:
+          description: The name of the phase the resource file was generated from. This attribute is present only on Model Views (Viewables) generated from a Revit source design. This attribute can be a string (for Revit non-sheet 2D or 3D views) or an array of strings (for Revit sheet views).
+          type: object
+        phaseIds:
+          description: The unique ID of the phase the resource file was generated from. This attribute is present only on Model Views (Viewables) generated from a Revit source design. This attribute can be a string (for Revit non-sheet 2D or 3D views) or an array of strings (for Revit sheet views).
+          type: object
+        camera:
+          type: array
+          description: The default viewpoint of a viewable 3D resource.
+          items:
+            type: number
+        resolution:
+          type: array
+          description: An array of two integers where the first number represents the width of a thumbnail in pixels, and the second the height. Available only for thumbnail resources.
+          items:
+            type: integer
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Messages'
+        children:
+          description: An optional array of objects, where each object (of type ``children``) represents another resource generated for this resource.
+          type: array
+          items:
+            $ref: '#/components/schemas/ManifestResources'
+      required:
+      - guid
+      - type
+      - role
+      - status
+    Region:
+      type: string
+      description: "Specifies where the referenced files are stored. Possible values are: \n    \n- ``US`` - Data center for the US region.\n- ``EMEA`` - Data center for the European Union, Middle East, and Africa. \n- ``AUS`` - (Beta) Data center for the Australia region.\n- ``CAN`` - Data center for the Canada region.\n- ``DEU`` - Data center for the Germany region.\n- ``IND`` - Data center for the India region.\n- ``JPN`` - Data center for the Japan region.\n- ``GBR``  - Data center for the United Kingdom region.\n"
+      enum:
+      - US
+      - EMEA
+      - AUS
+      - CAN
+      - DEU
+      - IND
+      - JPN
+      - GBR
+    Manifest:
+      type: object
+      properties:
+        urn:
+          type: string
+          description: The URL-safe Base64 encoded URN of the source design.
+        derivatives:
+          type: array
+          description: An array of objects, where each object represents a derivative of the source design.
+          items:
+            $ref: '#/components/schemas/ManifestDerivative'
+        hasThumbnail:
+          type: string
+          minLength: 1
+          description: '- ``true``: There is a thumbnail for the source design.
+
+            - ``false``: There is no thumbnail for the source design.
+
+            '
+        progress:
+          type: string
+          minLength: 1
+          description: Indicates the overall progress of all translation jobs, as a percentage. Once all requested derivatives are generated, the value changes to ``complete``.
+        type:
+          type: string
+          minLength: 1
+          description: The type of data that is returned. Always ``manifest``.
+        region:
+          type: string
+          minLength: 1
+          description: "Specifies the data center where the manifest, derivatives, and references are stored. Possible values are: \n\n- ``US`` - Data center for the US region.\n- ``EMEA`` - Data center for European Union, Middle East, and Africa. \n- ``AUS`` - Data center for the Australia region.\n- ``CAN`` - Data center for the Canada region.\n- ``DEU`` - Data center for the Germany region.\n- ``IND`` - Data center for the India region.\n- ``JPN`` - Data center for the Japan region.\n- ``GBR``  - Data center for the United Kingdom region.\n"
+        version:
+          type: string
+          minLength: 1
+          description: Indicates the version of the schema that the manifest is based on.
+        status:
+          type: string
+          minLength: 1
+          description: 'Overall status of all translation jobs for the source design. Possible values are: ``pending``, ``success``, ``inprogress``, ``failed``, ``timeout``.'
+      required:
+      - urn
+      - derivatives
+      - hasThumbnail
+      - progress
+      - type
+      - region
+      - version
+      - status
+      x-examples:
+        example-1:
+          urn: dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6c3ZmX3NhbXBsZV8wMi9MaW5rJTIwQXJjXzIwMTgucnZ0
+          derivatives:
+          - hasThumbnail: 'true'
+            children:
+            - urn: urn:adsk.viewing:fs.file:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6c3ZmX3NhbXBsZV8wMi9MaW5rJTIwQXJjXzIwMTgucnZ0/output/Resource/model.sdb
+              role: Autodesk.CloudPlatform.PropertyDatabase
+              mime: application/autodesk-db
+              guid: 6fac95cb-af5d-3e4f-b943-8a7f55847ff1
+              type: resource
+              status: success
+            - urn: urn:adsk.viewing:fs.file:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6c3ZmX3NhbXBsZV8wMi9MaW5rJTIwQXJjXzIwMTgucnZ0/output/Resource/AECModelData.json
+              role: Autodesk.AEC.ModelData
+              mime: application/json
+              guid: a4aac952-a3f4-031c-4113-b2d9ac2d0de6
+              type: resource
+              status: success
+            - phaseNames: New Construction
+              role: 3d
+              hasThumbnail: 'true'
+              children:
+              - guid: 92b5dec7-790a-45b0-a5e8-cd9f76058c3a-0004bdc0
+                type: view
+                role: 3d
+                name: 3D
+                status: success
+                progress: complete
+                camera:
+                - 63.460731506347656
+                - -69.05099487304688
+                - 85.06072235107422
+                - -12.099991798400879
+                - 6.50972843170166
+                - 9.5
+                - -0.40824830532073975
+                - 0.40824830532073975
+                - 0.8164966106414795
+                - 1.3879648447036743
+                - 0
+                - 1
+                - 1
+              - urn: urn:adsk.viewing:fs.file:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6c3ZmX3NhbXBsZV8wMi9MaW5rJTIwQXJjXzIwMTgucnZ0/output/Resource/3D View/3D/3D1.png
+                role: thumbnail
+                mime: image/png
+                guid: c70aa596-d404-714f-6795-9276087c3800
+                type: resource
+                resolution:
+                - 100
+                - 100
+                status: success
+              - urn: urn:adsk.viewing:fs.file:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6c3ZmX3NhbXBsZV8wMi9MaW5rJTIwQXJjXzIwMTgucnZ0/output/Resource/3D View/3D/3D2.png
+                role: thumbnail
+                mime: image/png
+                guid: 6ef65d1a-4a59-111d-f1ec-4e543bd2712b
+                type: resource
+                resolution:
+                - 200
+                - 200
+                status: success
+              - urn: urn:adsk.viewing:fs.file:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6c3ZmX3NhbXBsZV8wMi9MaW5rJTIwQXJjXzIwMTgucnZ0/output/Resource/3D View/3D/3D4.png
+                role: thumbnail
+                mime: image/png
+                guid: 2c06739e-5164-4f6d-450e-c8833fd2a2ba
+                type: resource
+                resolution:
+                - 400
+                - 400
+                status: success
+              - role: graphics
+                mime: application/autodesk-svf2
+                guid: 1821b502-b91e-f9f2-56e9-2d7cb4b0f4a3
+                type: resource
+              name: 3D
+              guid: 02efa4e8-11ec-5b90-1c0b-4775bad24b58
+              progress: complete
+              type: geometry
+              viewableID: 92b5dec7-790a-45b0-a5e8-cd9f76058c3a-0004bdc0
+              status: success
+            name: Link Arc_2018.rvt
+            progress: complete
+            outputType: svf2
+            status: success
+          - children:
+            - urn: urn:adsk.viewing:fs.file:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6c3ZmX3NhbXBsZV8wMi9MaW5rJTIwQXJjXzIwMTgucnZ0/output/preview1.png
+              role: thumbnail
+              mime: image/png
+              guid: db899ab5-939f-e250-d79d-2d1637ce4565
+              type: resource
+              resolution:
+              - 100
+              - 100
+              status: success
+            - urn: urn:adsk.viewing:fs.file:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6c3ZmX3NhbXBsZV8wMi9MaW5rJTIwQXJjXzIwMTgucnZ0/output/preview2.png
+              role: thumbnail
+              mime: image/png
+              guid: 3f6c118d-f551-7bf0-03c9-8548d26c9772
+              type: resource
+              resolution:
+              - 200
+              - 200
+              status: success
+            - urn: urn:adsk.viewing:fs.file:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6c3ZmX3NhbXBsZV8wMi9MaW5rJTIwQXJjXzIwMTgucnZ0/output/preview4.png
+              role: thumbnail
+              mime: image/png
+              guid: 4e751806-0920-ce32-e9fd-47c3cec21536
+              type: resource
+              resolution:
+              - 400
+              - 400
+              status: success
+            progress: complete
+            outputType: thumbnail
+            status: success
+          hasThumbnail: 'true'
+          progress: complete
+          type: manifest
+          region: US
+          version: '1.0'
+          status: success
+      description: Represents the successful response of a Fetch Manifest operation.
+    DeleteManifest:
+      title: DeleteManifest
+      x-stoplight:
+        id: 7uai98fnb6fdc
+      type: object
+      properties:
+        result:
+          type: string
+          x-stoplight:
+            id: nmoc4tg01iitw
+          description: A message describing outcome of the operation. Always ``success`` for status ``200``.
+      description: 'Represents the successful response of a Delete Manifest operation. '
+    Messages:
+      type: object
+      description: An array of objects where each object represents a message logged to the manifest during translation. For example, error messages and warning messages.
+      properties:
+        type:
+          type: string
+          x-stoplight:
+            id: 4pk3t1bfk3fbl
+          description: Indicates the type of the message. For example, warning indicates a warning message and error indicates an error message.
+        code:
+          type: string
+          x-stoplight:
+            id: pbq08tk47dfru
+          description: The ID of the message. For example, the error code reported by an error message.
+        message:
+          type: object
+          x-stoplight:
+            id: ii9qdtechgkph
+          description: A human-readable explanation of the event being reported. Can be a string or an array of string.
+  headers:
+    x-ads-startup-time:
+      description: 'The service startup time, in the following date format: ``EEE MMM dd HH:mm:ss Z yyyy``.'
+      schema:
+        type: string
+    x-ads-app-identifier:
+      description: The service identifier. Comprises of the service name, version, and environment.
+      schema:
+        type: string
+    x-ads-duration:
+      description: The amount of time spent servicing the request, in milliseconds.
+      schema:
+        type: string
+  parameters:
+    source-design-urn:
+      name: urn
+      in: path
+      schema:
+        type: string
+      description: The URL-safe Base64 encoded URN of the source design.
+      required: true
+    region:
+      name: region
+      in: header
+      schema:
+        $ref: '#/components/schemas/Region'
+      description: "Specifies the data center where the manifest and derivatives of the specified source design are stored. Possible values are:\n\n- ``US`` - (Default) Data center for the US region.\n- ``EMEA`` - Data center for the European Union, Middle East, and Africa. \n- ``AUS`` - Data center for the Australia region.\n- ``CAN`` - Data center for the Canada region.\n- ``DEU`` - Data center for the Germany region.\n- ``IND`` - Data center for the India region.\n- ``JPN`` - Data center for the Japan region.\n- ``GBR``  - Data center for the United Kingdom region.\n"
+    accept-encoding:
+      name: Accept-Encoding
+      in: header
+      schema:
+        type: string
+      description: "A comma separated list of the algorithms you want the response to be encoded in, specified in the order of preference.  \n\nIf you specify ``gzip`` or ``*``, content is compressed and returned in gzip format.\n"
+  securitySchemes:
+    2-legged:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+    3-legged-implicit:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: ''
+          refreshUrl: ''
+          scopes: {}
+    3-legged:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: ''
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+x-stoplight:
+  id: zm6m3b30rcbon

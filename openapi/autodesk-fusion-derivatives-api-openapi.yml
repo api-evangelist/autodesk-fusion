@@ -1,0 +1,228 @@
+openapi: 3.0.0
+info:
+  title: Construction.Account.Admin Account Management Derivatives API
+  version: '1.0'
+  contact:
+    name: Autodesk Plaform Services
+    url: https://aps.autodesk.com/
+    email: aps.help@autodesk.com
+  termsOfService: https://www.autodesk.com/company/legal-notices-trademarks/terms-of-service-autodesk360-web-services/forge-platform-web-services-api-terms-of-service
+  x-support: https://stackoverflow.com/questions/tagged/autodesk-platform-services
+  description: 'The Account Admin API automates creating and managing projects, assigning and managing project users, and managing member and partner company directories. You can also synchronize data with external systems.
+
+    '
+servers:
+- url: https://developer.api.autodesk.com
+security:
+- 2-legged: []
+- 3-legged: []
+tags:
+- name: Derivatives
+paths:
+  /modelderivative/v2/designdata/{urn}/manifest/{derivativeUrn}/signedcookies:
+    parameters:
+    - name: derivativeUrn
+      in: path
+      schema:
+        type: string
+      description: The URL-encoded URN of the derivative. Use the `Fetch Manifest operation </en/docs/model-derivative/v2/reference/http/manifest/urn-manifest-GET/>`_to obtain the URNs of derivatives for the specified source design.
+      required: true
+    - $ref: '#/components/parameters/source-design-urn'
+    get:
+      summary: Fetch Derivative Download URL
+      tags:
+      - Derivatives
+      responses:
+        '200':
+          description: Successfully retrieved the download URL of the specified derivative.
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/octet-stream
+            Content-Length:
+              schema:
+                type: string
+              description: Denotes the size of the derivative, in bytes.
+            x-ads-app-identifier:
+              $ref: '#/components/headers/x-ads-app-identifier'
+            x-ads-startup-time:
+              $ref: '#/components/headers/x-ads-startup-time'
+            x-ads-duration:
+              $ref: '#/components/headers/x-ads-duration'
+            Set-Cookie:
+              schema:
+                type: string
+              description: Signed cookie to use with download URL. There will be three headers in the response named Set-Cookie
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DerivativeDownload'
+      operationId: get-derivative-url
+      description: Returns a download URL and a set of signed cookies, which lets you securely download the derivative specified by the ``derivativeUrn`` URI parameter. The signed cookies have a lifetime of 6 hours. You can use range headers with the returned download URL to download the derivative in chunks, in parallel.
+      parameters:
+      - schema:
+          type: integer
+        in: query
+        name: minutes-expiration
+        description: Specifies how many minutes the signed cookies should remain valid. Default value is 360 minutes. The value you specify must be lower than the default value for this parameter. If you specify a value greater than the default value, the Model Derivative service will return an error with an HTTP status code of ``400``.
+      - schema:
+          type: string
+        in: query
+        name: response-content-disposition
+        description: The value that must be specified as the ``response-content-disposition`` query string parameter with the download URL. Must begin with ``attachment``. This value defaults to the default value corresponding to the derivative/file.
+      - $ref: '#/components/parameters/region'
+      security:
+      - 2-legged:
+        - data:read
+      - 3-legged:
+        - data:read
+  /modelderivative/v2/designdata/{urn}/manifest/{derivativeUrn}:
+    parameters:
+    - $ref: '#/components/parameters/source-design-urn'
+    - name: derivativeUrn
+      in: path
+      schema:
+        type: string
+      description: The URL-encoded URN of the derivative. Check the manifest of the source design to get the URNs of the derivatives available for download.
+      required: true
+    head:
+      summary: Check Derivative Details
+      tags:
+      - Derivatives
+      responses:
+        '200':
+          description: Information about the specified derivative was successfully returned.
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              description: application/octet-stream
+            Content-Length:
+              schema:
+                type: string
+              description: Denotes the size of the specified derivative, in bytes.
+            x-ads-app-identifier:
+              $ref: '#/components/headers/x-ads-app-identifier'
+            x-ads-startup-time:
+              $ref: '#/components/headers/x-ads-startup-time'
+            x-ads-duration:
+              $ref: '#/components/headers/x-ads-duration'
+            x-ads-troubleshooting:
+              $ref: '#/components/headers/x-ads-troubleshooting'
+        '202':
+          description: Request was accepted but processing is not complete. Repeat until you receive an HTTP status of ``200``.
+      operationId: head-check-derivative
+      description: 'Returns information about the specified derivative.
+
+
+        Use this operation to determine the total content length of a derivative before you download it. If the derivative is large, you can choose to download the derivative in chunks, by specifying a chunk size using the ``Range`` header parameter.'
+      parameters:
+      - $ref: '#/components/parameters/region'
+      security:
+      - 2-legged:
+        - data:read
+      - 3-legged:
+        - data:read
+components:
+  schemas:
+    DerivativeDownload:
+      title: DerivativeDownload
+      x-stoplight:
+        id: y7tfjbr0mg37l
+      type: object
+      description: Represents the successful response of a Fetch Derivative Download operation.
+      properties:
+        etag:
+          type: string
+          x-stoplight:
+            id: n02wcow4l8ho8
+          description: The calculated ETag hash of the derivative/file, if available.
+        size:
+          type: number
+          x-stoplight:
+            id: nc1if4dbnyhno
+          description: The size of the derivative/file, in bytes.
+        url:
+          type: string
+          x-stoplight:
+            id: 3rc3ezbezs3b4
+          description: The download URL.
+        content-type:
+          type: string
+          x-stoplight:
+            id: mbi8giry07u86
+          description: The content type of the derivative/file.
+        expiration:
+          type: number
+          x-stoplight:
+            id: 1ldan1aiao4gr
+          description: The 13-digit epoch time stamp indicating the time the signed cookies expire.
+    Region:
+      type: string
+      description: "Specifies where the referenced files are stored. Possible values are: \n    \n- ``US`` - Data center for the US region.\n- ``EMEA`` - Data center for the European Union, Middle East, and Africa. \n- ``AUS`` - (Beta) Data center for the Australia region.\n- ``CAN`` - Data center for the Canada region.\n- ``DEU`` - Data center for the Germany region.\n- ``IND`` - Data center for the India region.\n- ``JPN`` - Data center for the Japan region.\n- ``GBR``  - Data center for the United Kingdom region.\n"
+      enum:
+      - US
+      - EMEA
+      - AUS
+      - CAN
+      - DEU
+      - IND
+      - JPN
+      - GBR
+  headers:
+    x-ads-startup-time:
+      description: 'The service startup time, in the following date format: ``EEE MMM dd HH:mm:ss Z yyyy``.'
+      schema:
+        type: string
+    x-ads-app-identifier:
+      description: The service identifier. Comprises of the service name, version, and environment.
+      schema:
+        type: string
+    x-ads-duration:
+      description: The amount of time spent servicing the request, in milliseconds.
+      schema:
+        type: string
+    x-ads-troubleshooting:
+      description: Provides information about server failures, if any.
+      schema:
+        type: string
+  parameters:
+    source-design-urn:
+      name: urn
+      in: path
+      schema:
+        type: string
+      description: The URL-safe Base64 encoded URN of the source design.
+      required: true
+    region:
+      name: region
+      in: header
+      schema:
+        $ref: '#/components/schemas/Region'
+      description: "Specifies the data center where the manifest and derivatives of the specified source design are stored. Possible values are:\n\n- ``US`` - (Default) Data center for the US region.\n- ``EMEA`` - Data center for the European Union, Middle East, and Africa. \n- ``AUS`` - Data center for the Australia region.\n- ``CAN`` - Data center for the Canada region.\n- ``DEU`` - Data center for the Germany region.\n- ``IND`` - Data center for the India region.\n- ``JPN`` - Data center for the Japan region.\n- ``GBR``  - Data center for the United Kingdom region.\n"
+  securitySchemes:
+    2-legged:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+    3-legged-implicit:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: ''
+          refreshUrl: ''
+          scopes: {}
+    3-legged:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: ''
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+x-stoplight:
+  id: zm6m3b30rcbon

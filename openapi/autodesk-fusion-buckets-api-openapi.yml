@@ -1,0 +1,472 @@
+openapi: 3.0.0
+info:
+  title: Construction.Account.Admin Account Management Buckets API
+  version: '1.0'
+  contact:
+    name: Autodesk Plaform Services
+    url: https://aps.autodesk.com/
+    email: aps.help@autodesk.com
+  termsOfService: https://www.autodesk.com/company/legal-notices-trademarks/terms-of-service-autodesk360-web-services/forge-platform-web-services-api-terms-of-service
+  x-support: https://stackoverflow.com/questions/tagged/autodesk-platform-services
+  description: 'The Account Admin API automates creating and managing projects, assigning and managing project users, and managing member and partner company directories. You can also synchronize data with external systems.
+
+    '
+servers:
+- url: https://developer.api.autodesk.com
+security:
+- 2-legged: []
+- 3-legged: []
+tags:
+- name: Buckets
+  description: Bucket related operations
+paths:
+  /oss/v2/buckets:
+    get:
+      tags:
+      - Buckets
+      summary: List Buckets
+      description: "Returns a list of buckets owned by the application. \n"
+      operationId: get_buckets
+      parameters:
+      - $ref: '#/components/parameters/region'
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/startAt'
+      responses:
+        '200':
+          description: The list of buckets was successfully retrieved.
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/buckets'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/buckets'
+        '400':
+          $ref: '#/components/responses/BAD_REQUEST'
+        '401':
+          $ref: '#/components/responses/UNAUTHORIZED'
+        '403':
+          $ref: '#/components/responses/FORBIDDEN'
+        '404':
+          $ref: '#/components/responses/NOT_FOUND'
+        '500':
+          $ref: '#/components/responses/INTERNAL_SERVER_ERROR'
+      security:
+      - 2-legged:
+        - bucket:read
+      x-ads_command_line_example: 'curl -v "https://developer.api.autodesk.com/oss/v2/buckets" -X GET -H "Authorization: Bearer RhS6iEVMnEfl77MBSK3l2je06UHj"'
+    post:
+      tags:
+      - Buckets
+      summary: Create Bucket
+      description: "Creates a bucket. \n\nBuckets are virtual container within the Object Storage Service (OSS), which you can use to store and manage objects (files) in the cloud. The application creating the bucket is the owner of the bucket.\n\n**Note:** Do not use this operation to create buckets for BIM360 Document Management. Use [POST projects/{project_id}/storage](/en/docs/data/v2/reference/http/projects-project_id-storage-POST>) instead. For details, see [Upload Files to BIM 360 Document Management](/en/docs/bim360/v1/tutorials/document-management/upload-document).\n"
+      operationId: create_bucket
+      parameters:
+      - $ref: '#/components/parameters/region_header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/create_buckets_payload'
+        required: true
+      responses:
+        '200':
+          description: Bucket was successfully created.
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/bucket'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/bucket'
+        '400':
+          $ref: '#/components/responses/BAD_REQUEST'
+        '401':
+          $ref: '#/components/responses/UNAUTHORIZED'
+        '403':
+          $ref: '#/components/responses/FORBIDDEN'
+        '409':
+          description: The specified bucket key already exists.
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/reason'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/reason'
+        '500':
+          $ref: '#/components/responses/INTERNAL_SERVER_ERROR'
+      security:
+      - 2-legged:
+        - bucket:create
+      x-ads_command_line_example: 'curl -v "https://developer.api.autodesk.com/oss/v2/buckets" -X POST -H "Content-Type: application/json" -H "Authorization: Bearer kgEJWMJitdYbhfxghap8SbZqXMoS" -d  ''{"bucketKey":"apptestbucket","policyKey":"transient"}'''
+  /oss/v2/buckets/{bucketKey}:
+    delete:
+      tags:
+      - Buckets
+      summary: Delete Bucket
+      description: "Deletes the specified bucket. Only the application that owns the bucket can call this operation. All other applications that call this operation will receive a \"403 Forbidden\" error. \n\nThe initial processing of a bucket deletion request can be time-consuming. So, we recommend only deleting buckets containing a few objects, like those typically used for acceptance testing and prototyping. \n\n**Note:** Bucket keys will not be immediately available for reuse. \n"
+      operationId: delete_bucket
+      parameters:
+      - name: bucketKey
+        in: path
+        description: The bucket key of the bucket to delete.
+        required: true
+        schema:
+          pattern: ^[-_.a-z0-9]{3,128}$
+          type: string
+      responses:
+        '200':
+          description: The bucket deletion request was accepted.
+          content: {}
+        '400':
+          description: BAD REQUEST, Invalid request due to malformed syntax or missing headers
+          content: {}
+        '401':
+          $ref: '#/components/responses/UNAUTHORIZED'
+        '403':
+          $ref: '#/components/responses/FORBIDDEN'
+        '404':
+          description: NOT FOUND, The specified ``bucketKey`` does not exist.
+          content: {}
+        '409':
+          description: CONFLICT, The specified bucket is already marked for deletion.
+          content: {}
+        '500':
+          $ref: '#/components/responses/INTERNAL_SERVER_ERROR'
+      security:
+      - 2-legged:
+        - bucket:delete
+  /oss/v2/buckets/{bucketKey}/details:
+    get:
+      tags:
+      - Buckets
+      summary: Get Bucket Details
+      description: "Returns detailed information about the specified bucket.\n\n**Note:** Only the application that owns the bucket can call this operation. All other applications that call this operation will receive a \"403 Forbidden\" error. \n"
+      operationId: get_bucket_details
+      parameters:
+      - name: bucketKey
+        in: path
+        description: The bucket key of the bucket to query.
+        required: true
+        schema:
+          pattern: ^[-_.a-z0-9]{3,128}$
+          type: string
+      responses:
+        '200':
+          description: Bucket details were retrieved successfully.
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/bucket'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/bucket'
+        '400':
+          $ref: '#/components/responses/BAD_REQUEST'
+        '401':
+          $ref: '#/components/responses/UNAUTHORIZED'
+        '403':
+          $ref: '#/components/responses/FORBIDDEN'
+        '404':
+          description: NOT FOUND, Bucket does not exist.
+          content: {}
+        '500':
+          $ref: '#/components/responses/INTERNAL_SERVER_ERROR'
+      security:
+      - 2-legged:
+        - bucket:read
+        - viewables:read
+      x-ads_command_line_example: 'curl -v "https://developer.api.autodesk.com/oss/v2/buckets" -X GET -H "Authorization: Bearer RhS6iEVMnEfl77MBSK3l2je06UHj"'
+components:
+  schemas:
+    permission_access:
+      title: permission_access
+      x-stoplight:
+        id: 5rtb0xo1tipoq
+      type: string
+      description: 'Specifies the level of permission the application has. Possible values are:
+
+
+        - ``full`` - Unrestricted access to objects within the bucket.
+
+        - ``read_only`` - Read only access to the objects within the bucket. Modification and deletion of objects is not allowed.
+
+        '
+      enum:
+      - full
+      - read
+    Permission:
+      type: object
+      description: An object representing the permissions for accessing a bucket.
+      properties:
+        authId:
+          type: string
+          description: The Client ID of the application.
+        access:
+          $ref: '#/components/schemas/permission_access'
+    create_buckets_payload_allow:
+      type: object
+      description: An object that represents the permissions allowed for a bucket.
+      required:
+      - authId
+      - access
+      properties:
+        authId:
+          type: string
+          description: The Client ID of the application.
+        access:
+          $ref: '#/components/schemas/allowAccess'
+    buckets_items:
+      required:
+      - bucketKey
+      - createdDate
+      - policyKey
+      type: object
+      description: An object containing the properties of a bucket.
+      properties:
+        bucketKey:
+          type: string
+          description: 'Bucket key: An ID that uniquely identifies the bucket.'
+        createdDate:
+          type: integer
+          description: The time the bucket was created, represented as a Unix timestamp.
+          format: int64
+        policyKey:
+          $ref: '#/components/schemas/PolicyKey'
+    create_buckets_payload:
+      type: object
+      description: The request payload for the Create Bucket operation.
+      properties:
+        bucketKey:
+          type: string
+          description: 'Bucket key: A unique name you assign to a bucket. Bucket keys must be globally unique across all applications and regions. They must consist of only lower case characters, numbers 0-9, and underscores (_).
+
+
+            **Note:** You cannot change a bucket key once the bucket is created.
+
+            '
+        allow:
+          type: array
+          description: An array of objects, where each object represents an application that can access the bucket.
+          items:
+            $ref: '#/components/schemas/create_buckets_payload_allow'
+        policyKey:
+          $ref: '#/components/schemas/PolicyKey'
+      required:
+      - bucketKey
+      - policyKey
+    bucket:
+      type: object
+      description: An object representing a bucket.
+      properties:
+        bucketKey:
+          type: string
+          description: 'Bucket key: An ID that uniquely identifies the bucket.'
+        bucketOwner:
+          type: string
+          description: The Client ID of the application that owns the bucket.
+        createdDate:
+          type: integer
+          format: int64
+          description: The time the bucket was created, represented as a Unix timestamp.
+        permissions:
+          type: array
+          description: An array of objects, where each object represents an application that can access the bucket.
+          items:
+            $ref: '#/components/schemas/Permission'
+        policyKey:
+          $ref: '#/components/schemas/PolicyKey'
+    region:
+      title: region
+      x-stoplight:
+        id: yjjcwdkrxykkc
+      type: string
+      enum:
+      - US
+      - EMEA
+      - AUS
+      - APAC
+      - CAN
+      - DEU
+      - IND
+      - JPN
+      - GBR
+      description: 'Specifies where the bucket containing the object is stored. Possible values are:
+
+
+        - ``US`` : (Default) Data center for the US region.
+
+        - ``EMEA`` : Data center for the European Union, Middle East, and Africa.
+
+        - ``AUS`` : (Beta) Data center for Australia.
+
+        - ``CAN`` : Data center for the Canada region.
+
+        - ``DEU`` : Data center for the Germany region.
+
+        - ``IND`` : Data center for the India region.
+
+        - ``JPN`` : Data center for the Japan region.
+
+        - ``GBR`` : Data center for the United Kingdom region.
+
+
+        **Note:** Beta features are subject to change. Please do not use in production environments.     '
+    PolicyKey:
+      title: policyKey
+      x-stoplight:
+        id: 288f4f38318eb
+      type: string
+      default: transient
+      description: "Specifies the retention policy for the objects stored in the bucket. Possible values are: \n            \n- ``transient`` - Objects are retained for 24 hours.\n- ``temporary`` - Objects are retained for 30 days.\n- ``persistent`` - Objects are retained until they are deleted."
+      enum:
+      - transient
+      - temporary
+      - persistent
+    reason:
+      required:
+      - reason
+      type: object
+      properties:
+        reason:
+          type: string
+          description: reason for failure
+      description: An object returned with an error describing the reason for failure.
+    allowAccess:
+      title: allowAccess
+      x-stoplight:
+        id: ljxm7uf2g5rib
+      enum:
+      - full
+      - read
+      description: "Specifies the level of permission the application has. Required when ``allow`` is specified. Possible values are:\n\n - ``full`` - Unrestricted access to objects within the bucket.\n- ``read_only`` - Read only access to the objects within the bucket. Modification or deletion of objects is not allowed."
+    buckets:
+      title: buckets
+      required:
+      - items
+      type: object
+      description: An object that represents a collection of buckets.
+      properties:
+        items:
+          type: array
+          description: Array of objects, where each object represents a bucket.
+          items:
+            $ref: '#/components/schemas/buckets_items'
+        next:
+          type: string
+          description: The URL to be used to retrieve the next page of results, if available. It will be present only when there are more items to be retrieved after the current set.
+  parameters:
+    limit:
+      name: limit
+      in: query
+      description: 'The number of items you want per page.
+
+        Acceptable values = 1-100. Default = 10.
+
+        '
+      schema:
+        type: integer
+        default: 10
+    startAt:
+      name: startAt
+      in: query
+      description: 'The ID of the last item that was returned in the previous result set.  It enables the system to return subsequent items starting from the next one after the specified ID.
+
+        '
+      schema:
+        type: string
+    region_header:
+      name: region
+      in: header
+      required: true
+      description: 'Specifies where the bucket containing the object is stored. Possible values are:
+
+
+        - ``US`` : (Default) Data center for the US region.
+
+        - ``EMEA`` : Data center for the European Union, Middle East, and Africa.
+
+        - ``AUS`` : (Beta) Data center for Australia.
+
+        - ``CAN`` : Data center for the Canada region.
+
+        - ``DEU`` : Data center for the Germany region.
+
+        - ``IND`` : Data center for the India region.
+
+        - ``JPN`` : Data center for the Japan region.
+
+        - ``GBR`` : Data center for the United Kingdom region.
+
+
+        **Note:** Beta features are subject to change. Please do not use in production environments.'
+      schema:
+        $ref: '#/components/schemas/region'
+    region:
+      name: region
+      in: query
+      description: 'Specifies where the bucket containing the object is stored. Possible values are:
+
+
+        - ``US`` : (Default) Data center for the US region.
+
+        - ``EMEA`` : Data center for the European Union, Middle East, and Africa.
+
+        - ``AUS`` : (Beta) Data center for Australia.
+
+        - ``CAN`` : Data center for the Canada region.
+
+        - ``DEU`` : Data center for the Germany region.
+
+        - ``IND`` : Data center for the India region.
+
+        - ``JPN`` : Data center for the Japan region.
+
+        - ``GBR`` : Data center for the United Kingdom region.
+
+
+        **Note:** Beta features are subject to change. Please do not use in production environments.'
+      schema:
+        $ref: '#/components/schemas/region'
+  responses:
+    NOT_FOUND:
+      description: ' The requested resource could not be found. Verify the IDs of the resources you requested before you send this request again.'
+      content: {}
+    BAD_REQUEST:
+      description: OSS was unable to process the request. The syntax of the request is malformed or the request is missing a required header. Do not repeat the request without fixing the issue. The response body may indicate what is wrong with the request
+      content: {}
+    FORBIDDEN:
+      description: The request was successfully validated but lacking the required permissions. Verify your credentials and permissions before you send this request again.
+      content: {}
+    INTERNAL_SERVER_ERROR:
+      description: Internal failure while processing the request, reason depends on error.
+      content: {}
+    UNAUTHORIZED:
+      description: The supplied authorization header was not valid or the supplied token scope was not acceptable. Verify authentication and try again.
+      content: {}
+  securitySchemes:
+    2-legged:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+    3-legged-implicit:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: ''
+          refreshUrl: ''
+          scopes: {}
+    3-legged:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: ''
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+x-stoplight:
+  id: zm6m3b30rcbon

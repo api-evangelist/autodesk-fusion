@@ -1,0 +1,275 @@
+openapi: 3.0.0
+info:
+  title: Construction.Account.Admin Account Management Key Management API
+  version: '1.0'
+  contact:
+    name: Autodesk Plaform Services
+    url: https://aps.autodesk.com/
+    email: aps.help@autodesk.com
+  termsOfService: https://www.autodesk.com/company/legal-notices-trademarks/terms-of-service-autodesk360-web-services/forge-platform-web-services-api-terms-of-service
+  x-support: https://stackoverflow.com/questions/tagged/autodesk-platform-services
+  description: 'The Account Admin API automates creating and managing projects, assigning and managing project users, and managing member and partner company directories. You can also synchronize data with external systems.
+
+    '
+servers:
+- url: https://developer.api.autodesk.com
+security:
+- 2-legged: []
+- 3-legged: []
+tags:
+- name: Key Management
+paths:
+  /authentication/v2/service-accounts/{serviceAccountId}/keys:
+    parameters: []
+    post:
+      tags:
+      - Key Management
+      summary: Create Keys
+      description: 'Creates a service account key.
+
+
+        A service account key is a public-private key pair, generated using RSA with a key length of 2048 bits by the Identity Authorization Service (AuthZ).
+
+
+        The private key is returned once during its creation. AuthZ only stores the public key.
+
+
+        A service account can have up to 3 keys at any given time.'
+      operationId: create-service-account-key
+      parameters:
+      - name: serviceAccountId
+        in: path
+        description: The Autodesk ID of the service account
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Successful request; the service account key has been created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/service-account-private-key'
+        '400':
+          description: Invalid request; The service account is not currently in an enabled state. Make sure the service account is enabled.
+        '401':
+          description: Unauthorized; The token has expired, is invalid, or is not a two-legged token. Make sure a valid two-legged token is used.
+        '403':
+          description: Limit exceeded; The number of keys has exceeded the limit. Delete keys to free up space.
+        '404':
+          description: Not found; The service account is not found.
+        '500':
+          description: An unknown server-side error occurred. Please try again later. If the problem persists, please contact support.
+      security:
+      - 2-legged:
+        - application:service_account_key:write
+    get:
+      tags:
+      - Key Management
+      summary: Get All Keys
+      description: Lists all keys associated with the service account. This operation will only return key metadata, not the private or public key.
+      operationId: get-all-service-account-keys
+      parameters:
+      - name: serviceAccountId
+        in: path
+        description: The Autodesk ID of the service account
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful request; the keys have been retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/service-account-keys'
+              examples:
+                GetAll:
+                  value:
+                    keys:
+                    - kid: 550e8400-e29b-41d4-a716-446655440000
+                      status: ENABLED
+                      createdAt: 2024-01-25 03:08:04.156576834 +0000 UTC
+                      accessedAt: 2024-01-25 03:08:04.156576834 +0000 UTC
+                    - kid: 120e8400-e29b-41d4-a716-446655440003
+                      status: DISABLED
+                      createdAt: 2024-01-25 03:08:04.156576834 +0000 UTC
+                      accessedAt: 2024-01-25 03:08:04.156576834 +0000 UTC
+        '400':
+          description: Invalid request; The service account is not currently in an enabled state. Make sure the service account is enabled.
+        '401':
+          description: Unauthorized; The token has expired, is invalid, or is not a two-legged token. Make sure a valid two-legged token is used.
+        '404':
+          description: Not found; The service account is not found.
+        '500':
+          description: An unknown server-side error occurred. Please try again later. If the problem persists, please contact support.
+      security:
+      - 2-legged:
+        - application:service_account_key:read
+  /authentication/v2/service-accounts/{serviceAccountId}/keys/{keyId}:
+    parameters: []
+    patch:
+      tags:
+      - Key Management
+      summary: Enable or Disable Key
+      description: Enables or disables a service account key.
+      operationId: enable-disable-service-account-key
+      parameters:
+      - name: serviceAccountId
+        in: path
+        description: The Autodesk ID of the service account
+        required: true
+        schema:
+          type: string
+      - name: keyId
+        in: path
+        description: The ID of the private key
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/enable-disable-service-account-key-payload'
+            examples:
+              Example:
+                value:
+                  status: ENABLED
+        required: true
+        description: ''
+      responses:
+        '204':
+          description: Successful request; the service account key has been updated.
+        '400':
+          description: Invalid request; The service account is not currently in an enabled state or the key is already in an enabled or disabled state. Make sure the service account is enabled and the key state is actually changed.
+        '401':
+          description: Unauthorized; The token has expired, is invalid, or is not a two-legged token. Make sure a valid two-legged token is used.
+        '404':
+          description: Not found; The service account or key is not found.
+        '500':
+          description: An unknown server-side error occurred. Please try again later. If the problem persists, please contact support.
+      security:
+      - 2-legged:
+        - application:service_account_key:write
+    delete:
+      tags:
+      - Key Management
+      summary: Delete key
+      description: Deletes an existing key.
+      operationId: delete-service-account-key
+      parameters:
+      - name: serviceAccountId
+        in: path
+        description: The Autodesk ID of the service account
+        required: true
+        schema:
+          type: string
+      - name: keyId
+        in: path
+        description: The ID of the private key
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Successful request; the key has been deleted.
+        '400':
+          description: Invalid request; The service account is not currently in an enabled state. Make sure the service account is enabled.
+        '401':
+          description: Unauthorized; The token has expired, is invalid, or is not a two-legged token. Make sure a valid two-legged token is used.
+        '404':
+          description: Not found; The service account or key is not found.
+        '500':
+          description: An unknown server-side error occurred. Please try again later. If the problem persists, please contact support.
+      security:
+      - 2-legged:
+        - application:service_account_key:write
+components:
+  schemas:
+    enable-disable-service-account-key-payload:
+      title: Enable or Disable Service Account key Request
+      x-stoplight:
+        id: uk676x88o10m1
+      type: object
+      description: The request body for enable or disable service account key
+      properties:
+        status:
+          type: string
+          description: The status of the service account key
+          $ref: '#/components/schemas/status'
+      required:
+      - status
+    service-account-keys:
+      title: Service Account Keys
+      type: object
+      description: Contains details of a list of service account keys
+      properties:
+        keys:
+          type: array
+          description: List of service account keys
+          items:
+            $ref: '#/components/schemas/service-account-key-details'
+    status:
+      type: string
+      enum:
+      - ENABLED
+      - DISABLED
+    service-account-key-details:
+      title: Service Account Key Details
+      description: ''
+      type: object
+      properties:
+        kid:
+          type: string
+          description: The ID of the private key
+        status:
+          type: string
+          description: The status of the key
+          enum:
+          - ENABLED
+          - DISABLED
+        createdAt:
+          type: string
+          format: date-time
+          description: The creation time of the key, in UTC format
+        accessedAt:
+          type: string
+          format: date-time
+          description: This is the most recent time an access token was generated for this service account key, in UTC format
+    service-account-private-key:
+      title: Service Account Private Key
+      type: object
+      description: Describes a private key
+      properties:
+        kid:
+          type: string
+          description: The ID of the private key.
+        privateKey:
+          type: string
+          description: The private key value, in PEM format.
+  securitySchemes:
+    2-legged:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+    3-legged-implicit:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: ''
+          refreshUrl: ''
+          scopes: {}
+    3-legged:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: ''
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+x-stoplight:
+  id: zm6m3b30rcbon

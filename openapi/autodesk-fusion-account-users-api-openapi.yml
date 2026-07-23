@@ -1,0 +1,1144 @@
+openapi: 3.0.0
+info:
+  title: Construction.Account.Admin Account Management Account Users API
+  version: '1.0'
+  contact:
+    name: Autodesk Plaform Services
+    url: https://aps.autodesk.com/
+    email: aps.help@autodesk.com
+  termsOfService: https://www.autodesk.com/company/legal-notices-trademarks/terms-of-service-autodesk360-web-services/forge-platform-web-services-api-terms-of-service
+  x-support: https://stackoverflow.com/questions/tagged/autodesk-platform-services
+  description: 'The Account Admin API automates creating and managing projects, assigning and managing project users, and managing member and partner company directories. You can also synchronize data with external systems.
+
+    '
+servers:
+- url: https://developer.api.autodesk.com
+security:
+- 2-legged: []
+- 3-legged: []
+tags:
+- name: Account Users
+paths:
+  /hq/v1/accounts/{account_id}/users:
+    parameters:
+    - schema:
+        type: string
+      name: account_id
+      in: path
+      required: true
+      description: The account ID of the users. This corresponds to hub ID in the Data Management API. To convert a hub ID into an account ID you need to remove the “b.” prefix. For example, a hub ID of b.c8b0c73d-3ae9 translates to an account ID of c8b0c73d-3ae9.
+    get:
+      summary: Get account users
+      responses:
+        '200':
+          description: The request has succeeded
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+                  x-stoplight:
+                    id: lcdrvybcvuy9t
+        '400':
+          description: The request could not be understood by the server due to malformed syntax.
+        '403':
+          description: Forbidden
+        '404':
+          description: Resource Not Found
+        '409':
+          description: The request could not be completed due to a conflict with the current state of the resource
+        '422':
+          description: The request was unable to be followed due to restrictions.
+        '500':
+          description: Internal Server Error
+      operationId: getUsers
+      description: Query all the users in a specific BIM 360 account.
+      security:
+      - 2-legged: []
+      - 3-legged: []
+      - 3-legged-implicit: []
+      parameters:
+      - schema:
+          $ref: '#/components/schemas/Region'
+        in: header
+        name: Region
+        description: 'The geographic area where the data is stored. Acceptable values: US, EMEA, AUS, CAN, DEU, IND, JPN, GBR. By default, it is set to US.'
+      - schema:
+          type: integer
+        in: query
+        name: limit
+        description: 'Response array’s size Default value: 10 Max limit: 100'
+      - schema:
+          type: integer
+        in: query
+        name: offset
+        description: 'Offset of response array Default value: 0'
+      - schema:
+          type: string
+        in: query
+        name: sort
+        description: Comma-separated fields to sort by in ascending order
+      - schema:
+          type: string
+        in: query
+        name: field
+        description: Comma-separated fields to include in response
+      tags:
+      - Account Users
+    post:
+      summary: Create User
+      operationId: createUser
+      parameters:
+      - schema:
+          $ref: '#/components/schemas/Region'
+        in: header
+        name: Region
+        description: 'The geographic area where the data is stored. Acceptable values: US, EMEA, AUS, CAN, DEU, IND, JPN, GBR. By default, it is set to US.'
+      responses:
+        '201':
+          description: A new resource has been successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: The request could not be understood by the server due to malformed syntax.
+        '403':
+          description: Forbidden
+        '404':
+          description: Resource Not Found
+        '409':
+          description: The request could not be completed due to a conflict with the current state of the resource
+        '422':
+          description: The request was unable to be followed due to restrictions.
+        '500':
+          description: Internal Server Error
+      security:
+      - 2-legged: []
+      - 3-legged: []
+      - 3-legged-implicit: []
+      description: Create a new user in the BIM 360 member directory.
+      tags:
+      - Account Users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserPayload'
+  /hq/v1/accounts/{account_id}/users/import:
+    parameters:
+    - schema:
+        type: string
+      name: account_id
+      in: path
+      required: true
+      description: The account ID of the users. This corresponds to hub ID in the Data Management API. To convert a hub ID into an account ID you need to remove the “b.” prefix. For example, a hub ID of b.c8b0c73d-3ae9 translates to an account ID of c8b0c73d-3ae9.
+    post:
+      summary: Bulk import users
+      parameters:
+      - schema:
+          $ref: '#/components/schemas/Region'
+        in: header
+        name: Region
+        description: 'The geographic area where the data is stored. Acceptable values: US, EMEA, AUS, CAN, DEU, IND, JPN, GBR. By default, it is set to US.'
+      responses:
+        '201':
+          description: A new resource has been successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserImport'
+        '400':
+          description: The request could not be understood by the server due to malformed syntax.
+        '403':
+          description: Forbidden
+        '404':
+          description: Resource Not Found
+        '409':
+          description: The request could not be completed due to a conflict with the current state of the resource
+        '422':
+          description: The request was unable to be followed due to restrictions.
+        '500':
+          description: Internal Server Error
+      operationId: importUsers
+      description: Bulk import users to the master member directory in a BIM 360 account. (50 users maximum can be included in each call.)
+      security:
+      - 2-legged: []
+      - 3-legged: []
+      - 3-legged-implicit: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/UserPayload'
+                x-stoplight:
+                  id: oo7x7y92yduxj
+      tags:
+      - Account Users
+  /hq/v1/accounts/{account_id}/users/{user_id}:
+    parameters:
+    - schema:
+        type: string
+      name: account_id
+      in: path
+      required: true
+      description: The account ID of the user.
+    - schema:
+        type: string
+      name: user_id
+      in: path
+      required: true
+      description: User ID
+    get:
+      summary: Get the details of a user
+      responses:
+        '200':
+          description: The request has succeeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: The request could not be understood by the server due to malformed syntax.
+        '403':
+          description: Forbidden
+        '404':
+          description: Resource Not Found
+        '409':
+          description: The request could not be completed due to a conflict with the current state of the resource
+        '422':
+          description: The request was unable to be followed due to restrictions.
+        '500':
+          description: Internal Server Error
+      operationId: getUser
+      parameters:
+      - schema:
+          $ref: '#/components/schemas/Region'
+        in: header
+        name: Region
+        description: 'The geographic area where the data is stored. Acceptable values: US, EMEA, AUS, CAN, DEU, IND, JPN, GBR. By default, it is set to US.'
+      description: Query the details of a specific user.
+      security:
+      - 2-legged: []
+      - 3-legged: []
+      - 3-legged-implicit: []
+      tags:
+      - Account Users
+    patch:
+      summary: Update User
+      operationId: patchUserDetails
+      parameters:
+      - schema:
+          $ref: '#/components/schemas/Region'
+        in: header
+        name: Region
+        description: 'The geographic area where the data is stored. Acceptable values: US, EMEA, AUS, CAN, DEU, IND, JPN, GBR. By default, it is set to US.'
+      responses:
+        '200':
+          description: The request has succeeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: The request could not be understood by the server due to malformed syntax.
+        '403':
+          description: Forbidden
+        '404':
+          description: Resource Not Found
+        '409':
+          description: The request could not be completed due to a conflict with the current state of the resource
+        '422':
+          description: The request was unable to be followed due to restrictions.
+        '500':
+          description: Internal Server Error
+      security:
+      - 2-legged: []
+      - 3-legged: []
+      - 3-legged-implicit: []
+      description: Update a specific user’s status or default company.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserPatchPayload'
+      tags:
+      - Account Users
+  /hq/v1/accounts/{account_id}/users/search:
+    parameters:
+    - schema:
+        type: string
+      name: account_id
+      in: path
+      required: true
+      description: The account ID of the users.
+    get:
+      summary: Search Users
+      responses:
+        '200':
+          description: The request has succeeded
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+                  x-stoplight:
+                    id: lcdrvybcvuy9t
+        '400':
+          description: The request could not be understood by the server due to malformed syntax.
+        '403':
+          description: Forbidden
+        '404':
+          description: Resource Not Found
+        '409':
+          description: The request could not be completed due to a conflict with the current state of the resource
+        '422':
+          description: The request was unable to be followed due to restrictions.
+        '500':
+          description: Internal Server Error
+      operationId: searchUsers
+      description: Search users in the master member directory of a specific BIM 360 account by specified fields.
+      security:
+      - 2-legged: []
+      - 3-legged: []
+      - 3-legged-implicit: []
+      parameters:
+      - schema:
+          $ref: '#/components/schemas/Region'
+        in: header
+        name: Region
+        description: 'The geographic area where the data is stored. Acceptable values: US, EMEA, AUS, CAN, DEU, IND, JPN, GBR. By default, it is set to US.'
+      - schema:
+          type: string
+        in: query
+        name: name
+        description: 'User name to match Max length: 255'
+      - schema:
+          type: string
+        in: query
+        name: email
+        description: 'User email to match Max length: 255'
+      - schema:
+          type: string
+        in: query
+        name: company_name
+        description: 'User company to match Max length: 255'
+      - schema:
+          type: string
+        in: query
+        name: operator
+        description: 'Boolean operator to use: OR (default) or AND'
+      - schema:
+          type: boolean
+        in: query
+        name: partial
+        description: If true (default), perform a fuzzy match
+      - schema:
+          type: integer
+        in: query
+        name: limit
+        description: 'Response array’s size Default value: 10 Max limit: 100'
+      - schema:
+          type: integer
+        in: query
+        name: offset
+        description: 'Offset of response array Default value: 0'
+      - schema:
+          type: string
+        in: query
+        name: sort
+        description: Comma-separated fields to sort by in ascending order
+      - schema:
+          type: string
+        in: query
+        name: field
+        description: Comma-separated fields to include in response
+      tags:
+      - Account Users
+  /construction/admin/v1/accounts/{accountId}/users/{userId}/products:
+    parameters:
+    - schema:
+        type: string
+      name: accountId
+      in: path
+      required: true
+      description: The ID of the ACC account that contains the project being created or the projects being retrieved. This corresponds to the hub ID in the Data Management API. To convert a hub ID into an account ID, remove the “b." prefix. For example, a hub ID of b.c8b0c73d-3ae9 translates to an account ID of c8b0c73d-3ae9.
+    - schema:
+        type: string
+      name: userId
+      in: path
+      required: true
+      description: The ID of the user. To find the ID call GET users. You can use either the ACC ID (id) or the Autodesk ID (autodeskId).
+    get:
+      summary: Get user products
+      tags:
+      - Account Users
+      responses:
+        '200':
+          description: A list of products associated with the user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductsPage'
+        '400':
+          description: The request could not be understood by the server due to malformed syntax.
+        '401':
+          description: Request has not been applied because it lacks valid authentication credentials for the target resource.
+        '403':
+          description: The server understood the request but refuses to authorize it.
+        '404':
+          description: The resource could not be found.
+        '406':
+          description: The server cannot produce a response matching the list of acceptable values defined in the request.
+        '410':
+          description: Access to the target resource is no longer available.
+        '429':
+          description: User has sent too many requests in a given amount of time.
+        '500':
+          description: An unexpected error occurred on the server.
+        '503':
+          description: Server is not ready to handle the request.
+      operationId: getUserProducts
+      x-stoplight:
+        id: snwomaq8zrxrf
+      description: "Returns a list of ACC products the user is associated with in their assigned projects.\r\n\r\nOnly account administrators can call this endpoint.\r\n\r\nNote that this endpoint is compatible with both BIM 360 and Autodesk Construction Cloud (ACC) projects."
+      security:
+      - 2-legged: []
+      - 3-legged-implicit: []
+      - 3-legged: []
+      parameters:
+      - schema:
+          $ref: '#/components/schemas/Region'
+        in: header
+        name: Region
+        description: 'Specifies the region where your request should be routed. If not set, the request is routed automatically, which may result in a slight increase in latency. Possible values: US, EMEA. For a complete list of supported regions, see the Regions page.'
+      - schema:
+          type: string
+        in: header
+        name: User-Id
+        description: The ID of a user on whose behalf your request is acting. Your app has access to all users specified by the administrator in the SaaS integrations UI. Provide this header value to identify the user to be affected by the request.  You can use either the user’s ACC ID (id), or their Autodesk ID (autodeskId).  Note that this header is required for Account Admin POST, PATCH, and DELETE endpoints if you want to use a 2-legged authentication context. This header is optional for Account Admin GET endpoints.
+      - schema:
+          $ref: '#/components/schemas/filterID'
+        in: query
+        name: filter[projectId]
+        description: A list of project IDs. Only results where the user is associated with one or more of the specified projects are returned.
+      - schema:
+          $ref: '#/components/schemas/filterProductKey_internal'
+        in: query
+        name: filter[key]
+        description: 'Filters the list of products by product key — a machine-readable identifier for an ACC product (such as docs, build, or cost). You can specify one or more keys to return only those products the user is associated with.  Example: filter[key]=docs,build  Possible values: accountAdministration, autoSpecs, build, buildingConnected, capitalPlanning, cloudWorksharing, cost, designCollaboration, docs, financials, insight, modelCoordination, projectAdministration, takeoff, and workshopxr.'
+      - schema:
+          $ref: '#/components/schemas/filterProductField_internal'
+        in: query
+        name: fields
+        description: 'List of fields to return in the response. Defaults to all fields. Possible values: projectIds, name and icon.'
+      - schema:
+          $ref: '#/components/schemas/filterProductSort_internal'
+        in: query
+        name: sort
+        description: 'The list of fields to sort by. Each property can be followed by a direction modifier of either asc (ascending) or desc (descending). The default is asc.  Possible values: name.  Default is the order in database.'
+      - schema:
+          type: integer
+        in: query
+        name: limit
+        description: 'The maximum number of records to return in the response. Default: 20  Minimum: 1  Maximum: 200 (If a larger value is provided, only 200 records are returned)'
+      - schema:
+          type: integer
+        in: query
+        name: offset
+        description: 'The index of the first record to return. Used for pagination in combination with the limit parameter.  Example: limit=20 and offset=40 returns records 41–60.'
+  /construction/admin/v1/accounts/{accountId}/users/{userId}/roles:
+    parameters:
+    - schema:
+        type: string
+      name: accountId
+      in: path
+      required: true
+      description: The ID of the ACC account that contains the project being created or the projects being retrieved. This corresponds to the hub ID in the Data Management API. To convert a hub ID into an account ID, remove the “b." prefix. For example, a hub ID of b.c8b0c73d-3ae9 translates to an account ID of c8b0c73d-3ae9.
+    - schema:
+        type: string
+      name: userId
+      in: path
+      required: true
+      description: The ID of the user. To find the ID call GET users. You can use either the ACC ID (id) or the Autodesk ID (autodeskId).
+    get:
+      summary: Get user roles
+      tags:
+      - Account Users
+      responses:
+        '200':
+          description: A list of requested roles associated with the user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RolesPage'
+        '400':
+          description: The request could not be understood by the server due to malformed syntax.
+        '401':
+          description: Request has not been applied because it lacks valid authentication credentials for the target resource.
+        '403':
+          description: The server understood the request but refuses to authorize it.
+        '404':
+          description: The resource could not be found.
+        '406':
+          description: The server cannot produce a response matching the list of acceptable values defined in the request.
+        '410':
+          description: Access to the target resource is no longer available.
+        '429':
+          description: User has sent too many requests in a given amount of time.
+        '500':
+          description: An unexpected error occurred on the server.
+        '503':
+          description: Server is not ready to handle the request.
+      operationId: getUserRoles
+      x-stoplight:
+        id: cgulon93y268q
+      description: "Returns the roles assigned to a specific user across the projects they belong to.\r\n\r\nOnly users with account admin permissions can call this endpoint. To verify a user’s permissions, call GET users.\r\n\r\nNote that this endpoint is compatible with both BIM 360 and Autodesk Construction Cloud (ACC) projects."
+      security:
+      - 2-legged: []
+      - 3-legged-implicit: []
+      - 3-legged: []
+      parameters:
+      - schema:
+          $ref: '#/components/schemas/Region'
+        in: header
+        name: Region
+        description: 'Specifies the region where your request should be routed. If not set, the request is routed automatically, which may result in a slight increase in latency. Possible values: US, EMEA. For a complete list of supported regions, see the Regions page.'
+      - schema:
+          type: string
+        in: header
+        name: User-Id
+        description: The ID of a user on whose behalf your request is acting. Your app has access to all users specified by the administrator in the SaaS integrations UI. Provide this header value to identify the user to be affected by the request.  You can use either the user’s ACC ID (id), or their Autodesk ID (autodeskId).  Note that this header is required for Account Admin POST, PATCH, and DELETE endpoints if you want to use a 2-legged authentication context. This header is optional for Account Admin GET endpoints.
+      - schema:
+          $ref: '#/components/schemas/filterID'
+        in: query
+        name: filter[projectId]
+        description: A list of project IDs. Only results where the user is associated with one or more of the specified projects are returned.
+      - schema:
+          $ref: '#/components/schemas/filterRoleStatus_internal'
+        in: query
+        name: filter[status]
+        description: 'Filters roles by their status. Accepts one or more of the following values: active – The role is currently in use.  inactive – The role has been removed or is no longer in use.'
+      - schema:
+          type: string
+        in: query
+        name: filter[name]
+        description: Filters roles by name. By default, this performs a partial match (case-insensitive).  You can control how the match behaves by using the filterTextMatch parameter. For example, to match only names that start with (startsWith), end with (endsWith), or exactly equal (equals) the provided value.
+      - schema:
+          $ref: '#/components/schemas/filterTextMatch'
+        in: query
+        name: filterTextMatch
+        description: 'Specifies how text-based filters should match values in supported fields. This parameter can be used in any endpoint that supports text-based filtering (e.g., filter[name], filter[jobNumber], filter[companyName], etc.).  Possible values:  contains (default) – Matches if the field contains the specified text anywhere  startsWith – Matches if the field starts with the specified text  endsWith – Matches if the field ends with the specified text  equals – Matches only if the field exactly matches the specified text  Matching is case-insensitive.  Wildcards and regular expressions are not supported.'
+      - schema:
+          $ref: '#/components/schemas/filterRoleField_internal'
+        in: query
+        name: fields
+        description: 'A comma-separated list of response fields to include. Defaults to all fields if not specified. Use this parameter to reduce the response size by retrieving only the fields you need.  Possible values:  projectIds – Projects where the user holds this role  name – Role name  status – Role status (active or inactive)  key – Internal key used to translate the role name  createdAt – Timestamp when the role was created  updatedAt – Timestamp when the role was last updated'
+      - schema:
+          $ref: '#/components/schemas/filterRoleSort_internal'
+        in: query
+        name: sort
+        description: 'Sorts the results by one or more fields. Each field can be followed by a direction modifier:  asc – Ascending order (default)  desc – Descending order  Possible values: name, createdAt, updatedAt.  Default sort: name asc  Example: sort=name,updatedAt desc'
+      - schema:
+          type: integer
+        in: query
+        name: limit
+        description: 'The maximum number of records to return in the response. Default: 20  Minimum: 1  Maximum: 200 (If a larger value is provided, only 200 records are returned)'
+      - schema:
+          type: integer
+        in: query
+        name: offset
+        description: 'The index of the first record to return. Used for pagination in combination with the limit parameter.  Example: limit=20 and offset=40 returns records 41–60.'
+components:
+  schemas:
+    filterID:
+      title: filterID
+      type: array
+      items:
+        type: string
+    filterRoleSort:
+      title: filterRoleSort
+      x-stoplight:
+        id: xuzincefhreh7
+      description: 'Sorts the results by one or more fields.
+
+        Each field can be followed by a direction modifier:
+
+
+        asc – Ascending order (default)
+
+
+        desc – Descending order
+
+
+        Possible values: name, createdAt, updatedAt.
+
+
+        Default sort: name asc
+
+
+        Example: sort=name,updatedAt desc'
+      enum:
+      - name asc
+      - createdAt asc
+      - updatedAt asc
+      - name desc
+      - createdAt desc
+      - updatedAt desc
+    RolesPage:
+      title: RolesPage
+      x-stoplight:
+        id: 8kwl7yuzi534s
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        results:
+          type: array
+          x-stoplight:
+            id: 2dyfcimzwbq83
+          items:
+            $ref: '#/components/schemas/Role'
+      description: A list of requested roles associated with the user
+    filterProductSort:
+      title: filterProductSort
+      x-stoplight:
+        id: a3dgak2yoggvo
+      description: 'The list of fields to sort by.
+
+        Each property can be followed by a direction modifier of either asc (ascending) or desc (descending). The default is asc.
+
+
+        Possible values: name.
+
+
+        Default is the order in database.'
+      enum:
+      - name asc
+      - name desc
+    User:
+      title: User
+      x-stoplight:
+        id: fx3z9ao4dnpxy
+      type: object
+      properties:
+        id:
+          type: string
+          description: BIM 360 user ID
+        account_id:
+          type: string
+          description: Account ID
+        role:
+          description: The role of the user in the account. New user should be account_user only.
+          type: string
+        status:
+          description: Status of the user in the system. A new account user is always not_invited.
+          type: string
+        company_id:
+          type: string
+          description: The user’s default company ID in BIM 360
+        company_name:
+          type: string
+          description: The name of the user’s default company name in BIM 360
+        last_sign_in:
+          type: string
+          description: Timestamp of the last sign in, YYYY-MM-DDThh:mm:ss.sssZ format
+        email:
+          type: string
+          description: 'User’s email '
+        name:
+          type: string
+          description: Default display name
+        nickname:
+          type: string
+          description: Nick name for user
+        first_name:
+          type: string
+          description: User’s first name
+        last_name:
+          type: string
+          description: User’s last name
+        uid:
+          type: string
+          description: User’s Autodesk ID
+        image_url:
+          type: string
+          description: URL for user’s profile image
+        address_line_1:
+          type: string
+          description: User’s address line 1
+        address_line_2:
+          type: string
+          description: User’s address line 2
+        city:
+          type: string
+          description: City in which user is located
+        state_or_province:
+          type: string
+          description: State or province in which user is located
+        postal_code:
+          type: string
+          description: Postal code for the user’s location
+        country:
+          type: string
+          description: Country for this user
+        phone:
+          type: string
+          description: Contact phone number for the user
+        company:
+          type: string
+          description: Company information from the Autodesk user profile
+        job_title:
+          type: string
+          description: User’s job title
+        industry:
+          type: string
+          description: Industry information for user
+        about_me:
+          type: string
+          description: Short description about the user
+        created_at:
+          type: string
+          description: YYYY-MM-DDThh:mm:ss.sssZ format
+        updated_at:
+          type: string
+          description: YYYY-MM-DDThh:mm:ss.sssZ format
+    filterProductKey_internal:
+      title: filterProductKey_internal
+      x-stoplight:
+        id: ia0aei2c8mzor
+      type: array
+      items:
+        $ref: '#/components/schemas/filterProductKey'
+    filterRoleField_internal:
+      title: filterRoleField_internal
+      x-stoplight:
+        id: yes8ynadosrxv
+      type: array
+      items:
+        $ref: '#/components/schemas/filterRoleField'
+    filterProductKey:
+      title: filterProductKey
+      x-stoplight:
+        id: ukcd26xywubto
+      description: 'Filters the list of products by product key — a machine-readable identifier for an ACC product (such as docs, build, or cost).
+
+        You can specify one or more keys to return only those products the user is associated with.
+
+
+        Example: filter[key]=docs,build
+
+
+        Possible values: accountAdministration, autoSpecs, build, buildingConnected, capitalPlanning, cloudWorksharing, cost, designCollaboration, docs, financials, insight, modelCoordination, projectAdministration, takeoff, and workshopxr.'
+      enum:
+      - accountAdministration
+      - autoSpecs
+      - build
+      - buildingConnected
+      - capitalPlanning
+      - cloudWorksharing
+      - cost
+      - designCollaboration
+      - docs
+      - financials
+      - insight
+      - modelCoordination
+      - projectAdministration
+      - takeoff
+      - workshopxr
+    filterProductField_internal:
+      title: filterProductField_internal
+      x-stoplight:
+        id: fbqg01p4ahszs
+      type: array
+      items:
+        $ref: '#/components/schemas/filterProductField'
+    userPatchStatus:
+      title: userPatchStatus
+      x-stoplight:
+        id: vy3l7dr8yvvt4
+      type: string
+      enum:
+      - active
+      - inactive
+    Role:
+      title: Role
+      x-stoplight:
+        id: mwi2mj854b6ap
+      type: object
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 058zts2ymshko
+          description: The unique ID of the role.
+        status:
+          type: string
+          x-stoplight:
+            id: 1nbbaygm0mwqq
+          description: 'The role status. Possible values: active, inactive.'
+        name:
+          type: string
+          x-stoplight:
+            id: v1ouk468js1ew
+          description: "The name of the role. Predefined roles are localized based on the request language.\r\nMax length: 255"
+        key:
+          type: string
+          x-stoplight:
+            id: gv2k753jxgux3
+          description: "The internal key used for translating predefined role names.\r\nMax length: 255"
+        createdAt:
+          type: string
+          x-stoplight:
+            id: awpgr8sjxn7gb
+          description: The timestamp when the role was created.
+        updatedAt:
+          type: string
+          x-stoplight:
+            id: edcid2f8livhy
+          description: The timestamp when the role was last updated.
+        projectIds:
+          type: array
+          x-stoplight:
+            id: zzo7mn0r5oqr9
+          description: The list of projects where the user is associated with this role.
+          items:
+            x-stoplight:
+              id: 15ubmz0q77t5g
+            type: string
+      description: The requested page of roles associated with the user.
+    filterRoleStatus:
+      title: filterRoleStatus
+      x-stoplight:
+        id: szbrna059dtnf
+      description: 'Filters roles by their status. Accepts one or more of the following values:
+
+        active – The role is currently in use.
+
+
+        inactive – The role has been removed or is no longer in use.'
+      enum:
+      - active
+      - inactive
+    UserImport:
+      title: UserImportResponse
+      x-stoplight:
+        id: t8o0t7wpee7l3
+      type: object
+      properties:
+        success:
+          type: integer
+          x-stoplight:
+            id: vfh38q2zhm7vr
+          description: Import success user count
+        failure:
+          type: integer
+          x-stoplight:
+            id: wbnrw0ceazwkh
+          description: Import failure user count
+        success_items:
+          type: array
+          x-stoplight:
+            id: b91r3bdiu4916
+          description: Array of user objects that were successfully imported
+          items:
+            $ref: '#/components/schemas/User'
+            x-stoplight:
+              id: yreisjgu8c84e
+        failure_items:
+          type: array
+          x-stoplight:
+            id: spdgokc6tgfr3
+          description: Array of user objects that failed to import, along with content and error information
+          items:
+            $ref: '#/components/schemas/User'
+            x-stoplight:
+              id: h3qbrhrr4tpef
+    Product:
+      title: Product
+      x-stoplight:
+        id: 31zy2tuwriypp
+      type: object
+      description: A list of ACC products the user is associated with.
+      properties:
+        key:
+          x-stoplight:
+            id: rer2vmrd4g1y7
+          type: string
+          description: "A machine-readable identifier for the product (e.g., docs, build).\r\nEach product has a unique key used throughout the API for identification, filtering, and integration logic (e.g., in query parameters like filter[key]).\r\n\r\nPossible values: ACC - autoSpecs, build, cost, designCollaboration, docs, insight, modelCoordination, projectAdministration, and takeoff.\r\n\r\nBIM 360 - assets, costManagement, designCollaboration, documentManagement, field, fieldManagement, glue, insight, modelCoordination, plan, projectAdministration, projectHome, projectManagement, and quantification.\r\n\r\nNote that this endpoint returns only ACC products. Other endpoints, such as GET projects and GET projects/:projectId, may return both ACC and BIM 360 projects. In those responses, product keys may include BIM 360 values."
+        icon:
+          type: string
+          x-stoplight:
+            id: 4irlls1dstvd0
+          description: The URL of the icon associated with the product.
+        name:
+          type: string
+          x-stoplight:
+            id: yeot5qg0gkp7j
+          description: The name of the product.
+        projectIds:
+          type: array
+          x-stoplight:
+            id: 73ybax84vwovq
+          description: The list of projects IDs where the user is associated with the product.
+          items:
+            x-stoplight:
+              id: 5it7z4q34r99z
+            type: string
+    ProductsPage:
+      title: ProductsPage
+      x-stoplight:
+        id: xsphqarjuww5w
+      type: object
+      description: A list of products associated with the user
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        results:
+          type: array
+          x-stoplight:
+            id: 9a90u1uk439nr
+          items:
+            $ref: '#/components/schemas/Product'
+    UserPayload:
+      title: UserPayload
+      x-stoplight:
+        id: xilzd946u5je1
+      type: object
+      properties:
+        company_id:
+          type: string
+          description: The user’s default company ID in BIM 360
+        email:
+          type: string
+          description: 'User’s email '
+        name:
+          type: string
+          description: Default display name
+        nickname:
+          type: string
+          description: Nick name for user
+        first_name:
+          type: string
+          description: User’s first name
+        last_name:
+          type: string
+          description: User’s last name
+        image_url:
+          type: string
+          description: URL for user’s profile image
+        address_line_1:
+          type: string
+          description: User’s address line 1
+        address_line_2:
+          type: string
+          description: User’s address line 2
+        city:
+          type: string
+          description: City in which user is located
+        state_or_province:
+          type: string
+          description: State or province in which user is located
+        postal_code:
+          type: string
+          description: Postal code for the user’s location
+        country:
+          type: string
+          description: Country for this user
+        phone:
+          type: string
+          description: Contact phone number for the user
+        company:
+          type: string
+          description: Company information from the Autodesk user profile
+        job_title:
+          type: string
+          description: User’s job title
+        industry:
+          type: string
+          description: Industry information for user
+        about_me:
+          type: string
+          description: Short description about the user
+      required:
+      - email
+    filterRoleSort_internal:
+      title: filterRoleSort_internal
+      x-stoplight:
+        id: swdrk8sbdov1d
+      type: array
+      items:
+        $ref: '#/components/schemas/filterRoleSort'
+    Pagination:
+      title: Pagination
+      x-stoplight:
+        id: q1bi13503pl18
+      type: object
+      properties:
+        limit:
+          type: integer
+          x-stoplight:
+            id: 8izi1f176ek68
+        offset:
+          type: integer
+          x-stoplight:
+            id: v1vdhhbk5vhtj
+        totalResults:
+          type: integer
+          x-stoplight:
+            id: o7y9s28pvovds
+        nextUrl:
+          type: string
+          x-stoplight:
+            id: egebyg74p2y51
+        previousUrl:
+          type: string
+          x-stoplight:
+            id: rhoc949ms1w0p
+      description: "\tContains pagination details for the records returned by the endpoint."
+    Region:
+      title: Region
+      x-stoplight:
+        id: 5rz8jxdpgo4zq
+      type: string
+      enum:
+      - US
+      - EMEA
+      - AUS
+      - CAN
+      - DEU
+      - IND
+      - JPN
+      - GBR
+      description: 'Specifies the region where your request should be routed. Possible values are:
+
+        - ``US`` - Data center for the US region.
+
+        - ``EMEA`` - Data center for the European Union, Middle East, and Africa regions.
+
+        - ``AUS`` - Data center for the Australia region.
+
+        - ``CAN`` - Data center for the Canada region.
+
+        - ``DEU`` - Data center for the Germany region.
+
+        - ``IND`` - Data center for the India region.
+
+        - ``JPN`` - Data center for the Japan region.
+
+        - ``GBR`` - Data center for the United Kingdom region.'
+    filterProductField:
+      title: filterProductField
+      x-stoplight:
+        id: 3bm7y2gmfkzn9
+      description: 'List of fields to return in the response. Defaults to all fields.
+
+        Possible values: projectIds, name and icon.'
+      enum:
+      - projectIds
+      - name
+      - icon
+    filterRoleField:
+      title: filterRoleField
+      x-stoplight:
+        id: z2dxkedg44fnc
+      description: 'A comma-separated list of response fields to include. Defaults to all fields if not specified.
+
+        Use this parameter to reduce the response size by retrieving only the fields you need.
+
+
+        Possible values:
+
+
+        projectIds – Projects where the user holds this role
+
+
+        name – Role name
+
+
+        status – Role status (active or inactive)
+
+
+        key – Internal key used to translate the role name
+
+
+        createdAt – Timestamp when the role was created
+
+
+        updatedAt – Timestamp when the role was last updated'
+      enum:
+      - projectIds
+      - name
+      - status
+      - key
+      - createdAt
+      - updatedAt
+    filterRoleStatus_internal:
+      title: filterRoleStatus_internal
+      x-stoplight:
+        id: unyj4odpflg05
+      type: array
+      items:
+        $ref: '#/components/schemas/filterRoleStatus'
+    UserPatchPayload:
+      title: UserPatchPayload
+      x-stoplight:
+        id: xw8ty4k0es17i
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/userPatchStatus'
+          x-stoplight:
+            id: n6e75bp9t1fl3
+          description: New status to set the user to (only if not currently pending or not_invited)
+        company_id:
+          type: string
+          x-stoplight:
+            id: f3n7hx18s62dv
+          description: The user’s default company ID in BIM 360
+    filterProductSort_internal:
+      title: filterProductSort_internal
+      x-stoplight:
+        id: an9jj1722wf9w
+      type: array
+      items:
+        $ref: '#/components/schemas/filterProductSort'
+    filterTextMatch:
+      title: filterTextMatch
+      x-stoplight:
+        id: l613i9qr8h8a6
+      type: string
+      enum:
+      - contains
+      - startsWith
+      - endsWith
+      - equals
+  securitySchemes:
+    2-legged:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+    3-legged-implicit:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: ''
+          refreshUrl: ''
+          scopes: {}
+    3-legged:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: ''
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+x-stoplight:
+  id: zm6m3b30rcbon

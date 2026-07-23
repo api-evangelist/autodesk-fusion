@@ -1,0 +1,979 @@
+openapi: 3.0.0
+info:
+  title: Construction.Account.Admin Account Management Metadata API
+  version: '1.0'
+  contact:
+    name: Autodesk Plaform Services
+    url: https://aps.autodesk.com/
+    email: aps.help@autodesk.com
+  termsOfService: https://www.autodesk.com/company/legal-notices-trademarks/terms-of-service-autodesk360-web-services/forge-platform-web-services-api-terms-of-service
+  x-support: https://stackoverflow.com/questions/tagged/autodesk-platform-services
+  description: 'The Account Admin API automates creating and managing projects, assigning and managing project users, and managing member and partner company directories. You can also synchronize data with external systems.
+
+    '
+servers:
+- url: https://developer.api.autodesk.com
+security:
+- 2-legged: []
+- 3-legged: []
+tags:
+- name: Metadata
+paths:
+  /modelderivative/v2/designdata/{urn}/metadata:
+    parameters:
+    - $ref: '#/components/parameters/source-design-urn'
+    get:
+      summary: List Model Views
+      tags:
+      - Metadata
+      responses:
+        '200':
+          description: A list of Model Views was retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelViews'
+            application/xml:
+              schema:
+                type: object
+                properties: {}
+          headers:
+            x-ads-app-identifier:
+              $ref: '#/components/headers/x-ads-app-identifier'
+            x-ads-startup-time:
+              $ref: '#/components/headers/x-ads-startup-time'
+            x-ads-duration:
+              $ref: '#/components/headers/x-ads-duration'
+            x-ads-troubleshooting:
+              $ref: '#/components/headers/x-ads-troubleshooting'
+      operationId: get-model-views
+      description: 'Returns a list of Model Views (Viewables) in the source design specified by the ``urn`` parameter. It also returns an ID that uniquely identifies the Model View. You can use these IDs with other metadata operations to obtain information about the objects within those Model Views.
+
+
+        Designs created with applications like Fusion 360 and Inventor contain only one Model View per design. Applications like Revit allow multiple Model Views per design.
+
+
+        **Note:** You can retrieve metadata only from a design that has already been translated to SVF or SVF2.'
+      security:
+      - 2-legged:
+        - data:read
+      - 3-legged:
+        - data:read
+      parameters:
+      - $ref: '#/components/parameters/accept-encoding'
+      - $ref: '#/components/parameters/region'
+  /modelderivative/v2/designdata/{urn}/metadata/{modelGuid}:
+    parameters:
+    - $ref: '#/components/parameters/source-design-urn'
+    - name: modelGuid
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The ID of the Model View you are extracting the object tree from. Use the `List Model Views </en/docs/model-derivative/v2/reference/http/metadata/urn-metadata-GET>`_ operation to get the IDs of the Model Views in the source design.
+    get:
+      summary: Fetch Object tree
+      tags:
+      - Metadata
+      operationId: get-object-tree
+      description: "Retrieves the structured hierarchy of objects, known as an object tree, from the specified Model View (Viewable) within the specified source design. The object tree represents the arrangement and relationships of various objects present in that Model View.\n\n**Note:** A design file must be translated to SVF or SVF2 before you can retrieve its object tree.  \n\nBefore you call this operation:\n\n- Use the `List Model Views </en/docs/model-derivative/v2/reference/http/metadata/urn-metadata-GET/>`_ operation to obtain the list of Model Views in the source design.\n- Pick the ID of the Model View you want to query and specify that ID as the value for the ``modelGuid``  parameter.\n"
+      security:
+      - 2-legged:
+        - data:read
+      - 3-legged:
+        - data:read
+      parameters:
+      - $ref: '#/components/parameters/accept-encoding'
+      - $ref: '#/components/parameters/region'
+      - $ref: '#/components/parameters/x-ads-force'
+      - $ref: '#/components/parameters/x-ads-derivative-format'
+      - $ref: '#/components/parameters/forceget'
+      - schema:
+          type: integer
+        in: query
+        name: objectid
+        description: If specified, retrieves the sub-tree that has the specified Object ID as its parent node. If this parameter is not specified, retrieves the entire object tree.
+      - schema:
+          type: string
+        in: query
+        name: level
+        description: Specifies how many child levels of the hierarchy to return, when the ``objectid``  parameter is specified. Currently supports only ``level`` = ``1``.
+      responses:
+        '200':
+          description: The object tree of the specified Model View was retrieved successfully.
+          headers:
+            x-ads-app-identifier:
+              $ref: '#/components/headers/x-ads-app-identifier'
+            x-ads-startup-time:
+              $ref: '#/components/headers/x-ads-startup-time'
+            x-ads-duration:
+              $ref: '#/components/headers/x-ads-duration'
+            x-ads-troubleshooting:
+              $ref: '#/components/headers/x-ads-troubleshooting'
+            x-ads-size:
+              $ref: '#/components/headers/x-ads-size'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectTree'
+        '202':
+          description: Request was accepted but processing is not complete. Repeat until you receive an HTTP status of ``200``.
+          content:
+            application/json:
+              schema:
+                type: object
+  /modelderivative/v2/designdata/{urn}/metadata/{modelGuid}/properties:
+    parameters:
+    - $ref: '#/components/parameters/source-design-urn'
+    - name: modelGuid
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The ID of the Model View you are querying. Use the `List Model Views </en/docs/model-derivative/v2/reference/http/metadata/urn-metadata-GET>`_ operation to get the IDs of the Model Views in the source design.
+    get:
+      summary: Fetch All Properties
+      tags:
+      - Metadata
+      responses:
+        '200':
+          description: Properties were retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Properties'
+              examples:
+                example-1:
+                  value:
+                    data:
+                      type: string
+                      collection:
+                      - objectid: 0
+                        name: string
+                        externalId: string
+                        properties:
+                          Component Name: string
+                          Name: string
+                          Design Tracking Properties:
+                            Design State: string
+                            Designer: string
+                            File Subtype: string
+                          File Properties:
+                            Author: string
+                            Creation Date: string
+                            Original System: string
+                            Part Number: string
+                          Mass Properties:
+                            Area: string
+                            Volume: string
+          headers:
+            x-ads-app-identifier:
+              $ref: '#/components/headers/x-ads-app-identifier'
+            x-ads-startup-time:
+              $ref: '#/components/headers/x-ads-startup-time'
+            x-ads-duration:
+              $ref: '#/components/headers/x-ads-duration'
+            x-ads-troubleshooting:
+              $ref: '#/components/headers/x-ads-troubleshooting'
+            x-ads-size:
+              $ref: '#/components/headers/x-ads-size'
+        '202':
+          description: Request was accepted but processing is not complete. Repeat until you receive an HTTP status of ``200``.
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  result:
+                    type: string
+                    minLength: 1
+                required:
+                - result
+                x-examples:
+                  example-1:
+                    result: success
+      operationId: get-all-properties
+      description: "Returns a list of properties of all objects in the  Model View specified by the ``modelGuid`` parameter. \n\nThis operation returns properties of all objects by default. However, you can restrict the results to a specific object by specifying its ID as the ``objectid`` parameter.\n\nProperties are returned as a flat list, ordered, by their ``objectid``. The ``objectid`` is a non-persistent ID assigned to an object when the source design is translated to the SVF or SVF2 format. This means that:\n\n- A design file must be translated to SVF or SVF2 before you can retrieve properties.\n- The ``objectid`` of an object can change if the design is translated to SVF or SVF2 again. If you require a persistent ID across translations, use ``externalId`` to reference objects, instead of ``objectid``.\n\nBefore you call this operation:\n\n- Use the `List Model Views </en/docs/model-derivative/v2/reference/http/metadata/urn-metadata-GET/>`_ operation to obtain the list of Model Views (Viewables) in the source design. \n- Pick the ID of the Model View you want to query and specify that ID as the value for the ``modelGuid`` parameter.\n\n**Tip**: Use `Fetch Specific Properties </en/docs/model-derivative/v2/reference/http/metadata/urn-metadata-guid-properties-query-POST/>`_ to retrieve only the objects and properties of interest. What’s more, the response is paginated. So, when the number of properties returned is large, responses start arriving more promptly."
+      security:
+      - 2-legged:
+        - data:read
+      - 3-legged:
+        - data:read
+      parameters:
+      - $ref: '#/components/parameters/accept-encoding'
+      - $ref: '#/components/parameters/x-ads-force'
+      - $ref: '#/components/parameters/x-ads-derivative-format'
+      - $ref: '#/components/parameters/region'
+      - schema:
+          type: integer
+        in: query
+        name: objectid
+        description: 'The Object ID of the object you want to restrict the response to. If you do not specify this parameter, all properties of all objects within the Model View are returned.  '
+      - $ref: '#/components/parameters/forceget'
+  /modelderivative/v2/designdata/{urn}/metadata/{modelGuid}/properties:query:
+    parameters:
+    - $ref: '#/components/parameters/source-design-urn'
+    - name: modelGuid
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The ID of the Model View you are querying. Use the `List Model Views </en/docs/model-derivative/v2/reference/http/metadata/urn-metadata-GET>`_ operation to get the IDs of the Model Views in the source design.
+    post:
+      summary: Fetch Specific Properties
+      tags:
+      - Metadata
+      responses:
+        '200':
+          description: The requested properties were retrieved successfully.
+          headers:
+            x-ads-app-identifier:
+              $ref: '#/components/headers/x-ads-app-identifier'
+            x-ads-startup-time:
+              $ref: '#/components/headers/x-ads-startup-time'
+            x-ads-duration:
+              $ref: '#/components/headers/x-ads-duration'
+            x-ads-troubleshooting:
+              $ref: '#/components/headers/x-ads-troubleshooting'
+            x-ads-size:
+              $ref: '#/components/headers/x-ads-size'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpecificProperties'
+            application/xml:
+              schema:
+                type: object
+                properties: {}
+        '202':
+          description: Request was accepted but processing is not complete. Repeat until you receive an HTTP status of ``200``.
+      operationId: fetch-specific-properties
+      description: "Queries the objects in the Model View (Viewable) specified by the ``modelGuid`` parameter and returns the specified properties in a paginated list. You can limit the number of objects to be queried by specifying a filter using the ``query`` attribute in the request body.\n\n**Note:** A design file must be translated to SVF or SVF2 before you can query object properties.  \n\nBefore you call this operation:\n\n- Use the `List Model Views </en/docs/model-derivative/v2/reference/http/metadata/urn-metadata-GET/>`_ operation to obtain the list of Model Views in the source design.\n- Pick the ID of the Model View you want to query and specify that ID as the value for the ``modelGuid``  parameter."
+      security:
+      - 2-legged:
+        - data:read
+      - 3-legged:
+        - data:read
+      parameters:
+      - $ref: '#/components/parameters/accept-encoding'
+      - $ref: '#/components/parameters/region'
+      - $ref: '#/components/parameters/x-ads-derivative-format'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SpecificPropertiesPayload'
+components:
+  schemas:
+    Payload:
+      type: string
+      description: 'Specifies the format for numeric values in the response body. Possible values:
+
+
+        - ``text`` - (Default) Returns all properties requested in ``fields`` without applying any special formatting.
+
+        - ``unit`` - Applies a filter and returns only the properties that contain numerical values. Additionally, it formats property values as ``##<VALUE_OF_PROPERTY><UNIT_OF_VALUE><PRECISION><SYSTEM_UNIT>``. For example ``##94.172{mm}[3]{m}``, where ``94.172`` is the value of the property, ``{mm}`` is the unit of the value, ``[3]`` is the precision, and ``{m}`` is the metric base unit for the measurement.
+
+        '
+      x-stoplight:
+        id: 0f4faccbbd8c6
+      minLength: 1
+      enum:
+      - text
+      - unit
+    GreaterThan:
+      title: Greater Than
+      x-stoplight:
+        id: wt6wlh6tp2b30
+      type: object
+      description: 'Use this to retrieve only the properties of objects where a specified property is greater than a specified value. '
+      properties:
+        $ge:
+          type: array
+          x-stoplight:
+            id: cpx0ib25jqgfe
+          description: 'Returns only the objects where the value of the specified numerical property is greater than or equal to the specified value.
+
+
+            The first element of the array contains the name of the property. The next element specifies the values that the property must be greater than or equal to. The array can only be two elements long.
+
+
+            For example, if you specify an array as: ``"$ge":["properties.Dimensions.Width1",0.1]``, the request returns the properties of all objects whose ``properties.Dimensions.Width1`` property is greater than or equal to  ``0.1``.
+
+
+            **Note:** The Model Derivative service converts numeric values from their native units to metric base units for comparison. So, the value to compare with must be specified in metric base units. For example, if the property you are comparing is a length measurement, you must specify the value  in ``m``.  Not in ``cm``, ``mm``, or ``ft``.
+
+            '
+          items:
+            x-stoplight:
+              id: esy66zpx34855
+            type: object
+    EqualsTo:
+      title: Equals To
+      x-stoplight:
+        id: ulnf7b553sael
+      type: object
+      description: Describes a query for retrieving objects where a specified attribute exactly matches a specified value.
+      properties:
+        $eq:
+          type: array
+          x-stoplight:
+            id: 1ry7qk9rfxsto
+          description: 'Returns only the objects where the value of the specified attribute (``name`` attribute or any numerical property) is exactly equal to the specified value.
+
+
+            The first element of the array contains the name of the attribute. This can be the ``name`` attribute or the name of a numerical property. The second element of the array must be the value to match. If the first element is ``name``, must be a string value. If the first element is a numerical property, must be a numeric. The array can only be two elements long.
+
+
+            For example, if you specify an array as: ``"$eq":["name","Rectangular"]``, the request will only return the properties of the object named ``Rectangular``. if you specify an array as: ``"$eq":["properties.Dimensions.Width1",0.6]``, the request will return the properties of all objects whose ``properties.Dimensions.Width1`` property is exactly equal to ``0.6``.
+
+
+            **Note:** We recommend that you  use ``$between``  instead of ``$eq`` when testing non-integer numeric values for equality. Using ``between`` mitigates floating-point errors.'
+          items:
+            x-stoplight:
+              id: os8bjezxn1w7u
+            type: object
+    ObjectTree:
+      description: Represents the successful response of a Fetch Object Tree operation.
+      type: object
+      x-examples:
+        example-1:
+          data:
+            type: objects
+            objects:
+            - objectid: 1
+              name: A5
+              objects:
+              - objectid: 2
+                name: Model
+                objects:
+                - objectid: 3
+                  name: Bottom
+                  objects:
+                  - objectid: 4
+                    name: Box
+                - objectid: 5
+                  name: Pillar
+                  objects:
+                  - objectid: 6
+                    name: Cylinder
+                - objectid: 7
+                  name: Top
+                  objects:
+                  - objectid: 8
+                    name: Box
+      properties:
+        data:
+          type: object
+          description: Envelope that contains the returned data.
+          required:
+          - type
+          - objects
+          properties:
+            type:
+              type: string
+              description: The type of data that is returned. Always ``objects``.
+              minLength: 1
+            objects:
+              type: array
+              description: Collection of "objects" that constitute the nodes of the object tree.
+              uniqueItems: true
+              minItems: 1
+              items:
+                type: object
+                properties:
+                  objectid:
+                    type: number
+                    description: A non-persistent ID that is assigned to an object at translation time.
+                  name:
+                    type: string
+                    description: Name of the object.
+                    minLength: 1
+                  objects:
+                    type: array
+                    description: An optional array of objects of type ``object`` where each object represents a child of the current node on the object tree.
+                    uniqueItems: true
+                    minItems: 1
+                    items:
+                      type: object
+                      required:
+                      - objectid
+                      - name
+                required:
+                - objectid
+                - name
+      required:
+      - data
+    SpecificProperties:
+      description: Represents the successful response of a Fetch Specific Properties operation.
+      type: object
+      x-examples:
+        example-1:
+          pagination:
+            limit: 20
+            offset: 0
+            totalResults: 2
+          data:
+            type: properties
+            collection:
+            - objectid: 438
+              name: Floor [418183]
+              externalId: d85573c2-f8d5-46ae-966a-ac82fa18f500-00066187
+              properties:
+                Constraints:
+                  Level: Level 2
+                  Height Offset From Level: 0.000 mm
+                  Room Bounding: 'Yes'
+                  Related to Mass: 'No'
+                Construction:
+                  Structure: ''
+                  Default Thickness: 300.000 mm
+                  Function: Interior
+            - objectid: 4269
+              name: Generic 150mm
+              externalId: e3e052f9-0156-11d5-9301-0000863f27ad-00000153
+              properties:
+                Construction:
+                  Structure: ''
+                  Default Thickness: 150.000 mm
+                  Function: Interior
+      properties:
+        pagination:
+          type: object
+          description: Container for the attributes that define how the response paginated.
+          required:
+          - limit
+          - offset
+          - totalResults
+          properties:
+            limit:
+              type: number
+              description: The maximum number of properties you requested for this page.
+            offset:
+              type: number
+              description: The number of items skipped (because they were returned in previous pages) when returning this page.
+            totalResults:
+              type: number
+              description: The total number of properties to be returned.
+        data:
+          $ref: '#/components/schemas/Properties'
+      required:
+      - pagination
+      - data
+    XAdsDerivativeFormat:
+      type: string
+      x-stoplight:
+        id: 143cf5356d397
+      title: XAdsDerivativeFormat
+      description: "Specifies what Object IDs to return, if the design has legacy SVF derivatives generated by the BIM Docs service. Possible values are: \n\n- ``latest`` - (Default) Return SVF2 Object IDs.\n- ``fallback`` - Return SVF Object IDs."
+      enum:
+      - latest
+      - fallback
+    Role:
+      type: string
+      x-stoplight:
+        id: 4dfad8ded59da
+      minLength: 1
+      enum:
+      - 2d
+      - 3d
+      description: 'Specifies the type of a Model View.
+
+        Possible values are: ``2d``, ``3d``.'
+    LessThan:
+      title: Less Than
+      x-stoplight:
+        id: gfxs84g4ci1x3
+      type: object
+      description: Describes a query for retrieving objects where a specified numeric property is less than or equal to a specified value.
+      properties:
+        $le:
+          type: array
+          x-stoplight:
+            id: t6r9nah57kkh8
+          description: 'Returns only the objects where the value of the specified numeric property is less than or equal to the specified value.
+
+
+            The first element of the array contains the name of the property. The next element specifies the values that the property must be less than or equal to. The array can only be two elements long.
+
+
+            For example, if you specify an array as: ``"$le":["properties.Dimensions.Width1",10]``, the request returns the properties of all objects whose ``properties.Dimensions.Width1`` property is less than or equal to ``10``.
+
+
+            **Note:** The Model Derivative service converts numeric values from their native units to metric base units for comparison. So, the value to compare with must be specified in metric base units. For example, if the property you are comparing is a length measurement, you must specify the value  in ``m``.  Not in ``cm``, ``mm``, or ``ft``.'
+          items:
+            x-stoplight:
+              id: c0ak3mlhr5d9y
+            type: object
+    MatchId:
+      title: Match Id
+      x-stoplight:
+        id: w2kvmvxr8ebo6
+      type: object
+      description: Describes a query for retrieving objects having the specified Object IDs or External IDs.
+      properties:
+        $in:
+          type: array
+          description: 'Returns only the objects with their ``objectid`` or ``externalId`` attribute exactly matching one of the values specified in the array.
+
+
+            The first element of the array contains the name of the attribute to match (``objectid`` or ``externalId``). Subsequent elements contain the values to match.
+
+
+            For example, if you specify an array as: ``"$in":["objectid",1,2]``, the request will only return the properties of the objects with ``objectid`` = ``1`` and ``2``. If you specify an array as ``"$in":["externalId","doc_982afc8a","doc_afd75233" ]`` the request will only return the properties of the objects with ``externalId`` = ``doc_982afc8a`` and ``doc_afd75233``.
+
+            '
+          items:
+            type: object
+    SpecificPropertiesPayload:
+      type: object
+      x-examples:
+        example-1:
+          query:
+            $in:
+            - objectid
+            - 4269
+            - 438
+          fields:
+          - objectid
+          - name
+          - externalId
+          - properties.Cons*
+          pagination:
+            offset: 0
+            limit: 20
+          payload: text
+      description: Represents the request body of a Fetch Specific Properties operation.
+      properties:
+        pagination:
+          type: object
+          description: Specifies how to split the response into multiple pages, and return the response one page at a time.
+          required:
+          - offset
+          - limit
+          properties:
+            offset:
+              type: number
+              description: The number of properties to skip. Use this attribute with the ``limit`` attribute to split the properties into multiple pages. To fetch the first page, specify ``offset`` =0 (do not skip any properties). To fetch the second page, specify ``offset`` = value of ``limit`` you specified for the first page. So, the server skips the properties returned on the first page. In general, ``offset`` = ``previous_offset`` + ``previous_limit``. This attribute is 0 by default. The minimum value is 0.
+            limit:
+              type: number
+              description: The maximum number of properties to return in a single page. Use this attribute with the ``offset`` attribute to split the properties into multiple pages. To fetch the first page, specify ``offset`` =0 (do not skip any properties). To fetch the second page, specify ``offset`` = value of ``limit`` you specified for the first page. So, the server skips the search results returned on the first page. In general, ``offset`` = ``previous_offset`` + ``previous_limit``. This attribute is 20 by default. The minimum value is 1 and the maximum is 1000.
+        query:
+          description: "Specifies what objects to query. \nContains the parameters to pass to the search service. \nYou can use one of the following forms: "
+          oneOf:
+          - $ref: '#/components/schemas/MatchId'
+          - $ref: '#/components/schemas/BeginsWith'
+          - $ref: '#/components/schemas/EqualsTo'
+          - $ref: '#/components/schemas/Between'
+          - $ref: '#/components/schemas/LessThan'
+          - $ref: '#/components/schemas/GreaterThan'
+          - $ref: '#/components/schemas/Contains'
+        fields:
+          type: object
+          description: 'Specifies what properties of the objects to return. If you do not specify this attribute, the response returns all properties.
+
+
+            Possible values are:
+
+
+            - ``properties`` - Return all properties.
+
+            - ``properties.something``- Return the property named ``something`` and all its children.
+
+            - ``properties.some*`` - Return all properties with names that begin with ``some`` and all their children.
+
+            - ``properties.category.*`` - Return the property named ``category`` and all its children.
+
+            - ``properties.*.property`` - Return any property named ``property`` regardless of its parent.
+
+            '
+        payload:
+          $ref: '#/components/schemas/Payload'
+      required:
+      - pagination
+      - query
+      - fields
+    ModelViews:
+      type: object
+      x-examples:
+        example-1:
+          data:
+            type: metadata
+            metadata:
+            - name: NAVISWORKS/IFC EXPORT
+              role: 3d
+              guid: 04b9a71d-9015-0a7b-338b-8522a705a8d7
+            - name: New Construction
+              role: 3d
+              guid: 1d6e48c5-e4a4-8ca5-5b02-3f2acc354470
+              isMasterView: true
+            - name: 001 - 4128-AA-DC-681100**_IS01
+              role: 2d
+              guid: eea006f7-042b-c298-d497-9ef4047e8378
+      properties:
+        data:
+          type: object
+          description: Container for the data returned by the List Model Views operation.
+          required:
+          - type
+          - metadata
+          properties:
+            type:
+              type: string
+              minLength: 1
+              description: The type of data that is returned.
+            metadata:
+              type: array
+              uniqueItems: true
+              minItems: 1
+              description: An array of objects, where each object represents a Model View.
+              items:
+                type: object
+                description: An array of flat JSON objects representing metadata.
+                properties:
+                  name:
+                    type: string
+                    minLength: 1
+                    description: Name of the Model View.
+                  guid:
+                    type: string
+                    minLength: 1
+                    description: Unique ID of the Model View.
+                  role:
+                    $ref: '#/components/schemas/Role'
+                  isMasterView:
+                    type: boolean
+                    description: '- ``true``: Model View is a Master View derived from a Revit source design.
+
+                      - ``false``: Model View is not a Master View.'
+                required:
+                - name
+                - guid
+                - role
+                - isMasterView
+      required:
+      - data
+      description: Represents the successful response of a List Model Views operation.
+    Region:
+      type: string
+      description: "Specifies where the referenced files are stored. Possible values are: \n    \n- ``US`` - Data center for the US region.\n- ``EMEA`` - Data center for the European Union, Middle East, and Africa. \n- ``AUS`` - (Beta) Data center for the Australia region.\n- ``CAN`` - Data center for the Canada region.\n- ``DEU`` - Data center for the Germany region.\n- ``IND`` - Data center for the India region.\n- ``JPN`` - Data center for the Japan region.\n- ``GBR``  - Data center for the United Kingdom region.\n"
+      enum:
+      - US
+      - EMEA
+      - AUS
+      - CAN
+      - DEU
+      - IND
+      - JPN
+      - GBR
+    Properties:
+      description: Represents a successful response to a Fetch All Properties operation.
+      type: object
+      x-examples:
+        example-1:
+          data:
+            type: properties
+            collection:
+            - objectid: 1
+              name: A5
+              externalId: mou0zG8ViUOsqUzhb4TUiA
+              properties:
+                Name: A5
+            - objectid: 2
+              name: Model
+              externalId: z4u0zG8ViUOsqUzhb4TUiA
+              properties:
+                Component Name: Model
+                Name: Model
+                Design Tracking Properties:
+                  Design State: WorkInProgress
+                  Designer: ADSK
+                  File Subtype: Assembly
+                File Properties:
+                  Author: ADSK
+                  Creation Date: 2012-Jul-09 20:18:20
+                  Original System: Autodesk Inventor 2017
+                  Part Number: Model
+                Mass Properties:
+                  Area: 19772.676 millimeter^2
+                  Volume: 83673.946 millimeter^3
+            - objectid: 3
+              name: Bottom
+              externalId: 0Yu0zG8ViUOsqUzhb4TUiA
+              properties:
+                Component Name: A5-P1
+                Name: Bottom
+                Design Tracking Properties:
+                  Design State: WorkInProgress
+                  Designer: ADSK
+                  File Subtype: Modeling
+                File Properties:
+                  Author: ADSK
+                  Creation Date: 2012-Jul-09 20:18:35
+                  Original System: Autodesk Inventor 2017
+                  Part Number: Bottom
+                Mass Properties:
+                  Area: 7000 millimeter^2
+                  Volume: 25000 millimeter^3
+            - objectid: 4
+              name: Box
+              externalId: 1Iu0zG8ViUOsqUzhb4TUiA
+              properties:
+                'Center of Gravity:': -13.452 mm, -9.879 mm, -40.735 mm
+                Name: Box
+            - objectid: 5
+              name: Pillar
+              externalId: 1ou0zG8ViUOsqUzhb4TUiA
+              properties:
+                Component Name: Pillar
+                Name: Pillar
+                Design Tracking Properties:
+                  Design State: WorkInProgress
+                  Designer: ADSK
+                  File Subtype: Modeling
+                File Properties:
+                  Author: ADSK
+                  Creation Date: 2012-Jul-09 20:18:35
+                  Original System: Autodesk Inventor 2017
+                  Part Number: Pillar
+                Mass Properties:
+                  Area: 7000 millimeter^2
+                  Volume: 25000 millimeter^3
+            - objectid: 6
+              name: Cylinder
+              externalId: 2Iu0zG8ViUOsqUzhb4TUiA
+              properties:
+                'Mass:': 0.012 gram
+                Name: Cylinder
+            - objectid: 7
+              name: Top
+              externalId: 2ou0zG8ViUOsqUzhb4TUiA
+              properties:
+                Component Name: Top
+                Name: Top
+                Design Tracking Properties:
+                  Design State: WorkInProgress
+                  Designer: ADSK
+                  File Subtype: Modeling
+                File Properties:
+                  Author: ADSK
+                  Creation Date: 2012-Jul-09 20:19:38
+                  Original System: Autodesk Inventor 2017
+                  Part Number: Top
+                Mass Properties:
+                  Area: 5772.676 millimeter^2
+                  Volume: 33673.946 millimeter^3
+            - objectid: 8
+              name: Box
+              externalId: 3Iu0zG8ViUOsqUzhb4TUiA
+              properties:
+                Material: ABS Plastic
+                Name: Box
+      properties:
+        data:
+          type: object
+          description: Container for the data returned by the Fetch All Properties operation.
+          required:
+          - type
+          - collection
+          properties:
+            type:
+              type: string
+              minLength: 1
+              description: The type of data that is returned. Always ``properties``.
+            collection:
+              type: array
+              uniqueItems: true
+              minItems: 1
+              description: "A non-hierarchical list of objects contained in \nthe specified Model View. Each object has a \n``properties`` attribute, which contains the \nproperties of that object."
+              items:
+                type: object
+                properties:
+                  objectid:
+                    type: number
+                    description: 'Unique identifier of the object.
+
+
+                      **Note:** The ``objectid`` is a non-persistent ID assigned to an object when a design file is translated to SVF or SVF2. So:
+
+
+                      - The ``objectid`` of an object can change if the design is translated to SVF or SVF2 again.
+
+                      - If you require a persistent ID to reference an object, use ``externalId``.
+
+                      '
+                  name:
+                    type: string
+                    minLength: 1
+                    description: Name of the object.
+                  externalId:
+                    type: string
+                    minLength: 1
+                    description: A unique identifier of the object as defined in the source design. For example, ``UniqueID`` in Revit files.
+                  properties:
+                    type: object
+                    additionalProperties:
+                      type: object
+                    description: A JSON object containing dictionary objects (key value pairs), where the key is the property name and the value is the value of the property.
+                required:
+                - objectid
+                - name
+                - externalId
+      required:
+      - data
+    Between:
+      title: Between
+      x-stoplight:
+        id: njgq5ve7rm9tx
+      type: object
+      description: Describes a query for retrieving objects where a specified numeric property falls within a specified range.
+      properties:
+        $between:
+          type: array
+          x-stoplight:
+            id: wbtibkwfohj9v
+          description: 'Returns only the objects where the value of the specified numeric property lies between the specified values.
+
+
+            The first element of the array contains the name of the property. The next two elements specify the values that the property must lie between. The array can only be three elements long.
+
+
+            For example, if you specify an array as: ``"$between":["properties.Dimensions.Width1",1,10]``, the request returns the properties of all objects whose ``properties.Dimensions.Width1`` property is between ``1`` and ``10``.
+
+
+            **Note:** The Model Derivative service converts numeric values from their native units to metric base units for comparison. So, you must specify the values to compare with in metric base units. For example, if the property you are comparing is a length measurement, you must specify the values  in ``m``.  Not in ``cm``, ``mm``, or ``ft``.'
+          items:
+            x-stoplight:
+              id: llei13fa4zlrb
+            type: object
+    BeginsWith:
+      title: Begins With
+      x-stoplight:
+        id: porw5ys3yrhlb
+      type: object
+      description: Describes a query for retrieving objects with names that start with a specified string.
+      properties:
+        $prefix:
+          type: array
+          description: 'Returns only the objects with their ``name`` attribute beginning with the specified string.
+
+
+            The first element of the array contains the name of the attribute to match (``name``). The second element contains the string to match. The array can have only two elements. Only the objects whose name begin with the specified string are returned.
+
+            '
+          items:
+            type: string
+    Contains:
+      title: Contains
+      x-stoplight:
+        id: 4tfm4hibgzsul
+      type: object
+      description: Describes a query for retrieving objects where a specified property contains one or more words in a specified string.
+      properties:
+        $contains:
+          type: array
+          x-stoplight:
+            id: 2cf3abfnpwhe4
+          description: 'Returns only the objects where the value of the specified property contains the words specified in a string.
+
+
+            The first element of the array contains the name of the property. The second element contains a string containing the words to match. The array can only be two elements long.
+
+
+            For example, if you specify an array as: ``"$contains":["properties.Materials and Finishes.Structural Material","Concrete Situ"]``, the request returns the properties of all objects whose ``properties.Materials and Finishes.Structural Material`` property contains the words  ``Concrete`` and ``Situ``. You can specify up to 50 words.'
+          items:
+            x-stoplight:
+              id: kx0r1dg7muil0
+            type: string
+  parameters:
+    forceget:
+      name: forceget
+      in: query
+      required: false
+      schema:
+        type: string
+      description: "``true``: Retrieves large resources, even beyond the 20 MB limit. If exceptionally large (over 800 MB), the system acts as if ``forceget`` is ``false``. \n\n``false``: (Default) Does not retrieve resources if they are larger than 20 MB.\n"
+    accept-encoding:
+      name: Accept-Encoding
+      in: header
+      schema:
+        type: string
+      description: "A comma separated list of the algorithms you want the response to be encoded in, specified in the order of preference.  \n\nIf you specify ``gzip`` or ``*``, content is compressed and returned in gzip format.\n"
+    source-design-urn:
+      name: urn
+      in: path
+      schema:
+        type: string
+      description: The URL-safe Base64 encoded URN of the source design.
+      required: true
+    x-ads-derivative-format:
+      name: x-ads-derivative-format
+      in: header
+      required: false
+      schema:
+        $ref: '#/components/schemas/XAdsDerivativeFormat'
+      description: "Specifies what Object IDs to return, if the design has legacy SVF derivatives generated by the BIM Docs service. Possible values are:  \n\n- ``latest`` - (Default) Return SVF2 Object IDs. \n- ``fallback`` - Return SVF Object IDs.  \n\n**Note:**  \n\n1. This parameter applies only to designs with legacy SVF derivatives generated by the BIM 360 Docs service. \n2. The BIM 360 Docs service now generates SVF2 derivatives. SVF2 Object IDs may not be compatible with the SVF Object IDs previously generated by the BIM 360 Docs service. Setting this header to fallback may resolve backward compatibility issues resulting from Object IDs of legacy SVF derivatives being retained on the client side. \n3. If you use this parameter with one derivative (URN), you must use it consistently across the following: \n\n   - `Create Translation Job </en/docs/model-derivative/v2/reference/http/job-POST>`_ (for OBJ output) \n   - `Fetch Object Tree </en/docs/model-derivative/v2/reference/http/urn-metadata-modelguid-GET>`_\n   - `Fetch All Properties </en/docs/model-derivative/v2/reference/http/urn-metadata-guid-properties-GET>`_\n   - `Fetch Specific Properties <en/docs/model-derivative/v2/reference/http/metadata/urn-metadata-guid-properties-query-POST>`_\n"
+    x-ads-force:
+      name: x-ads-force
+      in: header
+      required: false
+      schema:
+        type: boolean
+      description: '- ``true``: Forces the system to parse property data all over again. Use this option to retrieve an object tree when previous attempts have failed.
+
+        - ``false``: (Default) Use previously parsed property data to extract the object tree.
+
+        '
+    region:
+      name: region
+      in: header
+      schema:
+        $ref: '#/components/schemas/Region'
+      description: "Specifies the data center where the manifest and derivatives of the specified source design are stored. Possible values are:\n\n- ``US`` - (Default) Data center for the US region.\n- ``EMEA`` - Data center for the European Union, Middle East, and Africa. \n- ``AUS`` - Data center for the Australia region.\n- ``CAN`` - Data center for the Canada region.\n- ``DEU`` - Data center for the Germany region.\n- ``IND`` - Data center for the India region.\n- ``JPN`` - Data center for the Japan region.\n- ``GBR``  - Data center for the United Kingdom region.\n"
+  headers:
+    x-ads-troubleshooting:
+      description: Provides information about server failures, if any.
+      schema:
+        type: string
+    x-ads-startup-time:
+      description: 'The service startup time, in the following date format: ``EEE MMM dd HH:mm:ss Z yyyy``.'
+      schema:
+        type: string
+    x-ads-app-identifier:
+      description: The service identifier. Comprises of the service name, version, and environment.
+      schema:
+        type: string
+    x-ads-duration:
+      description: The amount of time spent servicing the request, in milliseconds.
+      schema:
+        type: string
+    x-ads-size:
+      description: Size in bytes of the request data. Additionally, the system uses this information to determine if a 413 (content too large) response is returned.
+      schema:
+        type: string
+  securitySchemes:
+    2-legged:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+    3-legged-implicit:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: ''
+          refreshUrl: ''
+          scopes: {}
+    3-legged:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: ''
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+x-stoplight:
+  id: zm6m3b30rcbon

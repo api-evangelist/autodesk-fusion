@@ -1,0 +1,1373 @@
+openapi: 3.0.0
+info:
+  title: Construction.Account.Admin Account Management Project Users API
+  version: '1.0'
+  contact:
+    name: Autodesk Plaform Services
+    url: https://aps.autodesk.com/
+    email: aps.help@autodesk.com
+  termsOfService: https://www.autodesk.com/company/legal-notices-trademarks/terms-of-service-autodesk360-web-services/forge-platform-web-services-api-terms-of-service
+  x-support: https://stackoverflow.com/questions/tagged/autodesk-platform-services
+  description: 'The Account Admin API automates creating and managing projects, assigning and managing project users, and managing member and partner company directories. You can also synchronize data with external systems.
+
+    '
+servers:
+- url: https://developer.api.autodesk.com
+security:
+- 2-legged: []
+- 3-legged: []
+tags:
+- name: Project Users
+paths:
+  /construction/admin/v1/projects/{projectId}/users:
+    parameters:
+    - schema:
+        type: string
+      name: projectId
+      in: path
+      required: true
+      description: The ID of the project. This corresponds to project ID in the Data Management API. To convert a project ID in the Data Management API into a project ID in the ACC API you need to remove the “b.” prefix. For example, a project ID of b.a4be0c34a-4ab7 translates to a project ID of a4be0c34a-4ab7.
+    get:
+      summary: Get project users
+      responses:
+        '200':
+          description: A list of requested project users.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectUsersPage'
+        '400':
+          description: The request could not be understood by the server due to malformed syntax.
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Resource Not Found
+        '406':
+          description: Not Acceptable
+        '410':
+          description: Access to the target resource is no longer available.
+        '429':
+          description: User has sent too many requests in a given amount of time.
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Service Unavailable
+      operationId: getProjectUsers
+      description: 'Retrieves information about a filtered subset of users in the specified project.
+
+
+        There are two primary reasons to do this:
+
+
+        To verify that all users assigned to the project have been activated as members of the project.
+
+        To check other information about users, such as their project user ID, roles, and products.
+
+        Note that if you want to retrieve information about users associated with a particular Autodesk account, call the GET users endpoint.'
+      parameters:
+      - schema:
+          type: string
+        in: header
+        name: Accept-Language
+        description: This header is not currently supported in the Account Admin API.
+      - schema:
+          $ref: '#/components/schemas/Region'
+        in: header
+        name: Region
+        description: 'The region where the bucket resides. Acceptable values: US, EMEA, AUS, CAN, DEU, IND, JPN, GBR.'
+      - schema:
+          type: string
+        in: header
+        name: User-Id
+        description: Note that this header is not relevant for Account Admin GET endpoints. The ID of a user on whose behalf your API request is acting. Required if you’re using a 2-legged authentication context, which must be 2-legged OAuth2 security with user impersonation.  Your app has access to all users specified by the administrator in the SaaS integrations UI. Provide this header value to identify the user to be affected by the request.  You can use either the user’s ACC ID (id), or their Autodesk ID (autodeskId).
+      - schema:
+          $ref: '#/components/schemas/products_internal'
+        in: query
+        name: filter[products]
+        description: A comma-separated list of the products that the returned projects must use. Only projects that use one or more of the listed products are returned.
+      - schema:
+          type: string
+        in: query
+        name: filter[name]
+        description: 'A user name or name pattern to filter users by. Can be a partial match based on the value of filterTextMatch that you provide; for example: filter[name]=ABCco filterTextMatch=startsWith.  Max length: 255'
+      - schema:
+          type: string
+        in: query
+        name: filter[email]
+        description: 'A user email address or address pattern that the returned users must have. This can be a partial match based on the value of filterTextMatch that you provide. For example:  filter[email]=sample filterTextMatch=startsWith  Max length: 255'
+      - schema:
+          $ref: '#/components/schemas/statusFilter_internal'
+        in: query
+        name: filter[status]
+        description: A list of statuses that the returned project users must be in. The default values are active and pending.
+      - schema:
+          $ref: '#/components/schemas/accessLevels_internal'
+        in: query
+        name: filter[accessLevels]
+        description: A list of user access levels that the returned users must have.
+      - schema:
+          type: string
+        in: query
+        name: filter[companyId]
+        description: The ID of a company that the returned users must represent.
+      - schema:
+          type: string
+        in: query
+        name: filter[companyName]
+        description: 'The name of a company that returned users must be associated with. Can be a partial match based on the value of filterTextMatch that you provide. For example: filter[companyName]=Sample filterTextMatch=startsWith  Max length: 255'
+      - schema:
+          $ref: '#/components/schemas/filterAutodeskId'
+        in: query
+        name: filter[autodeskId]
+        description: A list of the Autodesk IDs of users to retrieve.
+      - schema:
+          $ref: '#/components/schemas/filterID'
+        in: query
+        name: filter[id]
+        description: A list of the ACC IDs of users to retrieve.
+      - schema:
+          type: string
+        in: query
+        name: filter[roleId]
+        description: 'The ID of a user role that the returned users must have. To obtain a role ID for this filter, you can inspect the roleId field in previous responses to this endpoint or to the GET projects/:projectId/users/:userId endpoint.  Max length: 255'
+      - schema:
+          $ref: '#/components/schemas/filterRoleIds'
+        in: query
+        name: filter[roleIds]
+        description: A list of the IDs of user roles that the returned users must have. To obtain a role ID for this filter, you can inspect the roleId field in previous responses to this endpoint or to the GET projects/:projectId/users/:userId endpoint.
+      - schema:
+          $ref: '#/components/schemas/userSortBy_internal'
+        in: query
+        name: sort
+        description: A list of fields to sort the returned users by. Multiple sort fields are applied in sequence order — each sort field produces groupings of projects with the same values of that field; the next sort field applies within the groupings produced by the previous sort field.
+      - schema:
+          $ref: '#/components/schemas/userFields_internal'
+        in: query
+        name: fields
+        description: 'A list of the project fields to include in the response. Default value: all fields.'
+      - schema:
+          $ref: '#/components/schemas/orFilters_internal'
+        in: query
+        name: orFilters
+        description: A list of user fields to combine with the SQL OR operator for filtering the returned project users. The OR is automatically incorporated between the fields; any one of them can produce a valid match.
+      - schema:
+          $ref: '#/components/schemas/filterTextMatch'
+        in: query
+        name: filterTextMatch
+        description: 'When filtering on a text-based field, this value indicates how to do the matching. Default value: contains. Possible values: contains, startsWith, endsWith and equals.'
+      - schema:
+          type: integer
+        in: query
+        name: limit
+        description: 'The maximum number of records to return in a single request. Possible range: 1-200. Default value: 20.'
+      - schema:
+          type: integer
+        in: query
+        name: offset
+        description: The record number that the returned page should start with. When the total number of records exceeds the value of limit, increase the offset value in subsequent requests to continue getting the remaining results.
+      security:
+      - 2-legged: []
+      - 3-legged-implicit: []
+      - 3-legged: []
+      tags:
+      - Project Users
+    post:
+      summary: Assigns a user to the specified project
+      responses:
+        '201':
+          description: Successfully added the user to the project.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectUserDetails'
+        '400':
+          description: The request could not be understood by the server due to malformed syntax.
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Resource Not Found
+        '406':
+          description: Not Acceptable
+        '410':
+          description: Access to the target resource is no longer available.
+        '412':
+          description: The server refuses to accept the request because a pre-condition failed.
+        '415':
+          description: The server refuses to accept the request because the payload format is in an unsupported format.
+        '429':
+          description: User has sent too many requests in a given amount of time.
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Service Unavailable
+      operationId: assignProjectUser
+      description: Assigns a user to the specified project.
+      parameters:
+      - schema:
+          type: string
+        in: header
+        name: Accept-Language
+        description: This header is not currently supported in the Account Admin API.
+      - schema:
+          $ref: '#/components/schemas/Region'
+        in: header
+        name: Region
+        description: 'The region where the bucket resides. Acceptable values: US, EMEA, AUS, CAN, DEU, IND, JPN, GBR.'
+      - schema:
+          type: string
+        in: header
+        name: User-Id
+        description: Note that this header is not relevant for Account Admin GET endpoints. The ID of a user on whose behalf your API request is acting. Required if you’re using a 2-legged authentication context, which must be 2-legged OAuth2 security with user impersonation.  Your app has access to all users specified by the administrator in the SaaS integrations UI. Provide this header value to identify the user to be affected by the request.  You can use either the user’s ACC ID (id), or their Autodesk ID (autodeskId).
+      security:
+      - 2-legged: []
+      - 3-legged-implicit: []
+      - 3-legged: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectUserPayload'
+      tags:
+      - Project Users
+  /construction/admin/v2/projects/{projectId}/users:import:
+    parameters:
+    - schema:
+        type: string
+      name: projectId
+      in: path
+      required: true
+      description: The ID of the project. This corresponds to project ID in the Data Management API. To convert a project ID in the Data Management API into a project ID in the ACC API you need to remove the “b.” prefix. For example, a project ID of b.a4be0c34a-4ab7 translates to a project ID of a4be0c34a-4ab7.
+    post:
+      summary: Assigns multiple users to a project
+      responses:
+        '202':
+          description: The request has been received but not yet acted upon.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectUsersImport'
+        '400':
+          description: The request could not be understood by the server due to malformed syntax.
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Resource Not Found
+        '406':
+          description: Not Acceptable
+        '410':
+          description: Access to the target resource is no longer available.
+        '412':
+          description: The server refuses to accept the request because a pre-condition failed.
+        '415':
+          description: The server refuses to accept the request because the payload format is in an unsupported format.
+        '429':
+          description: User has sent too many requests in a given amount of time.
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Service Unavailable
+      operationId: importProjectUsers
+      description: Assigns multiple users to a project at once. This endpoint can assign up to 200 users per request.
+      parameters:
+      - schema:
+          type: string
+        in: header
+        name: Accept-Language
+        description: This header is not currently supported in the Account Admin API.
+      - schema:
+          $ref: '#/components/schemas/Region'
+        in: header
+        name: Region
+        description: 'The region where the bucket resides. Acceptable values: US, EMEA, AUS, CAN, DEU, IND, JPN, GBR.'
+      - schema:
+          type: string
+        in: header
+        name: User-Id
+        description: Note that this header is not relevant for Account Admin GET endpoints. The ID of a user on whose behalf your API request is acting. Required if you’re using a 2-legged authentication context, which must be 2-legged OAuth2 security with user impersonation.  Your app has access to all users specified by the administrator in the SaaS integrations UI. Provide this header value to identify the user to be affected by the request.  You can use either the user’s ACC ID (id), or their Autodesk ID (autodeskId).
+      security:
+      - 2-legged: []
+      - 3-legged-implicit: []
+      - 3-legged: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectUsersImportPayload'
+      tags:
+      - Project Users
+  /construction/admin/v1/projects/{projectId}/users/{userId}:
+    parameters:
+    - schema:
+        type: string
+      name: projectId
+      in: path
+      required: true
+      description: The ID of the project. This corresponds to project ID in the Data Management API. To convert a project ID in the Data Management API into a project ID in the ACC API you need to remove the “b.” prefix. For example, a project ID of b.a4be0c34a-4ab7 translates to a project ID of a4be0c34a-4ab7.
+    - schema:
+        type: string
+      name: userId
+      in: path
+      required: true
+      description: The ID of the user. You can use either the ACC ID (id) or the Autodesk ID (autodeskId).
+    get:
+      summary: Get project user
+      responses:
+        '200':
+          description: Information about the requested project user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectUser'
+        '400':
+          description: The request could not be understood by the server due to malformed syntax.
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Resource Not Found
+        '406':
+          description: Not Acceptable
+        '410':
+          description: Access to the target resource is no longer available.
+        '429':
+          description: User has sent too many requests in a given amount of time.
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Service Unavailable
+      operationId: getProjectUser
+      description: 'Retrieves detailed information about the specified user in a project.
+
+
+        There are two primary reasons to do this:
+
+
+        To verify that a user assigned to the specified project has been activated as a member of the project.
+
+        To check other information about the user, such as their project user ID, roles, and products.'
+      parameters:
+      - schema:
+          type: string
+        in: header
+        name: Accept-Language
+        description: This header is not currently supported in the Account Admin API.
+      - schema:
+          $ref: '#/components/schemas/Region'
+        in: header
+        name: Region
+        description: 'The region where the bucket resides. Acceptable values: US, EMEA, AUS, CAN, DEU, IND, JPN, GBR.'
+      - schema:
+          type: string
+        in: header
+        name: User-Id
+        description: Note that this header is not relevant for Account Admin GET endpoints. The ID of a user on whose behalf your API request is acting. Required if you’re using a 2-legged authentication context, which must be 2-legged OAuth2 security with user impersonation.  Your app has access to all users specified by the administrator in the SaaS integrations UI. Provide this header value to identify the user to be affected by the request.  You can use either the user’s ACC ID (id), or their Autodesk ID (autodeskId).
+      - schema:
+          $ref: '#/components/schemas/userFields_internal'
+        in: query
+        name: fields
+        description: 'A comma-separated list of the project fields to include in the response. Default value: all fields.'
+      security:
+      - 2-legged: []
+      - 3-legged-implicit: []
+      - 3-legged: []
+      tags:
+      - Project Users
+    patch:
+      summary: Update user in project
+      responses:
+        '201':
+          description: The project user was successfully updated. The response includes only the fields being updated along with the ACC ID of the user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectUserDetails'
+        '400':
+          description: The request could not be understood by the server due to malformed syntax.
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Resource Not Found
+        '406':
+          description: Not Acceptable
+        '410':
+          description: Access to the target resource is no longer available.
+        '412':
+          description: The server refuses to accept the request because a pre-condition failed.
+        '415':
+          description: The server refuses to accept the request because the payload format is in an unsupported format.
+        '429':
+          description: User has sent too many requests in a given amount of time.
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Service Unavailable
+      operationId: updateProjectUser
+      description: 'Updates information about the specified user in a project.
+
+
+        Note that the Authorization header token can be obtained either via a three-legged OAuth flow, or via a two-legged Oauth flow with user impersonation, for which the User-Id header is also required.'
+      parameters:
+      - schema:
+          type: string
+        in: header
+        name: Accept-Language
+        description: This header is not currently supported in the Account Admin API.
+      - schema:
+          $ref: '#/components/schemas/Region'
+        in: header
+        name: Region
+        description: 'The region where the bucket resides. Acceptable values: US, EMEA, AUS, CAN, DEU, IND, JPN, GBR.'
+      - schema:
+          type: string
+        in: header
+        name: User-Id
+        description: Note that this header is not relevant for Account Admin GET endpoints. The ID of a user on whose behalf your API request is acting. Required if you’re using a 2-legged authentication context, which must be 2-legged OAuth2 security with user impersonation.  Your app has access to all users specified by the administrator in the SaaS integrations UI. Provide this header value to identify the user to be affected by the request.  You can use either the user’s ACC ID (id), or their Autodesk ID (autodeskId).
+      security:
+      - 2-legged: []
+      - 3-legged-implicit: []
+      - 3-legged: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectUsersUpdatePayload'
+      tags:
+      - Project Users
+    delete:
+      summary: Remove Project User
+      responses:
+        '204':
+          description: The request has succeeded, no content returned.
+          content: {}
+        '400':
+          description: The request could not be understood by the server due to malformed syntax.
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Resource Not Found
+        '410':
+          description: Access to the target resource is no longer available.
+        '415':
+          description: The server refuses to accept the request because the payload format is in an unsupported format.
+        '429':
+          description: User has sent too many requests in a given amount of time.
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Service Unavailable
+      operationId: removeProjectUser
+      description: 'Removes the specified user from a project.
+
+
+        Note that the Authorization header token can be obtained either via a three-legged OAuth flow, or via a two-legged Oauth flow with user impersonation, for which the User-Id header is also required.'
+      parameters:
+      - schema:
+          type: string
+        in: header
+        name: Accept-Language
+        description: This header is not currently supported in the Account Admin API.
+      - schema:
+          $ref: '#/components/schemas/Region'
+        in: header
+        name: Region
+        description: 'The region where the bucket resides. Acceptable values: US, EMEA, AUS, CAN, DEU, IND, JPN, GBR.'
+      - schema:
+          type: string
+        in: header
+        name: User-Id
+        description: Note that this header is not relevant for Account Admin GET endpoints. The ID of a user on whose behalf your API request is acting. Required if you’re using a 2-legged authentication context, which must be 2-legged OAuth2 security with user impersonation.  Your app has access to all users specified by the administrator in the SaaS integrations UI. Provide this header value to identify the user to be affected by the request.  You can use either the user’s ACC ID (id), or their Autodesk ID (autodeskId).
+      security:
+      - 2-legged: []
+      - 3-legged-implicit: []
+      - 3-legged: []
+      tags:
+      - Project Users
+components:
+  schemas:
+    filterID:
+      title: filterID
+      type: array
+      items:
+        type: string
+    accessLevels:
+      title: accessLevels
+      x-stoplight:
+        id: v2kbai7y3z4ls
+      type: string
+      enum:
+      - accountAdmin
+      - projectAdmin
+      - executive
+    ProjectUsersUpdatePayload:
+      title: ProjectUsersUpdatePayload
+      x-stoplight:
+        id: 7hpr38vcbofx7
+      type: object
+      properties:
+        email:
+          type: string
+          x-stoplight:
+            id: bhz1gjhsjijd7
+          description: 'The email address of the user.
+
+            Max length: 255'
+        companyId:
+          type: string
+          x-stoplight:
+            id: qjr3ljiek0a25
+          description: The ID of the company that the user is representing in the project. To obtain a list of all company IDs associated with a project, call GET projects/:projectId/companies.
+        roleIds:
+          type: array
+          x-stoplight:
+            id: k3j3e6w9zd7c3
+          description: A list of IDs of the roles that the user belongs to in the project.
+          items:
+            x-stoplight:
+              id: ngp6d387c9q14
+            type: string
+        products:
+          type: array
+          items:
+            type: object
+            x-stoplight:
+              id: hasrcy0zzx3bm
+            properties:
+              key:
+                $ref: '#/components/schemas/productKeys'
+                x-stoplight:
+                  id: wkmu7n556lqbw
+                description: A keyword that identifies the product.
+              access:
+                $ref: '#/components/schemas/productAccess'
+                x-stoplight:
+                  id: 2hg7ktpbupezj
+                description: The user’s type of access to the product identified by key.
+          required:
+          - key
+          - access
+    ProjectUserDetails:
+      title: ProjectUserResponse
+      x-stoplight:
+        id: yiq5880t5rnsf
+      type: object
+      properties:
+        email:
+          type: string
+          x-stoplight:
+            id: 4l126as65h226
+          description: 'The email of the user.
+
+            Max length: 255'
+        id:
+          type: string
+          description: The ACC ID of the user.
+        name:
+          type: string
+          description: The full name of the user.
+        firstName:
+          type: string
+          description: 'The user’s first name. This data syncs from the user’s Autodesk profile.
+
+            Max length: 255'
+        lastName:
+          type: string
+          description: 'The user’s last name. This data syncs from the user’s Autodesk profile.
+
+            Max length: 255'
+        autodeskId:
+          type: string
+          description: 'The ID of the user’s Autodesk profile.
+
+            Max length: 255'
+        analyticsId:
+          type: string
+          description: Not relevant
+        addressLine1:
+          type: string
+          description: 'The user’s address line 1. This data syncs from the user’s Autodesk profile.
+
+            Max length: 255'
+        addressLine2:
+          type: string
+          description: 'The user’s address line 2. This data syncs from the user’s Autodesk profile.
+
+            Max length: 255'
+        city:
+          type: string
+          description: 'The User’s city. This data syncs from the user’s Autodesk profile.
+
+            Max length: 255'
+        stateOrProvince:
+          type: string
+          description: 'The state or province of the user. The accepted values here change depending on which country is provided. This data syncs from the user’s Autodesk profile.
+
+            Max length: 255'
+        postalCode:
+          type: string
+          description: 'The zip or postal code of the user. This data syncs from the user’s Autodesk profile.
+
+            Max length: 255'
+        country:
+          type: string
+          description: 'The user’s country. This data syncs from the user’s Autodesk profile.
+
+            Max length: 255'
+        imageUrl:
+          type: string
+          description: 'The URL of the user’s avatar. This data syncs from the user’s Autodesk profile.
+
+            Max length: 255'
+        phone:
+          description: The user’s phone number. This data syncs from the user’s Autodesk profile.
+          type: object
+          properties:
+            number:
+              type: string
+              x-stoplight:
+                id: 9jn34var2c9nu
+              description: User’s phone number
+            phoneType:
+              type: string
+              x-stoplight:
+                id: i4870b3euojc3
+              description: The user’s phone type.
+            extension:
+              type: string
+              x-stoplight:
+                id: wz1h6mlxohgqp
+              description: User’s phone extension.
+        jobTitle:
+          type: string
+          description: 'The user’s job title. This data syncs from the user’s Autodesk profile.
+
+            Max length: 255'
+        industry:
+          type: string
+          description: 'The industry the user works in. This data syncs from the user’s Autodesk profile.
+
+            Max length: 255'
+        aboutMe:
+          type: string
+          description: 'A short bio about the user. This data syncs from the user’s Autodesk profile.
+
+            Max length: 255'
+        accessLevels:
+          description: Flags that identify a returned user’s access levels in the account or project.
+          type: object
+          properties:
+            accountAdmin:
+              type: boolean
+              x-stoplight:
+                id: uit3quf92pt7c
+              description: Indicates whether the user is an account administrator for the account.
+            projectAdmin:
+              type: boolean
+              x-stoplight:
+                id: 19r2u8did6fgi
+              description: Indicates whether the user is a project administrator for the project.
+            executive:
+              type: boolean
+              x-stoplight:
+                id: vwasqda2gcmm0
+              description: Indicates whether the user is an executive in the account.
+        addedOn:
+          type: string
+          description: The timestamp when the user was first given access to any product on the project.
+        updatedAt:
+          type: string
+          description: The timestamp when the project user was last updated, in ISO 8601 format.
+        companyId:
+          type: string
+          description: The ID of the company that the user is representing in the project. To obtain a list of all company IDs associated with a project, call GET projects/:projectId/companies.
+        companyName:
+          type: string
+          description: 'The name of the company to which the user belongs.
+
+            Max length: 255'
+        roleIds:
+          type: array
+          items:
+            type: string
+          description: A list of IDs of the roles that the user belongs to in the project.
+        roles:
+          description: A list of the role IDs and names that are associated with the user in the project.
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                x-stoplight:
+                  id: k4i4pyorywmgu
+                description: The ID of a role that the user belongs to in the project.
+              name:
+                type: string
+                x-stoplight:
+                  id: 06k3jj0ewbula
+                description: The name of a role that the user belongs to in the project.
+        status:
+          type: string
+          description: The status of the user in the project. A pending user could be waiting for their products to activate, or the user hasn’t accepted an email to create an account with Autodesk.
+        products:
+          type: array
+          items:
+            type: object
+            x-stoplight:
+              id: hasrcy0zzx3bm
+            properties:
+              key:
+                type: string
+                x-stoplight:
+                  id: wkmu7n556lqbw
+                description: A keyword that identifies the product.
+              access:
+                type: string
+                x-stoplight:
+                  id: 2hg7ktpbupezj
+                description: The user’s type of access to the product identified by key.
+        jobId:
+          type: string
+          x-stoplight:
+            id: sykfft9q3jzuo
+          description: Not relevant - we don’t currently support this field.
+    productKeys:
+      title: productKeys
+      type: string
+      enum:
+      - build
+      - docs
+      - takeoff
+      - cost
+      - autoSpecs
+      - financials
+      - buildingConnected
+      - capitalPlanning
+      - accountAdministration
+      - workshopxr
+      - insight
+      - projectAdministration
+      - modelCoordination
+      - designCollaboration
+      - cloudWorksharing
+    filterAutodeskId:
+      title: filterAutodeskId
+      x-stoplight:
+        id: 2avndceqj70a9
+      type: array
+      items:
+        x-stoplight:
+          id: 3ffftrtd5ie5v
+        type: string
+    ProjectUsersImportPayload:
+      title: ProjectUsersImportPayload
+      x-stoplight:
+        id: 73uitwejlqc1t
+      type: object
+      properties:
+        users:
+          description: User data to import.
+          type: array
+          items:
+            type: object
+            properties:
+              firstName:
+                type: string
+                description: 'The first name of the user.
+
+                  Max length: 255'
+              lastName:
+                type: string
+                description: 'The last name of the user.
+
+                  Max length: 255'
+              email:
+                type: string
+                x-stoplight:
+                  id: bhz1gjhsjijd7
+                description: 'The email address of the user.
+
+                  Max length: 255'
+              companyId:
+                type: string
+                x-stoplight:
+                  id: qjr3ljiek0a25
+                description: The ID of the company that the user is representing in the project. To obtain a list of all company IDs associated with a project, call GET projects/:projectId/companies.
+              roleIds:
+                type: array
+                x-stoplight:
+                  id: k3j3e6w9zd7c3
+                description: A list of IDs of the roles that the user belongs to in the project.
+                items:
+                  x-stoplight:
+                    id: ngp6d387c9q14
+                  type: string
+              products:
+                type: array
+                items:
+                  type: object
+                  x-stoplight:
+                    id: hasrcy0zzx3bm
+                  properties:
+                    key:
+                      $ref: '#/components/schemas/productKeys'
+                      x-stoplight:
+                        id: wkmu7n556lqbw
+                      description: A keyword that identifies the product.
+                    access:
+                      $ref: '#/components/schemas/productAccess'
+                      x-stoplight:
+                        id: 2hg7ktpbupezj
+                      description: The user’s type of access to the product identified by key.
+                  required:
+                  - key
+                  - access
+            required:
+            - email
+            - products
+    accessLevels_internal:
+      title: accessLevels_internal
+      x-stoplight:
+        id: wmvzmw12gsy4j
+      type: array
+      items:
+        $ref: '#/components/schemas/accessLevels'
+        x-stoplight:
+          id: 8768wybirus40
+    userFields_internal:
+      title: userFields_internal
+      type: array
+      items:
+        $ref: '#/components/schemas/userFields'
+        x-stoplight:
+          id: web6yrp57burr
+    ProjectUsersImport:
+      title: ProjectUsersImportResponse
+      x-stoplight:
+        id: 4vlcsf9vutqs8
+      type: object
+      properties:
+        jobId:
+          type: string
+          x-stoplight:
+            id: m7smt5frycgog
+          description: 'We don’t currently support this field, but expect to in a future release.
+
+            If the response returns jobId with a valid UUID value, the user import operation was successful.'
+    ProjectUser:
+      title: ProjectUser
+      x-stoplight:
+        id: yr7m0t04g7srf
+      type: object
+      properties:
+        email:
+          type: string
+          x-stoplight:
+            id: 4l126as65h226
+          description: 'The email of the user.
+
+            Max length: 255'
+        id:
+          type: string
+          description: The ACC ID of the user.
+        name:
+          type: string
+          description: The full name of the user.
+        firstName:
+          type: string
+          description: 'The user’s first name. This data syncs from the user’s Autodesk profile.
+
+            Max length: 255'
+        lastName:
+          type: string
+          description: 'The user’s last name. This data syncs from the user’s Autodesk profile.
+
+            Max length: 255'
+        autodeskId:
+          type: string
+          description: 'The ID of the user’s Autodesk profile.
+
+            Max length: 255'
+        analyticsId:
+          type: string
+          description: Not relevant
+        addressLine1:
+          type: string
+          description: 'The user’s address line 1. This data syncs from the user’s Autodesk profile.
+
+            Max length: 255'
+        addressLine2:
+          type: string
+          description: 'The user’s address line 2. This data syncs from the user’s Autodesk profile.
+
+            Max length: 255'
+        city:
+          type: string
+          description: 'The User’s city. This data syncs from the user’s Autodesk profile.
+
+            Max length: 255'
+        stateOrProvince:
+          type: string
+          description: 'The state or province of the user. The accepted values here change depending on which country is provided. This data syncs from the user’s Autodesk profile.
+
+            Max length: 255'
+        postalCode:
+          type: string
+          description: 'The zip or postal code of the user. This data syncs from the user’s Autodesk profile.
+
+            Max length: 255'
+        country:
+          type: string
+          description: 'The user’s country. This data syncs from the user’s Autodesk profile.
+
+            Max length: 255'
+        imageUrl:
+          type: string
+          description: 'The URL of the user’s avatar. This data syncs from the user’s Autodesk profile.
+
+            Max length: 255'
+        phone:
+          description: The user’s phone number. This data syncs from the user’s Autodesk profile.
+          type: object
+          properties:
+            number:
+              type: string
+              x-stoplight:
+                id: 9jn34var2c9nu
+              description: User’s phone number
+            phoneType:
+              type: string
+              x-stoplight:
+                id: i4870b3euojc3
+              description: The user’s phone type.
+            extension:
+              type: string
+              x-stoplight:
+                id: wz1h6mlxohgqp
+              description: User’s phone extension.
+        jobTitle:
+          type: string
+          description: 'The user’s job title. This data syncs from the user’s Autodesk profile.
+
+            Max length: 255'
+        industry:
+          type: string
+          description: 'The industry the user works in. This data syncs from the user’s Autodesk profile.
+
+            Max length: 255'
+        aboutMe:
+          type: string
+          description: 'A short bio about the user. This data syncs from the user’s Autodesk profile.
+
+            Max length: 255'
+        accessLevels:
+          description: Flags that identify a returned user’s access levels in the account or project.
+          type: object
+          properties:
+            accountAdmin:
+              type: boolean
+              x-stoplight:
+                id: uit3quf92pt7c
+              description: Indicates whether the user is an account administrator for the account.
+            projectAdmin:
+              type: boolean
+              x-stoplight:
+                id: 19r2u8did6fgi
+              description: Indicates whether the user is a project administrator for the project.
+            executive:
+              type: boolean
+              x-stoplight:
+                id: vwasqda2gcmm0
+              description: Indicates whether the user is an executive in the account.
+        addedOn:
+          type: string
+          description: The timestamp when the user was first given access to any product on the project.
+        updatedAt:
+          type: string
+          description: The timestamp when the project user was last updated, in ISO 8601 format.
+        companyId:
+          type: string
+          description: The ID of the company that the user is representing in the project. To obtain a list of all company IDs associated with a project, call GET projects/:projectId/companies.
+        companyName:
+          type: string
+          description: 'The name of the company to which the user belongs.
+
+            Max length: 255'
+        roleIds:
+          type: array
+          items:
+            type: string
+          description: A list of IDs of the roles that the user belongs to in the project.
+        roles:
+          description: A list of the role IDs and names that are associated with the user in the project.
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                x-stoplight:
+                  id: k4i4pyorywmgu
+                description: The ID of a role that the user belongs to in the project.
+              name:
+                type: string
+                x-stoplight:
+                  id: 06k3jj0ewbula
+                description: The name of a role that the user belongs to in the project.
+        status:
+          type: string
+          description: The status of the user in the project. A pending user could be waiting for their products to activate, or the user hasn’t accepted an email to create an account with Autodesk.
+        products:
+          type: array
+          items:
+            type: object
+            x-stoplight:
+              id: hasrcy0zzx3bm
+            properties:
+              key:
+                type: string
+                x-stoplight:
+                  id: wkmu7n556lqbw
+                description: A keyword that identifies the product.
+              access:
+                type: string
+                x-stoplight:
+                  id: 2hg7ktpbupezj
+                description: The user’s type of access to the product identified by key.
+    ProjectUserPayload:
+      title: ProjectUserPayload
+      x-stoplight:
+        id: d7oxg934a3kf6
+      type: object
+      properties:
+        email:
+          type: string
+          x-stoplight:
+            id: bhz1gjhsjijd7
+          description: 'The email address of the user.
+
+            Max length: 255'
+        companyId:
+          type: string
+          x-stoplight:
+            id: qjr3ljiek0a25
+          description: The ID of the company that the user is representing in the project. To obtain a list of all company IDs associated with a project, call GET projects/:projectId/companies.
+        roleIds:
+          type: array
+          x-stoplight:
+            id: k3j3e6w9zd7c3
+          description: A list of IDs of the roles that the user belongs to in the project.
+          items:
+            x-stoplight:
+              id: ngp6d387c9q14
+            type: string
+        products:
+          type: array
+          items:
+            type: object
+            required:
+            - key
+            - access
+            properties:
+              key:
+                $ref: '#/components/schemas/productKeys'
+                x-stoplight:
+                  id: wkmu7n556lqbw
+                description: A keyword that identifies the product.
+              access:
+                $ref: '#/components/schemas/productAccess'
+                x-stoplight:
+                  id: 2hg7ktpbupezj
+                description: The user’s type of access to the product identified by key.
+      required:
+      - email
+      - products
+    userSortBy:
+      title: userSortBy
+      x-stoplight:
+        id: 4pk6sj0cgqqan
+      type: string
+      enum:
+      - name asc
+      - email asc
+      - firstName asc
+      - lastName asc
+      - addressLine1 asc
+      - addressLine2 asc
+      - city asc
+      - companyName asc
+      - stateOrProvince asc
+      - status asc
+      - phone asc
+      - postalCode asc
+      - country asc
+      - addedOn asc
+      - name desc
+      - email desc
+      - firstName desc
+      - lastName desc
+      - addressLine1 desc
+      - addressLine2 desc
+      - city desc
+      - companyName desc
+      - stateOrProvince desc
+      - status desc
+      - phone desc
+      - postalCode desc
+      - country desc
+      - addedOn desc
+    ProjectUsersPage:
+      title: ProjectUsers
+      x-stoplight:
+        id: f584b87ecf8ca
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        results:
+          type: array
+          description: The requested page of project users.
+          items:
+            $ref: '#/components/schemas/ProjectUser'
+    orFilters:
+      title: orFilters
+      x-stoplight:
+        id: hch98m33unr18
+      type: string
+      enum:
+      - id
+      - name
+      - email
+      - autodeskId
+      - status
+      - accessLevels
+    orFilters_internal:
+      title: orFilters_internal
+      x-stoplight:
+        id: el45nd3vlwq52
+      type: array
+      items:
+        $ref: '#/components/schemas/orFilters'
+        x-stoplight:
+          id: xms9nyrej26w8
+    products:
+      title: products
+      x-stoplight:
+        id: qr6chlzpjohw0
+      type: string
+      enum:
+      - build
+      - docs
+      - takeoff
+      - cost
+      - autospecs
+      - financials
+      - buildingConnected
+      - capitalPlanning
+      - accountAdministration
+      - workshopxr
+      - insight
+      - projectAdministration
+      - modelCoordination
+      - designCollaboration
+      - cloudWorksharing
+      - fieldManagement
+      - costManagement
+      - glue
+      - documentManagement
+      - projectHome
+      - assets
+      - quantification
+      - plan
+      - field
+      - projectManagement
+      description: ''
+    Region:
+      title: Region
+      x-stoplight:
+        id: 5rz8jxdpgo4zq
+      type: string
+      enum:
+      - US
+      - EMEA
+      - AUS
+      - CAN
+      - DEU
+      - IND
+      - JPN
+      - GBR
+      description: 'Specifies the region where your request should be routed. Possible values are:
+
+        - ``US`` - Data center for the US region.
+
+        - ``EMEA`` - Data center for the European Union, Middle East, and Africa regions.
+
+        - ``AUS`` - Data center for the Australia region.
+
+        - ``CAN`` - Data center for the Canada region.
+
+        - ``DEU`` - Data center for the Germany region.
+
+        - ``IND`` - Data center for the India region.
+
+        - ``JPN`` - Data center for the Japan region.
+
+        - ``GBR`` - Data center for the United Kingdom region.'
+    Pagination:
+      title: Pagination
+      x-stoplight:
+        id: q1bi13503pl18
+      type: object
+      properties:
+        limit:
+          type: integer
+          x-stoplight:
+            id: 8izi1f176ek68
+        offset:
+          type: integer
+          x-stoplight:
+            id: v1vdhhbk5vhtj
+        totalResults:
+          type: integer
+          x-stoplight:
+            id: o7y9s28pvovds
+        nextUrl:
+          type: string
+          x-stoplight:
+            id: egebyg74p2y51
+        previousUrl:
+          type: string
+          x-stoplight:
+            id: rhoc949ms1w0p
+      description: "\tContains pagination details for the records returned by the endpoint."
+    statusFilter:
+      title: statusFilter
+      x-stoplight:
+        id: xqc12d47t2w4v
+      type: string
+      enum:
+      - active
+      - pending
+      - deleted
+    productAccess:
+      title: productAccess
+      x-stoplight:
+        id: fb0367b9f7e57
+      type: string
+      enum:
+      - administrator
+      - member
+      - none
+    products_internal:
+      title: products_internal
+      x-stoplight:
+        id: 9c80166a5fe5a
+      type: array
+      items:
+        $ref: '#/components/schemas/products'
+        x-stoplight:
+          id: qeezmlysbidw9
+    userSortBy_internal:
+      title: userSortBy_internal
+      x-stoplight:
+        id: gtw01y7bwe28r
+      type: array
+      items:
+        $ref: '#/components/schemas/userSortBy'
+        x-stoplight:
+          id: doc1w838c38cz
+    userFields:
+      title: userFields
+      x-stoplight:
+        id: 7zsag4qu2hd1k
+      type: string
+      enum:
+      - name
+      - email
+      - firstName
+      - lastName
+      - autodeskId
+      - addressLine1
+      - addressLine2
+      - city
+      - stateOrProvince
+      - postalCode
+      - country
+      - imageUrl
+      - lastSignIn
+      - phone
+      - jobTitle
+      - industry
+      - aboutMe
+      - createdAt
+      - updatedAt
+      - accessLevels
+      - companyId
+      - roleIds
+      - roles
+      - status
+      - addedOn
+      - products
+    statusFilter_internal:
+      title: statusFilter_internal
+      x-stoplight:
+        id: egjtyb75hopy5
+      type: array
+      items:
+        $ref: '#/components/schemas/statusFilter'
+        x-stoplight:
+          id: hcsuxuefqfyhc
+    filterTextMatch:
+      title: filterTextMatch
+      x-stoplight:
+        id: l613i9qr8h8a6
+      type: string
+      enum:
+      - contains
+      - startsWith
+      - endsWith
+      - equals
+    filterRoleIds:
+      title: filterRoleIds
+      x-stoplight:
+        id: b2vwul3iejon9
+      type: array
+      items:
+        x-stoplight:
+          id: cjucar8u515y5
+        type: string
+  securitySchemes:
+    2-legged:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+    3-legged-implicit:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: ''
+          refreshUrl: ''
+          scopes: {}
+    3-legged:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: ''
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+x-stoplight:
+  id: zm6m3b30rcbon

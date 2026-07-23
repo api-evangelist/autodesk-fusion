@@ -1,0 +1,261 @@
+openapi: 3.0.0
+info:
+  title: Construction.Account.Admin Account Management Issue Types API
+  version: '1.0'
+  contact:
+    name: Autodesk Plaform Services
+    url: https://aps.autodesk.com/
+    email: aps.help@autodesk.com
+  termsOfService: https://www.autodesk.com/company/legal-notices-trademarks/terms-of-service-autodesk360-web-services/forge-platform-web-services-api-terms-of-service
+  x-support: https://stackoverflow.com/questions/tagged/autodesk-platform-services
+  description: 'The Account Admin API automates creating and managing projects, assigning and managing project users, and managing member and partner company directories. You can also synchronize data with external systems.
+
+    '
+servers:
+- url: https://developer.api.autodesk.com
+security:
+- 2-legged: []
+- 3-legged: []
+tags:
+- name: Issue Types
+paths:
+  /construction/issues/v1/projects/{projectId}/issue-types:
+    parameters:
+    - schema:
+        type: string
+      name: projectId
+      in: path
+      required: true
+    get:
+      summary: Your GET endpoint
+      tags:
+      - Issue Types
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/issue_types_page'
+        '400':
+          description: Bad Request
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      operationId: getIssuesTypes
+      description: Retrieves a project’s categories and types.
+      security:
+      - 2-legged: []
+      - 3-legged: []
+      - 3-legged-implicit: []
+      parameters:
+      - schema:
+          type: string
+        in: query
+        name: include
+        description: Use include=subtypes to include the types (subtypes) for each category (type).
+      - schema:
+          type: integer
+        in: query
+        name: limit
+        description: Add limit=20 to limit the results count (together with the offset to support pagination).
+      - schema:
+          type: integer
+        in: query
+        name: offset
+        description: Add offset=20 to get partial results (together with the limit to support pagination).
+      - schema:
+          type: string
+        in: query
+        name: filter[updatedAt]
+        description: 'Retrieves types that were last updated at the specified date and time, in in one of the following URL-encoded formats: YYYY-MM-DDThh:mm:ss.sz or YYYY-MM-DD. Separate multiple values with commas.'
+      - schema:
+          type: boolean
+        in: query
+        name: filter[isActive]
+        description: 'Filter types by status e.g. filter[isActive]=true will only return active types. Default value: undefined (meaning both active & inactive issue type categories will return).'
+      - $ref: '#/components/parameters/x-ads-region'
+components:
+  parameters:
+    x-ads-region:
+      name: x-ads-region
+      in: header
+      schema:
+        $ref: '#/components/schemas/region'
+  schemas:
+    issue_types_page:
+      title: types_page
+      type: object
+      x-stoplight:
+        id: wbv2e5j32hmqt
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        results:
+          type: array
+          description: A list of issue type categories.
+          items:
+            $ref: '#/components/schemas/issue_type'
+    Pagination:
+      type: object
+      description: The pagination object.
+      properties:
+        limit:
+          type: integer
+          description: The number of items per page.
+        offset:
+          type: integer
+          description: The page number that the results begin from.
+        totalResults:
+          type: integer
+          description: The number of items in the response.
+    issue_type:
+      title: issue_type
+      x-stoplight:
+        id: nm8sqouq3xu9p
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the issue type.
+        containerId:
+          type: string
+          description: Not relevant
+        title:
+          type: string
+          description: 'Max length: 250'
+        isActive:
+          type: boolean
+          description: States whether the issue type is active.
+        orderIndex:
+          type: integer
+          description: Not relevant
+        permittedActions:
+          type: array
+          description: Not relevant
+          items:
+            type: string
+        permittedAttributes:
+          type: array
+          description: Not relevant
+          items:
+            type: string
+        subtypes:
+          type: array
+          description: A list of subtypes of the specific issue type.
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: The ID of the issue subtype.
+              issueTypeId:
+                type: string
+                description: The ID of the parent issue type.
+              title:
+                type: string
+                description: 'Max length: 250'
+              code:
+                type: string
+                description: 3 chars pin label.
+              isActive:
+                type: boolean
+                description: States whether the issue type is active.
+              orderIndex:
+                type: integer
+                description: Not relevant
+              isReadOnly:
+                type: boolean
+                description: Not relevant
+              permittedActions:
+                type: array
+                description: Not relevant
+                items:
+                  type: string
+              permittedAttributes:
+                type: array
+                description: Not relevant
+                items:
+                  type: string
+              createdBy:
+                type: string
+                description: The unique identifier of the user who created the issue type.
+              createdAt:
+                type: string
+                description: The date and time the issue was created, in ISO8601 format.
+              updatedBy:
+                type: string
+                description: The unique identifier of the user who updated the issue type.
+              updatedAt:
+                type: string
+                description: The date and time the issue type was updated, in ISO8601 format.
+              deletedBy:
+                type: string
+                description: The unique identifier of the user who deleted the issue type.
+              deletedAt:
+                type: string
+                description: The date and time the issue type was deleted, in ISO8601 format.
+        statusSet:
+          type: string
+          description: Not relevant
+        createdBy:
+          type: string
+          description: The unique identifier of the user who created the issue type.
+        createdAt:
+          type: string
+          description: The date and time the issue was created, in ISO8601 format.
+        updatedBy:
+          type: string
+          description: The unique identifier of the user who updated the issue type.
+        updatedAt:
+          type: string
+          description: The date and time the issue type was updated, in ISO8601 format.
+        deletedBy:
+          type: string
+          description: The unique identifier of the user who deleted the issue type.
+        deletedAt:
+          type: string
+          description: The date and time the issue type was deleted, in ISO8601 format.
+    region:
+      title: region
+      x-stoplight:
+        id: pvg574irwjt8w
+      type: string
+      enum:
+      - US
+      - EMEA
+      - AUS
+      - CAN
+      - DEU
+      - IND
+      - JPN
+      - GBR
+      description: "Specifies where the bucket containing the object is stored. Possible values are:\n            - ``US`` - (Default) Data center for the US region.\n            - ``EMEA`` - Data center for the European Union, Middle East, and Africa.\n            - ``AUS`` -  Data center for Australia.\n            - ``CAN`` - Data center for the Canada region.\n            - ``DEU`` - Data center for the Germany region.\n            - ``IND`` - Data center for the India region.\n            - ``JPN`` - Data center for the Japan region.\n            - ``GBR`` - Data center for the United Kingdom region.\n**Note:** Beta features are subject to change. Please do not use in production environments."
+  securitySchemes:
+    2-legged:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+    3-legged-implicit:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: ''
+          refreshUrl: ''
+          scopes: {}
+    3-legged:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: ''
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+x-stoplight:
+  id: zm6m3b30rcbon

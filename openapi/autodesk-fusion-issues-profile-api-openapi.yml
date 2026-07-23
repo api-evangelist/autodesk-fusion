@@ -1,0 +1,184 @@
+openapi: 3.0.0
+info:
+  title: Construction.Account.Admin Account Management Issues Profile API
+  version: '1.0'
+  contact:
+    name: Autodesk Plaform Services
+    url: https://aps.autodesk.com/
+    email: aps.help@autodesk.com
+  termsOfService: https://www.autodesk.com/company/legal-notices-trademarks/terms-of-service-autodesk360-web-services/forge-platform-web-services-api-terms-of-service
+  x-support: https://stackoverflow.com/questions/tagged/autodesk-platform-services
+  description: 'The Account Admin API automates creating and managing projects, assigning and managing project users, and managing member and partner company directories. You can also synchronize data with external systems.
+
+    '
+servers:
+- url: https://developer.api.autodesk.com
+security:
+- 2-legged: []
+- 3-legged: []
+tags:
+- name: Issues Profile
+paths:
+  /construction/issues/v1/projects/{projectId}/users/me:
+    parameters:
+    - schema:
+        type: string
+      name: projectId
+      in: path
+      required: true
+    get:
+      summary: Your GET endpoint
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Bad Request
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      operationId: getUserProfile
+      description: Returns the current user permissions.
+      security:
+      - 2-legged: []
+      - 3-legged: []
+      - 3-legged-implicit: []
+      parameters:
+      - $ref: '#/components/parameters/x-ads-region'
+      tags:
+      - Issues Profile
+components:
+  parameters:
+    x-ads-region:
+      name: x-ads-region
+      in: header
+      schema:
+        $ref: '#/components/schemas/region'
+  schemas:
+    permission_level:
+      title: permission_level
+      x-stoplight:
+        id: yvs19l1czlsoy
+      type: string
+      enum:
+      - create
+      - read
+      - write
+    region:
+      title: region
+      x-stoplight:
+        id: pvg574irwjt8w
+      type: string
+      enum:
+      - US
+      - EMEA
+      - AUS
+      - CAN
+      - DEU
+      - IND
+      - JPN
+      - GBR
+      description: "Specifies where the bucket containing the object is stored. Possible values are:\n            - ``US`` - (Default) Data center for the US region.\n            - ``EMEA`` - Data center for the European Union, Middle East, and Africa.\n            - ``AUS`` -  Data center for Australia.\n            - ``CAN`` - Data center for the Canada region.\n            - ``DEU`` - Data center for the Germany region.\n            - ``IND`` - Data center for the India region.\n            - ``JPN`` - Data center for the Japan region.\n            - ``GBR`` - Data center for the United Kingdom region.\n**Note:** Beta features are subject to change. Please do not use in production environments."
+    User:
+      title: User
+      type: object
+      x-stoplight:
+        id: fc9hr299sgm4v
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the given user.
+        isProjectAdmin:
+          type: boolean
+          description: States whether the current logged in user is a system admin.
+        canManageTemplates:
+          type: boolean
+          description: Not relevant
+        issues:
+          type: object
+          properties:
+            new:
+              type: object
+              description: If this object appears in the response, it indicates that the user can create and modify issues.
+              properties:
+                permittedActions:
+                  type: array
+                  description: The list of actions permitted for the user for this issue in its current state.
+                  items:
+                    type: string
+                permittedAttributes:
+                  type: array
+                  description: A list of attributes you are allowed to open a new issue. issueTypeId, linkedDocument, links, ownerId, officialResponse, rootCauseId, snapshotUrn are not applicable.
+                  items:
+                    type: string
+                permittedStatuses:
+                  type: array
+                  description: 'A list of available statuses for the project.
+
+                    Possible values: draft, open, pending, in_progress, completed, in_review, not_approved, in_dispute, closed.'
+                  items:
+                    type: string
+                permitted_actions:
+                  type: array
+                  description: Not relevant
+                  items:
+                    type: string
+                permitted_attributes:
+                  type: array
+                  description: Not relevant
+                  items:
+                    type: string
+                permitted_statuses:
+                  type: array
+                  description: Not relevant
+                  items:
+                    type: string
+            filter:
+              type: object
+              description: Not relevant
+              properties:
+                permittedStatuses:
+                  type: array
+                  description: Not relevant
+                  items:
+                    type: string
+        permissionLevels:
+          type: array
+          description: The permission level of the user. Each permission level corresponds to a combination of values in the response. For example, a combination of read and create in the response, corresponds to a Create for other companies permission level.
+          items:
+            $ref: '#/components/schemas/permission_level'
+  securitySchemes:
+    2-legged:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+    3-legged-implicit:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: ''
+          refreshUrl: ''
+          scopes: {}
+    3-legged:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: ''
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+x-stoplight:
+  id: zm6m3b30rcbon

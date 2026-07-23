@@ -1,0 +1,270 @@
+openapi: 3.0.0
+info:
+  title: Construction.Account.Admin Account Management Issue Comments API
+  version: '1.0'
+  contact:
+    name: Autodesk Plaform Services
+    url: https://aps.autodesk.com/
+    email: aps.help@autodesk.com
+  termsOfService: https://www.autodesk.com/company/legal-notices-trademarks/terms-of-service-autodesk360-web-services/forge-platform-web-services-api-terms-of-service
+  x-support: https://stackoverflow.com/questions/tagged/autodesk-platform-services
+  description: 'The Account Admin API automates creating and managing projects, assigning and managing project users, and managing member and partner company directories. You can also synchronize data with external systems.
+
+    '
+servers:
+- url: https://developer.api.autodesk.com
+security:
+- 2-legged: []
+- 3-legged: []
+tags:
+- name: Issue Comments
+paths:
+  /construction/issues/v1/projects/{projectId}/issues/{issueId}/comments:
+    parameters:
+    - schema:
+        type: string
+      name: projectId
+      in: path
+      required: true
+      description: The ID of the project.
+    - schema:
+        type: string
+      name: issueId
+      in: path
+      required: true
+      description: The unique identifier of the issue.
+    get:
+      summary: Your GET endpoint
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commentsPage'
+        '400':
+          description: Bad Request
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      operationId: getComments
+      description: Get all the comments for a specific issue.
+      security:
+      - 2-legged: []
+      - 3-legged: []
+      - 3-legged-implicit: []
+      parameters:
+      - $ref: '#/components/parameters/x-ads-region'
+      - schema:
+          type: string
+        in: query
+        name: limit
+        description: Add limit=20 to limit the results count (together with the offset to support pagination).
+      - schema:
+          type: string
+        in: query
+        name: offset
+        description: Add offset=20 to get partial results (together with the limit to support pagination).
+      - in: query
+        name: sortBy
+        description: Sort issue comments by specified fields. Separate multiple values with commas. To sort in descending order add a - (minus sign) before the sort criteria
+        schema:
+          $ref: '#/components/schemas/sortBy_internal'
+      tags:
+      - Issue Comments
+    post:
+      summary: ''
+      operationId: CreateComments
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/comment'
+        '400':
+          description: Bad Request
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '409':
+          description: Conflict
+        '500':
+          description: Internal Server Error
+      description: Creates a new comment under a specific issue.
+      security:
+      - 2-legged: []
+      - 3-legged: []
+      - 3-legged-implicit: []
+      parameters:
+      - $ref: '#/components/parameters/x-ads-region'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/commentsPayload'
+      tags:
+      - Issue Comments
+components:
+  parameters:
+    x-ads-region:
+      name: x-ads-region
+      in: header
+      schema:
+        $ref: '#/components/schemas/region'
+  schemas:
+    sortBy_internal:
+      title: sortBy_internal
+      x-stoplight:
+        id: jf3fxohnckp1q
+      type: array
+      items:
+        $ref: '#/components/schemas/sortBy'
+    commentsPayload:
+      title: commentsPayload
+      x-stoplight:
+        id: g2sp2gwd04hxi
+      type: object
+      properties:
+        body:
+          type: string
+          x-stoplight:
+            id: mqohbh0gr85g9
+      required:
+      - body
+    comment:
+      title: comment
+      type: object
+      x-stoplight:
+        id: t2dkwitlw6jgu
+      properties:
+        id:
+          type: string
+          description: The comment ID.
+        body:
+          type: string
+          description: 'The comment content. A \n indicates a new line, e.g.: Hey\nAharon will be a 2 lines comment.
+
+            Max length: 10000'
+        createdAt:
+          type: string
+          description: 'The date and time the custom attribute was created, in the following format: YYYY-MM-DDThh:mm:ss.sz.'
+        createdBy:
+          type: string
+          description: The Autodesk ID of the user who created the comment.
+        updatedAt:
+          type: string
+          description: Not relevant
+        deletedAt:
+          type: string
+          description: Not relevant
+        clientCreatedAt:
+          type: string
+          description: Not relevant
+        clientUpdatedAt:
+          type: string
+          description: Not relevant
+        permittedActions:
+          type: array
+          description: Not relevant
+          items:
+            type: string
+        permittedAttributes:
+          type: array
+          description: Not relevant
+          items:
+            type: string
+    Pagination:
+      type: object
+      description: The pagination object.
+      properties:
+        limit:
+          type: integer
+          description: The number of items per page.
+        offset:
+          type: integer
+          description: The page number that the results begin from.
+        totalResults:
+          type: integer
+          description: The number of items in the response.
+    region:
+      title: region
+      x-stoplight:
+        id: pvg574irwjt8w
+      type: string
+      enum:
+      - US
+      - EMEA
+      - AUS
+      - CAN
+      - DEU
+      - IND
+      - JPN
+      - GBR
+      description: "Specifies where the bucket containing the object is stored. Possible values are:\n            - ``US`` - (Default) Data center for the US region.\n            - ``EMEA`` - Data center for the European Union, Middle East, and Africa.\n            - ``AUS`` -  Data center for Australia.\n            - ``CAN`` - Data center for the Canada region.\n            - ``DEU`` - Data center for the Germany region.\n            - ``IND`` - Data center for the India region.\n            - ``JPN`` - Data center for the Japan region.\n            - ``GBR`` - Data center for the United Kingdom region.\n**Note:** Beta features are subject to change. Please do not use in production environments."
+    commentsPage:
+      title: issue-comments
+      type: object
+      description: The pagination object.
+      x-stoplight:
+        id: 4nxzq972zdl5h
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/comment'
+    sortBy:
+      title: sortBy
+      x-stoplight:
+        id: j8v94gty0f6up
+      type: string
+      enum:
+      - createdAt
+      - updatedAt
+      - createdBy
+      - displayId
+      - title
+      - description
+      - status
+      - assignedTo
+      - assignedToType
+      - dueDate
+      - locationDetails
+      - published
+      - closedBy
+      - closedAt
+      - issueSubType
+      - issueType
+      - customAttributes
+      - startDate
+  securitySchemes:
+    2-legged:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+    3-legged-implicit:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: ''
+          refreshUrl: ''
+          scopes: {}
+    3-legged:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: ''
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+x-stoplight:
+  id: zm6m3b30rcbon

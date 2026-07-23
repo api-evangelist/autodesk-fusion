@@ -1,0 +1,239 @@
+openapi: 3.0.0
+info:
+  title: Construction.Account.Admin Account Management Issue Root Cause Categories API
+  version: '1.0'
+  contact:
+    name: Autodesk Plaform Services
+    url: https://aps.autodesk.com/
+    email: aps.help@autodesk.com
+  termsOfService: https://www.autodesk.com/company/legal-notices-trademarks/terms-of-service-autodesk360-web-services/forge-platform-web-services-api-terms-of-service
+  x-support: https://stackoverflow.com/questions/tagged/autodesk-platform-services
+  description: 'The Account Admin API automates creating and managing projects, assigning and managing project users, and managing member and partner company directories. You can also synchronize data with external systems.
+
+    '
+servers:
+- url: https://developer.api.autodesk.com
+security:
+- 2-legged: []
+- 3-legged: []
+tags:
+- name: Issue Root Cause Categories
+paths:
+  /construction/issues/v1/projects/{projectId}/issue-root-cause-categories:
+    parameters:
+    - schema:
+        type: string
+      name: projectId
+      in: path
+      required: true
+      description: The ID of the project.
+    get:
+      summary: Your GET endpoint
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/root_cause_categories_page'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      operationId: getRootCauseCategories
+      description: Retrieves a list of supported root cause categories and root causes that you can allocate to an issue. For example, communication and coordination.
+      security:
+      - 2-legged: []
+      - 3-legged: []
+      - 3-legged-implicit: []
+      parameters:
+      - $ref: '#/components/parameters/x-ads-region'
+      - schema:
+          type: string
+        in: query
+        name: include
+        description: Add ‘include=rootcauses’ to add the root causes for each category.
+      - schema:
+          type: integer
+        in: query
+        name: limit
+        description: Add limit=20 to limit the results count (together with the offset to support pagination).
+      - schema:
+          type: integer
+        in: query
+        name: offset
+        description: Add offset=20 to get partial results (together with the limit to support pagination)
+      - schema:
+          type: string
+        in: query
+        name: filter[updatedAt]
+        description: 'Retrieves root cause categories updated at the specified date and time, in one of the following URL-encoded formats: YYYY-MM-DDThh:mm:ss.sz or YYYY-MM-DD. Separate multiple values with commas.'
+      tags:
+      - Issue Root Cause Categories
+components:
+  parameters:
+    x-ads-region:
+      name: x-ads-region
+      in: header
+      schema:
+        $ref: '#/components/schemas/region'
+  schemas:
+    Pagination:
+      type: object
+      description: The pagination object.
+      properties:
+        limit:
+          type: integer
+          description: The number of items per page.
+        offset:
+          type: integer
+          description: The page number that the results begin from.
+        totalResults:
+          type: integer
+          description: The number of items in the response.
+    region:
+      title: region
+      x-stoplight:
+        id: pvg574irwjt8w
+      type: string
+      enum:
+      - US
+      - EMEA
+      - AUS
+      - CAN
+      - DEU
+      - IND
+      - JPN
+      - GBR
+      description: "Specifies where the bucket containing the object is stored. Possible values are:\n            - ``US`` - (Default) Data center for the US region.\n            - ``EMEA`` - Data center for the European Union, Middle East, and Africa.\n            - ``AUS`` -  Data center for Australia.\n            - ``CAN`` - Data center for the Canada region.\n            - ``DEU`` - Data center for the Germany region.\n            - ``IND`` - Data center for the India region.\n            - ``JPN`` - Data center for the Japan region.\n            - ``GBR`` - Data center for the United Kingdom region.\n**Note:** Beta features are subject to change. Please do not use in production environments."
+    root_cause_category:
+      title: root_cause_category
+      x-stoplight:
+        id: xu7dv1hyc4jzi
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the issue root cause category.
+        title:
+          type: string
+          description: 'The title of the custom attribute.
+
+            Max length: 100'
+        isActive:
+          type: boolean
+          description: 'The description of the custom attribute.
+
+            Max length: 500'
+        permittedActions:
+          type: array
+          description: Not relevant
+          items:
+            type: string
+        permittedAttributes:
+          type: array
+          description: Not relevant
+          items:
+            type: string
+        rootCauses:
+          type: array
+          description: The metadata object; only relevant for list custom attributes.
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: The ID of the issue root cause.
+              rootCauseCategoryId:
+                type: string
+                description: The ID of the parent issue root cause category.
+              title:
+                type: string
+                description: 'The title of the issue root cause.
+
+                  Max length: 100'
+              isActive:
+                type: boolean
+                description: 'The description of the custom attribute.
+
+                  Max length: 500'
+              permittedActions:
+                type: array
+                description: Not relevant
+                items:
+                  type: string
+              permittedAttributes:
+                type: array
+                description: Not relevant
+                items:
+                  type: string
+              deletedAt:
+                type: string
+                description: 'The date and time the custom attribute was deleted, in the following format: YYYY-MM-DDThh:mm:ss.sz.'
+              deletedBy:
+                type: string
+                description: The Autodesk ID of the user who deleted the custom attribute.
+        createdAt:
+          type: string
+          description: 'The date and time the custom attribute was created, in the following format: YYYY-MM-DDThh:mm:ss.sz.'
+        createdBy:
+          type: string
+          description: The Autodesk ID of the user who created the custom attribute.
+        updatedAt:
+          type: string
+          description: 'The last date and time the custom attribute was updated, in the following format: YYYY-MM-DDThh:mm:ss.sz.'
+        updatedBy:
+          type: string
+          description: The Autodesk ID of the user who last updated the custom attribute.
+        deletedAt:
+          type: string
+          description: 'The date and time the custom attribute was deleted, in the following format: YYYY-MM-DDThh:mm:ss.sz.'
+        deletedBy:
+          type: string
+          description: The Autodesk ID of the user who deleted the custom attribute.
+      description: ''
+    root_cause_categories_page:
+      title: root-cause-categories-page
+      type: object
+      description: The pagination object.
+      x-stoplight:
+        id: ltnxakw21gumz
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        results:
+          type: array
+          description: A list of issue root cause categories.
+          items:
+            $ref: '#/components/schemas/root_cause_category'
+  securitySchemes:
+    2-legged:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+    3-legged-implicit:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: ''
+          refreshUrl: ''
+          scopes: {}
+    3-legged:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: ''
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+x-stoplight:
+  id: zm6m3b30rcbon
