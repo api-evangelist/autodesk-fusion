@@ -5,7 +5,20 @@ description: Autodesk Fusion is a cloud-based CAD/CAM/CAE/PCB platform that prov
   and shop-floor operations within the Autodesk Platform Services (APS) ecosystem.
   Developers can build scripts, add-ins, and integrations that automate workflows,
   sync production data, and connect Fusion with ERP, PLM, and BI systems.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/autodesk-fusion.png
 url: https://raw.githubusercontent.com/api-evangelist/autodesk-fusion/refs/heads/main/apis.yml
 created: '2026-06-13'
 modified: '2026-06-13'
@@ -20,43 +33,13 @@ tags:
 - REST
 - Autodesk Platform Services
 apis:
-- aid: autodesk-fusion:autodesk-fusion-api
-  name: Autodesk Fusion API
-  description: The Autodesk Fusion API enables developers to create scripts, add-ins,
-    and cloud-connected applications that extend and automate Fusion design and manufacturing
-    workflows. Built on Autodesk Platform Services, it supports OAuth 2.0 authentication
-    and covers the entire design-to-manufacturing process including parametric modeling,
-    simulation, and toolpath generation.
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
-  baseURL: https://developer.api.autodesk.com
-  tags:
-  - CAD
-  - Scripting
-  - Design
-  - Automation
-  properties:
-  - type: Documentation
-    url: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
-  - type: Documentation
-    url: https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-A92A4B10-3781-4925-94C6-47DA85A4F65A
-  - type: Authentication
-    url: https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics
-  - type: OpenAPI
-    url: https://github.com/autodesk-platform-services/aps-sdk-openapi
-  - url: graphql/autodesk-fusion-graphql.md
-    type: GraphQL
-  contact:
-  - FN: Autodesk Developer Network
-    url: https://aps.autodesk.com/developer/support
-    email: ''
 - aid: autodesk-fusion:fusion-automation-api
   name: Fusion Automation API (Design Automation)
-  description: The Fusion Automation API is a cloud-based Premium API that runs Fusion
-    scripts and automation jobs at scale without requiring desktop software. It supports
-    parametric design customization, advanced manufacturing algorithms (packing, toolpath
-    generation), and end-to-end workflow integration. Priced at 3.0 Flex tokens per
-    processing hour on a pay-per-use basis.
+  description: >-
+    The Fusion Automation API is a cloud-based Premium API that runs Fusion scripts and automation jobs
+    at scale without requiring desktop software. It supports parametric design customization, advanced
+    manufacturing algorithms (packing, toolpath generation), and end-to-end workflow integration. Priced
+    at 3.0 Flex tokens per processing hour on a pay-per-use basis.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://aps.autodesk.com/blog/design-automation-api-fusion-now-generally-available
   baseURL: https://developer.api.autodesk.com
@@ -78,11 +61,11 @@ apis:
     email: ''
 - aid: autodesk-fusion:fusion-operations-api
   name: Fusion Operations API
-  description: The Fusion Operations API provides REST endpoints to integrate Autodesk
-    Fusion Operations (manufacturing execution system) production data with external
-    enterprise systems. Supports bidirectional sync of production orders, inventory,
-    machine status, downtime records, punch clock entries, workers, and operations
-    with ERP, PLM, accounting, and BI platforms. Currently in Public Beta (V2).
+  description: >-
+    The Fusion Operations API provides REST endpoints to integrate Autodesk Fusion Operations (manufacturing
+    execution system) production data with external enterprise systems. Supports bidirectional sync of
+    production orders, inventory, machine status, downtime records, punch clock entries, workers, and
+    operations with ERP, PLM, accounting, and BI platforms. Currently in Public Beta (V2).
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://aps.autodesk.com/developer/overview/fusion-operations-api
   baseURL: https://developer.api.autodesk.com
@@ -104,10 +87,10 @@ apis:
     email: ''
 - aid: autodesk-fusion:manufacturing-data-model-api
   name: Manufacturing Data Model API (Fusion Data API)
-  description: The Manufacturing Data Model API exposes Fusion design and manufacturing
-    data through a GraphQL interface, enabling cloud-based read and write access to
-    component properties, Bill of Materials, model hierarchy, and thumbnail assets.
-    Allows programmatic access to granular design data without requiring the Fusion
+  description: >-
+    The Manufacturing Data Model API exposes Fusion design and manufacturing data through a GraphQL interface,
+    enabling cloud-based read and write access to component properties, Bill of Materials, model hierarchy,
+    and thumbnail assets. Allows programmatic access to granular design data without requiring the Fusion
     desktop application. Generally available since 2022.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://aps.autodesk.com/en/docs/mfgdataapi/v2/developers_guide/explorer/
@@ -130,6 +113,655 @@ apis:
   - FN: Autodesk Developer Network
     url: https://aps.autodesk.com/developer/support
     email: ''
+- aid: autodesk-fusion:autodesk-fusion-account-management-api
+  name: Autodesk Fusion Account Management API
+  description: The Account Management API from Autodesk Fusion — 2 operation(s) for account management.
+  humanURL: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  baseURL: https://developer.api.autodesk.com
+  tags:
+  - Account Management
+  properties:
+  - type: OpenAPI
+    url: openapi/autodesk-fusion-account-management-api-openapi.yml
+  - type: Documentation
+    url: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  - type: Documentation
+    url: >-
+      https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-A92A4B10-3781-4925-94C6-47DA85A4F65A
+  - type: Authentication
+    url: https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics
+  - type: GraphQL
+    url: graphql/autodesk-fusion-graphql.md
+- aid: autodesk-fusion:autodesk-fusion-account-users-api
+  name: Autodesk Fusion Account Users API
+  description: The Account Users API from Autodesk Fusion — 6 operation(s) for account users.
+  humanURL: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  baseURL: https://developer.api.autodesk.com
+  tags:
+  - Account Users
+  properties:
+  - type: OpenAPI
+    url: openapi/autodesk-fusion-account-users-api-openapi.yml
+  - type: Documentation
+    url: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  - type: Documentation
+    url: >-
+      https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-A92A4B10-3781-4925-94C6-47DA85A4F65A
+  - type: Authentication
+    url: https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics
+  - type: GraphQL
+    url: graphql/autodesk-fusion-graphql.md
+- aid: autodesk-fusion:autodesk-fusion-buckets-api
+  name: Autodesk Fusion Buckets API
+  description: Bucket related operations
+  humanURL: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  baseURL: https://developer.api.autodesk.com
+  tags:
+  - Buckets
+  properties:
+  - type: OpenAPI
+    url: openapi/autodesk-fusion-buckets-api-openapi.yml
+  - type: Documentation
+    url: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  - type: Documentation
+    url: >-
+      https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-A92A4B10-3781-4925-94C6-47DA85A4F65A
+  - type: Authentication
+    url: https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics
+  - type: GraphQL
+    url: graphql/autodesk-fusion-graphql.md
+- aid: autodesk-fusion:autodesk-fusion-business-units-api
+  name: Autodesk Fusion Business Units API
+  description: The Business Units API from Autodesk Fusion — 1 operation(s) for business units.
+  humanURL: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  baseURL: https://developer.api.autodesk.com
+  tags:
+  - Business Units
+  properties:
+  - type: OpenAPI
+    url: openapi/autodesk-fusion-business-units-api-openapi.yml
+  - type: Documentation
+    url: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  - type: Documentation
+    url: >-
+      https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-A92A4B10-3781-4925-94C6-47DA85A4F65A
+  - type: Authentication
+    url: https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics
+  - type: GraphQL
+    url: graphql/autodesk-fusion-graphql.md
+- aid: autodesk-fusion:autodesk-fusion-commands-api
+  name: Autodesk Fusion Commands API
+  description: The Commands API from Autodesk Fusion — 1 operation(s) for commands.
+  humanURL: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  baseURL: https://developer.api.autodesk.com
+  tags:
+  - Commands
+  properties:
+  - type: OpenAPI
+    url: openapi/autodesk-fusion-commands-api-openapi.yml
+  - type: Documentation
+    url: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  - type: Documentation
+    url: >-
+      https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-A92A4B10-3781-4925-94C6-47DA85A4F65A
+  - type: Authentication
+    url: https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics
+  - type: GraphQL
+    url: graphql/autodesk-fusion-graphql.md
+- aid: autodesk-fusion:autodesk-fusion-companies-api
+  name: Autodesk Fusion Companies API
+  description: The Companies API from Autodesk Fusion — 7 operation(s) for companies.
+  humanURL: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  baseURL: https://developer.api.autodesk.com
+  tags:
+  - Companies
+  properties:
+  - type: OpenAPI
+    url: openapi/autodesk-fusion-companies-api-openapi.yml
+  - type: Documentation
+    url: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  - type: Documentation
+    url: >-
+      https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-A92A4B10-3781-4925-94C6-47DA85A4F65A
+  - type: Authentication
+    url: https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics
+  - type: GraphQL
+    url: graphql/autodesk-fusion-graphql.md
+- aid: autodesk-fusion:autodesk-fusion-derivatives-api
+  name: Autodesk Fusion Derivatives API
+  description: The Derivatives API from Autodesk Fusion — 2 operation(s) for derivatives.
+  humanURL: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  baseURL: https://developer.api.autodesk.com
+  tags:
+  - Derivatives
+  properties:
+  - type: OpenAPI
+    url: openapi/autodesk-fusion-derivatives-api-openapi.yml
+  - type: Documentation
+    url: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  - type: Documentation
+    url: >-
+      https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-A92A4B10-3781-4925-94C6-47DA85A4F65A
+  - type: Authentication
+    url: https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics
+  - type: GraphQL
+    url: graphql/autodesk-fusion-graphql.md
+- aid: autodesk-fusion:autodesk-fusion-exchange-token-api
+  name: Autodesk Fusion Exchange Token API
+  description: The Exchange Token API from Autodesk Fusion — 1 operation(s) for exchange token.
+  humanURL: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  baseURL: https://developer.api.autodesk.com
+  tags:
+  - Exchange Token
+  properties:
+  - type: OpenAPI
+    url: openapi/autodesk-fusion-exchange-token-api-openapi.yml
+  - type: Documentation
+    url: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  - type: Documentation
+    url: >-
+      https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-A92A4B10-3781-4925-94C6-47DA85A4F65A
+  - type: Authentication
+    url: https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics
+  - type: GraphQL
+    url: graphql/autodesk-fusion-graphql.md
+- aid: autodesk-fusion:autodesk-fusion-folders-api
+  name: Autodesk Fusion Folders API
+  description: The Folders API from Autodesk Fusion — 8 operation(s) for folders.
+  humanURL: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  baseURL: https://developer.api.autodesk.com
+  tags:
+  - Folders
+  properties:
+  - type: OpenAPI
+    url: openapi/autodesk-fusion-folders-api-openapi.yml
+  - type: Documentation
+    url: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  - type: Documentation
+    url: >-
+      https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-A92A4B10-3781-4925-94C6-47DA85A4F65A
+  - type: Authentication
+    url: https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics
+  - type: GraphQL
+    url: graphql/autodesk-fusion-graphql.md
+- aid: autodesk-fusion:autodesk-fusion-hooks-api
+  name: Autodesk Fusion Hooks API
+  description: The Hooks API from Autodesk Fusion — 5 operation(s) for hooks.
+  humanURL: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  baseURL: https://developer.api.autodesk.com
+  tags:
+  - Hooks
+  properties:
+  - type: OpenAPI
+    url: openapi/autodesk-fusion-hooks-api-openapi.yml
+  - type: Documentation
+    url: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  - type: Documentation
+    url: >-
+      https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-A92A4B10-3781-4925-94C6-47DA85A4F65A
+  - type: Authentication
+    url: https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics
+  - type: GraphQL
+    url: graphql/autodesk-fusion-graphql.md
+- aid: autodesk-fusion:autodesk-fusion-hubs-api
+  name: Autodesk Fusion Hubs API
+  description: The Hubs API from Autodesk Fusion — 2 operation(s) for hubs.
+  humanURL: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  baseURL: https://developer.api.autodesk.com
+  tags:
+  - Hubs
+  properties:
+  - type: OpenAPI
+    url: openapi/autodesk-fusion-hubs-api-openapi.yml
+  - type: Documentation
+    url: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  - type: Documentation
+    url: >-
+      https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-A92A4B10-3781-4925-94C6-47DA85A4F65A
+  - type: Authentication
+    url: https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics
+  - type: GraphQL
+    url: graphql/autodesk-fusion-graphql.md
+- aid: autodesk-fusion:autodesk-fusion-informational-api
+  name: Autodesk Fusion Informational API
+  description: The Informational API from Autodesk Fusion — 1 operation(s) for informational.
+  humanURL: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  baseURL: https://developer.api.autodesk.com
+  tags:
+  - Informational
+  properties:
+  - type: OpenAPI
+    url: openapi/autodesk-fusion-informational-api-openapi.yml
+  - type: Documentation
+    url: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  - type: Documentation
+    url: >-
+      https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-A92A4B10-3781-4925-94C6-47DA85A4F65A
+  - type: Authentication
+    url: https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics
+  - type: GraphQL
+    url: graphql/autodesk-fusion-graphql.md
+- aid: autodesk-fusion:autodesk-fusion-issue-attachments-api
+  name: Autodesk Fusion Issue Attachments API
+  description: The Issue Attachments API from Autodesk Fusion — 3 operation(s) for issue attachments.
+  humanURL: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  baseURL: https://developer.api.autodesk.com
+  tags:
+  - Issue Attachments
+  properties:
+  - type: OpenAPI
+    url: openapi/autodesk-fusion-issue-attachments-api-openapi.yml
+  - type: Documentation
+    url: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  - type: Documentation
+    url: >-
+      https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-A92A4B10-3781-4925-94C6-47DA85A4F65A
+  - type: Authentication
+    url: https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics
+  - type: GraphQL
+    url: graphql/autodesk-fusion-graphql.md
+- aid: autodesk-fusion:autodesk-fusion-issue-attribute-definitions-api
+  name: Autodesk Fusion Issue Attribute Definitions API
+  description: >-
+    The Issue Attribute Definitions API from Autodesk Fusion — 1 operation(s) for issue attribute definitions.
+  humanURL: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  baseURL: https://developer.api.autodesk.com
+  tags:
+  - Issue Attribute Definitions
+  properties:
+  - type: OpenAPI
+    url: openapi/autodesk-fusion-issue-attribute-definitions-api-openapi.yml
+  - type: Documentation
+    url: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  - type: Documentation
+    url: >-
+      https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-A92A4B10-3781-4925-94C6-47DA85A4F65A
+  - type: Authentication
+    url: https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics
+  - type: GraphQL
+    url: graphql/autodesk-fusion-graphql.md
+- aid: autodesk-fusion:autodesk-fusion-issue-attribute-mappings-api
+  name: Autodesk Fusion Issue Attribute Mappings API
+  description: >-
+    The Issue Attribute Mappings API from Autodesk Fusion — 1 operation(s) for issue attribute mappings.
+  humanURL: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  baseURL: https://developer.api.autodesk.com
+  tags:
+  - Issue Attribute Mappings
+  properties:
+  - type: OpenAPI
+    url: openapi/autodesk-fusion-issue-attribute-mappings-api-openapi.yml
+  - type: Documentation
+    url: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  - type: Documentation
+    url: >-
+      https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-A92A4B10-3781-4925-94C6-47DA85A4F65A
+  - type: Authentication
+    url: https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics
+  - type: GraphQL
+    url: graphql/autodesk-fusion-graphql.md
+- aid: autodesk-fusion:autodesk-fusion-issue-comments-api
+  name: Autodesk Fusion Issue Comments API
+  description: The Issue Comments API from Autodesk Fusion — 1 operation(s) for issue comments.
+  humanURL: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  baseURL: https://developer.api.autodesk.com
+  tags:
+  - Issue Comments
+  properties:
+  - type: OpenAPI
+    url: openapi/autodesk-fusion-issue-comments-api-openapi.yml
+  - type: Documentation
+    url: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  - type: Documentation
+    url: >-
+      https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-A92A4B10-3781-4925-94C6-47DA85A4F65A
+  - type: Authentication
+    url: https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics
+  - type: GraphQL
+    url: graphql/autodesk-fusion-graphql.md
+- aid: autodesk-fusion:autodesk-fusion-issue-root-cause-categories-api
+  name: Autodesk Fusion Issue Root Cause Categories API
+  description: >-
+    The Issue Root Cause Categories API from Autodesk Fusion — 1 operation(s) for issue root cause categories.
+  humanURL: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  baseURL: https://developer.api.autodesk.com
+  tags:
+  - Issue Root Cause Categories
+  properties:
+  - type: OpenAPI
+    url: openapi/autodesk-fusion-issue-root-cause-categories-api-openapi.yml
+  - type: Documentation
+    url: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  - type: Documentation
+    url: >-
+      https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-A92A4B10-3781-4925-94C6-47DA85A4F65A
+  - type: Authentication
+    url: https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics
+  - type: GraphQL
+    url: graphql/autodesk-fusion-graphql.md
+- aid: autodesk-fusion:autodesk-fusion-issue-types-api
+  name: Autodesk Fusion Issue Types API
+  description: The Issue Types API from Autodesk Fusion — 1 operation(s) for issue types.
+  humanURL: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  baseURL: https://developer.api.autodesk.com
+  tags:
+  - Issue Types
+  properties:
+  - type: OpenAPI
+    url: openapi/autodesk-fusion-issue-types-api-openapi.yml
+  - type: Documentation
+    url: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  - type: Documentation
+    url: >-
+      https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-A92A4B10-3781-4925-94C6-47DA85A4F65A
+  - type: Authentication
+    url: https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics
+  - type: GraphQL
+    url: graphql/autodesk-fusion-graphql.md
+- aid: autodesk-fusion:autodesk-fusion-issues-api
+  name: Autodesk Fusion Issues API
+  description: The Issues API from Autodesk Fusion — 2 operation(s) for issues.
+  humanURL: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  baseURL: https://developer.api.autodesk.com
+  tags:
+  - Issues
+  properties:
+  - type: OpenAPI
+    url: openapi/autodesk-fusion-issues-api-openapi.yml
+  - type: Documentation
+    url: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  - type: Documentation
+    url: >-
+      https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-A92A4B10-3781-4925-94C6-47DA85A4F65A
+  - type: Authentication
+    url: https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics
+  - type: GraphQL
+    url: graphql/autodesk-fusion-graphql.md
+- aid: autodesk-fusion:autodesk-fusion-issues-profile-api
+  name: Autodesk Fusion Issues Profile API
+  description: The Issues Profile API from Autodesk Fusion — 1 operation(s) for issues profile.
+  humanURL: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  baseURL: https://developer.api.autodesk.com
+  tags:
+  - Issues Profile
+  properties:
+  - type: OpenAPI
+    url: openapi/autodesk-fusion-issues-profile-api-openapi.yml
+  - type: Documentation
+    url: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  - type: Documentation
+    url: >-
+      https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-A92A4B10-3781-4925-94C6-47DA85A4F65A
+  - type: Authentication
+    url: https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics
+  - type: GraphQL
+    url: graphql/autodesk-fusion-graphql.md
+- aid: autodesk-fusion:autodesk-fusion-items-api
+  name: Autodesk Fusion Items API
+  description: The Items API from Autodesk Fusion — 8 operation(s) for items.
+  humanURL: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  baseURL: https://developer.api.autodesk.com
+  tags:
+  - Items
+  properties:
+  - type: OpenAPI
+    url: openapi/autodesk-fusion-items-api-openapi.yml
+  - type: Documentation
+    url: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  - type: Documentation
+    url: >-
+      https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-A92A4B10-3781-4925-94C6-47DA85A4F65A
+  - type: Authentication
+    url: https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics
+  - type: GraphQL
+    url: graphql/autodesk-fusion-graphql.md
+- aid: autodesk-fusion:autodesk-fusion-jobs-api
+  name: Autodesk Fusion Jobs API
+  description: The Jobs API from Autodesk Fusion — 2 operation(s) for jobs.
+  humanURL: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  baseURL: https://developer.api.autodesk.com
+  tags:
+  - Jobs
+  properties:
+  - type: OpenAPI
+    url: openapi/autodesk-fusion-jobs-api-openapi.yml
+  - type: Documentation
+    url: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  - type: Documentation
+    url: >-
+      https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-A92A4B10-3781-4925-94C6-47DA85A4F65A
+  - type: Authentication
+    url: https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics
+  - type: GraphQL
+    url: graphql/autodesk-fusion-graphql.md
+- aid: autodesk-fusion:autodesk-fusion-key-management-api
+  name: Autodesk Fusion Key Management API
+  description: The Key Management API from Autodesk Fusion — 2 operation(s) for key management.
+  humanURL: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  baseURL: https://developer.api.autodesk.com
+  tags:
+  - Key Management
+  properties:
+  - type: OpenAPI
+    url: openapi/autodesk-fusion-key-management-api-openapi.yml
+  - type: Documentation
+    url: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  - type: Documentation
+    url: >-
+      https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-A92A4B10-3781-4925-94C6-47DA85A4F65A
+  - type: Authentication
+    url: https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics
+  - type: GraphQL
+    url: graphql/autodesk-fusion-graphql.md
+- aid: autodesk-fusion:autodesk-fusion-manifest-api
+  name: Autodesk Fusion Manifest API
+  description: The Manifest API from Autodesk Fusion — 1 operation(s) for manifest.
+  humanURL: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  baseURL: https://developer.api.autodesk.com
+  tags:
+  - Manifest
+  properties:
+  - type: OpenAPI
+    url: openapi/autodesk-fusion-manifest-api-openapi.yml
+  - type: Documentation
+    url: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  - type: Documentation
+    url: >-
+      https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-A92A4B10-3781-4925-94C6-47DA85A4F65A
+  - type: Authentication
+    url: https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics
+  - type: GraphQL
+    url: graphql/autodesk-fusion-graphql.md
+- aid: autodesk-fusion:autodesk-fusion-metadata-api
+  name: Autodesk Fusion Metadata API
+  description: The Metadata API from Autodesk Fusion — 4 operation(s) for metadata.
+  humanURL: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  baseURL: https://developer.api.autodesk.com
+  tags:
+  - Metadata
+  properties:
+  - type: OpenAPI
+    url: openapi/autodesk-fusion-metadata-api-openapi.yml
+  - type: Documentation
+    url: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  - type: Documentation
+    url: >-
+      https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-A92A4B10-3781-4925-94C6-47DA85A4F65A
+  - type: Authentication
+    url: https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics
+  - type: GraphQL
+    url: graphql/autodesk-fusion-graphql.md
+- aid: autodesk-fusion:autodesk-fusion-objects-api
+  name: Autodesk Fusion Objects API
+  description: Object related operations
+  humanURL: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  baseURL: https://developer.api.autodesk.com
+  tags:
+  - Objects
+  properties:
+  - type: OpenAPI
+    url: openapi/autodesk-fusion-objects-api-openapi.yml
+  - type: Documentation
+    url: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  - type: Documentation
+    url: >-
+      https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-A92A4B10-3781-4925-94C6-47DA85A4F65A
+  - type: Authentication
+    url: https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics
+  - type: GraphQL
+    url: graphql/autodesk-fusion-graphql.md
+- aid: autodesk-fusion:autodesk-fusion-project-users-api
+  name: Autodesk Fusion Project Users API
+  description: The Project Users API from Autodesk Fusion — 3 operation(s) for project users.
+  humanURL: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  baseURL: https://developer.api.autodesk.com
+  tags:
+  - Project Users
+  properties:
+  - type: OpenAPI
+    url: openapi/autodesk-fusion-project-users-api-openapi.yml
+  - type: Documentation
+    url: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  - type: Documentation
+    url: >-
+      https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-A92A4B10-3781-4925-94C6-47DA85A4F65A
+  - type: Authentication
+    url: https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics
+  - type: GraphQL
+    url: graphql/autodesk-fusion-graphql.md
+- aid: autodesk-fusion:autodesk-fusion-projects-api
+  name: Autodesk Fusion Projects API
+  description: The Projects API from Autodesk Fusion — 11 operation(s) for projects.
+  humanURL: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  baseURL: https://developer.api.autodesk.com
+  tags:
+  - Projects
+  properties:
+  - type: OpenAPI
+    url: openapi/autodesk-fusion-projects-api-openapi.yml
+  - type: Documentation
+    url: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  - type: Documentation
+    url: >-
+      https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-A92A4B10-3781-4925-94C6-47DA85A4F65A
+  - type: Authentication
+    url: https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics
+  - type: GraphQL
+    url: graphql/autodesk-fusion-graphql.md
+- aid: autodesk-fusion:autodesk-fusion-thumbnails-api
+  name: Autodesk Fusion Thumbnails API
+  description: The Thumbnails API from Autodesk Fusion — 1 operation(s) for thumbnails.
+  humanURL: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  baseURL: https://developer.api.autodesk.com
+  tags:
+  - Thumbnails
+  properties:
+  - type: OpenAPI
+    url: openapi/autodesk-fusion-thumbnails-api-openapi.yml
+  - type: Documentation
+    url: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  - type: Documentation
+    url: >-
+      https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-A92A4B10-3781-4925-94C6-47DA85A4F65A
+  - type: Authentication
+    url: https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics
+  - type: GraphQL
+    url: graphql/autodesk-fusion-graphql.md
+- aid: autodesk-fusion:autodesk-fusion-token-api
+  name: Autodesk Fusion Token API
+  description: The Token API from Autodesk Fusion — 7 operation(s) for token.
+  humanURL: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  baseURL: https://developer.api.autodesk.com
+  tags:
+  - Token
+  properties:
+  - type: OpenAPI
+    url: openapi/autodesk-fusion-token-api-openapi.yml
+  - type: Documentation
+    url: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  - type: Documentation
+    url: >-
+      https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-A92A4B10-3781-4925-94C6-47DA85A4F65A
+  - type: Authentication
+    url: https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics
+  - type: GraphQL
+    url: graphql/autodesk-fusion-graphql.md
+- aid: autodesk-fusion:autodesk-fusion-tokens-api
+  name: Autodesk Fusion Tokens API
+  description: The Tokens API from Autodesk Fusion — 2 operation(s) for tokens.
+  humanURL: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  baseURL: https://developer.api.autodesk.com
+  tags:
+  - Tokens
+  properties:
+  - type: OpenAPI
+    url: openapi/autodesk-fusion-tokens-api-openapi.yml
+  - type: Documentation
+    url: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  - type: Documentation
+    url: >-
+      https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-A92A4B10-3781-4925-94C6-47DA85A4F65A
+  - type: Authentication
+    url: https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics
+  - type: GraphQL
+    url: graphql/autodesk-fusion-graphql.md
+- aid: autodesk-fusion:autodesk-fusion-user-projects-api
+  name: Autodesk Fusion User Projects API
+  description: The User Projects API from Autodesk Fusion — 1 operation(s) for user projects.
+  humanURL: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  baseURL: https://developer.api.autodesk.com
+  tags:
+  - User Projects
+  properties:
+  - type: OpenAPI
+    url: openapi/autodesk-fusion-user-projects-api-openapi.yml
+  - type: Documentation
+    url: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  - type: Documentation
+    url: >-
+      https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-A92A4B10-3781-4925-94C6-47DA85A4F65A
+  - type: Authentication
+    url: https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics
+  - type: GraphQL
+    url: graphql/autodesk-fusion-graphql.md
+- aid: autodesk-fusion:autodesk-fusion-users-api
+  name: Autodesk Fusion Users API
+  description: The Users API from Autodesk Fusion — 1 operation(s) for users.
+  humanURL: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  baseURL: https://developer.api.autodesk.com
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/autodesk-fusion-users-api-openapi.yml
+  - type: Documentation
+    url: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  - type: Documentation
+    url: >-
+      https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-A92A4B10-3781-4925-94C6-47DA85A4F65A
+  - type: Authentication
+    url: https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics
+  - type: GraphQL
+    url: graphql/autodesk-fusion-graphql.md
+- aid: autodesk-fusion:autodesk-fusion-versions-api
+  name: Autodesk Fusion Versions API
+  description: The Versions API from Autodesk Fusion — 8 operation(s) for versions.
+  humanURL: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  baseURL: https://developer.api.autodesk.com
+  tags:
+  - Versions
+  properties:
+  - type: OpenAPI
+    url: openapi/autodesk-fusion-versions-api-openapi.yml
+  - type: Documentation
+    url: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
+  - type: Documentation
+    url: >-
+      https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-A92A4B10-3781-4925-94C6-47DA85A4F65A
+  - type: Authentication
+    url: https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics
+  - type: GraphQL
+    url: graphql/autodesk-fusion-graphql.md
 common:
 - type: AgenticAccess
   url: agentic-access/autodesk-fusion-agentic-access.yml
