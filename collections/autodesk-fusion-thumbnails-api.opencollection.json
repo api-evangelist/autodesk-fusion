@@ -1,0 +1,75 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Construction.Account.Admin Account Management Thumbnails API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "client_credentials",
+      "accessTokenUrl": "",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Thumbnails",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fetch Thumbnail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developer.api.autodesk.com/modelderivative/v2/designdata/:urn/thumbnail",
+            "headers": [
+              {
+                "name": "region",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "urn",
+                "value": "",
+                "type": "path",
+                "description": "The URL-safe Base64 encoded URN of the source design."
+              },
+              {
+                "name": "width",
+                "value": "",
+                "type": "query",
+                "description": "Width of thumbnail in pixels.  Possible values are: ``100``, ``200``, ``400``  If ``width`` is omitted, but ``height`` is specified, ``width`` defaults to ``height``. If both ``width`` and ``height`` are omitted, the server will return a thumbnail closest to ``200``, if such a thumbnail is available."
+              },
+              {
+                "name": "height",
+                "value": "",
+                "type": "query",
+                "description": "Height of thumbnails. Possible values are: ``100``, ``200``, ``400``.If ``height`` is omitted, but ``width`` is specified, ``height`` defaults to ``width``.  If both ``width`` and ``height`` are omitted, the server will return a thumbnail closest to ``200``, if such a thumbnail is available"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Downloads a thumbnail of the specified source design."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

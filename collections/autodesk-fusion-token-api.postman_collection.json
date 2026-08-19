@@ -1,0 +1,939 @@
+{
+  "item": [
+    {
+      "id": "348691c0-e2fb-49ce-8269-ed490509756c",
+      "name": "Token",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6bcbf25d-7501-48c8-b080-d07d19eab520",
+          "name": "Authorize User",
+          "request": {
+            "name": "Authorize User",
+            "description": {
+              "content": "Returns a browser URL to redirect an end user in order to acquire the user’s consent to authorize the application to access resources on their behalf.\n\nInvoking this operation is the first step in authenticating users and retrieving an authorization code grant. The authorization code that is generated remains valid for 5 minutes, while the ID token stays valid for 60 minutes. Any access tokens you obtain are valid for 60 minutes, and refresh tokens remain valid for 15 days.\n\nThis operation has a rate limit of 500 calls per minute.\n\n**Note:** This operation is intended for use with client-side applications only. It is not suitable for server-side applications.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "authentication",
+                "v2",
+                "authorize"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "client_id",
+                  "value": "<string>",
+                  "description": "(Required) The Client ID of the calling application, as registered with APS."
+                },
+                {
+                  "disabled": false,
+                  "key": "response_type",
+                  "value": "<string>",
+                  "description": "(Required) The type of response you want to receive. Possible values are: \n\n-  ``code`` - Authorization code grant.\n-  ``id_token`` - OpenID Connect ID token.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "redirect_uri",
+                  "value": "<string>",
+                  "description": "(Required) The URI that APS redirects users to after they grant or deny access permission to the application. Must match the Callback URL for the application as registered with APS.\n\nMust be specified as a URL-safe string. It can include query parameters or any other valid URL construct.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "nonce",
+                  "value": "<string>",
+                  "description": "A random string that is sent with the request. APS passes back the same string to you so that you can verify whether you received the same string that you sent. This check mitigates token replay attacks"
+                },
+                {
+                  "disabled": false,
+                  "key": "state",
+                  "value": "<string>",
+                  "description": "A URL-encoded random string. The authorization flow will pass the same string back to the Callback URL using the ``state`` query string parameter. This process helps ensure that the callback you receive is a response to what you originally requested. It prevents malicious actors from forging requests.\n\nThe string can only contain alphanumeric characters, commas, periods, underscores, and hyphens.            \n"
+                },
+                {
+                  "disabled": false,
+                  "key": "scope",
+                  "value": "<string>",
+                  "description": "(Required) A URL-encoded space-delimited list of requested scopes. See the `Developer's Guide documentation on scopes </en/docs/oauth/v2/developers_guide/scopes/>`_ for a list of valid values you can provide.\n\nThe string you specify for this parameter must not exceed 2000 characters and it cannot contain more than 50 scopes.  "
+                },
+                {
+                  "disabled": false,
+                  "key": "response_mode",
+                  "value": "<string>",
+                  "description": "Specifies how the authorization response should be returned. Valid values are:\n\n- ``fragment`` - Encode the response parameters in the fragment of the redirect URI. A fragment in a URI is the optional part of the URI that appears after a ``#`` symbol, which refers to a specific section within a resource. For example, ``section`` in ``https://www.mysite.org/myresource#section``.\n- ``form_post`` - Embed the authorization response parameter in an HTML form.\n- ``query`` -  Embed the authorization response as a query string parameter of the redirect URI. \n\nIf ``id_token`` is stated as ``response_type``,  only ``form_post`` is allowed as ``response_mode``.'\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "prompt",
+                  "value": "<string>",
+                  "description": "Specifies how to prompt users for authentication. Possible values are: \n\n- ``login`` : Always prompt the user for authentication, regardless of the state of the login session. \n\n**Note:** If you do not specify this parameter, the system will not prompt the user for authentication as long as a login session is active. If a login session is not active, the system will prompt the user for authentication.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "authoptions",
+                  "value": "<string>",
+                  "description": "A JSON object containing options that specify how to display the sign-in page. Refer the `Developer's Guide documentation on AuthOptions </en/docs/oauth/v2/developers_guide/authoptions/>`_ for supported values."
+                },
+                {
+                  "disabled": false,
+                  "key": "code_challenge",
+                  "value": "<string>",
+                  "description": "A URL-encoded string derived from the code verifier sent in the authorization request with the Proof Key for Code Exchange (PKCE) grant flow."
+                },
+                {
+                  "disabled": false,
+                  "key": "code_challenge_method",
+                  "value": "<string>",
+                  "description": "The method used to derive the code challenge for the PKCE grant flow. Possible value is:\n\n- ``S256``- Hashes the code verifier using the SHA-256 algorithm and then applies Base64 URL encoding.\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a90aeaae-81f7-44fb-b58d-802a4fa5d137",
+              "name": "Successfully redirected to the redirect URI.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authentication",
+                    "v2",
+                    "authorize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "client_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "response_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "redirect_uri",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "nonce",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "scope",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "response_mode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "prompt",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "authoptions",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "code_challenge",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "code_challenge_method",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Found",
+              "code": 302,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3286c0b1-5ff6-4d19-a20d-11a6aa87fa87",
+          "name": "Revoke Token",
+          "request": {
+            "name": "Revoke Token",
+            "description": {
+              "content": "Revokes an active access token or refresh token.\n\nAn application can only revoke its own tokens.\n\nThis operation has a rate limit of 100 calls per minute.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "authentication",
+                "v2",
+                "revoke"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "token",
+                  "value": "<string>",
+                  "description": "(Required) The token to be revoked. \n"
+                },
+                {
+                  "disabled": false,
+                  "key": "token_type_hint",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "client_id",
+                  "value": "<string>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "88528e39-040c-40d8-9833-8b096888fc92",
+              "name": "The token was successfully revoked. This operation has no response body.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authentication",
+                    "v2",
+                    "revoke"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Must be ``Bearer <BASE64_ENCODED_STRING>`` where ``<BASE64_ENCODED_STRING>`` is the Base64 encoding of the concatenated string ``<CLIENT_ID>:<CLIENT_SECRET>``.'\n\n**Note** This header is required only for Traditional Web Apps and Server-to-Server Apps. It is not required for Desktop, Mobile, and Single-Page Apps.\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The token to be revoked. \n",
+                        "type": "text/plain"
+                      },
+                      "key": "token",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "token_type_hint",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "client_id",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "08024390-0593-46d5-b71a-d4b081241dbd",
+          "name": "Get JWKS",
+          "request": {
+            "name": "Get JWKS",
+            "description": {
+              "content": "Returns a set of public keys in the JSON Web Key Set (JWKS) format.\n\nPublic keys returned by this operation can be used to validate the asymmetric JWT signature of an access token without making network calls. It can be used to validate both two-legged access tokens and three-legged access tokens. \n\nSee the Developer's Guide topic on `Asymmetric Signing </en/docs/oauth/v2/developers_guide/asymmetric-encryption/>`_ for more information. \n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "authentication",
+                "v2",
+                "keys"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2de810fa-3b4e-4147-ae2b-9f6c1fa95936",
+              "name": " A set of public keys in the JWKS format was returned successfully. ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authentication",
+                    "v2",
+                    "keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"keys\": [\n    {\n      \"kid\": \"BMSYB0FZTBBA5EqqoF2g3CLYMuI5zEjl\",\n      \"kty\": \"RSA\",\n      \"use\": \"sig\",\n      \"n\": \"hsCOmpYP17pNmRYgUjEPb3WzXNSvFQ0kmSWzbt2i5HYDkJmzKh7Vwgr5kQz5nQ6QVCFe2Ld30C0-a6Y9y2jolktskE6Chb8gG1bbvFdmH0TMsMLtOhzLOqSTfc8giwpYebJBmlW8BT_NWcdUH9Rk1ct4UPgu1OttzUHNulTG4t6d3X2I6oTndlGkonNPTjvEE9e5x4q38jC56RgWkS9pcdBSqa5vLeA-rGRcUyCDYVgLBaBJdnH-qxSNLbgftDmgDRdzj-sGUxUE85IY6wAadgdDMg0BWtLYwmFZwV38xPDyhSQ-AT3lvxDQMMco50Y7yOjoJf4qJ28XXZ-iNJXwUw\",\n      \"e\": \"AQAB\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5970b61b-0925-4365-b52c-de81a78bb4f3",
+          "name": "Acquire Token",
+          "request": {
+            "name": "Acquire Token",
+            "description": {
+              "content": "Returns an access token or refresh token.\n\n* If `grant_type` is `authorization_code`, returns a 3-legged access token for authorization code grant. \n* If `grant_type` is `client_credentials`, returns a 2-legged access token for client credentials grant.\n* If `grant_type` is `refresh_token`, returns new access token using the refresh token provided in the request.\n\nTraditional Web Apps and Server-to-Server Apps should use the ``Authorization`` header with Basic Authentication for this operation. Desktop, Mobile, and Single-Page Apps should use ``client_id`` in the form body instead.\n\nThis operation has a rate limit of 500 calls per minute.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "authentication",
+                "v2",
+                "token"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "grant_type",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "code",
+                  "value": "<string>",
+                  "description": "The authorization code that was passed to your application when the user granted access permission to your application. It was passed as the ``code`` query parameter to the redirect URI when you called `Authorize User </en/docs/oauth/v2/reference/http/authorize-GET/>`_. \n\nRequired if `grant_type` is ``authorization_code``.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "redirect_uri",
+                  "value": "<string>",
+                  "description": "The URI that APS redirects users to after they grant or deny access permission to the application. Must match the Callback URL for the application registered with APS. \n\nRequired if `grant_type` is ``authorization_code``.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "code_verifier",
+                  "value": "<string>",
+                  "description": "A random URL-encoded string between 43 characters and 128 characters. In a PKCE grant flow, the authentication server uses this string to verify the code challenge that was passed when you called `Authorize User </en/docs/oauth/v2/reference/http/authorize-GET/>`_.  \n\nRequired if ``grant_type`` is `authorization_code` and ``code_challenge`` was specified when you called `Authorize User </en/docs/oauth/v2/reference/http/authorize-GET/>`_.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "refresh_token",
+                  "value": "<string>",
+                  "description": "The refresh token used to acquire a new access token and a refresh token.\n\nRequired if ``grant_type`` is ``refresh_token``.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "scope",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "client_id",
+                  "value": "<string>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "7e6eeec9-551d-4da4-a4b2-5df23860574f",
+              "name": "An access token was successfully returned.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authentication",
+                    "v2",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Must be ``Bearer <BASE64_ENCODED_STRING>`` where ``<BASE64_ENCODED_STRING>`` is the Base64 encoding of the concatenated string ``<CLIENT_ID>:<CLIENT_SECRET>``.'\n\n**Note** This header is required only for Traditional Web Apps and Server-to-Server Apps. It is not required for Desktop, Mobile, and Single-Page Apps.\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "grant_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The authorization code that was passed to your application when the user granted access permission to your application. It was passed as the ``code`` query parameter to the redirect URI when you called `Authorize User </en/docs/oauth/v2/reference/http/authorize-GET/>`_. \n\nRequired if `grant_type` is ``authorization_code``.\n",
+                        "type": "text/plain"
+                      },
+                      "key": "code",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The URI that APS redirects users to after they grant or deny access permission to the application. Must match the Callback URL for the application registered with APS. \n\nRequired if `grant_type` is ``authorization_code``.\n",
+                        "type": "text/plain"
+                      },
+                      "key": "redirect_uri",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "A random URL-encoded string between 43 characters and 128 characters. In a PKCE grant flow, the authentication server uses this string to verify the code challenge that was passed when you called `Authorize User </en/docs/oauth/v2/reference/http/authorize-GET/>`_.  \n\nRequired if ``grant_type`` is `authorization_code` and ``code_challenge`` was specified when you called `Authorize User </en/docs/oauth/v2/reference/http/authorize-GET/>`_.\n",
+                        "type": "text/plain"
+                      },
+                      "key": "code_verifier",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The refresh token used to acquire a new access token and a refresh token.\n\nRequired if ``grant_type`` is ``refresh_token``.\n",
+                        "type": "text/plain"
+                      },
+                      "key": "refresh_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "scope",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "client_id",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3bc62d6d-2482-458e-8b8f-af20c1d126dc",
+          "name": "Introspect Token",
+          "request": {
+            "name": "Introspect Token",
+            "description": {
+              "content": "Returns metadata about the specified access token or reference token.\n\nAn application can only introspect its own tokens.\n\nThis operation has a rate limit of 500 calls per minute.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "authentication",
+                "v2",
+                "introspect"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "token",
+                  "value": "<string>",
+                  "description": "The token to be introspected."
+                },
+                {
+                  "disabled": false,
+                  "key": "client_id",
+                  "value": "<string>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "cda8b21e-72b3-4c76-aea1-e193ed64631c",
+              "name": "Metadata was successfully returned.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authentication",
+                    "v2",
+                    "introspect"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Must be ``Bearer <BASE64_ENCODED_STRING>`` where ``<BASE64_ENCODED_STRING>`` is the Base64 encoding of the concatenated string ``<CLIENT_ID>:<CLIENT_SECRET>``.'\n\n**Note** This header is required only for Traditional Web Apps and Server-to-Server Apps. It is not required for Desktop, Mobile, and Single-Page Apps.\n",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The token to be introspected.",
+                        "type": "text/plain"
+                      },
+                      "key": "token",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "client_id",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"active\": true,\n  \"client_id\": \"string\",\n  \"exp\": 3832,\n  \"scope\": \"string\",\n  \"userid\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d3bccbf0-1513-4a96-90bd-95a268d13fbc",
+          "name": "Get OIDC Specification",
+          "request": {
+            "name": "Get OIDC Specification",
+            "description": {
+              "content": "Returns an OpenID Connect Discovery Specification compliant JSON document. It contains a list of the OpenID/OAuth endpoints, supported scopes, claims, public keys used to sign the tokens, and other details.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ".well-known",
+                "openid-configuration"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9991fc43-3d6f-46ca-9e15-06a644fe5165",
+              "name": "The OIDC specification was successfully returned.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ".well-known",
+                    "openid-configuration"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"issuer\": \"string\",\n  \"authorization_endpoint\": \"string\",\n  \"token_endpoint\": \"string\",\n  \"userinfo_endpoint\": \"string\",\n  \"jwks_uri\": \"string\",\n  \"revoke_endpoint\": \"string\",\n  \"introspection_endpoint\": \"string\",\n  \"scopes_supported\": [\n    \"string\",\n    \"string\"\n  ],\n  \"response_types_supported\": [\n    \"string\",\n    \"string\"\n  ],\n  \"response_modes_supported\": [\n    \"string\",\n    \"string\"\n  ],\n  \"grant_types_supported\": [\n    \"string\",\n    \"string\"\n  ],\n  \"subject_types_supported\": [\n    \"string\",\n    \"string\"\n  ],\n  \"id_token_signing_alg_values_supported\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a365b548-c61c-44e6-83a8-7bd3ba6c0316",
+          "name": "Logout",
+          "request": {
+            "name": "Logout",
+            "description": {
+              "content": "Signs out the currently authenticated user from the APS authorization server. Thereafter, this operation redirects the user to the ``post_logout_redirect_uri``, or to the Autodesk Sign-in page when no ``post_logout_redirect_uri`` is provided.\n\nThis operation has a rate limit of 500 calls per minute.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "authentication",
+                "v2",
+                "logout"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "post_logout_redirect_uri",
+                  "value": "<string>",
+                  "description": "The URI to redirect your users to once logout is performed. If you do not specify this parameter your users are redirected to the Autodesk Sign-in page. \n\n**Note:**  You must provide a redirect URI that is pre-registered with APS. This precaution is taken to prevent unauthorized applications from hijacking the logout process.\n"
+                }
+              ],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "dccf77ff-12e7-4fd4-9734-992e9e8d3b94",
+              "name": "The user was successfully logged out.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authentication",
+                    "v2",
+                    "logout"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "post_logout_redirect_uri",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Found",
+              "code": 302,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://developer.api.autodesk.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "grant_type",
+        "value": "client_credentials"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "e9b04e5e-dde9-4058-8a1e-e4b341426ac2",
+    "name": "Construction.Account.Admin Account Management Token API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Account Admin API automates creating and managing projects, assigning and managing project users, and managing member and partner company directories. You can also synchronize data with external systems.\n\n\nContact Support:\n Name: Autodesk Plaform Services\n Email: aps.help@autodesk.com",
+      "type": "text/plain"
+    }
+  }
+}

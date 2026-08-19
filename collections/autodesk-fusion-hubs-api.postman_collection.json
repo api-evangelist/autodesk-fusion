@@ -1,0 +1,657 @@
+{
+  "item": [
+    {
+      "id": "a98bd390-7d70-4084-8c90-40f5e79ba6b1",
+      "name": "Hubs",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "55b38fb5-0832-447c-8ef2-cc0d27021fdb",
+          "name": "List Hubs",
+          "request": {
+            "name": "List Hubs",
+            "description": {
+              "content": "Returns a collection of hubs that the user of your app can access.\n\nThe returned hubs can be BIM 360 Team hubs, Fusion Team hubs (formerly known as A360 Team hubs), A360 Personal hubs, ACC Docs (Autodesk Docs) accounts, or BIM 360 Docs accounts. Only active hubs are returned.\n\nFor BIM 360 Docs and ACC Docs, a hub ID corresponds to an Account ID. To convert a BIM 360 or ACC Account ID to a hub ID, prefix the Account ID with ``b.``. For example, an Account ID of ```c8b0c73d-3ae9``` translates to a hub ID of ``b.c8b0c73d-3ae9``.\n\n**Note:** This operation supports Autodesk Construction Cloud (ACC) Projects. For more information, see the [ACC Platform API documentation](https://en.docs.acc.v1/overview/introduction/). ",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "project",
+                "v1",
+                "hubs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "filter[id]",
+                  "value": "<string>",
+                  "description": "Filter by the ``id`` of the ``ref`` target."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[id]",
+                  "value": "<string>",
+                  "description": "Filter by the ``id`` of the ``ref`` target."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[name]",
+                  "value": "<string>",
+                  "description": "Filter by the ``name`` of the ``ref`` target."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[name]",
+                  "value": "<string>",
+                  "description": "Filter by the ``name`` of the ``ref`` target."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[extension.type]",
+                  "value": "<string>",
+                  "description": "Filter by the extension type. \n"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[extension.type]",
+                  "value": "<string>",
+                  "description": "Filter by the extension type. \n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "In a two-legged authentication context, an app has access to all users specified by the administrator in the SaaS integrations UI. By providing this header, the API call will be limited to act only on behalf of the specified user.",
+                "key": "x-user-id",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "3ea2eb9d-0b7c-434d-b68d-00f584d47d82",
+              "name": "The list of hubs was successfully retrieved.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "project",
+                    "v1",
+                    "hubs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[name]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[name]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[extension.type]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[extension.type]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "In a two-legged authentication context, an app has access to all users specified by the administrator in the SaaS integrations UI. By providing this header, the API call will be limited to act only on behalf of the specified user.",
+                    "key": "x-user-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  },\n  \"links\": {\n    \"self\": {\n      \"href\": \"string\"\n    }\n  },\n  \"data\": [\n    {\n      \"links\": {\n        \"self\": {\n          \"href\": \"string\"\n        }\n      },\n      \"type\": \"hubs\",\n      \"id\": \"string\",\n      \"attributes\": {\n        \"name\": \"string\",\n        \"extension\": {\n          \"type\": \"string\",\n          \"version\": \"string\",\n          \"schema\": {\n            \"href\": \"string\"\n          },\n          \"data\": {\n            \"key_0\": {},\n            \"key_1\": {}\n          }\n        },\n        \"region\": \"GBR\"\n      },\n      \"relationships\": {\n        \"projects\": {\n          \"links\": {\n            \"related\": {\n              \"href\": \"string\"\n            }\n          }\n        },\n        \"pimCollection\": {\n          \"data\": {\n            \"id\": \"string\",\n            \"type\": \"string\"\n          }\n        }\n      }\n    },\n    {\n      \"links\": {\n        \"self\": {\n          \"href\": \"string\"\n        }\n      },\n      \"type\": \"hubs\",\n      \"id\": \"string\",\n      \"attributes\": {\n        \"name\": \"string\",\n        \"extension\": {\n          \"type\": \"string\",\n          \"version\": \"string\",\n          \"schema\": {\n            \"href\": \"string\"\n          },\n          \"data\": {\n            \"key_0\": {},\n            \"key_1\": {}\n          }\n        },\n        \"region\": \"GBR\"\n      },\n      \"relationships\": {\n        \"projects\": {\n          \"links\": {\n            \"related\": {\n              \"href\": \"string\"\n            }\n          }\n        },\n        \"pimCollection\": {\n          \"data\": {\n            \"id\": \"string\",\n            \"type\": \"string\"\n          }\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "03e9c2ea-1f39-4ef7-8fd6-29aa0e77081d",
+              "name": "The supplied Authorization header was not valid or the supplied token scope was not acceptable. Verify Authentication and try again.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "project",
+                    "v1",
+                    "hubs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[name]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[name]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[extension.type]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[extension.type]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "In a two-legged authentication context, an app has access to all users specified by the administrator in the SaaS integrations UI. By providing this header, the API call will be limited to act only on behalf of the specified user.",
+                    "key": "x-user-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "96125471-4617-4154-8e47-7b6f2fccdd15",
+              "name": "The request was successfully validated but permission is not granted, or the application has not been allowed access. Do not try again unless you resolve permissions first.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "project",
+                    "v1",
+                    "hubs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[name]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[name]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[extension.type]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[extension.type]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "In a two-legged authentication context, an app has access to all users specified by the administrator in the SaaS integrations UI. By providing this header, the API call will be limited to act only on behalf of the specified user.",
+                    "key": "x-user-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"jsonapi\": {},\n  \"links\": {},\n  \"meta\": {\n    \"warnings\": [\n      {\n        \"Id\": {},\n        \"HttpStatusCode\": \"string\",\n        \"ErrorCode\": \"string\",\n        \"Title\": \"string\",\n        \"Detail\": \"string\",\n        \"AboutLink\": {},\n        \"Source\": {},\n        \"meta\": {}\n      },\n      {\n        \"Id\": {},\n        \"HttpStatusCode\": \"string\",\n        \"ErrorCode\": \"string\",\n        \"Title\": \"string\",\n        \"Detail\": \"string\",\n        \"AboutLink\": {},\n        \"Source\": {},\n        \"meta\": {}\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b8766ae0-4cc8-49ae-b142-fb78a43880e5",
+          "name": "Get a Hub",
+          "request": {
+            "name": "Get a Hub",
+            "description": {
+              "content": "Returns the hub specified by the ``hub_id`` parameter.\n\nFor BIM 360 Docs, a hub ID corresponds to a BIM 360 account ID. To convert a BIM 360 account ID to a hub ID, prefix the account ID with ``b.``. For example, an account ID of ```c8b0c73d-3ae9``` translates to a hub ID of ``b.c8b0c73d-3ae9``.\n\n**Note:** This operation supports Autodesk Construction Cloud (ACC) Projects. For more information, see the [ACC Platform API documentation](https://en.docs.acc.v1/overview/introduction/). ",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "project",
+                "v1",
+                "hubs",
+                ":hub_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "hub_id",
+                  "description": "(Required) The unique identifier of a hub."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "In a two-legged authentication context, an app has access to all users specified by the administrator in the SaaS integrations UI. By providing this header, the API call will be limited to act only on behalf of the specified user.",
+                "key": "x-user-id",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a4fa027d-7bae-41aa-9f72-27b3d08d44d2",
+              "name": "The hub was successfully retrieved.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "project",
+                    "v1",
+                    "hubs",
+                    ":hub_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "hub_id",
+                      "description": "(Required) The unique identifier of a hub."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "In a two-legged authentication context, an app has access to all users specified by the administrator in the SaaS integrations UI. By providing this header, the API call will be limited to act only on behalf of the specified user.",
+                    "key": "x-user-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  },\n  \"links\": {\n    \"self\": {\n      \"href\": \"string\"\n    }\n  },\n  \"data\": {\n    \"links\": {\n      \"self\": {\n        \"href\": \"string\"\n      }\n    },\n    \"type\": \"hubs\",\n    \"id\": \"string\",\n    \"attributes\": {\n      \"name\": \"string\",\n      \"extension\": {\n        \"type\": \"string\",\n        \"version\": \"string\",\n        \"schema\": {\n          \"href\": \"string\"\n        },\n        \"data\": {\n          \"key_0\": {},\n          \"key_1\": {}\n        }\n      },\n      \"region\": \"CAN\"\n    },\n    \"relationships\": {\n      \"projects\": {\n        \"links\": {\n          \"related\": {\n            \"href\": \"string\"\n          }\n        }\n      },\n      \"pimCollection\": {\n        \"data\": {\n          \"id\": \"string\",\n          \"type\": \"string\"\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3dbce039-a7d3-42e6-84fc-2428ed33e5c3",
+              "name": "The request could not be understood by the server due to malformed syntax or missing request headers. The client SHOULD NOT repeat the request without modifications. The response body may give an indication of what is wrong with the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "project",
+                    "v1",
+                    "hubs",
+                    ":hub_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "hub_id",
+                      "description": "(Required) The unique identifier of a hub."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "In a two-legged authentication context, an app has access to all users specified by the administrator in the SaaS integrations UI. By providing this header, the API call will be limited to act only on behalf of the specified user.",
+                    "key": "x-user-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "16a8addf-330c-4c3a-94b6-ddf902cb4340",
+              "name": "The request was successfully validated but permission is not granted, or the application has not been allowed access. Do not try again unless you resolve permissions first.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "project",
+                    "v1",
+                    "hubs",
+                    ":hub_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "hub_id",
+                      "description": "(Required) The unique identifier of a hub."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "In a two-legged authentication context, an app has access to all users specified by the administrator in the SaaS integrations UI. By providing this header, the API call will be limited to act only on behalf of the specified user.",
+                    "key": "x-user-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"jsonapi\": {},\n  \"links\": {},\n  \"meta\": {\n    \"warnings\": [\n      {\n        \"Id\": {},\n        \"HttpStatusCode\": \"string\",\n        \"ErrorCode\": \"string\",\n        \"Title\": \"string\",\n        \"Detail\": \"string\",\n        \"AboutLink\": {},\n        \"Source\": {},\n        \"meta\": {}\n      },\n      {\n        \"Id\": {},\n        \"HttpStatusCode\": \"string\",\n        \"ErrorCode\": \"string\",\n        \"Title\": \"string\",\n        \"Detail\": \"string\",\n        \"AboutLink\": {},\n        \"Source\": {},\n        \"meta\": {}\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "80232373-3992-4a8d-9c16-575852f6c152",
+              "name": "The specified resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "project",
+                    "v1",
+                    "hubs",
+                    ":hub_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "hub_id",
+                      "description": "(Required) The unique identifier of a hub."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "In a two-legged authentication context, an app has access to all users specified by the administrator in the SaaS integrations UI. By providing this header, the API call will be limited to act only on behalf of the specified user.",
+                    "key": "x-user-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://developer.api.autodesk.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "grant_type",
+        "value": "client_credentials"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "68749b02-dfd7-4460-8a5e-e73e40d354ad",
+    "name": "Construction.Account.Admin Account Management Hubs API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Account Admin API automates creating and managing projects, assigning and managing project users, and managing member and partner company directories. You can also synchronize data with external systems.\n\n\nContact Support:\n Name: Autodesk Plaform Services\n Email: aps.help@autodesk.com",
+      "type": "text/plain"
+    }
+  }
+}

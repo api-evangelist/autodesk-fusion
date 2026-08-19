@@ -1,0 +1,161 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Construction.Account.Admin Account Management API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "client_credentials",
+      "accessTokenUrl": "",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Account Management",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get All Service Accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developer.api.autodesk.com/authentication/v2/service-accounts",
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieves all service accounts associated with an application."
+        },
+        {
+          "info": {
+            "name": "Create Service Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://developer.api.autodesk.com/authentication/v2/service-accounts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Creates a service account. Only a server-to-server application can own service accounts.\n\nAn application can have up to 10 service accounts at any given time.\n\nUpon a successful response, the operation returns the service account ID and email address."
+        },
+        {
+          "info": {
+            "name": "Get Service Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developer.api.autodesk.com/authentication/v2/service-accounts/:serviceAccountId",
+            "params": [
+              {
+                "name": "serviceAccountId",
+                "value": "",
+                "type": "path",
+                "description": "The Autodesk ID of the service account"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieves the details for a service account."
+        },
+        {
+          "info": {
+            "name": "Enable or Disable Service Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://developer.api.autodesk.com/authentication/v2/service-accounts/:serviceAccountId",
+            "params": [
+              {
+                "name": "serviceAccountId",
+                "value": "",
+                "type": "path",
+                "description": "The Autodesk ID of the service account"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Enables or disables a service account.\n\nWhen a service account is in a disabled state, it loses its capability to manage its service account key.\nAssertions signed by the key will be treated as invalid.\n\nThis operation allows enabling a service account that is in a deactivated state."
+        },
+        {
+          "info": {
+            "name": "Delete Service Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://developer.api.autodesk.com/authentication/v2/service-accounts/:serviceAccountId",
+            "params": [
+              {
+                "name": "serviceAccountId",
+                "value": "",
+                "type": "path",
+                "description": "The Autodesk ID of the service account"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Deletes an existing service account. When a service account is deleted, all associated keys will also be deleted."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,92 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Construction.Account.Admin Account Management Issue Types API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "client_credentials",
+      "accessTokenUrl": "",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Issue Types",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Your GET endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developer.api.autodesk.com/construction/issues/v1/projects/:projectId/issue-types",
+            "headers": [
+              {
+                "name": "x-ads-region",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Use include=subtypes to include the types (subtypes) for each category (type)."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Add limit=20 to limit the results count (together with the offset to support pagination)."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Add offset=20 to get partial results (together with the limit to support pagination)."
+              },
+              {
+                "name": "filter[updatedAt]",
+                "value": "",
+                "type": "query",
+                "description": "Retrieves types that were last updated at the specified date and time, in in one of the following URL-encoded formats: YYYY-MM-DDThh:mm:ss.sz or YYYY-MM-DD. Separate multiple values with commas."
+              },
+              {
+                "name": "filter[isActive]",
+                "value": "",
+                "type": "query",
+                "description": "Filter types by status e.g. filter[isActive]=true will only return active types. Default value: undefined (meaning both active & inactive issue type categories will return)."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieves a project’s categories and types."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

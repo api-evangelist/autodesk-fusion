@@ -1,0 +1,525 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Construction.Account.Admin Account Management Items API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "client_credentials",
+      "accessTokenUrl": "",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Items",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get an Item",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developer.api.autodesk.com/data/v1/projects/:project_id/items/:item_id",
+            "headers": [
+              {
+                "name": "x-user-id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of a project. \n\nFor BIM 360 Docs and ACC Docs, a hub ID corresponds to an Account ID. To convert a BIM 360 or ACC Account ID to a hub ID, prefix the Account ID with ``b.``. For example, an Account ID of ```c8b0c73d-3ae9``` translates to a hub ID of ``b.c8b0c73d-3ae9``.\n\nSimilarly, to convert an ACC or BIM 360 project ID to a Data Management project ID prefix the ACC or BIM 360 project ID with ``b.``. For example, a project ID of ``c8b0c73d-3ae9`` translates to a project ID of ``b.c8b0c73d-3ae9``.\n"
+              },
+              {
+                "name": "item_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of an item."
+              },
+              {
+                "name": "includePathInProject",
+                "value": "",
+                "type": "query",
+                "description": "Specify whether to return ``pathInProject`` attribute in response for BIM 360 Docs projects. ``pathInProject`` is the relative path of the item starting from project’s root folder. \n\n- ``true``: Response will include the ``pathInProject`` attribute for BIM 360 Docs projects.  \n- ``false``: (Default) Response will not include ``pathInProject`` attribute for BIM 360 Docs projects.\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieves an item. Items represent Word documents, Fusion 360 design files, drawings, spreadsheets, etc.\n\nThe tip version for the item is included in the included array of the payload.\nTo retrieve multiple items, see the ListItems command.\n\n**Note:** This operation supports Autodesk Construction Cloud (ACC) Projects. For more information, see the [ACC Platform API documentation](https://en.docs.acc.v1/overview/introduction/). "
+        },
+        {
+          "info": {
+            "name": "Update an Item",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://developer.api.autodesk.com/data/v1/projects/:project_id/items/:item_id",
+            "headers": [
+              {
+                "name": "x-user-id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of a project. \n\nFor BIM 360 Docs and ACC Docs, a hub ID corresponds to an Account ID. To convert a BIM 360 or ACC Account ID to a hub ID, prefix the Account ID with ``b.``. For example, an Account ID of ```c8b0c73d-3ae9``` translates to a hub ID of ``b.c8b0c73d-3ae9``.\n\nSimilarly, to convert an ACC or BIM 360 project ID to a Data Management project ID prefix the ACC or BIM 360 project ID with ``b.``. For example, a project ID of ``c8b0c73d-3ae9`` translates to a project ID of ``b.c8b0c73d-3ae9``.\n"
+              },
+              {
+                "name": "item_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of an item."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Updates the ``displayName`` of the specified item. Note that updating the ``displayName`` of an item is not supported for BIM 360 Docs or ACC items.\n\n**Note:** This operation supports Autodesk Construction Cloud (ACC) Projects. For more information, see the [ACC Platform API documentation](https://en.docs.acc.v1/overview/introduction/). "
+        },
+        {
+          "info": {
+            "name": "Get Parent of an Item",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developer.api.autodesk.com/data/v1/projects/:project_id/items/:item_id/parent",
+            "headers": [
+              {
+                "name": "x-user-id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of a project. \n\nFor BIM 360 Docs and ACC Docs, a hub ID corresponds to an Account ID. To convert a BIM 360 or ACC Account ID to a hub ID, prefix the Account ID with ``b.``. For example, an Account ID of ```c8b0c73d-3ae9``` translates to a hub ID of ``b.c8b0c73d-3ae9``.\n\nSimilarly, to convert an ACC or BIM 360 project ID to a Data Management project ID prefix the ACC or BIM 360 project ID with ``b.``. For example, a project ID of ``c8b0c73d-3ae9`` translates to a project ID of ``b.c8b0c73d-3ae9``.\n"
+              },
+              {
+                "name": "item_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of an item."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns the parent folder of the specified item.\n\n**Note:** This operation supports Autodesk Construction Cloud (ACC) Projects. For more information, see the [ACC Platform API documentation](https://en.docs.acc.v1/overview/introduction/). "
+        },
+        {
+          "info": {
+            "name": "List Custom Relationships for an Item",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developer.api.autodesk.com/data/v1/projects/:project_id/items/:item_id/relationships/refs",
+            "headers": [
+              {
+                "name": "x-user-id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of a project. \n\nFor BIM 360 Docs and ACC Docs, a hub ID corresponds to an Account ID. To convert a BIM 360 or ACC Account ID to a hub ID, prefix the Account ID with ``b.``. For example, an Account ID of ```c8b0c73d-3ae9``` translates to a hub ID of ``b.c8b0c73d-3ae9``.\n\nSimilarly, to convert an ACC or BIM 360 project ID to a Data Management project ID prefix the ACC or BIM 360 project ID with ``b.``. For example, a project ID of ``c8b0c73d-3ae9`` translates to a project ID of ``b.c8b0c73d-3ae9``.\n"
+              },
+              {
+                "name": "item_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of an item."
+              },
+              {
+                "name": "filter[type]",
+                "value": "",
+                "type": "query",
+                "description": "Filter by the ``type`` of the ``ref`` target. Supported values include ``folders``, ``items``, and ``versions``."
+              },
+              {
+                "name": "filter[id]",
+                "value": "",
+                "type": "query",
+                "description": "Filter by the ``id`` of the ``ref`` target."
+              },
+              {
+                "name": "filter[refType]",
+                "value": "",
+                "type": "query",
+                "description": "Filter by ``refType``. Possible values: ``derived``, ``dependencies``, ``auxiliary``, ``xrefs``, and ``includes``."
+              },
+              {
+                "name": "filter[direction]",
+                "value": "",
+                "type": "query",
+                "description": "Filter by the direction of the reference. Possible values: ``from`` and ``to``."
+              },
+              {
+                "name": "filter[extension.type]",
+                "value": "",
+                "type": "query",
+                "description": "Filter by the extension type. \n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns the custom relationships that are associated with the specified item. Custom relationships can be established between an item and other resources within the ``data`` domain service (folders, items, and versions).\n\nEach relationship is defined by the ID of the object at the other end of the relationship, together with type, specific reference meta including extension data.\nCallers will typically use a filter parameter to restrict the response to the custom relationship types (``filter[met"
+        },
+        {
+          "info": {
+            "name": "Create a Custom Relationship for an Item",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://developer.api.autodesk.com/data/v1/projects/:project_id/items/:item_id/relationships/refs",
+            "headers": [
+              {
+                "name": "x-user-id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of a project. \n\nFor BIM 360 Docs and ACC Docs, a hub ID corresponds to an Account ID. To convert a BIM 360 or ACC Account ID to a hub ID, prefix the Account ID with ``b.``. For example, an Account ID of ```c8b0c73d-3ae9``` translates to a hub ID of ``b.c8b0c73d-3ae9``.\n\nSimilarly, to convert an ACC or BIM 360 project ID to a Data Management project ID prefix the ACC or BIM 360 project ID with ``b.``. For example, a project ID of ``c8b0c73d-3ae9`` translates to a project ID of ``b.c8b0c73d-3ae9``.\n"
+              },
+              {
+                "name": "item_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of an item."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Creates a custom relationship between an item and another resource within the data domain service (folder, item, or version)."
+        },
+        {
+          "info": {
+            "name": "List Related Resources for an Item",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developer.api.autodesk.com/data/v1/projects/:project_id/items/:item_id/refs",
+            "headers": [
+              {
+                "name": "x-user-id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of a project. \n\nFor BIM 360 Docs and ACC Docs, a hub ID corresponds to an Account ID. To convert a BIM 360 or ACC Account ID to a hub ID, prefix the Account ID with ``b.``. For example, an Account ID of ```c8b0c73d-3ae9``` translates to a hub ID of ``b.c8b0c73d-3ae9``.\n\nSimilarly, to convert an ACC or BIM 360 project ID to a Data Management project ID prefix the ACC or BIM 360 project ID with ``b.``. For example, a project ID of ``c8b0c73d-3ae9`` translates to a project ID of ``b.c8b0c73d-3ae9``.\n"
+              },
+              {
+                "name": "item_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of an item."
+              },
+              {
+                "name": "filter[type]",
+                "value": "",
+                "type": "query",
+                "description": "Filter by the ``type`` of the ``ref`` target. Supported values include ``folders``, ``items``, and ``versions``."
+              },
+              {
+                "name": "filter[id]",
+                "value": "",
+                "type": "query",
+                "description": "Filter by the ``id`` of the ``ref`` target."
+              },
+              {
+                "name": "filter[extension.type]",
+                "value": "",
+                "type": "query",
+                "description": "Filter by the extension type. \n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns the resources (items, folders, and versions) that have a custom relationship with the specified item. Custom relationships can be established between an item and other resources within the data domain service (folders, items, and versions).\n\n\nEach relationship is defined by the ID of the object at the other end of the relationship, together with type, attributes, and relationships links.\nCallers will typically use a filter parameter to restrict the response to the custom relationship typ"
+        },
+        {
+          "info": {
+            "name": "List Relationship Links for an Item",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developer.api.autodesk.com/data/v1/projects/:project_id/items/:item_id/relationships/links",
+            "headers": [
+              {
+                "name": "x-user-id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of a project. \n\nFor BIM 360 Docs and ACC Docs, a hub ID corresponds to an Account ID. To convert a BIM 360 or ACC Account ID to a hub ID, prefix the Account ID with ``b.``. For example, an Account ID of ```c8b0c73d-3ae9``` translates to a hub ID of ``b.c8b0c73d-3ae9``.\n\nSimilarly, to convert an ACC or BIM 360 project ID to a Data Management project ID prefix the ACC or BIM 360 project ID with ``b.``. For example, a project ID of ``c8b0c73d-3ae9`` translates to a project ID of ``b.c8b0c73d-3ae9``.\n"
+              },
+              {
+                "name": "item_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of an item."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns a list of links for the specified item. \n\nCustom relationships can be established between an item and other external resources residing outside the data domain service. A link’s ``href`` attribute defines the target URI to access a resource.\n\n**Note:** This operation supports Autodesk Construction Cloud (ACC) Projects. For more information, see the [ACC Platform API documentation](https://en.docs.acc.v1/overview/introduction/). "
+        },
+        {
+          "info": {
+            "name": "Get Tip Version of an Item",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developer.api.autodesk.com/data/v1/projects/:project_id/items/:item_id/tip",
+            "headers": [
+              {
+                "name": "x-user-id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of a project. \n\nFor BIM 360 Docs and ACC Docs, a hub ID corresponds to an Account ID. To convert a BIM 360 or ACC Account ID to a hub ID, prefix the Account ID with ``b.``. For example, an Account ID of ```c8b0c73d-3ae9``` translates to a hub ID of ``b.c8b0c73d-3ae9``.\n\nSimilarly, to convert an ACC or BIM 360 project ID to a Data Management project ID prefix the ACC or BIM 360 project ID with ``b.``. For example, a project ID of ``c8b0c73d-3ae9`` translates to a project ID of ``b.c8b0c73d-3ae9``.\n"
+              },
+              {
+                "name": "item_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of an item."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns the latest version of the specified item. A project can contain multiple versions of a resource item. The latest version is referred to as the tip version, which is returned by this operation.\n\n**Note:** This operation supports Autodesk Construction Cloud (ACC) Projects. For more information, see the [ACC Platform API documentation](https://en.docs.acc.v1/overview/introduction/). "
+        },
+        {
+          "info": {
+            "name": "List all Versions of an Item",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developer.api.autodesk.com/data/v1/projects/:project_id/items/:item_id/versions",
+            "headers": [
+              {
+                "name": "x-user-id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of a project. \n\nFor BIM 360 Docs and ACC Docs, a hub ID corresponds to an Account ID. To convert a BIM 360 or ACC Account ID to a hub ID, prefix the Account ID with ``b.``. For example, an Account ID of ```c8b0c73d-3ae9``` translates to a hub ID of ``b.c8b0c73d-3ae9``.\n\nSimilarly, to convert an ACC or BIM 360 project ID to a Data Management project ID prefix the ACC or BIM 360 project ID with ``b.``. For example, a project ID of ``c8b0c73d-3ae9`` translates to a project ID of ``b.c8b0c73d-3ae9``.\n"
+              },
+              {
+                "name": "item_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of an item."
+              },
+              {
+                "name": "filter[id]",
+                "value": "",
+                "type": "query",
+                "description": "Filter by the ``id`` of the ``ref`` target."
+              },
+              {
+                "name": "filter[extension.type]",
+                "value": "",
+                "type": "query",
+                "description": "Filter by the extension type. \n"
+              },
+              {
+                "name": "filter[versionNumber]",
+                "value": "",
+                "type": "query",
+                "description": "Filter by versionNumber."
+              },
+              {
+                "name": "page[number]",
+                "value": "",
+                "type": "query",
+                "description": "Specifies what page to return. Page numbers are 0-based (the first page is page 0)."
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the maximum number of elements to return in the page. The default value is 200. The min value is 1. The max value is 200."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Lists all versions of the specified item. A project can contain multiple versions of a resource item.\n\n**Note:** This operation supports Autodesk Construction Cloud (ACC) Projects. For more information, see the [ACC Platform API documentation](https://en.docs.acc.v1/overview/introduction/). "
+        },
+        {
+          "info": {
+            "name": "Create an Item",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://developer.api.autodesk.com/data/v1/projects/:project_id/items",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of a project. \n\nFor BIM 360 Docs and ACC Docs, a hub ID corresponds to an Account ID. To convert a BIM 360 or ACC Account ID to a hub ID, prefix the Account ID with ``b.``. For example, an Account ID of ```c8b0c73d-3ae9``` translates to a hub ID of ``b.c8b0c73d-3ae9``.\n\nSimilarly, to convert an ACC or BIM 360 project ID to a Data Management project ID prefix the ACC or BIM 360 project ID with ``b.``. For example, a project ID of ``c8b0c73d-3ae9`` translates to a project ID of ``b.c8b0c73d-3ae9``.\n"
+              },
+              {
+                "name": "copyFrom",
+                "value": "",
+                "type": "query",
+                "description": "The Version ID (URN) of the version to copy from. \n\n**Note**: This parameter is relevant only for copying files to BIM 360 Docs.\n\nFor information on how to find the URN, see the initial steps of the [Download a File](/en/docs/data/v2/tutorials/download-file/) tutorial.\n\nYou can only copy files to the Plans folder or to subfolders of the Plans folder with an ``item:autodesk.bim360:Document`` item extension type. You can only copy files to the Project Files folder or to subfolders of the Project Files folder with an ``item:autodesk.bim360:File`` item extension type.  \n\nTo verify an item’s extension type, use the [Get an Item](/en/docs/data/v2/reference/http/projects-project_id-items-item_id-GET/) operation, and check the ``attributes.extension.type`` attribute.  \n\nNote that if you copy a file to the Plans folder or to a subfolder of the Plans folder, the copied file inherits the permissions of the source file. For example, if users of your app did not have permission to download files in the source folder, but does have permission to download files in the target folder, they will not be able to download the copied file.  \n\nNote that you cannot copy a file while it is being uploaded, updated, or copied. To verify the current process state of a file, call the [Get an Item](en/docs/data/v2/reference/http/projects-project_id-items-item_id-GET/) operation , and check the ``attributes.extension.data.processState`` attribute.\n"
+              },
+              {
+                "name": "x-user-id",
+                "value": "",
+                "type": "query",
+                "description": "In a two-legged authentication context, the app has access to all users specified by the administrator in the SaaS integrations UI. By providing this header, the API call will be limited to act on behalf of only the user specified.        \n\nNote that for a three-legged OAuth flow or for a two-legged OAuth flow with user impersonation (``x-user-id``), the users of your app must have permission to upload files to the specified parent folder (``data.attributes.relationships.parent.data.id``).\n\nFor copying files, users of your app must have permission to view the source folder. \n\nFor information about managing and verifying folder permissions for BIM 360 Docs, see the section on [Managing Folder Permissions](http://help.autodesk.com/view/BIM360D/ENU/?guid=GUID-2643FEEF-B48A-45A1-B354-797DAD628C37).'\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Creates the first version of a file (item). To create additional versions of an item, use POST versions.\n\nBefore you create the first version of an item, you must create a placeholder for the file, and upload the file to the placeholder. For more details about the workflow, see the tutorial on uploading a file.\n\nThis operation also allows you to create a new item by copying a specific version of an existing item to another folder. The copied version becomes the first version of the new item in t"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

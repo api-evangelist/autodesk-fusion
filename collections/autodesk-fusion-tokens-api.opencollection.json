@@ -1,0 +1,139 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Construction.Account.Admin Account Management Tokens API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "client_credentials",
+      "accessTokenUrl": "",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tokens",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Secret Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://developer.api.autodesk.com/webhooks/v1/tokens",
+            "headers": [
+              {
+                "name": "x-ads-region",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "region",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the geographical location (region) of the server the request must be executed on. This also corresponds to the region where the Webhook data is stored. It is also the location of the server that will make request to your callback URL. Possible values:\n\n- ``US`` - (Default) Data center dedicated to serve the United States region.\n- ``EMEA`` - Data center dedicated to serve the European Union, Middle East, and Africa regions.\n- ``AUS`` - (Beta) Data center dedicated to serve the Australia region.\n- ``CAN`` - Data center dedicated to serve the Canada region.\n- ``DEU`` - Data center dedicated to serve the Germany region.\n- ``IND`` - Data center dedicated to serve the India region.\n- ``JPN`` - Data center dedicated to serve the Japan region.\n- ``GBR`` - Data center dedicated to serve the United Kingdom region.\n\n**Note:** \n\n1. Beta features are subject to change. Please avoid using them in production environments.\n2. You can also use the ``x-ads-region`` header to specify the region. If you specify the ``region`` query string parameter as well as the ``x-ads-region`` header, the ``x-ads-region`` header takes precedence.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Sets a secret token to verify the authenticity of webhook payloads. \n\nWhen a webhook event occurs, the service calculates a hash signature using the token and includes it in the event notification. The receiving application listening at the callback URL can verify the payload's integrity by comparing the calculated signature to the one received.\n\nThe webhooks affected by this operation are determined by the type of access token you use.\n\n- Two-legged Access Token: Sets the secret token for all w"
+        },
+        {
+          "info": {
+            "name": "Update Secret Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://developer.api.autodesk.com/webhooks/v1/tokens/@me",
+            "headers": [
+              {
+                "name": "x-ads-region",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "region",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the geographical location (region) of the server the request must be executed on. This also corresponds to the region where the Webhook data is stored. It is also the location of the server that will make request to your callback URL. Possible values:\n\n- ``US`` - (Default) Data center dedicated to serve the United States region.\n- ``EMEA`` - Data center dedicated to serve the European Union, Middle East, and Africa regions.\n- ``AUS`` - (Beta) Data center dedicated to serve the Australia region.\n- ``CAN`` - Data center dedicated to serve the Canada region.\n- ``DEU`` - Data center dedicated to serve the Germany region.\n- ``IND`` - Data center dedicated to serve the India region.\n- ``JPN`` - Data center dedicated to serve the Japan region.\n- ``GBR`` - Data center dedicated to serve the United Kingdom region.\n\n**Note:** \n\n1. Beta features are subject to change. Please avoid using them in production environments.\n2. You can also use the ``x-ads-region`` header to specify the region. If you specify the ``region`` query string parameter as well as the ``x-ads-region`` header, the ``x-ads-region`` header takes precedence.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Replaces an existing secret token with a new one. \n\nNote that there can be a delay of up to 10 minutes while the change takes effect. We recommend that your callback accept both secret token values for a period of time to allow all requests to go through.\n\nThe webhooks affected by this operation are determined by the type of access token you use.\n\n- Two-legged Access Token: Sets the secret token for all webhooks owned by calling the app.\n- Three-legged Access Token: Sets the secrety token for al"
+        },
+        {
+          "info": {
+            "name": "Delete Secret Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://developer.api.autodesk.com/webhooks/v1/tokens/@me",
+            "headers": [
+              {
+                "name": "x-ads-region",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "region",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the geographical location (region) of the server the request must be executed on. This also corresponds to the region where the Webhook data is stored. It is also the location of the server that will make request to your callback URL. Possible values:\n\n- ``US`` - (Default) Data center dedicated to serve the United States region.\n- ``EMEA`` - Data center dedicated to serve the European Union, Middle East, and Africa regions.\n- ``AUS`` - (Beta) Data center dedicated to serve the Australia region.\n- ``CAN`` - Data center dedicated to serve the Canada region.\n- ``DEU`` - Data center dedicated to serve the Germany region.\n- ``IND`` - Data center dedicated to serve the India region.\n- ``JPN`` - Data center dedicated to serve the Japan region.\n- ``GBR`` - Data center dedicated to serve the United Kingdom region.\n\n**Note:** \n\n1. Beta features are subject to change. Please avoid using them in production environments.\n2. You can also use the ``x-ads-region`` header to specify the region. If you specify the ``region`` query string parameter as well as the ``x-ads-region`` header, the ``x-ads-region`` header takes precedence.\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Removes an existing secret token from the webhooks impacted by this operation. \n\nThe webhooks affected by this operation are determined by the type of access token you use.\n\n- Two-legged Access Token: Sets the secret token for all webhooks owned by calling the app.\n- Three-legged Access Token: Sets the secrety token for all webhooks owned by the calling user\n\nNote that there can be a delay of up to 10 minutes while the change takes effect. We recommend that your callback accept both secret token"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

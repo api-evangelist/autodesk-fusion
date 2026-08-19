@@ -1,0 +1,787 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Construction.Account.Admin Account Management Objects API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "client_credentials",
+      "accessTokenUrl": "",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Objects",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Delete Object",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://developer.api.autodesk.com/oss/v2/buckets/:bucketKey/objects/:objectKey",
+            "params": [
+              {
+                "name": "bucketKey",
+                "value": "",
+                "type": "path",
+                "description": "The bucket key of the bucket that contains the objects you are operating on."
+              },
+              {
+                "name": "objectKey",
+                "value": "",
+                "type": "path",
+                "description": "The URL-encoded human friendly name of the object."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Deletes an object from the bucket."
+        },
+        {
+          "info": {
+            "name": "List Objects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developer.api.autodesk.com/oss/v2/buckets/:bucketKey/objects",
+            "params": [
+              {
+                "name": "bucketKey",
+                "value": "",
+                "type": "path",
+                "description": "The bucket key of the bucket that contains the objects you are operating on."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of items you want per page.\nAcceptable values = 1-100. Default = 10.\n"
+              },
+              {
+                "name": "beginsWith",
+                "value": "",
+                "type": "query",
+                "description": "Filters the results by the value you specify. Only the objects with their ``objectKey`` beginning with the specified string are returned."
+              },
+              {
+                "name": "startAt",
+                "value": "",
+                "type": "query",
+                "description": "The ID of the last item that was returned in the previous result set.  It enables the system to return subsequent items starting from the next one after the specified ID.\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns a list objects in the specified bucket. \n\nOnly the application that owns the bucket can call this operation. All other applications that call this operation will receive a \"403 Forbidden\" error.\n"
+        },
+        {
+          "info": {
+            "name": "Get Object Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developer.api.autodesk.com/oss/v2/buckets/:bucketKey/objects/:objectKey/details",
+            "headers": [
+              {
+                "name": "If-Modified-Since",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bucketKey",
+                "value": "",
+                "type": "path",
+                "description": "The bucket key of the bucket that contains the objects you are operating on."
+              },
+              {
+                "name": "objectKey",
+                "value": "",
+                "type": "path",
+                "description": "The URL-encoded human friendly name of the object."
+              },
+              {
+                "name": "with",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns detailed information about the specified object."
+        },
+        {
+          "info": {
+            "name": "Generate OSS Signed URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://developer.api.autodesk.com/oss/v2/buckets/:bucketKey/objects/:objectKey/signed",
+            "params": [
+              {
+                "name": "bucketKey",
+                "value": "",
+                "type": "path",
+                "description": "The bucket key of the bucket that contains the objects you are operating on."
+              },
+              {
+                "name": "objectKey",
+                "value": "",
+                "type": "path",
+                "description": "The URL-encoded human friendly name of the object."
+              },
+              {
+                "name": "access",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "useCdn",
+                "value": "",
+                "type": "query",
+                "description": "``true`` : Returns a Cloudfront URL to the object instead of an Autodesk URL (one that points to a location on https://developer.api.autodesk.com). Applications can interact with the Cloudfront URL exactly like with any classic public resource in OSS. They can use GET requests to download objects or PUT requests to upload objects.\n\n``false`` : (Default) Returns an Autodesk URL (one that points to a location on https://developer.api.autodesk.com) to the object.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Generates a signed URL that can be used to download or upload an object within the specified expiration time. If the object the signed URL points to is deleted or expires before the signed URL expires, the signed URL will no longer be valid.\n\nIn addition to this operation that generates OSS signed URLs, OSS provides operations to generate S3 signed URLs. S3 signed URLs allow direct upload/download from S3 but are restricted to bucket owners. OSS signed URLs also allow upload/download and can be "
+        },
+        {
+          "info": {
+            "name": "Download Object Using Signed URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developer.api.autodesk.com/oss/v2/signedresources/:hash",
+            "headers": [
+              {
+                "name": "Range",
+                "value": ""
+              },
+              {
+                "name": "If-None-Match",
+                "value": ""
+              },
+              {
+                "name": "If-Modified-Since",
+                "value": ""
+              },
+              {
+                "name": "Accept-Encoding",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "hash",
+                "value": "",
+                "type": "path",
+                "description": "The ID component of the signed URL.\n\n**Note:** The signed URL returned by [Generate OSS Signed URL](/en/docs/data/v2/reference/http/signedresources-:id-GET/) contains ``hash`` as a URI parameter.\n"
+              },
+              {
+                "name": "region",
+                "value": "",
+                "type": "query",
+                "description": "Specifies where the bucket containing the object is stored. Possible values are:\n\n- ``US`` : (Default) Data center for the US region.\n- ``EMEA`` : Data center for the European Union, Middle East, and Africa.\n- ``AUS`` : (Beta) Data center for Australia.\n- ``CAN`` : Data center for the Canada region.\n- ``DEU`` : Data center for the Germany region.\n- ``IND`` : Data center for the India region.\n- ``JPN`` : Data center for the Japan region.\n- ``GBR`` : Data center for the United Kingdom region.\n\n**Note:** Beta features are subject to change. Please do not use in production environments."
+              },
+              {
+                "name": "response-content-disposition",
+                "value": "",
+                "type": "query",
+                "description": "The value of the Content-Disposition header you want to receive when you download the object using the signed URL. If you do not specify a value, the Content-Disposition header defaults to the value stored with OSS."
+              },
+              {
+                "name": "response-content-type",
+                "value": "",
+                "type": "query",
+                "description": "The value of the Content-Type header you want to receive when you download the object using the signed URL. If you do not specify a value, the Content-Type header defaults to the value stored with OSS."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Downloads an object using an OSS signed URL.\n\n**Note:** The signed URL returned by [Generate OSS Signed URL](/en/docs/data/v2/reference/http/signedresources-:id-GET/)  contains the ``hash`` URI parameter as well. \n"
+        },
+        {
+          "info": {
+            "name": "Replace Object Using Signed URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://developer.api.autodesk.com/oss/v2/signedresources/:hash",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Content-Length",
+                "value": ""
+              },
+              {
+                "name": "Content-Disposition",
+                "value": ""
+              },
+              {
+                "name": "x-ads-region",
+                "value": ""
+              },
+              {
+                "name": "If-Match",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "hash",
+                "value": "",
+                "type": "path",
+                "description": "The ID component of the signed URL.\n\n**Note:** The signed URL returned by [Generate OSS Signed URL](/en/docs/data/v2/reference/http/signedresources-:id-GET/) contains ``hash`` as a URI parameter.\n"
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "body",
+                  "value": ""
+                }
+              ]
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Replaces an object that already exists on OSS, using an OSS signed URL. \n\nThe signed URL must fulfil the following conditions:\n\n- The signed URL is valid (it has not expired as yet).\n- It was generated with ``write`` or ``readwrite`` for the ``access`` parameter.\n"
+        },
+        {
+          "info": {
+            "name": "Delete Object Using Signed URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://developer.api.autodesk.com/oss/v2/signedresources/:hash",
+            "headers": [
+              {
+                "name": "x-ads-region",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "hash",
+                "value": "",
+                "type": "path",
+                "description": "The ID component of the signed URL.\n\n**Note:** The signed URL returned by [Generate OSS Signed URL](/en/docs/data/v2/reference/http/signedresources-:id-GET/) contains ``hash`` as a URI parameter.\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Delete an object using an OSS signed URL to access it.\n\nOnly applications that own the bucket containing the object can call this operation. \n"
+        },
+        {
+          "info": {
+            "name": "Upload Object Using Signed URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://developer.api.autodesk.com/oss/v2/signedresources/:hash/resumable",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Content-Range",
+                "value": ""
+              },
+              {
+                "name": "Content-Disposition",
+                "value": ""
+              },
+              {
+                "name": "x-ads-region",
+                "value": ""
+              },
+              {
+                "name": "Session-Id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "hash",
+                "value": "",
+                "type": "path",
+                "description": "The ID component of the signed URL.\n\n**Note:** The signed URL returned by [Generate OSS Signed URL](/en/docs/data/v2/reference/http/signedresources-:id-GET/) contains ``hash`` as a URI parameter.\n"
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "body",
+                  "value": ""
+                }
+              ]
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Performs a resumable upload using an OSS signed URL. Use this operation to upload an object in chunks.\n\n**Note:** The signed URL returned by [Generate OSS Signed URL](/en/docs/data/v2/reference/http/signedresources-:id-GET/) contains the ``hash`` as a URI parameter. \n"
+        },
+        {
+          "info": {
+            "name": "Copy Object",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://developer.api.autodesk.com/oss/v2/buckets/:bucketKey/objects/:objectKey/copyto/:newObjKey",
+            "params": [
+              {
+                "name": "bucketKey",
+                "value": "",
+                "type": "path",
+                "description": "The bucket key of the bucket that contains the objects you are operating on."
+              },
+              {
+                "name": "objectKey",
+                "value": "",
+                "type": "path",
+                "description": "The URL-encoded human friendly name of the object."
+              },
+              {
+                "name": "newObjKey",
+                "value": "",
+                "type": "path",
+                "description": "A URL-encoded human friendly name to identify the copied object."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Creates a copy of an object within the bucket."
+        },
+        {
+          "info": {
+            "name": "Generate Signed S3 Download URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developer.api.autodesk.com/oss/v2/buckets/:bucketKey/objects/:objectKey/signeds3download",
+            "headers": [
+              {
+                "name": "If-None-Match",
+                "value": ""
+              },
+              {
+                "name": "If-Modified-Since",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bucketKey",
+                "value": "",
+                "type": "path",
+                "description": "The bucket key of the bucket that contains the objects you are operating on."
+              },
+              {
+                "name": "objectKey",
+                "value": "",
+                "type": "path",
+                "description": "The URL-encoded human friendly name of the object."
+              },
+              {
+                "name": "response-content-type",
+                "value": "",
+                "type": "query",
+                "description": "The value of the Content-Type header you want to receive when you download the object using the signed URL. If you do not specify a value, the Content-Type header defaults to the value stored with OSS."
+              },
+              {
+                "name": "response-content-disposition",
+                "value": "",
+                "type": "query",
+                "description": "The value of the Content-Disposition header you want to receive when you download the object using the signed URL. If you do not specify a value, the Content-Disposition header defaults to the value stored with OSS."
+              },
+              {
+                "name": "response-cache-control",
+                "value": "",
+                "type": "query",
+                "description": "The value of the Cache-Control header you want to receive when you download the object using the signed URL. If you do not specify a value, the Cache-Control header defaults to the value stored with OSS."
+              },
+              {
+                "name": "public-resource-fallback",
+                "value": "",
+                "type": "query",
+                "description": "Specifies how to return the signed URLs, in case the object was uploaded in chunks, and assembling of chunks is not yet complete.\n\n- ``true`` : Return a single signed OSS URL.\n- ``false`` : (Default) Return multiple signed S3 URLs, where each URL points to a chunk.\n"
+              },
+              {
+                "name": "minutesExpiration",
+                "value": "",
+                "type": "query",
+                "description": "The time window (in minutes) the signed URL will remain usable. Acceptable values = 1-60 minutes. Default = 2 minutes.\n\n**Tip:** Use the smallest possible time window to minimize exposure of the signed URL.\n"
+              },
+              {
+                "name": "useCdn",
+                "value": "",
+                "type": "query",
+                "description": "``true`` : Returns a URL that points to a CloudFront edge location.\n\n``false`` : (Default) Returns a URL that points directly to the S3 object.\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Gets a signed URL to download an object directly from S3, bypassing OSS servers. This signed URL expires in 2 minutes by default, but you can change this duration if needed.  You must start the download before the signed URL expires. The download itself can take longer. If the download fails after the validity period of the signed URL has elapsed, you can call this operation again to obtain a fresh signed URL.\n\nOnly applications that have read access to the object can call this operation.   \n\nYo"
+        },
+        {
+          "info": {
+            "name": "Batch Generate Signed S3 Upload URLs",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://developer.api.autodesk.com/oss/v2/buckets/:bucketKey/objects/batchsigneds3upload",
+            "params": [
+              {
+                "name": "bucketKey",
+                "value": "",
+                "type": "path",
+                "description": "The bucket key of the bucket that contains the objects you are operating on."
+              },
+              {
+                "name": "useAcceleration",
+                "value": "",
+                "type": "query",
+                "description": "``true`` : (Default) Generates a faster S3 signed URL using Transfer Acceleration.\n\n``false``: Generates a standard S3 signed URL.\n"
+              },
+              {
+                "name": "minutesExpiration",
+                "value": "",
+                "type": "query",
+                "description": "The time window (in minutes) the signed URL will remain usable. Acceptable values = 1-60 minutes. Default = 2 minutes.\n\n**Tip:** Use the smallest possible time window to minimize exposure of the signed URL.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Creates and returns signed URLs to upload a set of objects directly to S3. These signed URLs expire in 2 minutes by default, but you can change this duration if needed.  You must start uploading the objects before the signed URLs expire. The upload  itself can take longer.\n\nOnly the application that owns the bucket can call this operation. All other applications that call this operation will receive a \"403 Forbidden\" error.\n\nIf required, you can request an array of signed URLs for each object, w"
+        },
+        {
+          "info": {
+            "name": "Complete Batch Upload to S3 Signed URLs",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://developer.api.autodesk.com/oss/v2/buckets/:bucketKey/objects/batchcompleteupload",
+            "params": [
+              {
+                "name": "bucketKey",
+                "value": "",
+                "type": "path",
+                "description": "The bucket key of the bucket that contains the objects you are operating on."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Requests OSS to start reconstituting the set of objects that were uploaded using signed S3 upload URLs. You must call this operation only after all the objects have been uploaded. \n\nYou can specify up to 25 objects in this operation. \n"
+        },
+        {
+          "info": {
+            "name": "Batch Generate Signed S3 Download URLs",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://developer.api.autodesk.com/oss/v2/buckets/:bucketKey/objects/batchsigneds3download",
+            "params": [
+              {
+                "name": "bucketKey",
+                "value": "",
+                "type": "path",
+                "description": "The bucket key of the bucket that contains the objects you are operating on."
+              },
+              {
+                "name": "public-resource-fallback",
+                "value": "",
+                "type": "query",
+                "description": "Specifies how to return the signed URLs, in case the object was uploaded in chunks, and assembling of chunks is not yet complete.\n\n- ``true`` : Return a single signed OSS URL.\n- ``false`` : (Default) Return multiple signed S3 URLs, where each URL points to a chunk.\n"
+              },
+              {
+                "name": "minutesExpiration",
+                "value": "",
+                "type": "query",
+                "description": "The time window (in minutes) the signed URL will remain usable. Acceptable values = 1-60 minutes. Default = 2 minutes.\n\n**Tip:** Use the smallest possible time window to minimize exposure of the signed URL.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Creates and returns signed URLs to download a set of objects directly from S3. These signed URLs expire in 2 minutes by default, but you can change this duration if needed.  You must start download the objects before the signed URLs expire. The download itself can take longer.\n\nOnly the application that owns the bucket can call this operation. All other applications that call this operation will receive a \"403 Forbidden\" error.\n"
+        },
+        {
+          "info": {
+            "name": "Generate Signed S3 Upload URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developer.api.autodesk.com/oss/v2/buckets/:bucketKey/objects/:objectKey/signeds3upload",
+            "params": [
+              {
+                "name": "bucketKey",
+                "value": "",
+                "type": "path",
+                "description": "The bucket key of the bucket that contains the objects you are operating on."
+              },
+              {
+                "name": "objectKey",
+                "value": "",
+                "type": "path",
+                "description": "The URL-encoded human friendly name of the object."
+              },
+              {
+                "name": "parts",
+                "value": "",
+                "type": "query",
+                "description": "The number of parts you intend to chunk the object for uploading. OSS will return that many signed URLs, one URL for each chunk. If you do not specify a value you'll get only one URL to upload the entire object.             \n"
+              },
+              {
+                "name": "firstPart",
+                "value": "",
+                "type": "query",
+                "description": "The index of the first chunk to be uploaded."
+              },
+              {
+                "name": "uploadKey",
+                "value": "",
+                "type": "query",
+                "description": "The ``uploadKey`` of a previously-initiated upload, in order to request more chunk upload URLs for the same upload. If you do not specify a value, OSS will initiate a new upload entirely."
+              },
+              {
+                "name": "minutesExpiration",
+                "value": "",
+                "type": "query",
+                "description": "The time window (in minutes) the signed URL will remain usable. Acceptable values = 1-60 minutes. Default = 2 minutes.\n\n**Tip:** Use the smallest possible time window to minimize exposure of the signed URL.\n"
+              },
+              {
+                "name": "useAcceleration",
+                "value": "",
+                "type": "query",
+                "description": "``true`` : (Default) Generates a faster S3 signed URL using Transfer Acceleration.\n\n``false``: Generates a standard S3 signed URL.\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Gets a signed URL to upload an object directly to S3, bypassing OSS servers. You can also request an array of signed URLs which lets you upload an object in chunks.\n\nThis signed URL expires in 2 minutes by default, but you can change this duration if needed.  You must start the upload before the signed URL expires. The upload itself can take longer. If the upload fails after the validity period of the signed URL has elapsed, you can call this operation again to obtain a fresh signed URL (or an a"
+        },
+        {
+          "info": {
+            "name": "Complete Upload to S3 Signed URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://developer.api.autodesk.com/oss/v2/buckets/:bucketKey/objects/:objectKey/signeds3upload",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "x-ads-meta-Content-Type",
+                "value": ""
+              },
+              {
+                "name": "x-ads-meta-Content-Disposition",
+                "value": ""
+              },
+              {
+                "name": "x-ads-meta-Content-Encoding",
+                "value": ""
+              },
+              {
+                "name": "x-ads-meta-Cache-Control",
+                "value": ""
+              },
+              {
+                "name": "x-ads-user-defined-metadata",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bucketKey",
+                "value": "",
+                "type": "path",
+                "description": "The bucket key of the bucket that contains the objects you are operating on."
+              },
+              {
+                "name": "objectKey",
+                "value": "",
+                "type": "path",
+                "description": "The URL-encoded human friendly name of the object."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Requests OSS to assemble and reconstitute the object that was uploaded using signed S3 upload URL. You must call this operation only after all parts/chunks of the object has been uploaded."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

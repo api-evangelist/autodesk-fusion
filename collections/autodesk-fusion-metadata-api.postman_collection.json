@@ -1,0 +1,1161 @@
+{
+  "item": [
+    {
+      "id": "0f9eb743-e8bc-430e-81d0-f4cb0e645ef4",
+      "name": "Metadata",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e67439e7-534b-48db-9fe3-4519094f5c1b",
+          "name": "List Model Views",
+          "request": {
+            "name": "List Model Views",
+            "description": {
+              "content": "Returns a list of Model Views (Viewables) in the source design specified by the ``urn`` parameter. It also returns an ID that uniquely identifies the Model View. You can use these IDs with other metadata operations to obtain information about the objects within those Model Views.\n\nDesigns created with applications like Fusion 360 and Inventor contain only one Model View per design. Applications like Revit allow multiple Model Views per design.\n\n**Note:** You can retrieve metadata only from a design that has already been translated to SVF or SVF2.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "modelderivative",
+                "v2",
+                "designdata",
+                ":urn",
+                "metadata"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "urn",
+                  "description": "(Required) The URL-safe Base64 encoded URN of the source design."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "A comma separated list of the algorithms you want the response to be encoded in, specified in the order of preference.  \n\nIf you specify ``gzip`` or ``*``, content is compressed and returned in gzip format.\n",
+                "key": "Accept-Encoding",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Specifies the data center where the manifest and derivatives of the specified source design are stored. Possible values are:\n\n- ``US`` - (Default) Data center for the US region.\n- ``EMEA`` - Data center for the European Union, Middle East, and Africa. \n- ``AUS`` - Data center for the Australia region.\n- ``CAN`` - Data center for the Canada region.\n- ``DEU`` - Data center for the Germany region.\n- ``IND`` - Data center for the India region.\n- ``JPN`` - Data center for the Japan region.\n- ``GBR``  - Data center for the United Kingdom region.\n",
+                "key": "region",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "d62a3b15-13f7-4191-a600-c78ee44ff72b",
+              "name": "A list of Model Views was retrieved successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "modelderivative",
+                    "v2",
+                    "designdata",
+                    ":urn",
+                    "metadata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "urn",
+                      "description": "(Required) The URL-safe Base64 encoded URN of the source design."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A comma separated list of the algorithms you want the response to be encoded in, specified in the order of preference.  \n\nIf you specify ``gzip`` or ``*``, content is compressed and returned in gzip format.\n",
+                    "key": "Accept-Encoding",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies the data center where the manifest and derivatives of the specified source design are stored. Possible values are:\n\n- ``US`` - (Default) Data center for the US region.\n- ``EMEA`` - Data center for the European Union, Middle East, and Africa. \n- ``AUS`` - Data center for the Australia region.\n- ``CAN`` - Data center for the Canada region.\n- ``DEU`` - Data center for the Germany region.\n- ``IND`` - Data center for the India region.\n- ``JPN`` - Data center for the Japan region.\n- ``GBR``  - Data center for the United Kingdom region.\n",
+                    "key": "region",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The service identifier. Comprises of the service name, version, and environment.",
+                  "key": "x-ads-app-identifier",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "The service startup time, in the following date format: ``EEE MMM dd HH:mm:ss Z yyyy``.",
+                  "key": "x-ads-startup-time",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "The amount of time spent servicing the request, in milliseconds.",
+                  "key": "x-ads-duration",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Provides information about server failures, if any.",
+                  "key": "x-ads-troubleshooting",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"type\": \"string\",\n    \"metadata\": [\n      {\n        \"name\": \"string\",\n        \"guid\": \"string\",\n        \"role\": \"3d\",\n        \"isMasterView\": true\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6d2c575a-bbe4-4709-abb8-3000b22608bd",
+          "name": "Fetch Object tree",
+          "request": {
+            "name": "Fetch Object tree",
+            "description": {
+              "content": "Retrieves the structured hierarchy of objects, known as an object tree, from the specified Model View (Viewable) within the specified source design. The object tree represents the arrangement and relationships of various objects present in that Model View.\n\n**Note:** A design file must be translated to SVF or SVF2 before you can retrieve its object tree.  \n\nBefore you call this operation:\n\n- Use the `List Model Views </en/docs/model-derivative/v2/reference/http/metadata/urn-metadata-GET/>`_ operation to obtain the list of Model Views in the source design.\n- Pick the ID of the Model View you want to query and specify that ID as the value for the ``modelGuid``  parameter.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "modelderivative",
+                "v2",
+                "designdata",
+                ":urn",
+                "metadata",
+                ":modelGuid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "forceget",
+                  "value": "<string>",
+                  "description": "``true``: Retrieves large resources, even beyond the 20 MB limit. If exceptionally large (over 800 MB), the system acts as if ``forceget`` is ``false``. \n\n``false``: (Default) Does not retrieve resources if they are larger than 20 MB.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "objectid",
+                  "value": "<integer>",
+                  "description": "If specified, retrieves the sub-tree that has the specified Object ID as its parent node. If this parameter is not specified, retrieves the entire object tree."
+                },
+                {
+                  "disabled": false,
+                  "key": "level",
+                  "value": "<string>",
+                  "description": "Specifies how many child levels of the hierarchy to return, when the ``objectid``  parameter is specified. Currently supports only ``level`` = ``1``."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "urn",
+                  "description": "(Required) The URL-safe Base64 encoded URN of the source design."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "modelGuid",
+                  "description": "(Required) The ID of the Model View you are extracting the object tree from. Use the `List Model Views </en/docs/model-derivative/v2/reference/http/metadata/urn-metadata-GET>`_ operation to get the IDs of the Model Views in the source design."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "A comma separated list of the algorithms you want the response to be encoded in, specified in the order of preference.  \n\nIf you specify ``gzip`` or ``*``, content is compressed and returned in gzip format.\n",
+                "key": "Accept-Encoding",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Specifies the data center where the manifest and derivatives of the specified source design are stored. Possible values are:\n\n- ``US`` - (Default) Data center for the US region.\n- ``EMEA`` - Data center for the European Union, Middle East, and Africa. \n- ``AUS`` - Data center for the Australia region.\n- ``CAN`` - Data center for the Canada region.\n- ``DEU`` - Data center for the Germany region.\n- ``IND`` - Data center for the India region.\n- ``JPN`` - Data center for the Japan region.\n- ``GBR``  - Data center for the United Kingdom region.\n",
+                "key": "region",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "- ``true``: Forces the system to parse property data all over again. Use this option to retrieve an object tree when previous attempts have failed.\n- ``false``: (Default) Use previously parsed property data to extract the object tree.\n",
+                "key": "x-ads-force",
+                "value": "<boolean>"
+              },
+              {
+                "disabled": false,
+                "description": "Specifies what Object IDs to return, if the design has legacy SVF derivatives generated by the BIM Docs service. Possible values are:  \n\n- ``latest`` - (Default) Return SVF2 Object IDs. \n- ``fallback`` - Return SVF Object IDs.  \n\n**Note:**  \n\n1. This parameter applies only to designs with legacy SVF derivatives generated by the BIM 360 Docs service. \n2. The BIM 360 Docs service now generates SVF2 derivatives. SVF2 Object IDs may not be compatible with the SVF Object IDs previously generated by the BIM 360 Docs service. Setting this header to fallback may resolve backward compatibility issues resulting from Object IDs of legacy SVF derivatives being retained on the client side. \n3. If you use this parameter with one derivative (URN), you must use it consistently across the following: \n\n   - `Create Translation Job </en/docs/model-derivative/v2/reference/http/job-POST>`_ (for OBJ output) \n   - `Fetch Object Tree </en/docs/model-derivative/v2/reference/http/urn-metadata-modelguid-GET>`_\n   - `Fetch All Properties </en/docs/model-derivative/v2/reference/http/urn-metadata-guid-properties-GET>`_\n   - `Fetch Specific Properties <en/docs/model-derivative/v2/reference/http/metadata/urn-metadata-guid-properties-query-POST>`_\n",
+                "key": "x-ads-derivative-format",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "da157898-e4f8-49c9-b115-f78266f60f7d",
+              "name": "The object tree of the specified Model View was retrieved successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "modelderivative",
+                    "v2",
+                    "designdata",
+                    ":urn",
+                    "metadata",
+                    ":modelGuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "forceget",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "objectid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "level",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "urn",
+                      "description": "(Required) The URL-safe Base64 encoded URN of the source design."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "modelGuid",
+                      "description": "(Required) The ID of the Model View you are extracting the object tree from. Use the `List Model Views </en/docs/model-derivative/v2/reference/http/metadata/urn-metadata-GET>`_ operation to get the IDs of the Model Views in the source design."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A comma separated list of the algorithms you want the response to be encoded in, specified in the order of preference.  \n\nIf you specify ``gzip`` or ``*``, content is compressed and returned in gzip format.\n",
+                    "key": "Accept-Encoding",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies the data center where the manifest and derivatives of the specified source design are stored. Possible values are:\n\n- ``US`` - (Default) Data center for the US region.\n- ``EMEA`` - Data center for the European Union, Middle East, and Africa. \n- ``AUS`` - Data center for the Australia region.\n- ``CAN`` - Data center for the Canada region.\n- ``DEU`` - Data center for the Germany region.\n- ``IND`` - Data center for the India region.\n- ``JPN`` - Data center for the Japan region.\n- ``GBR``  - Data center for the United Kingdom region.\n",
+                    "key": "region",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "- ``true``: Forces the system to parse property data all over again. Use this option to retrieve an object tree when previous attempts have failed.\n- ``false``: (Default) Use previously parsed property data to extract the object tree.\n",
+                    "key": "x-ads-force",
+                    "value": "<boolean>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies what Object IDs to return, if the design has legacy SVF derivatives generated by the BIM Docs service. Possible values are:  \n\n- ``latest`` - (Default) Return SVF2 Object IDs. \n- ``fallback`` - Return SVF Object IDs.  \n\n**Note:**  \n\n1. This parameter applies only to designs with legacy SVF derivatives generated by the BIM 360 Docs service. \n2. The BIM 360 Docs service now generates SVF2 derivatives. SVF2 Object IDs may not be compatible with the SVF Object IDs previously generated by the BIM 360 Docs service. Setting this header to fallback may resolve backward compatibility issues resulting from Object IDs of legacy SVF derivatives being retained on the client side. \n3. If you use this parameter with one derivative (URN), you must use it consistently across the following: \n\n   - `Create Translation Job </en/docs/model-derivative/v2/reference/http/job-POST>`_ (for OBJ output) \n   - `Fetch Object Tree </en/docs/model-derivative/v2/reference/http/urn-metadata-modelguid-GET>`_\n   - `Fetch All Properties </en/docs/model-derivative/v2/reference/http/urn-metadata-guid-properties-GET>`_\n   - `Fetch Specific Properties <en/docs/model-derivative/v2/reference/http/metadata/urn-metadata-guid-properties-query-POST>`_\n",
+                    "key": "x-ads-derivative-format",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The service identifier. Comprises of the service name, version, and environment.",
+                  "key": "x-ads-app-identifier",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "The service startup time, in the following date format: ``EEE MMM dd HH:mm:ss Z yyyy``.",
+                  "key": "x-ads-startup-time",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "The amount of time spent servicing the request, in milliseconds.",
+                  "key": "x-ads-duration",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Provides information about server failures, if any.",
+                  "key": "x-ads-troubleshooting",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Size in bytes of the request data. Additionally, the system uses this information to determine if a 413 (content too large) response is returned.",
+                  "key": "x-ads-size",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"type\": \"string\",\n    \"objects\": [\n      {\n        \"objectid\": 3325.4306605928773,\n        \"name\": \"string\",\n        \"objects\": [\n          {\n            \"objectid\": 404,\n            \"name\": 6991.180276336773\n          }\n        ]\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "60d06cf3-f44f-4cb0-83e1-62e396a950ae",
+              "name": "Request was accepted but processing is not complete. Repeat until you receive an HTTP status of ``200``.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "modelderivative",
+                    "v2",
+                    "designdata",
+                    ":urn",
+                    "metadata",
+                    ":modelGuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "forceget",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "objectid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "level",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "urn",
+                      "description": "(Required) The URL-safe Base64 encoded URN of the source design."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "modelGuid",
+                      "description": "(Required) The ID of the Model View you are extracting the object tree from. Use the `List Model Views </en/docs/model-derivative/v2/reference/http/metadata/urn-metadata-GET>`_ operation to get the IDs of the Model Views in the source design."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A comma separated list of the algorithms you want the response to be encoded in, specified in the order of preference.  \n\nIf you specify ``gzip`` or ``*``, content is compressed and returned in gzip format.\n",
+                    "key": "Accept-Encoding",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies the data center where the manifest and derivatives of the specified source design are stored. Possible values are:\n\n- ``US`` - (Default) Data center for the US region.\n- ``EMEA`` - Data center for the European Union, Middle East, and Africa. \n- ``AUS`` - Data center for the Australia region.\n- ``CAN`` - Data center for the Canada region.\n- ``DEU`` - Data center for the Germany region.\n- ``IND`` - Data center for the India region.\n- ``JPN`` - Data center for the Japan region.\n- ``GBR``  - Data center for the United Kingdom region.\n",
+                    "key": "region",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "- ``true``: Forces the system to parse property data all over again. Use this option to retrieve an object tree when previous attempts have failed.\n- ``false``: (Default) Use previously parsed property data to extract the object tree.\n",
+                    "key": "x-ads-force",
+                    "value": "<boolean>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies what Object IDs to return, if the design has legacy SVF derivatives generated by the BIM Docs service. Possible values are:  \n\n- ``latest`` - (Default) Return SVF2 Object IDs. \n- ``fallback`` - Return SVF Object IDs.  \n\n**Note:**  \n\n1. This parameter applies only to designs with legacy SVF derivatives generated by the BIM 360 Docs service. \n2. The BIM 360 Docs service now generates SVF2 derivatives. SVF2 Object IDs may not be compatible with the SVF Object IDs previously generated by the BIM 360 Docs service. Setting this header to fallback may resolve backward compatibility issues resulting from Object IDs of legacy SVF derivatives being retained on the client side. \n3. If you use this parameter with one derivative (URN), you must use it consistently across the following: \n\n   - `Create Translation Job </en/docs/model-derivative/v2/reference/http/job-POST>`_ (for OBJ output) \n   - `Fetch Object Tree </en/docs/model-derivative/v2/reference/http/urn-metadata-modelguid-GET>`_\n   - `Fetch All Properties </en/docs/model-derivative/v2/reference/http/urn-metadata-guid-properties-GET>`_\n   - `Fetch Specific Properties <en/docs/model-derivative/v2/reference/http/metadata/urn-metadata-guid-properties-query-POST>`_\n",
+                    "key": "x-ads-derivative-format",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d3c3b6b1-9b8b-4134-80ba-9fb3843a05bb",
+          "name": "Fetch All Properties",
+          "request": {
+            "name": "Fetch All Properties",
+            "description": {
+              "content": "Returns a list of properties of all objects in the  Model View specified by the ``modelGuid`` parameter. \n\nThis operation returns properties of all objects by default. However, you can restrict the results to a specific object by specifying its ID as the ``objectid`` parameter.\n\nProperties are returned as a flat list, ordered, by their ``objectid``. The ``objectid`` is a non-persistent ID assigned to an object when the source design is translated to the SVF or SVF2 format. This means that:\n\n- A design file must be translated to SVF or SVF2 before you can retrieve properties.\n- The ``objectid`` of an object can change if the design is translated to SVF or SVF2 again. If you require a persistent ID across translations, use ``externalId`` to reference objects, instead of ``objectid``.\n\nBefore you call this operation:\n\n- Use the `List Model Views </en/docs/model-derivative/v2/reference/http/metadata/urn-metadata-GET/>`_ operation to obtain the list of Model Views (Viewables) in the source design. \n- Pick the ID of the Model View you want to query and specify that ID as the value for the ``modelGuid`` parameter.\n\n**Tip**: Use `Fetch Specific Properties </en/docs/model-derivative/v2/reference/http/metadata/urn-metadata-guid-properties-query-POST/>`_ to retrieve only the objects and properties of interest. What’s more, the response is paginated. So, when the number of properties returned is large, responses start arriving more promptly.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "modelderivative",
+                "v2",
+                "designdata",
+                ":urn",
+                "metadata",
+                ":modelGuid",
+                "properties"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "objectid",
+                  "value": "<integer>",
+                  "description": "The Object ID of the object you want to restrict the response to. If you do not specify this parameter, all properties of all objects within the Model View are returned.  "
+                },
+                {
+                  "disabled": false,
+                  "key": "forceget",
+                  "value": "<string>",
+                  "description": "``true``: Retrieves large resources, even beyond the 20 MB limit. If exceptionally large (over 800 MB), the system acts as if ``forceget`` is ``false``. \n\n``false``: (Default) Does not retrieve resources if they are larger than 20 MB.\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "urn",
+                  "description": "(Required) The URL-safe Base64 encoded URN of the source design."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "modelGuid",
+                  "description": "(Required) The ID of the Model View you are querying. Use the `List Model Views </en/docs/model-derivative/v2/reference/http/metadata/urn-metadata-GET>`_ operation to get the IDs of the Model Views in the source design."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "A comma separated list of the algorithms you want the response to be encoded in, specified in the order of preference.  \n\nIf you specify ``gzip`` or ``*``, content is compressed and returned in gzip format.\n",
+                "key": "Accept-Encoding",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "- ``true``: Forces the system to parse property data all over again. Use this option to retrieve an object tree when previous attempts have failed.\n- ``false``: (Default) Use previously parsed property data to extract the object tree.\n",
+                "key": "x-ads-force",
+                "value": "<boolean>"
+              },
+              {
+                "disabled": false,
+                "description": "Specifies what Object IDs to return, if the design has legacy SVF derivatives generated by the BIM Docs service. Possible values are:  \n\n- ``latest`` - (Default) Return SVF2 Object IDs. \n- ``fallback`` - Return SVF Object IDs.  \n\n**Note:**  \n\n1. This parameter applies only to designs with legacy SVF derivatives generated by the BIM 360 Docs service. \n2. The BIM 360 Docs service now generates SVF2 derivatives. SVF2 Object IDs may not be compatible with the SVF Object IDs previously generated by the BIM 360 Docs service. Setting this header to fallback may resolve backward compatibility issues resulting from Object IDs of legacy SVF derivatives being retained on the client side. \n3. If you use this parameter with one derivative (URN), you must use it consistently across the following: \n\n   - `Create Translation Job </en/docs/model-derivative/v2/reference/http/job-POST>`_ (for OBJ output) \n   - `Fetch Object Tree </en/docs/model-derivative/v2/reference/http/urn-metadata-modelguid-GET>`_\n   - `Fetch All Properties </en/docs/model-derivative/v2/reference/http/urn-metadata-guid-properties-GET>`_\n   - `Fetch Specific Properties <en/docs/model-derivative/v2/reference/http/metadata/urn-metadata-guid-properties-query-POST>`_\n",
+                "key": "x-ads-derivative-format",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Specifies the data center where the manifest and derivatives of the specified source design are stored. Possible values are:\n\n- ``US`` - (Default) Data center for the US region.\n- ``EMEA`` - Data center for the European Union, Middle East, and Africa. \n- ``AUS`` - Data center for the Australia region.\n- ``CAN`` - Data center for the Canada region.\n- ``DEU`` - Data center for the Germany region.\n- ``IND`` - Data center for the India region.\n- ``JPN`` - Data center for the Japan region.\n- ``GBR``  - Data center for the United Kingdom region.\n",
+                "key": "region",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "2a0960fe-f3b0-4e07-87b1-614f979a58fd",
+              "name": "Properties were retrieved successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "modelderivative",
+                    "v2",
+                    "designdata",
+                    ":urn",
+                    "metadata",
+                    ":modelGuid",
+                    "properties"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "objectid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "forceget",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "urn",
+                      "description": "(Required) The URL-safe Base64 encoded URN of the source design."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "modelGuid",
+                      "description": "(Required) The ID of the Model View you are querying. Use the `List Model Views </en/docs/model-derivative/v2/reference/http/metadata/urn-metadata-GET>`_ operation to get the IDs of the Model Views in the source design."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A comma separated list of the algorithms you want the response to be encoded in, specified in the order of preference.  \n\nIf you specify ``gzip`` or ``*``, content is compressed and returned in gzip format.\n",
+                    "key": "Accept-Encoding",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "- ``true``: Forces the system to parse property data all over again. Use this option to retrieve an object tree when previous attempts have failed.\n- ``false``: (Default) Use previously parsed property data to extract the object tree.\n",
+                    "key": "x-ads-force",
+                    "value": "<boolean>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies what Object IDs to return, if the design has legacy SVF derivatives generated by the BIM Docs service. Possible values are:  \n\n- ``latest`` - (Default) Return SVF2 Object IDs. \n- ``fallback`` - Return SVF Object IDs.  \n\n**Note:**  \n\n1. This parameter applies only to designs with legacy SVF derivatives generated by the BIM 360 Docs service. \n2. The BIM 360 Docs service now generates SVF2 derivatives. SVF2 Object IDs may not be compatible with the SVF Object IDs previously generated by the BIM 360 Docs service. Setting this header to fallback may resolve backward compatibility issues resulting from Object IDs of legacy SVF derivatives being retained on the client side. \n3. If you use this parameter with one derivative (URN), you must use it consistently across the following: \n\n   - `Create Translation Job </en/docs/model-derivative/v2/reference/http/job-POST>`_ (for OBJ output) \n   - `Fetch Object Tree </en/docs/model-derivative/v2/reference/http/urn-metadata-modelguid-GET>`_\n   - `Fetch All Properties </en/docs/model-derivative/v2/reference/http/urn-metadata-guid-properties-GET>`_\n   - `Fetch Specific Properties <en/docs/model-derivative/v2/reference/http/metadata/urn-metadata-guid-properties-query-POST>`_\n",
+                    "key": "x-ads-derivative-format",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies the data center where the manifest and derivatives of the specified source design are stored. Possible values are:\n\n- ``US`` - (Default) Data center for the US region.\n- ``EMEA`` - Data center for the European Union, Middle East, and Africa. \n- ``AUS`` - Data center for the Australia region.\n- ``CAN`` - Data center for the Canada region.\n- ``DEU`` - Data center for the Germany region.\n- ``IND`` - Data center for the India region.\n- ``JPN`` - Data center for the Japan region.\n- ``GBR``  - Data center for the United Kingdom region.\n",
+                    "key": "region",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The service identifier. Comprises of the service name, version, and environment.",
+                  "key": "x-ads-app-identifier",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "The service startup time, in the following date format: ``EEE MMM dd HH:mm:ss Z yyyy``.",
+                  "key": "x-ads-startup-time",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "The amount of time spent servicing the request, in milliseconds.",
+                  "key": "x-ads-duration",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Provides information about server failures, if any.",
+                  "key": "x-ads-troubleshooting",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Size in bytes of the request data. Additionally, the system uses this information to determine if a 413 (content too large) response is returned.",
+                  "key": "x-ads-size",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"type\": \"string\",\n    \"collection\": [\n      {\n        \"objectid\": 0,\n        \"name\": \"string\",\n        \"externalId\": \"string\",\n        \"properties\": {\n          \"Component Name\": \"string\",\n          \"Name\": \"string\",\n          \"Design Tracking Properties\": {\n            \"Design State\": \"string\",\n            \"Designer\": \"string\",\n            \"File Subtype\": \"string\"\n          },\n          \"File Properties\": {\n            \"Author\": \"string\",\n            \"Creation Date\": \"string\",\n            \"Original System\": \"string\",\n            \"Part Number\": \"string\"\n          },\n          \"Mass Properties\": {\n            \"Area\": \"string\",\n            \"Volume\": \"string\"\n          }\n        }\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "db34281b-a8d3-43bf-b7dd-018bd7ee30e4",
+              "name": "Request was accepted but processing is not complete. Repeat until you receive an HTTP status of ``200``.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "modelderivative",
+                    "v2",
+                    "designdata",
+                    ":urn",
+                    "metadata",
+                    ":modelGuid",
+                    "properties"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "objectid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "forceget",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "urn",
+                      "description": "(Required) The URL-safe Base64 encoded URN of the source design."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "modelGuid",
+                      "description": "(Required) The ID of the Model View you are querying. Use the `List Model Views </en/docs/model-derivative/v2/reference/http/metadata/urn-metadata-GET>`_ operation to get the IDs of the Model Views in the source design."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A comma separated list of the algorithms you want the response to be encoded in, specified in the order of preference.  \n\nIf you specify ``gzip`` or ``*``, content is compressed and returned in gzip format.\n",
+                    "key": "Accept-Encoding",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "- ``true``: Forces the system to parse property data all over again. Use this option to retrieve an object tree when previous attempts have failed.\n- ``false``: (Default) Use previously parsed property data to extract the object tree.\n",
+                    "key": "x-ads-force",
+                    "value": "<boolean>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies what Object IDs to return, if the design has legacy SVF derivatives generated by the BIM Docs service. Possible values are:  \n\n- ``latest`` - (Default) Return SVF2 Object IDs. \n- ``fallback`` - Return SVF Object IDs.  \n\n**Note:**  \n\n1. This parameter applies only to designs with legacy SVF derivatives generated by the BIM 360 Docs service. \n2. The BIM 360 Docs service now generates SVF2 derivatives. SVF2 Object IDs may not be compatible with the SVF Object IDs previously generated by the BIM 360 Docs service. Setting this header to fallback may resolve backward compatibility issues resulting from Object IDs of legacy SVF derivatives being retained on the client side. \n3. If you use this parameter with one derivative (URN), you must use it consistently across the following: \n\n   - `Create Translation Job </en/docs/model-derivative/v2/reference/http/job-POST>`_ (for OBJ output) \n   - `Fetch Object Tree </en/docs/model-derivative/v2/reference/http/urn-metadata-modelguid-GET>`_\n   - `Fetch All Properties </en/docs/model-derivative/v2/reference/http/urn-metadata-guid-properties-GET>`_\n   - `Fetch Specific Properties <en/docs/model-derivative/v2/reference/http/metadata/urn-metadata-guid-properties-query-POST>`_\n",
+                    "key": "x-ads-derivative-format",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies the data center where the manifest and derivatives of the specified source design are stored. Possible values are:\n\n- ``US`` - (Default) Data center for the US region.\n- ``EMEA`` - Data center for the European Union, Middle East, and Africa. \n- ``AUS`` - Data center for the Australia region.\n- ``CAN`` - Data center for the Canada region.\n- ``DEU`` - Data center for the Germany region.\n- ``IND`` - Data center for the India region.\n- ``JPN`` - Data center for the Japan region.\n- ``GBR``  - Data center for the United Kingdom region.\n",
+                    "key": "region",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"result\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c810b582-345f-4e36-93b6-e9237809f245",
+          "name": "Fetch Specific Properties",
+          "request": {
+            "name": "Fetch Specific Properties",
+            "description": {
+              "content": "Queries the objects in the Model View (Viewable) specified by the ``modelGuid`` parameter and returns the specified properties in a paginated list. You can limit the number of objects to be queried by specifying a filter using the ``query`` attribute in the request body.\n\n**Note:** A design file must be translated to SVF or SVF2 before you can query object properties.  \n\nBefore you call this operation:\n\n- Use the `List Model Views </en/docs/model-derivative/v2/reference/http/metadata/urn-metadata-GET/>`_ operation to obtain the list of Model Views in the source design.\n- Pick the ID of the Model View you want to query and specify that ID as the value for the ``modelGuid``  parameter.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "modelderivative",
+                "v2",
+                "designdata",
+                ":urn",
+                "metadata",
+                ":modelGuid",
+                "properties:query"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "urn",
+                  "description": "(Required) The URL-safe Base64 encoded URN of the source design."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "modelGuid",
+                  "description": "(Required) The ID of the Model View you are querying. Use the `List Model Views </en/docs/model-derivative/v2/reference/http/metadata/urn-metadata-GET>`_ operation to get the IDs of the Model Views in the source design."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "A comma separated list of the algorithms you want the response to be encoded in, specified in the order of preference.  \n\nIf you specify ``gzip`` or ``*``, content is compressed and returned in gzip format.\n",
+                "key": "Accept-Encoding",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Specifies the data center where the manifest and derivatives of the specified source design are stored. Possible values are:\n\n- ``US`` - (Default) Data center for the US region.\n- ``EMEA`` - Data center for the European Union, Middle East, and Africa. \n- ``AUS`` - Data center for the Australia region.\n- ``CAN`` - Data center for the Canada region.\n- ``DEU`` - Data center for the Germany region.\n- ``IND`` - Data center for the India region.\n- ``JPN`` - Data center for the Japan region.\n- ``GBR``  - Data center for the United Kingdom region.\n",
+                "key": "region",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Specifies what Object IDs to return, if the design has legacy SVF derivatives generated by the BIM Docs service. Possible values are:  \n\n- ``latest`` - (Default) Return SVF2 Object IDs. \n- ``fallback`` - Return SVF Object IDs.  \n\n**Note:**  \n\n1. This parameter applies only to designs with legacy SVF derivatives generated by the BIM 360 Docs service. \n2. The BIM 360 Docs service now generates SVF2 derivatives. SVF2 Object IDs may not be compatible with the SVF Object IDs previously generated by the BIM 360 Docs service. Setting this header to fallback may resolve backward compatibility issues resulting from Object IDs of legacy SVF derivatives being retained on the client side. \n3. If you use this parameter with one derivative (URN), you must use it consistently across the following: \n\n   - `Create Translation Job </en/docs/model-derivative/v2/reference/http/job-POST>`_ (for OBJ output) \n   - `Fetch Object Tree </en/docs/model-derivative/v2/reference/http/urn-metadata-modelguid-GET>`_\n   - `Fetch All Properties </en/docs/model-derivative/v2/reference/http/urn-metadata-guid-properties-GET>`_\n   - `Fetch Specific Properties <en/docs/model-derivative/v2/reference/http/metadata/urn-metadata-guid-properties-query-POST>`_\n",
+                "key": "x-ads-derivative-format",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"offset\": \"<number>\",\n    \"limit\": \"<number>\"\n  },\n  \"query\": {\n    \"$in\": [\n      \"<object>\",\n      \"<object>\"\n    ]\n  },\n  \"fields\": \"<object>\",\n  \"payload\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "34d0c217-758e-43db-b93a-1012f5af4ba4",
+              "name": "The requested properties were retrieved successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "modelderivative",
+                    "v2",
+                    "designdata",
+                    ":urn",
+                    "metadata",
+                    ":modelGuid",
+                    "properties:query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "urn",
+                      "description": "(Required) The URL-safe Base64 encoded URN of the source design."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "modelGuid",
+                      "description": "(Required) The ID of the Model View you are querying. Use the `List Model Views </en/docs/model-derivative/v2/reference/http/metadata/urn-metadata-GET>`_ operation to get the IDs of the Model Views in the source design."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A comma separated list of the algorithms you want the response to be encoded in, specified in the order of preference.  \n\nIf you specify ``gzip`` or ``*``, content is compressed and returned in gzip format.\n",
+                    "key": "Accept-Encoding",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies the data center where the manifest and derivatives of the specified source design are stored. Possible values are:\n\n- ``US`` - (Default) Data center for the US region.\n- ``EMEA`` - Data center for the European Union, Middle East, and Africa. \n- ``AUS`` - Data center for the Australia region.\n- ``CAN`` - Data center for the Canada region.\n- ``DEU`` - Data center for the Germany region.\n- ``IND`` - Data center for the India region.\n- ``JPN`` - Data center for the Japan region.\n- ``GBR``  - Data center for the United Kingdom region.\n",
+                    "key": "region",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies what Object IDs to return, if the design has legacy SVF derivatives generated by the BIM Docs service. Possible values are:  \n\n- ``latest`` - (Default) Return SVF2 Object IDs. \n- ``fallback`` - Return SVF Object IDs.  \n\n**Note:**  \n\n1. This parameter applies only to designs with legacy SVF derivatives generated by the BIM 360 Docs service. \n2. The BIM 360 Docs service now generates SVF2 derivatives. SVF2 Object IDs may not be compatible with the SVF Object IDs previously generated by the BIM 360 Docs service. Setting this header to fallback may resolve backward compatibility issues resulting from Object IDs of legacy SVF derivatives being retained on the client side. \n3. If you use this parameter with one derivative (URN), you must use it consistently across the following: \n\n   - `Create Translation Job </en/docs/model-derivative/v2/reference/http/job-POST>`_ (for OBJ output) \n   - `Fetch Object Tree </en/docs/model-derivative/v2/reference/http/urn-metadata-modelguid-GET>`_\n   - `Fetch All Properties </en/docs/model-derivative/v2/reference/http/urn-metadata-guid-properties-GET>`_\n   - `Fetch Specific Properties <en/docs/model-derivative/v2/reference/http/metadata/urn-metadata-guid-properties-query-POST>`_\n",
+                    "key": "x-ads-derivative-format",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pagination\": {\n    \"offset\": \"<number>\",\n    \"limit\": \"<number>\"\n  },\n  \"query\": {\n    \"$in\": [\n      \"<object>\",\n      \"<object>\"\n    ]\n  },\n  \"fields\": \"<object>\",\n  \"payload\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The service identifier. Comprises of the service name, version, and environment.",
+                  "key": "x-ads-app-identifier",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "The service startup time, in the following date format: ``EEE MMM dd HH:mm:ss Z yyyy``.",
+                  "key": "x-ads-startup-time",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "The amount of time spent servicing the request, in milliseconds.",
+                  "key": "x-ads-duration",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Provides information about server failures, if any.",
+                  "key": "x-ads-troubleshooting",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Size in bytes of the request data. Additionally, the system uses this information to determine if a 413 (content too large) response is returned.",
+                  "key": "x-ads-size",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pagination\": {\n    \"limit\": 1521.3738815894862,\n    \"offset\": 2362.6982172529774,\n    \"totalResults\": 6810.007848179438\n  },\n  \"data\": {\n    \"data\": {\n      \"type\": \"string\",\n      \"collection\": [\n        {\n          \"objectid\": 1019.1025543596577,\n          \"name\": \"string\",\n          \"externalId\": \"string\",\n          \"properties\": {\n            \"key_0\": {},\n            \"key_1\": {},\n            \"key_2\": {}\n          }\n        }\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ed73235f-e73a-4712-9623-1d6c80e46881",
+              "name": "Request was accepted but processing is not complete. Repeat until you receive an HTTP status of ``200``.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "modelderivative",
+                    "v2",
+                    "designdata",
+                    ":urn",
+                    "metadata",
+                    ":modelGuid",
+                    "properties:query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "urn",
+                      "description": "(Required) The URL-safe Base64 encoded URN of the source design."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "modelGuid",
+                      "description": "(Required) The ID of the Model View you are querying. Use the `List Model Views </en/docs/model-derivative/v2/reference/http/metadata/urn-metadata-GET>`_ operation to get the IDs of the Model Views in the source design."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A comma separated list of the algorithms you want the response to be encoded in, specified in the order of preference.  \n\nIf you specify ``gzip`` or ``*``, content is compressed and returned in gzip format.\n",
+                    "key": "Accept-Encoding",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies the data center where the manifest and derivatives of the specified source design are stored. Possible values are:\n\n- ``US`` - (Default) Data center for the US region.\n- ``EMEA`` - Data center for the European Union, Middle East, and Africa. \n- ``AUS`` - Data center for the Australia region.\n- ``CAN`` - Data center for the Canada region.\n- ``DEU`` - Data center for the Germany region.\n- ``IND`` - Data center for the India region.\n- ``JPN`` - Data center for the Japan region.\n- ``GBR``  - Data center for the United Kingdom region.\n",
+                    "key": "region",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies what Object IDs to return, if the design has legacy SVF derivatives generated by the BIM Docs service. Possible values are:  \n\n- ``latest`` - (Default) Return SVF2 Object IDs. \n- ``fallback`` - Return SVF Object IDs.  \n\n**Note:**  \n\n1. This parameter applies only to designs with legacy SVF derivatives generated by the BIM 360 Docs service. \n2. The BIM 360 Docs service now generates SVF2 derivatives. SVF2 Object IDs may not be compatible with the SVF Object IDs previously generated by the BIM 360 Docs service. Setting this header to fallback may resolve backward compatibility issues resulting from Object IDs of legacy SVF derivatives being retained on the client side. \n3. If you use this parameter with one derivative (URN), you must use it consistently across the following: \n\n   - `Create Translation Job </en/docs/model-derivative/v2/reference/http/job-POST>`_ (for OBJ output) \n   - `Fetch Object Tree </en/docs/model-derivative/v2/reference/http/urn-metadata-modelguid-GET>`_\n   - `Fetch All Properties </en/docs/model-derivative/v2/reference/http/urn-metadata-guid-properties-GET>`_\n   - `Fetch Specific Properties <en/docs/model-derivative/v2/reference/http/metadata/urn-metadata-guid-properties-query-POST>`_\n",
+                    "key": "x-ads-derivative-format",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pagination\": {\n    \"offset\": \"<number>\",\n    \"limit\": \"<number>\"\n  },\n  \"query\": {\n    \"$in\": [\n      \"<object>\",\n      \"<object>\"\n    ]\n  },\n  \"fields\": \"<object>\",\n  \"payload\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://developer.api.autodesk.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "grant_type",
+        "value": "client_credentials"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "8e8ce382-ddf6-4a1d-b614-cbfccc10c9ba",
+    "name": "Construction.Account.Admin Account Management Metadata API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Account Admin API automates creating and managing projects, assigning and managing project users, and managing member and partner company directories. You can also synchronize data with external systems.\n\n\nContact Support:\n Name: Autodesk Plaform Services\n Email: aps.help@autodesk.com",
+      "type": "text/plain"
+    }
+  }
+}

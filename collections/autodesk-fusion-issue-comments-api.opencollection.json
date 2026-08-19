@@ -1,0 +1,131 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Construction.Account.Admin Account Management Issue Comments API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "client_credentials",
+      "accessTokenUrl": "",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Issue Comments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Your GET endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developer.api.autodesk.com/construction/issues/v1/projects/:projectId/issues/:issueId/comments",
+            "headers": [
+              {
+                "name": "x-ads-region",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the project."
+              },
+              {
+                "name": "issueId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the issue."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Add limit=20 to limit the results count (together with the offset to support pagination)."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Add offset=20 to get partial results (together with the limit to support pagination)."
+              },
+              {
+                "name": "sortBy",
+                "value": "",
+                "type": "query",
+                "description": "Sort issue comments by specified fields. Separate multiple values with commas. To sort in descending order add a - (minus sign) before the sort criteria"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get all the comments for a specific issue."
+        },
+        {
+          "info": {
+            "name": "CreateComments",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://developer.api.autodesk.com/construction/issues/v1/projects/:projectId/issues/:issueId/comments",
+            "headers": [
+              {
+                "name": "x-ads-region",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the project."
+              },
+              {
+                "name": "issueId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the issue."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Creates a new comment under a specific issue."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

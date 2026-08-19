@@ -1,0 +1,339 @@
+{
+  "item": [
+    {
+      "id": "aaa0f83f-e61e-4b29-be3c-dc4369e1fad3",
+      "name": "Manifest",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7dd894b2-e696-4556-a082-72a447093975",
+          "name": "Fetch Manifest",
+          "request": {
+            "name": "Fetch Manifest",
+            "description": {
+              "content": "Retrieves the manifest of the specified source design.\n\nThe manifest is a JSON file containing information about all the derivatives translated from the specified source design. It contains information such as the URNs of the derivatives, the translation status of each derivative, and much more.\n\nThe first time you translate a source design, the Model Derivative service creates a manifest for that design. Thereafter, every time you translate that source design, even to a different format, the Model Derivative service updates the same manifest. It does not create a new manifest. Instead, the manifest acts like a central registry for all the derivatives of your source design created through the Model Derivative service.  \n\nWhen the Model Derivative service starts a translation job (as a result of a request you make using `Create Translation Job </en/docs/model-derivative/v2/reference/http/jobs/job-POST/>`_), it keeps on updating the manifest at regular intervals. So, you can use the manifest to check the status and progress of each derivative that is being generated. When multiple derivatives have been requested each derivative may complete at a different time. So, each derivative has its own ``status`` attribute. The manifest also contains an overall ``status`` attribute. The overall ``status`` becomes ``complete`` when the ``status`` of all individual derivatives become complete.\n\nOnce the translation status of a derivative is ``complete`` you can download the derivative.\n\n**Note:** You cannot download 3D SVF2 derivatives.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "modelderivative",
+                "v2",
+                "designdata",
+                ":urn",
+                "manifest"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "urn",
+                  "description": "(Required) The URL-safe Base64 encoded URN of the source design."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "A comma separated list of the algorithms you want the response to be encoded in, specified in the order of preference.  \n\nIf you specify ``gzip`` or ``*``, content is compressed and returned in gzip format.\n",
+                "key": "Accept-Encoding",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Specifies the data center where the manifest and derivatives of the specified source design are stored. Possible values are:\n\n- ``US`` - (Default) Data center for the US region.\n- ``EMEA`` - Data center for the European Union, Middle East, and Africa. \n- ``AUS`` - Data center for the Australia region.\n- ``CAN`` - Data center for the Canada region.\n- ``DEU`` - Data center for the Germany region.\n- ``IND`` - Data center for the India region.\n- ``JPN`` - Data center for the Japan region.\n- ``GBR``  - Data center for the United Kingdom region.\n",
+                "key": "region",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "1eb84476-951e-4d38-bde2-fbe94658600a",
+              "name": "Manifest was retrieved successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "modelderivative",
+                    "v2",
+                    "designdata",
+                    ":urn",
+                    "manifest"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "urn",
+                      "description": "(Required) The URL-safe Base64 encoded URN of the source design."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A comma separated list of the algorithms you want the response to be encoded in, specified in the order of preference.  \n\nIf you specify ``gzip`` or ``*``, content is compressed and returned in gzip format.\n",
+                    "key": "Accept-Encoding",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies the data center where the manifest and derivatives of the specified source design are stored. Possible values are:\n\n- ``US`` - (Default) Data center for the US region.\n- ``EMEA`` - Data center for the European Union, Middle East, and Africa. \n- ``AUS`` - Data center for the Australia region.\n- ``CAN`` - Data center for the Canada region.\n- ``DEU`` - Data center for the Germany region.\n- ``IND`` - Data center for the India region.\n- ``JPN`` - Data center for the Japan region.\n- ``GBR``  - Data center for the United Kingdom region.\n",
+                    "key": "region",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "key": "x-ads-app-identifier",
+                  "value": "string",
+                  "description": ""
+                },
+                {
+                  "disabled": false,
+                  "key": "x-ads-startup-time",
+                  "value": "string",
+                  "description": ""
+                },
+                {
+                  "disabled": false,
+                  "key": "x-ads-duration",
+                  "value": "string",
+                  "description": ""
+                },
+                {
+                  "disabled": false,
+                  "key": "x-ads-troubleshooting",
+                  "value": "string",
+                  "description": ""
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"urn\": \"string\",\n  \"derivatives\": [\n    {\n      \"name\": \"strin\",\n      \"hasThumbnail\": \"string\",\n      \"progress\": \"string\",\n      \"outputType\": \"string\",\n      \"status\": \"string\",\n      \"properties\": {},\n      \"messages\": [\n        {\n          \"type\": \"string\",\n          \"code\": \"string\",\n          \"message\": {}\n        },\n        {\n          \"type\": \"string\",\n          \"code\": \"string\",\n          \"message\": {}\n        }\n      ],\n      \"children\": [\n        {\n          \"guid\": \"string\",\n          \"type\": \"string\",\n          \"role\": \"string\",\n          \"status\": \"string\",\n          \"urn\": \"string\",\n          \"mime\": \"string\",\n          \"viewableID\": \"string\",\n          \"name\": \"string\",\n          \"hasThumbnail\": \"string\",\n          \"progress\": \"string\",\n          \"phaseNames\": {},\n          \"phaseIds\": {},\n          \"camera\": [\n            1759.0408675981873,\n            5334.435755346533\n          ],\n          \"resolution\": [\n            8242,\n            2766\n          ],\n          \"messages\": [\n            {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"code\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"message\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"code\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"message\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"children\": [\n            {\n              \"value\": \"<Circular reference to #/components/schemas/ManifestResources detected>\"\n            },\n            {\n              \"value\": \"<Circular reference to #/components/schemas/ManifestResources detected>\"\n            }\n          ]\n        },\n        {\n          \"guid\": \"str\",\n          \"type\": \"string\",\n          \"role\": \"string\",\n          \"status\": \"string\",\n          \"urn\": \"string\",\n          \"mime\": \"string\",\n          \"viewableID\": \"string\",\n          \"name\": \"string\",\n          \"hasThumbnail\": \"string\",\n          \"progress\": \"string\",\n          \"phaseNames\": {},\n          \"phaseIds\": {},\n          \"camera\": [\n            3053.539254930938,\n            5658.328909811337\n          ],\n          \"resolution\": [\n            6380,\n            6439\n          ],\n          \"messages\": [\n            {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"code\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"message\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"code\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"message\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"children\": [\n            {\n              \"value\": \"<Circular reference to #/components/schemas/ManifestResources detected>\"\n            },\n            {\n              \"value\": \"<Circular reference to #/components/schemas/ManifestResources detected>\"\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"name\": \"string\",\n      \"hasThumbnail\": \"string\",\n      \"progress\": \"string\",\n      \"outputType\": \"str\",\n      \"status\": \"strin\",\n      \"properties\": {},\n      \"messages\": [\n        {\n          \"type\": \"string\",\n          \"code\": \"string\",\n          \"message\": {}\n        },\n        {\n          \"type\": \"string\",\n          \"code\": \"string\",\n          \"message\": {}\n        }\n      ],\n      \"children\": [\n        {\n          \"guid\": \"string\",\n          \"type\": \"string\",\n          \"role\": \"string\",\n          \"status\": \"string\",\n          \"urn\": \"string\",\n          \"mime\": \"string\",\n          \"viewableID\": \"string\",\n          \"name\": \"string\",\n          \"hasThumbnail\": \"string\",\n          \"progress\": \"string\",\n          \"phaseNames\": {},\n          \"phaseIds\": {},\n          \"camera\": [\n            279.9154763180789,\n            2742.4782256256817\n          ],\n          \"resolution\": [\n            762,\n            562\n          ],\n          \"messages\": [\n            {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"code\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"message\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"code\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"message\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"children\": [\n            {\n              \"value\": \"<Circular reference to #/components/schemas/ManifestResources detected>\"\n            },\n            {\n              \"value\": \"<Circular reference to #/components/schemas/ManifestResources detected>\"\n            }\n          ]\n        },\n        {\n          \"guid\": \"string\",\n          \"type\": \"string\",\n          \"role\": \"string\",\n          \"status\": \"string\",\n          \"urn\": \"string\",\n          \"mime\": \"string\",\n          \"viewableID\": \"string\",\n          \"name\": \"string\",\n          \"hasThumbnail\": \"string\",\n          \"progress\": \"string\",\n          \"phaseNames\": {},\n          \"phaseIds\": {},\n          \"camera\": [\n            6346.1270424728655,\n            1254.125348096653\n          ],\n          \"resolution\": [\n            9235,\n            2676\n          ],\n          \"messages\": [\n            {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"code\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"message\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"code\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"message\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"children\": [\n            {\n              \"value\": \"<Circular reference to #/components/schemas/ManifestResources detected>\"\n            },\n            {\n              \"value\": \"<Circular reference to #/components/schemas/ManifestResources detected>\"\n            }\n          ]\n        }\n      ]\n    }\n  ],\n  \"hasThumbnail\": \"string\",\n  \"progress\": \"string\",\n  \"type\": \"string\",\n  \"region\": \"string\",\n  \"version\": \"string\",\n  \"status\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a357ee60-a3a5-48d7-881e-fe875877db81",
+          "name": "Delete Manifest",
+          "request": {
+            "name": "Delete Manifest",
+            "description": {
+              "content": "Deletes the manifest of the specified source design. It also deletes all derivatives (translated output files) generated from the source design. However, it does not delete the source design.\n\n**Note:** This operation is idempotent. So, if you call it multiple times, even when no manifest exists, will still return a successful response (200).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "modelderivative",
+                "v2",
+                "designdata",
+                ":urn",
+                "manifest"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "urn",
+                  "description": "(Required) The URL-safe Base64 encoded URN of the source design."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Specifies the data center where the manifest and derivatives of the specified source design are stored. Possible values are:\n\n- ``US`` - (Default) Data center for the US region.\n- ``EMEA`` - Data center for the European Union, Middle East, and Africa. \n- ``AUS`` - Data center for the Australia region.\n- ``CAN`` - Data center for the Canada region.\n- ``DEU`` - Data center for the Germany region.\n- ``IND`` - Data center for the India region.\n- ``JPN`` - Data center for the Japan region.\n- ``GBR``  - Data center for the United Kingdom region.\n",
+                "key": "region",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "23e91d81-7cc9-4633-902d-16cb7628f928",
+              "name": "Success.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "modelderivative",
+                    "v2",
+                    "designdata",
+                    ":urn",
+                    "manifest"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "urn",
+                      "description": "(Required) The URL-safe Base64 encoded URN of the source design."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies the data center where the manifest and derivatives of the specified source design are stored. Possible values are:\n\n- ``US`` - (Default) Data center for the US region.\n- ``EMEA`` - Data center for the European Union, Middle East, and Africa. \n- ``AUS`` - Data center for the Australia region.\n- ``CAN`` - Data center for the Canada region.\n- ``DEU`` - Data center for the Germany region.\n- ``IND`` - Data center for the India region.\n- ``JPN`` - Data center for the Japan region.\n- ``GBR``  - Data center for the United Kingdom region.\n",
+                    "key": "region",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The service identifier. Comprises of the service name, version, and environment.",
+                  "key": "x-ads-app-identifier",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "The service startup time, in the following date format: ``EEE MMM dd HH:mm:ss Z yyyy``.",
+                  "key": "x-ads-startup-time",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "The amount of time spent servicing the request, in milliseconds.",
+                  "key": "x-ads-duration",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"result\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://developer.api.autodesk.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "grant_type",
+        "value": "client_credentials"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "afa79a66-d3d5-4f6b-aeef-d67b63b2e610",
+    "name": "Construction.Account.Admin Account Management Manifest API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Account Admin API automates creating and managing projects, assigning and managing project users, and managing member and partner company directories. You can also synchronize data with external systems.\n\n\nContact Support:\n Name: Autodesk Plaform Services\n Email: aps.help@autodesk.com",
+      "type": "text/plain"
+    }
+  }
+}

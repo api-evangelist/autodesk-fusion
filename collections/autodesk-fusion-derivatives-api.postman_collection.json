@@ -1,0 +1,458 @@
+{
+  "item": [
+    {
+      "id": "b5873935-7ad4-4c17-af97-cf7fbaa104e3",
+      "name": "Derivatives",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "26f949b6-7a8d-49ed-bce7-892f00520014",
+          "name": "Fetch Derivative Download URL",
+          "request": {
+            "name": "Fetch Derivative Download URL",
+            "description": {
+              "content": "Returns a download URL and a set of signed cookies, which lets you securely download the derivative specified by the ``derivativeUrn`` URI parameter. The signed cookies have a lifetime of 6 hours. You can use range headers with the returned download URL to download the derivative in chunks, in parallel.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "modelderivative",
+                "v2",
+                "designdata",
+                ":urn",
+                "manifest",
+                ":derivativeUrn",
+                "signedcookies"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "minutes-expiration",
+                  "value": "<integer>",
+                  "description": "Specifies how many minutes the signed cookies should remain valid. Default value is 360 minutes. The value you specify must be lower than the default value for this parameter. If you specify a value greater than the default value, the Model Derivative service will return an error with an HTTP status code of ``400``."
+                },
+                {
+                  "disabled": false,
+                  "key": "response-content-disposition",
+                  "value": "<string>",
+                  "description": "The value that must be specified as the ``response-content-disposition`` query string parameter with the download URL. Must begin with ``attachment``. This value defaults to the default value corresponding to the derivative/file."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "derivativeUrn",
+                  "description": "(Required) The URL-encoded URN of the derivative. Use the `Fetch Manifest operation </en/docs/model-derivative/v2/reference/http/manifest/urn-manifest-GET/>`_to obtain the URNs of derivatives for the specified source design."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "urn",
+                  "description": "(Required) The URL-safe Base64 encoded URN of the source design."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Specifies the data center where the manifest and derivatives of the specified source design are stored. Possible values are:\n\n- ``US`` - (Default) Data center for the US region.\n- ``EMEA`` - Data center for the European Union, Middle East, and Africa. \n- ``AUS`` - Data center for the Australia region.\n- ``CAN`` - Data center for the Canada region.\n- ``DEU`` - Data center for the Germany region.\n- ``IND`` - Data center for the India region.\n- ``JPN`` - Data center for the Japan region.\n- ``GBR``  - Data center for the United Kingdom region.\n",
+                "key": "region",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "4c546ee9-75e9-4e69-8369-f390beeaa1b8",
+              "name": "Successfully retrieved the download URL of the specified derivative.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "modelderivative",
+                    "v2",
+                    "designdata",
+                    ":urn",
+                    "manifest",
+                    ":derivativeUrn",
+                    "signedcookies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "minutes-expiration",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "response-content-disposition",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "derivativeUrn",
+                      "description": "(Required) The URL-encoded URN of the derivative. Use the `Fetch Manifest operation </en/docs/model-derivative/v2/reference/http/manifest/urn-manifest-GET/>`_to obtain the URNs of derivatives for the specified source design."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "urn",
+                      "description": "(Required) The URL-safe Base64 encoded URN of the source design."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies the data center where the manifest and derivatives of the specified source design are stored. Possible values are:\n\n- ``US`` - (Default) Data center for the US region.\n- ``EMEA`` - Data center for the European Union, Middle East, and Africa. \n- ``AUS`` - Data center for the Australia region.\n- ``CAN`` - Data center for the Canada region.\n- ``DEU`` - Data center for the Germany region.\n- ``IND`` - Data center for the India region.\n- ``JPN`` - Data center for the Japan region.\n- ``GBR``  - Data center for the United Kingdom region.\n",
+                    "key": "region",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Denotes the size of the derivative, in bytes.",
+                  "key": "Content-Length",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "The service identifier. Comprises of the service name, version, and environment.",
+                  "key": "x-ads-app-identifier",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "The service startup time, in the following date format: ``EEE MMM dd HH:mm:ss Z yyyy``.",
+                  "key": "x-ads-startup-time",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "The amount of time spent servicing the request, in milliseconds.",
+                  "key": "x-ads-duration",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Signed cookie to use with download URL. There will be three headers in the response named Set-Cookie",
+                  "key": "Set-Cookie",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"etag\": \"string\",\n  \"size\": 2263.9915127208633,\n  \"url\": \"string\",\n  \"content-type\": \"string\",\n  \"expiration\": 6741.361785686926\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c1126b12-e63c-40be-9908-7aa3134af1a4",
+          "name": "Check Derivative Details",
+          "request": {
+            "name": "Check Derivative Details",
+            "description": {
+              "content": "Returns information about the specified derivative.\n\nUse this operation to determine the total content length of a derivative before you download it. If the derivative is large, you can choose to download the derivative in chunks, by specifying a chunk size using the ``Range`` header parameter.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "modelderivative",
+                "v2",
+                "designdata",
+                ":urn",
+                "manifest",
+                ":derivativeUrn"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "urn",
+                  "description": "(Required) The URL-safe Base64 encoded URN of the source design."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "derivativeUrn",
+                  "description": "(Required) The URL-encoded URN of the derivative. Check the manifest of the source design to get the URNs of the derivatives available for download."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Specifies the data center where the manifest and derivatives of the specified source design are stored. Possible values are:\n\n- ``US`` - (Default) Data center for the US region.\n- ``EMEA`` - Data center for the European Union, Middle East, and Africa. \n- ``AUS`` - Data center for the Australia region.\n- ``CAN`` - Data center for the Canada region.\n- ``DEU`` - Data center for the Germany region.\n- ``IND`` - Data center for the India region.\n- ``JPN`` - Data center for the Japan region.\n- ``GBR``  - Data center for the United Kingdom region.\n",
+                "key": "region",
+                "value": "<string>"
+              }
+            ],
+            "method": "HEAD",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "25004304-d522-4936-a344-c0265221385e",
+              "name": "Information about the specified derivative was successfully returned.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "modelderivative",
+                    "v2",
+                    "designdata",
+                    ":urn",
+                    "manifest",
+                    ":derivativeUrn"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "urn",
+                      "description": "(Required) The URL-safe Base64 encoded URN of the source design."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "derivativeUrn",
+                      "description": "(Required) The URL-encoded URN of the derivative. Check the manifest of the source design to get the URNs of the derivatives available for download."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies the data center where the manifest and derivatives of the specified source design are stored. Possible values are:\n\n- ``US`` - (Default) Data center for the US region.\n- ``EMEA`` - Data center for the European Union, Middle East, and Africa. \n- ``AUS`` - Data center for the Australia region.\n- ``CAN`` - Data center for the Canada region.\n- ``DEU`` - Data center for the Germany region.\n- ``IND`` - Data center for the India region.\n- ``JPN`` - Data center for the Japan region.\n- ``GBR``  - Data center for the United Kingdom region.\n",
+                    "key": "region",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "HEAD",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Denotes the size of the specified derivative, in bytes.",
+                  "key": "Content-Length",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "The service identifier. Comprises of the service name, version, and environment.",
+                  "key": "x-ads-app-identifier",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "The service startup time, in the following date format: ``EEE MMM dd HH:mm:ss Z yyyy``.",
+                  "key": "x-ads-startup-time",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "The amount of time spent servicing the request, in milliseconds.",
+                  "key": "x-ads-duration",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Provides information about server failures, if any.",
+                  "key": "x-ads-troubleshooting",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "fcf5defd-6324-4ef5-93db-2be345f78bf1",
+              "name": "Request was accepted but processing is not complete. Repeat until you receive an HTTP status of ``200``.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "modelderivative",
+                    "v2",
+                    "designdata",
+                    ":urn",
+                    "manifest",
+                    ":derivativeUrn"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "urn",
+                      "description": "(Required) The URL-safe Base64 encoded URN of the source design."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "derivativeUrn",
+                      "description": "(Required) The URL-encoded URN of the derivative. Check the manifest of the source design to get the URNs of the derivatives available for download."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies the data center where the manifest and derivatives of the specified source design are stored. Possible values are:\n\n- ``US`` - (Default) Data center for the US region.\n- ``EMEA`` - Data center for the European Union, Middle East, and Africa. \n- ``AUS`` - Data center for the Australia region.\n- ``CAN`` - Data center for the Canada region.\n- ``DEU`` - Data center for the Germany region.\n- ``IND`` - Data center for the India region.\n- ``JPN`` - Data center for the Japan region.\n- ``GBR``  - Data center for the United Kingdom region.\n",
+                    "key": "region",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "HEAD",
+                "body": {}
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://developer.api.autodesk.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "grant_type",
+        "value": "client_credentials"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "1148b860-c464-468c-96d4-15709c4ed917",
+    "name": "Construction.Account.Admin Account Management Derivatives API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Account Admin API automates creating and managing projects, assigning and managing project users, and managing member and partner company directories. You can also synchronize data with external systems.\n\n\nContact Support:\n Name: Autodesk Plaform Services\n Email: aps.help@autodesk.com",
+      "type": "text/plain"
+    }
+  }
+}

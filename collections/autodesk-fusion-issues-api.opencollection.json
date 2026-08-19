@@ -1,0 +1,347 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Construction.Account.Admin Account Management Issues API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "client_credentials",
+      "accessTokenUrl": "",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Issues",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Your GET endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developer.api.autodesk.com/construction/issues/v1/projects/:projectId/issues",
+            "headers": [
+              {
+                "name": "x-ads-region",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the project."
+              },
+              {
+                "name": "filter[id]",
+                "value": "",
+                "type": "query",
+                "description": "Filter issues by the unique issue ID. Separate multiple values with commas."
+              },
+              {
+                "name": "filter[issueTypeId]",
+                "value": "",
+                "type": "query",
+                "description": "Filter issues by the unique identifier of the category of the issue. Note that the API name for category is type. Separate multiple values with commas."
+              },
+              {
+                "name": "filter[issueSubtypeId]",
+                "value": "",
+                "type": "query",
+                "description": "Filter issues by the unique identifier of the type of the issue. Note that the API name for type is subtype. Separate multiple values with commas."
+              },
+              {
+                "name": "filter[status]",
+                "value": "",
+                "type": "query",
+                "description": "Filter issues by their status. Separate multiple values with commas."
+              },
+              {
+                "name": "filter[linkedDocumentUrn]",
+                "value": "",
+                "type": "query",
+                "description": "Retrieves pushpin issues associated with the specified files. We support all file types that are compatible with the Files tool. You need to specify the URL-encoded file item IDs."
+              },
+              {
+                "name": "filter[dueDate]",
+                "value": "",
+                "type": "query",
+                "description": "Filter issues by due date, in one of the following URL-encoded format: YYYY-MM-DD. Separate multiple values with commas."
+              },
+              {
+                "name": "filter[startDate]",
+                "value": "",
+                "type": "query",
+                "description": "Filter issues by start date, in one of the following URL-encoded format: YYYY-MM-DD. Separate multiple values with commas."
+              },
+              {
+                "name": "filter[deleted]",
+                "value": "",
+                "type": "query",
+                "description": "Filter deleted issues. For example, filter[deleted]=true. If set to true it only returns deleted issues. If set to false it only returns undeleted issues. Note that we do not currently support returning both deleted and undeleted issues. Default value: false."
+              },
+              {
+                "name": "filter[createdAt]",
+                "value": "",
+                "type": "query",
+                "description": "Filter issues created at the specified date and time, in one of the following URL-encoded formats: YYYY-MM-DDThh:mm:ss.sz or YYYY-MM-DD. Separate multiple values with commas"
+              },
+              {
+                "name": "filter[createdBy]",
+                "value": "",
+                "type": "query",
+                "description": "Filter issues by the unique identifier of the user who created the issue. Separate multiple values with commas."
+              },
+              {
+                "name": "filter[updatedAt]",
+                "value": "",
+                "type": "query",
+                "description": "Filter issues updated at the specified date and time, in one of the following URL-encoded formats: YYYY-MM-DDThh:mm:ss.sz or YYYY-MM-DD. Separate multiple values with commas. "
+              },
+              {
+                "name": "filter[updatedBy]",
+                "value": "",
+                "type": "query",
+                "description": "Filter issues by the unique identifier of the user who updated the issue. Separate multiple values with commas."
+              },
+              {
+                "name": "filter[assignedTo]",
+                "value": "",
+                "type": "query",
+                "description": "Filter issues by the unique Autodesk ID of the User/Company/Role identifier of the current assignee of this issue. Separate multiple values with commas."
+              },
+              {
+                "name": "filter[rootCauseId]",
+                "value": "",
+                "type": "query",
+                "description": "Filter issues by the unique identifier of the type of root cause for the issue. Separate multiple values with commas."
+              },
+              {
+                "name": "filter[locationId]",
+                "value": "",
+                "type": "query",
+                "description": "Retrieves issues associated with the specified location but not the location’s sublocations. To also retrieve issues that relate to the locations’s sublocations use the sublocationId filter. Separate multiple values with commas."
+              },
+              {
+                "name": "filter[subLocationId]",
+                "value": "",
+                "type": "query",
+                "description": "Retrieves issues associated with the specified unique LBS (Location Breakdown Structure) identifier, as well as issues associated with the sub locations of the LBS identifier. Separate multiple values with commas."
+              },
+              {
+                "name": "filter[closedBy]",
+                "value": "",
+                "type": "query",
+                "description": "Filter issues by the unique identifier of the user who closed the issue. Separate multiple values with commas. For Example: A3RGM375QTZ7."
+              },
+              {
+                "name": "filter[closedAt]",
+                "value": "",
+                "type": "query",
+                "description": "Filter issues closed at the specified date and time, in one of the following URL-encoded formats: YYYY-MM-DDThh:mm:ss.sz or YYYY-MM-DD. Separate multiple values with commas."
+              },
+              {
+                "name": "filter[search]",
+                "value": "",
+                "type": "query",
+                "description": "Filter issues using ‘search’ criteria. this will filter both title and issues display ID. For example, use filter[search]=300"
+              },
+              {
+                "name": "filter[displayId]",
+                "value": "",
+                "type": "query",
+                "description": "Filter issues by the chronological user-friendly identifier. Separate multiple values with commas."
+              },
+              {
+                "name": "filter[assignedToType]",
+                "value": "",
+                "type": "query",
+                "description": "Filter issues by the type of the current assignee of this issue. Separate multiple values with commas. Possible values: Possible values: user, company, role, null. For Example: user."
+              },
+              {
+                "name": "filter[customAttributes]",
+                "value": "",
+                "type": "query",
+                "description": "Filter issues by the custom attributes. Each custom attribute filter should be defined by it’s uuid. For example: filter[customAttributes][f227d940-ae9b-4722-9297-389f4411f010]=1,2,3. Separate multiple values with commas."
+              },
+              {
+                "name": "filter[valid]",
+                "value": "",
+                "type": "query",
+                "description": "Only return valid issues (=no empty type/subtype). Default value: undefined (meaning will return both valid & invalid issues)."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Return specified number of issues. Acceptable values are 1-100. Default value: 100."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Return issues starting from the specified offset number. Default value: 0."
+              },
+              {
+                "name": "sortBy",
+                "value": "",
+                "type": "query",
+                "description": "Sort issue comments by specified fields. Separate multiple values with commas. To sort in descending order add a - (minus sign) before the sort criteria"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Return only specific fields in issue object. Separate multiple values with commas."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieves information about all the issues in a project, including details about their associated comments and attachments."
+        },
+        {
+          "info": {
+            "name": "createIssue",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://developer.api.autodesk.com/construction/issues/v1/projects/:projectId/issues",
+            "headers": [
+              {
+                "name": "x-ads-region",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the project."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Adds an issue to a project."
+        },
+        {
+          "info": {
+            "name": "Your GET endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developer.api.autodesk.com/construction/issues/v1/projects/:projectId/issues/:issueId",
+            "headers": [
+              {
+                "name": "x-ads-region",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the project."
+              },
+              {
+                "name": "issueId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the issue."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieves detailed information about a single issue. For general information about all the issues in a project."
+        },
+        {
+          "info": {
+            "name": "patchIssueDetails",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://developer.api.autodesk.com/construction/issues/v1/projects/:projectId/issues/:issueId",
+            "headers": [
+              {
+                "name": "x-ads-region",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the project."
+              },
+              {
+                "name": "issueId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the issue."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Updates an issue.\n\nTo verify whether a user can update issues for a specific project, call GET users/me.\n\nTo verify which attributes the user can update, call GET issues/:id and check the permittedAttributes and permittedStatuses lists."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,127 @@
+{
+  "item": [
+    {
+      "id": "59682317-2655-4099-b0d7-d2cfabdcf3d6",
+      "name": "Users",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "85ca3c13-bb51-47d3-a56f-2283932c4d50",
+          "name": "Get User Info",
+          "request": {
+            "name": "Get User Info",
+            "description": {
+              "content": "Retrieves information about the authenticated user.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "userinfo"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "grant_type",
+                  "value": "authorization_code"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "015b895d-35ad-444e-a311-0e3feaa89617",
+              "name": "Information about the currently logged in user was successfully returned.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "userinfo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"sub\": \"string\",\n  \"name\": \"string\",\n  \"given_name\": \"string\",\n  \"family_name\": \"string\",\n  \"preferred_username\": \"string\",\n  \"email\": \"string\",\n  \"email_verified\": true,\n  \"profile\": \"string\",\n  \"picture\": \"string\",\n  \"locale\": \"string\",\n  \"updated_at\": 6844,\n  \"is_2fa_enabled\": true,\n  \"country_code\": \"string\",\n  \"address\": {\n    \"street_address\": \"string\",\n    \"locality\": \"string\",\n    \"region\": \"string\",\n    \"postal_code\": \"string\",\n    \"country\": \"string\"\n  },\n  \"phone_number\": \"string\",\n  \"phone_number_verified\": true,\n  \"ldap_enabled\": true,\n  \"ldap_domain\": \"string\",\n  \"job_title\": \"string\",\n  \"industry\": \"string\",\n  \"industry_code\": \"string\",\n  \"about_me\": \"string\",\n  \"language\": \"string\",\n  \"company\": \"string\",\n  \"created_date\": \"string\",\n  \"last_login_date\": \"string\",\n  \"eidm_guid\": \"string\",\n  \"opt_in\": false,\n  \"social_userinfo_list\": [\n    {\n      \"socialUserId\": \"string\",\n      \"providerId\": \"string\",\n      \"providerName\": \"string\"\n    },\n    {\n      \"socialUserId\": \"string\",\n      \"providerId\": \"string\",\n      \"providerName\": \"string\"\n    }\n  ],\n  \"thumbnails\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://developer.api.autodesk.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "grant_type",
+        "value": "client_credentials"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "fab031ff-9ff2-46d7-825b-46493f7e430d",
+    "name": "Construction.Account.Admin Account Management Users API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Account Admin API automates creating and managing projects, assigning and managing project users, and managing member and partner company directories. You can also synchronize data with external systems.\n\n\nContact Support:\n Name: Autodesk Plaform Services\n Email: aps.help@autodesk.com",
+      "type": "text/plain"
+    }
+  }
+}

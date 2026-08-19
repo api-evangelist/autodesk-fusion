@@ -1,0 +1,471 @@
+{
+  "item": [
+    {
+      "id": "d6793a77-ba77-442c-9a3b-c914c7a503de",
+      "name": "Exchange Token",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8bc6e131-cc37-43ae-aa17-1e36bd36b6cd",
+          "name": "Exchanging JWT assertion for token",
+          "request": {
+            "name": "Exchanging JWT assertion for token",
+            "description": {
+              "content": "Returns a three-legged access token for the JWT assertion you provide in the request body. See the Developer's Guide topic JWT Assertions for information on how to generate a JWT assertion for this operation.\n\nThis operation is only for confidential clients. It requires Basic Authorization (client_id, client_secret). Authentication information (client_id, client_secret) can be included either in the header or the body, but not both simultaneously.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "authentication",
+                "v2",
+                "token"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "grant_type",
+                  "value": "<string>",
+                  "description": "(Required) Must be \"urn:ietf:params:oauth:grant-type:jwt-bearer\"."
+                },
+                {
+                  "disabled": false,
+                  "key": "assertion",
+                  "value": "<string>",
+                  "description": "(Required) The value of the JWT assertion."
+                },
+                {
+                  "disabled": false,
+                  "key": "client_id",
+                  "value": "<string>",
+                  "description": "This attribute is optional; it serves as an additional option where the client can either use the authorization header or opt to send this information in the body."
+                },
+                {
+                  "disabled": false,
+                  "key": "client_secret",
+                  "value": "<string>",
+                  "description": "This attribute is optional; it serves as an additional option where the client can either use the authorization header or opt to send this information in the body."
+                },
+                {
+                  "disabled": false,
+                  "key": "scope",
+                  "value": "<string>",
+                  "description": "This is a space-delimited list of scopes. The scope in the token endpoint request body should be a subset of or the same as the scope specified in the assertion. If the scope is not present, then the returned access token will have the same scope as the assertion."
+                },
+                {
+                  "disabled": false,
+                  "key": "scope",
+                  "value": "<string>",
+                  "description": "This is a space-delimited list of scopes. The scope in the token endpoint request body should be a subset of or the same as the scope specified in the assertion. If the scope is not present, then the returned access token will have the same scope as the assertion."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "9231a19f-866b-4f17-97e5-8b5d226925fb",
+              "name": "Successful request; access token returned.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authentication",
+                    "v2",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Must be Basic <credentials>, where <credentials> is a base64 encoded string of client_id:client_secret. This parameter is required only if client_id and client_secret are not provided in the request body.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Must be \"urn:ietf:params:oauth:grant-type:jwt-bearer\".",
+                        "type": "text/plain"
+                      },
+                      "key": "grant_type",
+                      "value": "urn:ietf:params:oauth:grant-type:jwt-bearer"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The value of the JWT assertion.",
+                        "type": "text/plain"
+                      },
+                      "key": "assertion",
+                      "value": "eyJraWQiOiI1ZGU5OTNmNC02MmIwLTQ5NWEtYTQzYS1iOTg5NmQ2ZTk1ODIiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJKbE85VEExempmSlFPR1hwSm1xOUpISlNJMEQ0VWtRNCIsInN1YiI6Ilo3NTJDVDVNS1cyUzlON0UiLCJhdWQiOiJodHRwczovL2RldmVsb3Blci5hcGkuYXV0b2Rlc2suY29tL2F1dGhlbnRpY2F0aW9uL3YyL3Rva2VuIiwiZXhwIjoxNzEwOTA3MTAwLCJzY29wZSI6WyJ1c2VyOnJlYWQiLCJkYXRhOnJlYWQiXX0.p9RNN28G38VCczbO6JgkTRfcb079_xDcDm2i4-HUqUdSZKre6jllx1IWhmwG0cm79EhC3OjJ0_zoPfKj2sP4lrPm27iXzd6x_SfD4LKS4zAJI2IERXjU05T9zWU4bfZWk0EinBysV0stvvEtZIBHczD_uAXCB5YLvyBX-O_kXqqkigNQupG9RsmE4GOjhG7pGLL_tdDYXkN46JAw-vMyXlhsdOntuZCjDOpcD4hsIueKwaqm6aLBKUTE1Htwpk0MUYmvl7AF03XDgWjhwRnJVOk_MkdF44bjSCAmsQ5uTYbWipUJjDqUy38b4xiRRRB0_qsg_kZ-DBOAFzUtYN6ilA"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"access_token\": \"string\",\n  \"token_type\": \"Bearer\",\n  \"expires_in\": 7205\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7dc3a018-d709-4f2c-bd03-1acca9d1d6a9",
+              "name": "Invalid request or invalid grant; ``grant_type`` or ``assertion`` attribute may be missing or invalid; or the service account is not in an enabled state. Make sure the attributes are correct and the service account is enabled.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authentication",
+                    "v2",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Must be Basic <credentials>, where <credentials> is a base64 encoded string of client_id:client_secret. This parameter is required only if client_id and client_secret are not provided in the request body.",
+                    "key": "Authorization",
+                    "value": "string"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Must be \"urn:ietf:params:oauth:grant-type:jwt-bearer\".",
+                        "type": "text/plain"
+                      },
+                      "key": "grant_type",
+                      "value": "urn:ietf:params:oauth:grant-type:jwt-bearer"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The value of the JWT assertion.",
+                        "type": "text/plain"
+                      },
+                      "key": "assertion",
+                      "value": "eyJraWQiOiI1ZGU5OTNmNC02MmIwLTQ5NWEtYTQzYS1iOTg5NmQ2ZTk1ODIiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJKbE85VEExempmSlFPR1hwSm1xOUpISlNJMEQ0VWtRNCIsInN1YiI6Ilo3NTJDVDVNS1cyUzlON0UiLCJhdWQiOiJodHRwczovL2RldmVsb3Blci5hcGkuYXV0b2Rlc2suY29tL2F1dGhlbnRpY2F0aW9uL3YyL3Rva2VuIiwiZXhwIjoxNzEwOTA3MTAwLCJzY29wZSI6WyJ1c2VyOnJlYWQiLCJkYXRhOnJlYWQiXX0.p9RNN28G38VCczbO6JgkTRfcb079_xDcDm2i4-HUqUdSZKre6jllx1IWhmwG0cm79EhC3OjJ0_zoPfKj2sP4lrPm27iXzd6x_SfD4LKS4zAJI2IERXjU05T9zWU4bfZWk0EinBysV0stvvEtZIBHczD_uAXCB5YLvyBX-O_kXqqkigNQupG9RsmE4GOjhG7pGLL_tdDYXkN46JAw-vMyXlhsdOntuZCjDOpcD4hsIueKwaqm6aLBKUTE1Htwpk0MUYmvl7AF03XDgWjhwRnJVOk_MkdF44bjSCAmsQ5uTYbWipUJjDqUy38b4xiRRRB0_qsg_kZ-DBOAFzUtYN6ilA"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5c9499b6-fa76-4849-9945-aff25bfa8282",
+              "name": "Invalid credentials; The client credentials are invalid. Make sure the correct client credentials are used.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authentication",
+                    "v2",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Must be Basic <credentials>, where <credentials> is a base64 encoded string of client_id:client_secret. This parameter is required only if client_id and client_secret are not provided in the request body.",
+                    "key": "Authorization",
+                    "value": "string"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Must be \"urn:ietf:params:oauth:grant-type:jwt-bearer\".",
+                        "type": "text/plain"
+                      },
+                      "key": "grant_type",
+                      "value": "urn:ietf:params:oauth:grant-type:jwt-bearer"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The value of the JWT assertion.",
+                        "type": "text/plain"
+                      },
+                      "key": "assertion",
+                      "value": "eyJraWQiOiI1ZGU5OTNmNC02MmIwLTQ5NWEtYTQzYS1iOTg5NmQ2ZTk1ODIiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJKbE85VEExempmSlFPR1hwSm1xOUpISlNJMEQ0VWtRNCIsInN1YiI6Ilo3NTJDVDVNS1cyUzlON0UiLCJhdWQiOiJodHRwczovL2RldmVsb3Blci5hcGkuYXV0b2Rlc2suY29tL2F1dGhlbnRpY2F0aW9uL3YyL3Rva2VuIiwiZXhwIjoxNzEwOTA3MTAwLCJzY29wZSI6WyJ1c2VyOnJlYWQiLCJkYXRhOnJlYWQiXX0.p9RNN28G38VCczbO6JgkTRfcb079_xDcDm2i4-HUqUdSZKre6jllx1IWhmwG0cm79EhC3OjJ0_zoPfKj2sP4lrPm27iXzd6x_SfD4LKS4zAJI2IERXjU05T9zWU4bfZWk0EinBysV0stvvEtZIBHczD_uAXCB5YLvyBX-O_kXqqkigNQupG9RsmE4GOjhG7pGLL_tdDYXkN46JAw-vMyXlhsdOntuZCjDOpcD4hsIueKwaqm6aLBKUTE1Htwpk0MUYmvl7AF03XDgWjhwRnJVOk_MkdF44bjSCAmsQ5uTYbWipUJjDqUy38b4xiRRRB0_qsg_kZ-DBOAFzUtYN6ilA"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "fa3446ba-9a0e-44cb-a82d-2398095c7c84",
+              "name": "Forbidden; The request was successfully validated but lacked the required permissions. Verify your credentials and permissions before you send this request again.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authentication",
+                    "v2",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Must be Basic <credentials>, where <credentials> is a base64 encoded string of client_id:client_secret. This parameter is required only if client_id and client_secret are not provided in the request body.",
+                    "key": "Authorization",
+                    "value": "string"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Must be \"urn:ietf:params:oauth:grant-type:jwt-bearer\".",
+                        "type": "text/plain"
+                      },
+                      "key": "grant_type",
+                      "value": "urn:ietf:params:oauth:grant-type:jwt-bearer"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The value of the JWT assertion.",
+                        "type": "text/plain"
+                      },
+                      "key": "assertion",
+                      "value": "eyJraWQiOiI1ZGU5OTNmNC02MmIwLTQ5NWEtYTQzYS1iOTg5NmQ2ZTk1ODIiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJKbE85VEExempmSlFPR1hwSm1xOUpISlNJMEQ0VWtRNCIsInN1YiI6Ilo3NTJDVDVNS1cyUzlON0UiLCJhdWQiOiJodHRwczovL2RldmVsb3Blci5hcGkuYXV0b2Rlc2suY29tL2F1dGhlbnRpY2F0aW9uL3YyL3Rva2VuIiwiZXhwIjoxNzEwOTA3MTAwLCJzY29wZSI6WyJ1c2VyOnJlYWQiLCJkYXRhOnJlYWQiXX0.p9RNN28G38VCczbO6JgkTRfcb079_xDcDm2i4-HUqUdSZKre6jllx1IWhmwG0cm79EhC3OjJ0_zoPfKj2sP4lrPm27iXzd6x_SfD4LKS4zAJI2IERXjU05T9zWU4bfZWk0EinBysV0stvvEtZIBHczD_uAXCB5YLvyBX-O_kXqqkigNQupG9RsmE4GOjhG7pGLL_tdDYXkN46JAw-vMyXlhsdOntuZCjDOpcD4hsIueKwaqm6aLBKUTE1Htwpk0MUYmvl7AF03XDgWjhwRnJVOk_MkdF44bjSCAmsQ5uTYbWipUJjDqUy38b4xiRRRB0_qsg_kZ-DBOAFzUtYN6ilA"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4e7dfa15-d261-4090-bf97-2ac22b29f6c6",
+              "name": "An unknown server-side error occurred. Please try again later. If the problem persists, please contact support.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authentication",
+                    "v2",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Must be Basic <credentials>, where <credentials> is a base64 encoded string of client_id:client_secret. This parameter is required only if client_id and client_secret are not provided in the request body.",
+                    "key": "Authorization",
+                    "value": "string"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Must be \"urn:ietf:params:oauth:grant-type:jwt-bearer\".",
+                        "type": "text/plain"
+                      },
+                      "key": "grant_type",
+                      "value": "urn:ietf:params:oauth:grant-type:jwt-bearer"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The value of the JWT assertion.",
+                        "type": "text/plain"
+                      },
+                      "key": "assertion",
+                      "value": "eyJraWQiOiI1ZGU5OTNmNC02MmIwLTQ5NWEtYTQzYS1iOTg5NmQ2ZTk1ODIiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJKbE85VEExempmSlFPR1hwSm1xOUpISlNJMEQ0VWtRNCIsInN1YiI6Ilo3NTJDVDVNS1cyUzlON0UiLCJhdWQiOiJodHRwczovL2RldmVsb3Blci5hcGkuYXV0b2Rlc2suY29tL2F1dGhlbnRpY2F0aW9uL3YyL3Rva2VuIiwiZXhwIjoxNzEwOTA3MTAwLCJzY29wZSI6WyJ1c2VyOnJlYWQiLCJkYXRhOnJlYWQiXX0.p9RNN28G38VCczbO6JgkTRfcb079_xDcDm2i4-HUqUdSZKre6jllx1IWhmwG0cm79EhC3OjJ0_zoPfKj2sP4lrPm27iXzd6x_SfD4LKS4zAJI2IERXjU05T9zWU4bfZWk0EinBysV0stvvEtZIBHczD_uAXCB5YLvyBX-O_kXqqkigNQupG9RsmE4GOjhG7pGLL_tdDYXkN46JAw-vMyXlhsdOntuZCjDOpcD4hsIueKwaqm6aLBKUTE1Htwpk0MUYmvl7AF03XDgWjhwRnJVOk_MkdF44bjSCAmsQ5uTYbWipUJjDqUy38b4xiRRRB0_qsg_kZ-DBOAFzUtYN6ilA"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://developer.api.autodesk.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "grant_type",
+        "value": "client_credentials"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "1f172af9-a73a-49ce-be08-773cc1875828",
+    "name": "Construction.Account.Admin Account Management Exchange Token API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Account Admin API automates creating and managing projects, assigning and managing project users, and managing member and partner company directories. You can also synchronize data with external systems.\n\n\nContact Support:\n Name: Autodesk Plaform Services\n Email: aps.help@autodesk.com",
+      "type": "text/plain"
+    }
+  }
+}

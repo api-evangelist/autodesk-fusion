@@ -1,0 +1,546 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Construction.Account.Admin Account Management Companies API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "client_credentials",
+      "accessTokenUrl": "",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Companies",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all companies in an account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developer.api.autodesk.com/hq/v1/accounts/:account_id/companies",
+            "headers": [
+              {
+                "name": "Region",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "The account ID of the company. This corresponds to hub ID in the Data Management API. To convert a hub ID into an account ID you need to remove the “b.” prefix. For example, a hub ID of b.c8b0c73d-3ae9 translates to an account ID of c8b0c73d-3ae9."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Response array’s size Default value: 10 Max limit: 100"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset of response array Default value: 0"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated fields to sort by in ascending order  Prepending a field with - sorts in descending order Invalid fields and whitespaces will be ignored"
+              },
+              {
+                "name": "field",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated fields to include in response  id will always be returned Invalid fields will be ignored"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Query all the partner companies in a specific BIM 360 account.\nNote that this endpoint is compatible with both BIM 360 and Autodesk Construction Cloud (ACC) projects."
+        },
+        {
+          "info": {
+            "name": "Create a new partner company",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://developer.api.autodesk.com/hq/v1/accounts/:account_id/companies",
+            "headers": [
+              {
+                "name": "Region",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "The account ID of the company. This corresponds to hub ID in the Data Management API. To convert a hub ID into an account ID you need to remove the “b.” prefix. For example, a hub ID of b.c8b0c73d-3ae9 translates to an account ID of c8b0c73d-3ae9."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Create a new partner company.\nNote that this endpoint is compatible with both BIM 360 and Autodesk Construction Cloud (ACC) projects."
+        },
+        {
+          "info": {
+            "name": "Bulk import partner companies",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://developer.api.autodesk.com/hq/v1/accounts/:account_id/companies/import",
+            "headers": [
+              {
+                "name": "Region",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "The account ID of the company. This corresponds to hub ID in the Data Management API. To convert a hub ID into an account ID you need to remove the “b.” prefix. For example, a hub ID of b.c8b0c73d-3ae9 translates to an account ID of c8b0c73d-3ae9."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Bulk import partner companies to the company directory in a specific BIM 360 account. (50 companies maximum can be included in each call.)\nNote that this endpoint is compatible with both BIM 360 and Autodesk Construction Cloud (ACC) projects."
+        },
+        {
+          "info": {
+            "name": "Get details of a company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developer.api.autodesk.com/hq/v1/accounts/:account_id/companies/:company_id",
+            "headers": [
+              {
+                "name": "Region",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "The account ID of the company."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Query the details of a specific partner company."
+        },
+        {
+          "info": {
+            "name": "Update the properties of company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://developer.api.autodesk.com/hq/v1/accounts/:account_id/companies/:company_id",
+            "headers": [
+              {
+                "name": "Region",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "The account ID of the company."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Update the properties of only the specified attributes of a specific partner company."
+        },
+        {
+          "info": {
+            "name": "Create or update a company’s image",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://developer.api.autodesk.com/hq/v1/accounts/:account_id/companies/:company_id/image",
+            "headers": [
+              {
+                "name": "Region",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "The account ID of the company."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "body",
+                  "value": ""
+                }
+              ]
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Create or update a specific partner company’s image."
+        },
+        {
+          "info": {
+            "name": "Search companies in account by name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developer.api.autodesk.com/hq/v1/accounts/:account_id/companies/search",
+            "headers": [
+              {
+                "name": "Region",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "The account ID of the company."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Company name to match Max length: 255"
+              },
+              {
+                "name": "trade",
+                "value": "",
+                "type": "query",
+                "description": "Company trade to match Max length: 255"
+              },
+              {
+                "name": "operator",
+                "value": "",
+                "type": "query",
+                "description": "Boolean operator to use: OR (default) or AND"
+              },
+              {
+                "name": "partial",
+                "value": "",
+                "type": "query",
+                "description": "If true (default), perform a fuzzy match"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Response array’s size Default value: 10 Max limit: 100"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset of response array Default value: 0"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated fields to sort by in ascending order"
+              },
+              {
+                "name": "field",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated fields to include in response"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Search partner companies in a specific BIM 360 account by name.\nNote that this endpoint is compatible with both BIM 360 and Autodesk Construction Cloud (ACC) projects."
+        },
+        {
+          "info": {
+            "name": "Get all companies in a project",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developer.api.autodesk.com/hq/v1/accounts/:account_id/projects/:project_id/companies",
+            "headers": [
+              {
+                "name": "Region",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "The account ID of the company."
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the project. "
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Response array’s size Default value: 10 Max limit: 100"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset of response array Default value: 0"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated fields to sort by in ascending order"
+              },
+              {
+                "name": "field",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated fields to include in response"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Query all the partner companies in a specific BIM 360 project.\nNote that this endpoint is compatible with both BIM 360 and Autodesk Construction Cloud (ACC) projects."
+        },
+        {
+          "info": {
+            "name": "Get account companies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developer.api.autodesk.com/construction/admin/v1/accounts/:accountId/companies",
+            "headers": [
+              {
+                "name": "Region",
+                "value": ""
+              },
+              {
+                "name": "User-Id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the ACC account that contains the project being created or the projects being retrieved. This corresponds to the hub ID in the Data Management API. To convert a hub ID into an account ID, remove the “b.\" prefix. For example, a hub ID of b.c8b0c73d-3ae9 translates to an account ID of c8b0c73d-3ae9."
+              },
+              {
+                "name": "filter[name]",
+                "value": "",
+                "type": "query",
+                "description": "Filter companies by name. Can be a partial match based on the value of filterTextMatch provided. Max length: 255"
+              },
+              {
+                "name": "filter[trade]",
+                "value": "",
+                "type": "query",
+                "description": "Filter companies by trade. Can be a partial match based on the value of filterTextMatch provided. Max length: 255"
+              },
+              {
+                "name": "filter[erpId]",
+                "value": "",
+                "type": "query",
+                "description": "Filter companies by ERP Id. Can be a partial match based on the value of filterTextMatch provided. Max length: 255"
+              },
+              {
+                "name": "filter[taxId]",
+                "value": "",
+                "type": "query",
+                "description": "Filter companies by tax Id. Can be a partial match based on the value of filterTextMatch provided. Max length: 255"
+              },
+              {
+                "name": "filter[updatedAt]",
+                "value": "",
+                "type": "query",
+                "description": "Filter companies by updated at date range. The range must be specified with dates in an ISO-8601 format with time required. The start and end dates of the range should be separated by .. One of the dates in the range may be omitted. For example, to get everything on or before June 1, 2019 the range would be ..2019-06-01T23:59:59.999Z. To get everything after June 1, 2019 the range would be 2019-06-01T00:00:00.000Z... Max length: 100"
+              },
+              {
+                "name": "orFilters",
+                "value": "",
+                "type": "query",
+                "description": "List of filtered fields to apply an “or” operator. Valid list of fields are erpId, name, taxId, trade, updatedAt."
+              },
+              {
+                "name": "filterTextMatch",
+                "value": "",
+                "type": "query",
+                "description": "Defines how text-based filters should match results. Possible values: contains (default) – Returns results where the text appears anywhere in the field. startsWith – Matches only if the field starts with the given value. endsWith – Matches only if the field ends with the given value. equals – Matches only if the field is an exact match."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "The list of fields to sort by. When multiple fields are listed the later property is used to sort the resources where the previous fields have the same value. Each property can be followed by a direction modifier of either asc (ascending) or desc (descending). If no direction is specified then asc is assumed. Valid fields for sorting are name, trade, erpId, taxId, status, createdAt, updatedAt, projectSize and userSize. Default sort is name."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields to return in the response. Defaults to all fields. Valid list of fields are accountId, name, trade, addresses, websiteUrl, description, erpId, taxId, imageUrl, status, createdAt, updatedAt, projectSize, userSize and originalName."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of records per request. Default: 20. Minimum: 1, Maximum: 200. If a value greater than 200 is provided, only 200 records are returned."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The record number to start returning results from, used for pagination. For example, if limit=20 and offset=20, the request retrieves the second page of results."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns a list of companies in an account.\r\n\r\nYou can also use this endpoint to filter out the list of companies by setting the filter parameters.\r\n\r\nNote that this endpoint is compatible with both BIM 360 and Autodesk Construction Cloud (ACC) projects."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

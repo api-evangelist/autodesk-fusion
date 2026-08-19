@@ -1,0 +1,155 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Construction.Account.Admin Account Management Buckets API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "client_credentials",
+      "accessTokenUrl": "",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Buckets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Buckets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developer.api.autodesk.com/oss/v2/buckets",
+            "params": [
+              {
+                "name": "region",
+                "value": "",
+                "type": "query",
+                "description": "Specifies where the bucket containing the object is stored. Possible values are:\n\n- ``US`` : (Default) Data center for the US region.\n- ``EMEA`` : Data center for the European Union, Middle East, and Africa.\n- ``AUS`` : (Beta) Data center for Australia.\n- ``CAN`` : Data center for the Canada region.\n- ``DEU`` : Data center for the Germany region.\n- ``IND`` : Data center for the India region.\n- ``JPN`` : Data center for the Japan region.\n- ``GBR`` : Data center for the United Kingdom region.\n\n**Note:** Beta features are subject to change. Please do not use in production environments."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of items you want per page.\nAcceptable values = 1-100. Default = 10.\n"
+              },
+              {
+                "name": "startAt",
+                "value": "",
+                "type": "query",
+                "description": "The ID of the last item that was returned in the previous result set.  It enables the system to return subsequent items starting from the next one after the specified ID.\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns a list of buckets owned by the application. \n"
+        },
+        {
+          "info": {
+            "name": "Create Bucket",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://developer.api.autodesk.com/oss/v2/buckets",
+            "headers": [
+              {
+                "name": "region",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Creates a bucket. \n\nBuckets are virtual container within the Object Storage Service (OSS), which you can use to store and manage objects (files) in the cloud. The application creating the bucket is the owner of the bucket.\n\n**Note:** Do not use this operation to create buckets for BIM360 Document Management. Use [POST projects/{project_id}/storage](/en/docs/data/v2/reference/http/projects-project_id-storage-POST>) instead. For details, see [Upload Files to BIM 360 Document Management](/en/docs/b"
+        },
+        {
+          "info": {
+            "name": "Delete Bucket",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://developer.api.autodesk.com/oss/v2/buckets/:bucketKey",
+            "params": [
+              {
+                "name": "bucketKey",
+                "value": "",
+                "type": "path",
+                "description": "The bucket key of the bucket to delete."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Deletes the specified bucket. Only the application that owns the bucket can call this operation. All other applications that call this operation will receive a \"403 Forbidden\" error. \n\nThe initial processing of a bucket deletion request can be time-consuming. So, we recommend only deleting buckets containing a few objects, like those typically used for acceptance testing and prototyping. \n\n**Note:** Bucket keys will not be immediately available for reuse. \n"
+        },
+        {
+          "info": {
+            "name": "Get Bucket Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developer.api.autodesk.com/oss/v2/buckets/:bucketKey/details",
+            "params": [
+              {
+                "name": "bucketKey",
+                "value": "",
+                "type": "path",
+                "description": "The bucket key of the bucket to query."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns detailed information about the specified bucket.\n\n**Note:** Only the application that owns the bucket can call this operation. All other applications that call this operation will receive a \"403 Forbidden\" error. \n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

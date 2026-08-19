@@ -1,0 +1,1428 @@
+{
+  "item": [
+    {
+      "id": "202c0594-5280-4ee0-84a0-ef736e983eb6",
+      "name": "Account Management",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8589558f-1a65-44f0-98bb-892896d87ef3",
+          "name": "Create Service Account",
+          "request": {
+            "name": "Create Service Account",
+            "description": {
+              "content": "Creates a service account. Only a server-to-server application can own service accounts.\n\nAn application can have up to 10 service accounts at any given time.\n\nUpon a successful response, the operation returns the service account ID and email address.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "authentication",
+                "v2",
+                "service-accounts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "58813a62-025f-45c4-bb0b-d574a2a3810f",
+              "name": "Successful request; the service account has been created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authentication",
+                    "v2",
+                    "service-accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"test-service-account\",\n  \"firstName\": \"ServiceAccount\",\n  \"lastName\": \"ServiceAccount\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"serviceAccountId\": \"EXAMPLE_SA_ID_001\",\n  \"email\": \"test-service-account@EXAMPLE_CLIENT_ID_32CHARXXXXXXXXXXXXXXXX.adskserviceaccount.autodesk.com\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ca2b8c62-0521-4ece-bc07-dca284ad8772",
+              "name": "The request could not be understood by the server due to malformed syntax.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authentication",
+                    "v2",
+                    "service-accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"test-service-account\",\n  \"firstName\": \"ServiceAccount\",\n  \"lastName\": \"ServiceAccount\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "eea15b7b-d906-438f-b134-40f947167b4c",
+              "name": "The access token is invalid. It may have either expired or may not be a two-legged access token. Please verify the token and retry the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authentication",
+                    "v2",
+                    "service-accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"test-service-account\",\n  \"firstName\": \"ServiceAccount\",\n  \"lastName\": \"ServiceAccount\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8973e2cf-5cdb-438c-b3e3-b3b3bb9bda71",
+              "name": "The provided Client ID is wrong or the number of service accounts that the application can have has reached the limit. Please verify the Client ID. If you've reached the limit, delete unused service accounts to create capacity.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authentication",
+                    "v2",
+                    "service-accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"test-service-account\",\n  \"firstName\": \"ServiceAccount\",\n  \"lastName\": \"ServiceAccount\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5fa2c1fb-38e7-401d-aa9e-570a8daf6c9f",
+              "name": "An unknown server-side error occurred. Please try again later. If the problem persists, please contact support.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authentication",
+                    "v2",
+                    "service-accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"test-service-account\",\n  \"firstName\": \"ServiceAccount\",\n  \"lastName\": \"ServiceAccount\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c7313acf-8808-460b-b73a-bd2dbcac5d88",
+          "name": "Get All Service Accounts",
+          "request": {
+            "name": "Get All Service Accounts",
+            "description": {
+              "content": "Retrieves all service accounts associated with an application.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "authentication",
+                "v2",
+                "service-accounts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c117941b-2267-442f-9fcc-b489b8390824",
+              "name": "Successful request; the service accounts have been retrieved.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authentication",
+                    "v2",
+                    "service-accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"serviceAccounts\": [\n    {\n      \"serviceAccountId\": \"EXAMPLE_SA_ID_001\",\n      \"email\": \"testserviceaccount1@EXAMPLE_CLIENT_ID_32CHARXXXXXXXXXXXXXXXX.adskserviceaccount.autodesk.com\",\n      \"createdBy\": \"EXAMPLE_CLIENT_ID_32CHARXXXXXXXXXXXXXXXX\",\n      \"status\": \"ENABLED\",\n      \"createdAt\": \"2024-01-25 03:08:04.156576834 +0000 UTC\",\n      \"accessedAt\": \"2024-01-25 03:08:04.156576834 +0000 UTC\",\n      \"expiresAt\": \"2025-01-25 03:08:04.156576834 +0000 UTC\"\n    },\n    {\n      \"serviceAccountId\": \"EXAMPLE_SA_ID_002\",\n      \"email\": \"testserviceaccount1@EXAMPLE_CLIENT_ID_32CHARXXXXXXXXXXXXXXXX.adskserviceaccount.autodesk.com\",\n      \"createdBy\": \"EXAMPLE_CLIENT_ID_32CHARXXXXXXXXXXXXXXXX\",\n      \"status\": \"DISABLED\",\n      \"createdAt\": \"2024-01-25 03:08:04.156576834 +0000 UTC\",\n      \"accessedAt\": \"2024-01-25 03:08:04.156576834 +0000 UTC\",\n      \"expiresAt\": \"2025-01-25 03:08:04.156576834 +0000 UTC\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "feaa5ddd-f9a1-46b8-85ab-be7cb15dc968",
+              "name": "Unauthorized; The token has expired, is invalid, or is not a two-legged token. Make sure a valid two-legged token is used.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authentication",
+                    "v2",
+                    "service-accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "85ded5ff-3cb6-41ec-a1ea-9bcbc645ff31",
+              "name": "Invalid client; The client is wrong. Make sure the correct client id is used.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authentication",
+                    "v2",
+                    "service-accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1ed0d8f6-cad5-49fb-8bd1-d9113f22e885",
+              "name": "An unknown server-side error occurred. Please try again later. If the problem persists, please contact support.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authentication",
+                    "v2",
+                    "service-accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2417347a-1805-4a58-9347-4945e1ab1775",
+          "name": "Get Service Account",
+          "request": {
+            "name": "Get Service Account",
+            "description": {
+              "content": "Retrieves the details for a service account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "authentication",
+                "v2",
+                "service-accounts",
+                ":serviceAccountId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "serviceAccountId",
+                  "description": "(Required) The Autodesk ID of the service account"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "16073ff6-7fee-4f70-8e28-9b9ac09d471e",
+              "name": "Successful request; the service account has been retrieved.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authentication",
+                    "v2",
+                    "service-accounts",
+                    ":serviceAccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serviceAccountId",
+                      "description": "(Required) The Autodesk ID of the service account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"serviceAccountId\": \"test-user-id-1\",\n  \"email\": \"test@EXAMPLE_CLIENT_ID_32CHARXXXXXXXXXXXXXXXX.adskserviceaccount.autodesk.com\",\n  \"createdBy\": \"EXAMPLE_CLIENT_ID_32CHARXXXXXXXXXXXXXXXX\",\n  \"status\": \"ENABLED\",\n  \"createdAt\": \"2024-01-25 03:08:04.156576834 +0000 UTC\",\n  \"accessedAt\": \"2024-01-25 03:08:04.156576834 +0000 UTC\",\n  \"expiresAt\": \"2025-01-25 03:08:04.156576834 +0000 UTC\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "105205fb-2436-496c-8d8b-8d4fcb38d8e5",
+              "name": "Unauthorized; The token has expired, is invalid, or is not a two-legged token. Make sure a valid two-legged token is used.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authentication",
+                    "v2",
+                    "service-accounts",
+                    ":serviceAccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serviceAccountId",
+                      "description": "(Required) The Autodesk ID of the service account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "24cc2f0c-81a2-4eb2-9750-292ec30661b8",
+              "name": "Not found; The service account is not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authentication",
+                    "v2",
+                    "service-accounts",
+                    ":serviceAccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serviceAccountId",
+                      "description": "(Required) The Autodesk ID of the service account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "83493166-cc3b-4b5a-9f38-c48a71b56f92",
+              "name": "An unknown server-side error occurred. Please try again later. If the problem persists, please contact support.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authentication",
+                    "v2",
+                    "service-accounts",
+                    ":serviceAccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serviceAccountId",
+                      "description": "(Required) The Autodesk ID of the service account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a312229b-a33f-4bd8-a19d-8b604f7de036",
+          "name": "Enable or Disable Service Account",
+          "request": {
+            "name": "Enable or Disable Service Account",
+            "description": {
+              "content": "Enables or disables a service account.\n\nWhen a service account is in a disabled state, it loses its capability to manage its service account key.\nAssertions signed by the key will be treated as invalid.\n\nThis operation allows enabling a service account that is in a deactivated state.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "authentication",
+                "v2",
+                "service-accounts",
+                ":serviceAccountId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "serviceAccountId",
+                  "description": "(Required) The Autodesk ID of the service account"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2045b3d4-bec0-4d2b-a31c-49d94bf7e5e8",
+              "name": "Successful request; the service account has been updated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authentication",
+                    "v2",
+                    "service-accounts",
+                    ":serviceAccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serviceAccountId",
+                      "description": "(Required) The Autodesk ID of the service account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"ENABLED\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"serviceAccountId\": \"test-user-id-1\",\n  \"email\": \"test@EXAMPLE_CLIENT_ID_32CHARXXXXXXXXXXXXXXXX.adskserviceaccount.autodesk.com\",\n  \"createdBy\": \"EXAMPLE_CLIENT_ID_32CHARXXXXXXXXXXXXXXXX\",\n  \"status\": \"ENABLED\",\n  \"createdAt\": \"2024-01-25 03:08:04.156576834 +0000 UTC\",\n  \"accessedAt\": \"2024-01-25 03:08:04.156576834 +0000 UTC\",\n  \"expiresAt\": \"2025-01-25 03:08:04.156576834 +0000 UTC\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4eb47d75-9665-45fe-b1f3-5f37a41be281",
+              "name": "Invalid request; The service account is already in an enabled or disabled state. Make sure the state is actually changed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authentication",
+                    "v2",
+                    "service-accounts",
+                    ":serviceAccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serviceAccountId",
+                      "description": "(Required) The Autodesk ID of the service account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"ENABLED\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "835351db-4059-438d-9e0a-c872ad1be81b",
+              "name": "Unauthorized; The token has expired, is invalid, or is not a two-legged token. Make sure a valid two-legged token is used.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authentication",
+                    "v2",
+                    "service-accounts",
+                    ":serviceAccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serviceAccountId",
+                      "description": "(Required) The Autodesk ID of the service account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"ENABLED\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "63b773cc-9c0e-4126-8e91-0c33122cdd32",
+              "name": "Not found; The service account is not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authentication",
+                    "v2",
+                    "service-accounts",
+                    ":serviceAccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serviceAccountId",
+                      "description": "(Required) The Autodesk ID of the service account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"ENABLED\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "057005ad-2c07-42b1-8963-e009cf89e7a6",
+              "name": "An unknown server-side error occurred. Please try again later. If the problem persists, please contact support.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authentication",
+                    "v2",
+                    "service-accounts",
+                    ":serviceAccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serviceAccountId",
+                      "description": "(Required) The Autodesk ID of the service account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"ENABLED\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8f14ae81-9961-4788-8b69-e3b96af547c5",
+          "name": "Delete Service Account",
+          "request": {
+            "name": "Delete Service Account",
+            "description": {
+              "content": "Deletes an existing service account. When a service account is deleted, all associated keys will also be deleted.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "authentication",
+                "v2",
+                "service-accounts",
+                ":serviceAccountId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "serviceAccountId",
+                  "description": "(Required) The Autodesk ID of the service account"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "5abdce8a-9851-4abb-bd66-41a5a377fc7a",
+              "name": "Successful request; the service account has been deleted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authentication",
+                    "v2",
+                    "service-accounts",
+                    ":serviceAccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serviceAccountId",
+                      "description": "(Required) The Autodesk ID of the service account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2f029d63-3656-4cc2-a05f-88c717266dde",
+              "name": "Unauthorized; The token has expired, is invalid, or is not a two-legged token. Make sure a valid two-legged token is used.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authentication",
+                    "v2",
+                    "service-accounts",
+                    ":serviceAccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serviceAccountId",
+                      "description": "(Required) The Autodesk ID of the service account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8ac7920e-6c49-4f0e-9929-b15e9bd2c162",
+              "name": "Not found; The service account is not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authentication",
+                    "v2",
+                    "service-accounts",
+                    ":serviceAccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serviceAccountId",
+                      "description": "(Required) The Autodesk ID of the service account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "442d8973-c39c-4740-b494-2d03342cc0b2",
+              "name": "An unknown server-side error occurred. Please try again later. If the problem persists, please contact support.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authentication",
+                    "v2",
+                    "service-accounts",
+                    ":serviceAccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serviceAccountId",
+                      "description": "(Required) The Autodesk ID of the service account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://developer.api.autodesk.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "grant_type",
+        "value": "client_credentials"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "0ad438d4-349c-44ea-bb92-fdddedf5c0f9",
+    "name": "Construction.Account.Admin Account Management API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Account Admin API automates creating and managing projects, assigning and managing project users, and managing member and partner company directories. You can also synchronize data with external systems.\n\n\nContact Support:\n Name: Autodesk Plaform Services\n Email: aps.help@autodesk.com",
+      "type": "text/plain"
+    }
+  }
+}

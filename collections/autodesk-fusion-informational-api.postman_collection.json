@@ -1,0 +1,241 @@
+{
+  "item": [
+    {
+      "id": "4b36a05c-a827-4cff-a01e-ce89d150491a",
+      "name": "Informational",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "26af8a5b-cd0b-4c1b-8d91-b567da82c6b7",
+          "name": "List Supported Formats",
+          "request": {
+            "name": "List Supported Formats",
+            "description": {
+              "content": "Returns an up-to-date list of supported translations. This operation also provides information on the types of derivatives that can be generated for each source design file type. Furthermore, it allows you to obtain a list of translations that have changed since a specified date.\n\nSee the [Supported Translation Formats table](/en/docs/model-derivative/v2/overview/supported-translations/) for more details.\n\n**Note:** We keep adding new file formats to our supported translations list, constantly.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "modelderivative",
+                "v2",
+                "designdata",
+                "formats"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Specifies a date in the ``Day of the week, DD Month YYYY HH:MM:SS GMT`` format. The response will contain only the formats modified since the specified date and time. If you specify an invalid date, the response will contain all supported formats. If no changes have been made after the specified date, the service returns HTTP status ``304``, NOT MODIFIED.",
+                "key": "If-Modified-Since",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "A comma separated list of the algorithms you want the response to be encoded in, specified in the order of preference.  \n\nIf you specify ``gzip`` or ``*``, content is compressed and returned in gzip format.\n",
+                "key": "Accept-Encoding",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "8eee6b23-a8a3-4bc1-804a-15edcb8b5816",
+              "name": "A list of supported formats was successfully returned. ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "modelderivative",
+                    "v2",
+                    "designdata",
+                    "formats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies a date in the ``Day of the week, DD Month YYYY HH:MM:SS GMT`` format. The response will contain only the formats modified since the specified date and time. If you specify an invalid date, the response will contain all supported formats. If no changes have been made after the specified date, the service returns HTTP status ``304``, NOT MODIFIED.",
+                    "key": "If-Modified-Since",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A comma separated list of the algorithms you want the response to be encoded in, specified in the order of preference.  \n\nIf you specify ``gzip`` or ``*``, content is compressed and returned in gzip format.\n",
+                    "key": "Accept-Encoding",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The service identifier. Comprises of the service name, version, and environment.",
+                  "key": "x-ads-app-identifier",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "The service startup time, in the following date format: ``EEE MMM dd HH:mm:ss Z yyyy``.",
+                  "key": "x-ads-startup-time",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "The amount of time spent servicing the request, in milliseconds.",
+                  "key": "x-ads-duration",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Provides information about server failures, if any.",
+                  "key": "x-ads-troubleshooting",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Indicates the date and time (in ``Day of the week, DD Month YYYY HH:MM:SS GMT`` format) the supported formats were last modified.",
+                  "key": "Last-Modified",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"formats\": {\n    \"key_0\": [\n      \"string\",\n      \"string\"\n    ],\n    \"key_1\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "902190ce-4d7f-433e-8b50-b7f75b3c1b74",
+              "name": "Supported formats have not changed since the date specified by the ``If-Modified-Since`` header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "modelderivative",
+                    "v2",
+                    "designdata",
+                    "formats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies a date in the ``Day of the week, DD Month YYYY HH:MM:SS GMT`` format. The response will contain only the formats modified since the specified date and time. If you specify an invalid date, the response will contain all supported formats. If no changes have been made after the specified date, the service returns HTTP status ``304``, NOT MODIFIED.",
+                    "key": "If-Modified-Since",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A comma separated list of the algorithms you want the response to be encoded in, specified in the order of preference.  \n\nIf you specify ``gzip`` or ``*``, content is compressed and returned in gzip format.\n",
+                    "key": "Accept-Encoding",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Modified",
+              "code": 304,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://developer.api.autodesk.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "grant_type",
+        "value": "client_credentials"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "00f239a2-365d-46cd-aa18-44025f906c6b",
+    "name": "Construction.Account.Admin Account Management Informational API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Account Admin API automates creating and managing projects, assigning and managing project users, and managing member and partner company directories. You can also synchronize data with external systems.\n\n\nContact Support:\n Name: Autodesk Plaform Services\n Email: aps.help@autodesk.com",
+      "type": "text/plain"
+    }
+  }
+}

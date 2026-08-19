@@ -1,0 +1,121 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Construction.Account.Admin Account Management Derivatives API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "client_credentials",
+      "accessTokenUrl": "",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Derivatives",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fetch Derivative Download URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developer.api.autodesk.com/modelderivative/v2/designdata/:urn/manifest/:derivativeUrn/signedcookies",
+            "headers": [
+              {
+                "name": "region",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "derivativeUrn",
+                "value": "",
+                "type": "path",
+                "description": "The URL-encoded URN of the derivative. Use the `Fetch Manifest operation </en/docs/model-derivative/v2/reference/http/manifest/urn-manifest-GET/>`_to obtain the URNs of derivatives for the specified source design."
+              },
+              {
+                "name": "urn",
+                "value": "",
+                "type": "path",
+                "description": "The URL-safe Base64 encoded URN of the source design."
+              },
+              {
+                "name": "minutes-expiration",
+                "value": "",
+                "type": "query",
+                "description": "Specifies how many minutes the signed cookies should remain valid. Default value is 360 minutes. The value you specify must be lower than the default value for this parameter. If you specify a value greater than the default value, the Model Derivative service will return an error with an HTTP status code of ``400``."
+              },
+              {
+                "name": "response-content-disposition",
+                "value": "",
+                "type": "query",
+                "description": "The value that must be specified as the ``response-content-disposition`` query string parameter with the download URL. Must begin with ``attachment``. This value defaults to the default value corresponding to the derivative/file."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns a download URL and a set of signed cookies, which lets you securely download the derivative specified by the ``derivativeUrn`` URI parameter. The signed cookies have a lifetime of 6 hours. You can use range headers with the returned download URL to download the derivative in chunks, in parallel."
+        },
+        {
+          "info": {
+            "name": "Check Derivative Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "HEAD",
+            "url": "https://developer.api.autodesk.com/modelderivative/v2/designdata/:urn/manifest/:derivativeUrn",
+            "headers": [
+              {
+                "name": "region",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "urn",
+                "value": "",
+                "type": "path",
+                "description": "The URL-safe Base64 encoded URN of the source design."
+              },
+              {
+                "name": "derivativeUrn",
+                "value": "",
+                "type": "path",
+                "description": "The URL-encoded URN of the derivative. Check the manifest of the source design to get the URNs of the derivatives available for download."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns information about the specified derivative.\n\nUse this operation to determine the total content length of a derivative before you download it. If the derivative is large, you can choose to download the derivative in chunks, by specifying a chunk size using the ``Range`` header parameter."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

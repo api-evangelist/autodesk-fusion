@@ -1,0 +1,233 @@
+{
+  "item": [
+    {
+      "id": "8d9e6feb-43ad-47ff-9373-bb7731073219",
+      "name": "Thumbnails",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5b971c18-4a4b-4458-930f-aa0fe19d4ae6",
+          "name": "Fetch Thumbnail",
+          "request": {
+            "name": "Fetch Thumbnail",
+            "description": {
+              "content": "Downloads a thumbnail of the specified source design.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "modelderivative",
+                "v2",
+                "designdata",
+                ":urn",
+                "thumbnail"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "width",
+                  "value": "<integer>",
+                  "description": "Width of thumbnail in pixels.  Possible values are: ``100``, ``200``, ``400``  If ``width`` is omitted, but ``height`` is specified, ``width`` defaults to ``height``. If both ``width`` and ``height`` are omitted, the server will return a thumbnail closest to ``200``, if such a thumbnail is available."
+                },
+                {
+                  "disabled": false,
+                  "key": "height",
+                  "value": "<integer>",
+                  "description": "Height of thumbnails. Possible values are: ``100``, ``200``, ``400``.If ``height`` is omitted, but ``width`` is specified, ``height`` defaults to ``width``.  If both ``width`` and ``height`` are omitted, the server will return a thumbnail closest to ``200``, if such a thumbnail is available"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "urn",
+                  "description": "(Required) The URL-safe Base64 encoded URN of the source design."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Specifies the data center where the manifest and derivatives of the specified source design are stored. Possible values are:\n\n- ``US`` - (Default) Data center for the US region.\n- ``EMEA`` - Data center for the European Union, Middle East, and Africa. \n- ``AUS`` - Data center for the Australia region.\n- ``CAN`` - Data center for the Canada region.\n- ``DEU`` - Data center for the Germany region.\n- ``IND`` - Data center for the India region.\n- ``JPN`` - Data center for the Japan region.\n- ``GBR``  - Data center for the United Kingdom region.\n",
+                "key": "region",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "image/png"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "5610b894-a332-4630-9b0e-c32a89243204",
+              "name": "The requested thumbnail was successfully retrieved.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "modelderivative",
+                    "v2",
+                    "designdata",
+                    ":urn",
+                    "thumbnail"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "width",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "height",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "urn",
+                      "description": "(Required) The URL-safe Base64 encoded URN of the source design."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies the data center where the manifest and derivatives of the specified source design are stored. Possible values are:\n\n- ``US`` - (Default) Data center for the US region.\n- ``EMEA`` - Data center for the European Union, Middle East, and Africa. \n- ``AUS`` - Data center for the Australia region.\n- ``CAN`` - Data center for the Canada region.\n- ``DEU`` - Data center for the Germany region.\n- ``IND`` - Data center for the India region.\n- ``JPN`` - Data center for the Japan region.\n- ``GBR``  - Data center for the United Kingdom region.\n",
+                    "key": "region",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "image/png"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "File name of the thumbnail.",
+                  "key": "x-ads-name",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Thumbnail size. Possible values are: ``[100,100]``, ``[200,200]``, ``[400,400]``",
+                  "key": "x-ads-size",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "key": "x-ads-role",
+                  "value": "extracted",
+                  "description": ""
+                },
+                {
+                  "disabled": false,
+                  "key": "x-ads-job-status",
+                  "value": "failed",
+                  "description": ""
+                },
+                {
+                  "disabled": false,
+                  "description": "The service identifier. Comprises of the service name, version, and environment.",
+                  "key": "x-ads-app-identifier",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "The service startup time, in the following date format: ``EEE MMM dd HH:mm:ss Z yyyy``.",
+                  "key": "x-ads-startup-time",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "The amount of time spent servicing the request, in milliseconds.",
+                  "key": "x-ads-duration",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Provides information about server failures, if any.",
+                  "key": "x-ads-troubleshooting",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "image/png"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://developer.api.autodesk.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "grant_type",
+        "value": "client_credentials"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "efbcf55b-9a1a-4bf5-ab92-ab552a1e74f5",
+    "name": "Construction.Account.Admin Account Management Thumbnails API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Account Admin API automates creating and managing projects, assigning and managing project users, and managing member and partner company directories. You can also synchronize data with external systems.\n\n\nContact Support:\n Name: Autodesk Plaform Services\n Email: aps.help@autodesk.com",
+      "type": "text/plain"
+    }
+  }
+}

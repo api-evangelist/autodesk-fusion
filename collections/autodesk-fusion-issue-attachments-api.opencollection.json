@@ -1,0 +1,135 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Construction.Account.Admin Account Management Issue Attachments API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "client_credentials",
+      "accessTokenUrl": "",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Issue Attachments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Add attachments to an issue",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://developer.api.autodesk.com/construction/issues/v1/projects/:projectId/attachments",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the project."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Adds attachments to an existing issue.\r\n\r\nLinks one or more files in Autodesk Docs (uploaded via the Data Management OSS API) to the specified issue.\r\n\r\nNote that an issue can have up to 100 attachments. Files can include images, PDFs, or other supported formats.\r\n\r\nFor more information about uploading attachments, see the Upload Issue Attachment tutorial."
+        },
+        {
+          "info": {
+            "name": "Delete an attachment from an issue",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://developer.api.autodesk.com/construction/issues/v1/projects/:projectId/attachments/:issueId/items/:attachmentId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the project. Use the Data Management API to retrieve the project ID. For more information, see the Retrieve a Project ID tutorial. You need to convert the project ID into a project ID for the ACC API by removing the “b.\" prefix. For example, a project ID of b.a4be0c34a-4ab7 translates to a project ID of a4be0c34a-4ab7."
+              },
+              {
+                "name": "issueId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the issue. To find the ID, call GET issues."
+              },
+              {
+                "name": "attachmentId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the attachment. To find the ID, call GET attachments."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Deletes a specific attachment from an issue in a project."
+        },
+        {
+          "info": {
+            "name": "Get all attachments for an issue",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developer.api.autodesk.com/construction/issues/v1/projects/:projectId/attachments/:issueId/items",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the project. Use the Data Management API to retrieve the project ID. For more information, see the Retrieve a Project ID tutorial. You need to convert the project ID into a project ID for the ACC API by removing the “b.\" prefix. For example, a project ID of b.a4be0c34a-4ab7 translates to a project ID of a4be0c34a-4ab7."
+              },
+              {
+                "name": "issueId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the issue. To find the ID, call GET issues."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieves all attachments for a specific issue in a project.\r\n\r\nFor details about retrieving metadata for a specific attachment, see the Retrieve Issue Attachment tutorial.\r\n\r\nFor details about downloading an attachment, see the Download Issue Attachment tutorial."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

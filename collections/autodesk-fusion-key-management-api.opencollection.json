@@ -1,0 +1,157 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Construction.Account.Admin Account Management Key Management API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "client_credentials",
+      "accessTokenUrl": "",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Key Management",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get All Keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developer.api.autodesk.com/authentication/v2/service-accounts/:serviceAccountId/keys",
+            "params": [
+              {
+                "name": "serviceAccountId",
+                "value": "",
+                "type": "path",
+                "description": "The Autodesk ID of the service account"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Lists all keys associated with the service account. This operation will only return key metadata, not the private or public key."
+        },
+        {
+          "info": {
+            "name": "Create Keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://developer.api.autodesk.com/authentication/v2/service-accounts/:serviceAccountId/keys",
+            "params": [
+              {
+                "name": "serviceAccountId",
+                "value": "",
+                "type": "path",
+                "description": "The Autodesk ID of the service account"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Creates a service account key.\n\nA service account key is a public-private key pair, generated using RSA with a key length of 2048 bits by the Identity Authorization Service (AuthZ).\n\nThe private key is returned once during its creation. AuthZ only stores the public key.\n\nA service account can have up to 3 keys at any given time."
+        },
+        {
+          "info": {
+            "name": "Enable or Disable Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://developer.api.autodesk.com/authentication/v2/service-accounts/:serviceAccountId/keys/:keyId",
+            "params": [
+              {
+                "name": "serviceAccountId",
+                "value": "",
+                "type": "path",
+                "description": "The Autodesk ID of the service account"
+              },
+              {
+                "name": "keyId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the private key"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Enables or disables a service account key."
+        },
+        {
+          "info": {
+            "name": "Delete key",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://developer.api.autodesk.com/authentication/v2/service-accounts/:serviceAccountId/keys/:keyId",
+            "params": [
+              {
+                "name": "serviceAccountId",
+                "value": "",
+                "type": "path",
+                "description": "The Autodesk ID of the service account"
+              },
+              {
+                "name": "keyId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the private key"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Deletes an existing key."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

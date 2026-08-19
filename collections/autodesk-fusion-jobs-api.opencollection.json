@@ -1,0 +1,105 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Construction.Account.Admin Account Management Jobs API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "client_credentials",
+      "accessTokenUrl": "",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Jobs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Translation Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://developer.api.autodesk.com/modelderivative/v2/designdata/job",
+            "headers": [
+              {
+                "name": "x-ads-force",
+                "value": ""
+              },
+              {
+                "name": "x-ads-derivative-format",
+                "value": ""
+              },
+              {
+                "name": "region",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Creates a job to translate the specified source design to another format, generating derivatives of the source design. You can optionally:\n\n- Extract selected parts of a design and export the set of geometries in OBJ format.\n- Generate different-sized thumbnails.\n\nWhen the translation job runs, details about the process and generated derivatives are logged to a JSON file known as a manifest. This manifest is typically created during the first translation of a source design. Subsequently, the sys"
+        },
+        {
+          "info": {
+            "name": "Specify References",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://developer.api.autodesk.com/modelderivative/v2/designdata/:urn/references",
+            "headers": [
+              {
+                "name": "region",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "urn",
+                "value": "",
+                "type": "path",
+                "description": "The Base64 (URL Safe) encoded design URN."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Specifies the location of the files referenced by the specified source design.\n\nWhen you call `Create Translation Job </en/docs/model-derivative/v2/reference/http/job-POST>`_, set  ``checkReferences`` to ``true``.   The Model Derivative service will then use the details you specify in this operation to locate and download the referenced files.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

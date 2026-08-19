@@ -1,0 +1,101 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Construction.Account.Admin Account Management Manifest API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "client_credentials",
+      "accessTokenUrl": "",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Manifest",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fetch Manifest",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developer.api.autodesk.com/modelderivative/v2/designdata/:urn/manifest",
+            "headers": [
+              {
+                "name": "Accept-Encoding",
+                "value": ""
+              },
+              {
+                "name": "region",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "urn",
+                "value": "",
+                "type": "path",
+                "description": "The URL-safe Base64 encoded URN of the source design."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieves the manifest of the specified source design.\n\nThe manifest is a JSON file containing information about all the derivatives translated from the specified source design. It contains information such as the URNs of the derivatives, the translation status of each derivative, and much more.\n\nThe first time you translate a source design, the Model Derivative service creates a manifest for that design. Thereafter, every time you translate that source design, even to a different format, the Mo"
+        },
+        {
+          "info": {
+            "name": "Delete Manifest",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://developer.api.autodesk.com/modelderivative/v2/designdata/:urn/manifest",
+            "headers": [
+              {
+                "name": "region",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "urn",
+                "value": "",
+                "type": "path",
+                "description": "The URL-safe Base64 encoded URN of the source design."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Deletes the manifest of the specified source design. It also deletes all derivatives (translated output files) generated from the source design. However, it does not delete the source design.\n\n**Note:** This operation is idempotent. So, if you call it multiple times, even when no manifest exists, will still return a successful response (200).\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

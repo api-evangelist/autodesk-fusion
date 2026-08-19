@@ -1,0 +1,1598 @@
+{
+  "item": [
+    {
+      "id": "ec1d2945-3824-40e8-997e-2a69945c64db",
+      "name": "Buckets",
+      "description": {
+        "content": "Bucket related operations",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ff57ba7f-684f-4268-a16d-a25c1721e39d",
+          "name": "List Buckets",
+          "request": {
+            "name": "List Buckets",
+            "description": {
+              "content": "Returns a list of buckets owned by the application. \n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "oss",
+                "v2",
+                "buckets"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "region",
+                  "value": "<string>",
+                  "description": "Specifies where the bucket containing the object is stored. Possible values are:\n\n- ``US`` : (Default) Data center for the US region.\n- ``EMEA`` : Data center for the European Union, Middle East, and Africa.\n- ``AUS`` : (Beta) Data center for Australia.\n- ``CAN`` : Data center for the Canada region.\n- ``DEU`` : Data center for the Germany region.\n- ``IND`` : Data center for the India region.\n- ``JPN`` : Data center for the Japan region.\n- ``GBR`` : Data center for the United Kingdom region.\n\n**Note:** Beta features are subject to change. Please do not use in production environments."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10",
+                  "description": "The number of items you want per page.\nAcceptable values = 1-100. Default = 10.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "startAt",
+                  "value": "<string>",
+                  "description": "The ID of the last item that was returned in the previous result set.  It enables the system to return subsequent items starting from the next one after the specified ID.\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "72958d5e-9fcf-4a42-a25b-ba6892bf2a54",
+              "name": "The list of buckets was successfully retrieved.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oss",
+                    "v2",
+                    "buckets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "region",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "startAt",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"bucketKey\": \"string\",\n      \"createdDate\": 371,\n      \"policyKey\": \"transient\"\n    },\n    {\n      \"bucketKey\": \"string\",\n      \"createdDate\": 6949,\n      \"policyKey\": \"transient\"\n    }\n  ],\n  \"next\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d2a99b1c-d5a5-473c-b088-02563bd9bbc9",
+              "name": "OSS was unable to process the request. The syntax of the request is malformed or the request is missing a required header. Do not repeat the request without fixing the issue. The response body may indicate what is wrong with the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oss",
+                    "v2",
+                    "buckets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "region",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "startAt",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "933d0331-488d-44f9-9452-35cff230e17d",
+              "name": "The supplied authorization header was not valid or the supplied token scope was not acceptable. Verify authentication and try again.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oss",
+                    "v2",
+                    "buckets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "region",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "startAt",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "148da27f-7206-4af2-88d0-373a6d7bcec6",
+              "name": "The request was successfully validated but lacking the required permissions. Verify your credentials and permissions before you send this request again.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oss",
+                    "v2",
+                    "buckets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "region",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "startAt",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0ee18452-5bb0-4325-9d6f-e012d2622029",
+              "name": " The requested resource could not be found. Verify the IDs of the resources you requested before you send this request again.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oss",
+                    "v2",
+                    "buckets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "region",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "startAt",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "cb79ae2a-25f4-43d7-943b-ce2618d386de",
+              "name": "Internal failure while processing the request, reason depends on error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oss",
+                    "v2",
+                    "buckets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "region",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "startAt",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "23a58bd8-aa4b-4e8b-b017-0ead1751bde9",
+          "name": "Create Bucket",
+          "request": {
+            "name": "Create Bucket",
+            "description": {
+              "content": "Creates a bucket. \n\nBuckets are virtual container within the Object Storage Service (OSS), which you can use to store and manage objects (files) in the cloud. The application creating the bucket is the owner of the bucket.\n\n**Note:** Do not use this operation to create buckets for BIM360 Document Management. Use [POST projects/{project_id}/storage](/en/docs/data/v2/reference/http/projects-project_id-storage-POST>) instead. For details, see [Upload Files to BIM 360 Document Management](/en/docs/bim360/v1/tutorials/document-management/upload-document).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "oss",
+                "v2",
+                "buckets"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Specifies where the bucket containing the object is stored. Possible values are:\n\n- ``US`` : (Default) Data center for the US region.\n- ``EMEA`` : Data center for the European Union, Middle East, and Africa.\n- ``AUS`` : (Beta) Data center for Australia.\n- ``CAN`` : Data center for the Canada region.\n- ``DEU`` : Data center for the Germany region.\n- ``IND`` : Data center for the India region.\n- ``JPN`` : Data center for the Japan region.\n- ``GBR`` : Data center for the United Kingdom region.\n\n**Note:** Beta features are subject to change. Please do not use in production environments.",
+                "key": "region",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"bucketKey\": \"<string>\",\n  \"policyKey\": \"transient\",\n  \"allow\": [\n    {\n      \"authId\": \"<string>\",\n      \"access\": \"<string>\"\n    },\n    {\n      \"authId\": \"<string>\",\n      \"access\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9d286d94-4094-49b7-82ac-3b5cf21e0ba5",
+              "name": "Bucket was successfully created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oss",
+                    "v2",
+                    "buckets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies where the bucket containing the object is stored. Possible values are:\n\n- ``US`` : (Default) Data center for the US region.\n- ``EMEA`` : Data center for the European Union, Middle East, and Africa.\n- ``AUS`` : (Beta) Data center for Australia.\n- ``CAN`` : Data center for the Canada region.\n- ``DEU`` : Data center for the Germany region.\n- ``IND`` : Data center for the India region.\n- ``JPN`` : Data center for the Japan region.\n- ``GBR`` : Data center for the United Kingdom region.\n\n**Note:** Beta features are subject to change. Please do not use in production environments.",
+                    "key": "region",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"bucketKey\": \"<string>\",\n  \"policyKey\": \"transient\",\n  \"allow\": [\n    {\n      \"authId\": \"<string>\",\n      \"access\": \"<string>\"\n    },\n    {\n      \"authId\": \"<string>\",\n      \"access\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"bucketKey\": \"string\",\n  \"bucketOwner\": \"string\",\n  \"createdDate\": 1752,\n  \"permissions\": [\n    {\n      \"authId\": \"string\",\n      \"access\": \"read\"\n    },\n    {\n      \"authId\": \"string\",\n      \"access\": \"full\"\n    }\n  ],\n  \"policyKey\": \"transient\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e295c013-2e1b-4349-9134-2875066b780c",
+              "name": "OSS was unable to process the request. The syntax of the request is malformed or the request is missing a required header. Do not repeat the request without fixing the issue. The response body may indicate what is wrong with the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oss",
+                    "v2",
+                    "buckets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies where the bucket containing the object is stored. Possible values are:\n\n- ``US`` : (Default) Data center for the US region.\n- ``EMEA`` : Data center for the European Union, Middle East, and Africa.\n- ``AUS`` : (Beta) Data center for Australia.\n- ``CAN`` : Data center for the Canada region.\n- ``DEU`` : Data center for the Germany region.\n- ``IND`` : Data center for the India region.\n- ``JPN`` : Data center for the Japan region.\n- ``GBR`` : Data center for the United Kingdom region.\n\n**Note:** Beta features are subject to change. Please do not use in production environments.",
+                    "key": "region",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"bucketKey\": \"<string>\",\n  \"policyKey\": \"transient\",\n  \"allow\": [\n    {\n      \"authId\": \"<string>\",\n      \"access\": \"<string>\"\n    },\n    {\n      \"authId\": \"<string>\",\n      \"access\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a733f665-741b-43ce-9ab1-bfcb5e53bbd1",
+              "name": "The supplied authorization header was not valid or the supplied token scope was not acceptable. Verify authentication and try again.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oss",
+                    "v2",
+                    "buckets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies where the bucket containing the object is stored. Possible values are:\n\n- ``US`` : (Default) Data center for the US region.\n- ``EMEA`` : Data center for the European Union, Middle East, and Africa.\n- ``AUS`` : (Beta) Data center for Australia.\n- ``CAN`` : Data center for the Canada region.\n- ``DEU`` : Data center for the Germany region.\n- ``IND`` : Data center for the India region.\n- ``JPN`` : Data center for the Japan region.\n- ``GBR`` : Data center for the United Kingdom region.\n\n**Note:** Beta features are subject to change. Please do not use in production environments.",
+                    "key": "region",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"bucketKey\": \"<string>\",\n  \"policyKey\": \"transient\",\n  \"allow\": [\n    {\n      \"authId\": \"<string>\",\n      \"access\": \"<string>\"\n    },\n    {\n      \"authId\": \"<string>\",\n      \"access\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8d9b7571-dbfb-43fb-aac3-d18cfa6752d4",
+              "name": "The request was successfully validated but lacking the required permissions. Verify your credentials and permissions before you send this request again.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oss",
+                    "v2",
+                    "buckets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies where the bucket containing the object is stored. Possible values are:\n\n- ``US`` : (Default) Data center for the US region.\n- ``EMEA`` : Data center for the European Union, Middle East, and Africa.\n- ``AUS`` : (Beta) Data center for Australia.\n- ``CAN`` : Data center for the Canada region.\n- ``DEU`` : Data center for the Germany region.\n- ``IND`` : Data center for the India region.\n- ``JPN`` : Data center for the Japan region.\n- ``GBR`` : Data center for the United Kingdom region.\n\n**Note:** Beta features are subject to change. Please do not use in production environments.",
+                    "key": "region",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"bucketKey\": \"<string>\",\n  \"policyKey\": \"transient\",\n  \"allow\": [\n    {\n      \"authId\": \"<string>\",\n      \"access\": \"<string>\"\n    },\n    {\n      \"authId\": \"<string>\",\n      \"access\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1c61077f-d8c5-4e7d-8971-0ceb024d1742",
+              "name": "The specified bucket key already exists.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oss",
+                    "v2",
+                    "buckets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies where the bucket containing the object is stored. Possible values are:\n\n- ``US`` : (Default) Data center for the US region.\n- ``EMEA`` : Data center for the European Union, Middle East, and Africa.\n- ``AUS`` : (Beta) Data center for Australia.\n- ``CAN`` : Data center for the Canada region.\n- ``DEU`` : Data center for the Germany region.\n- ``IND`` : Data center for the India region.\n- ``JPN`` : Data center for the Japan region.\n- ``GBR`` : Data center for the United Kingdom region.\n\n**Note:** Beta features are subject to change. Please do not use in production environments.",
+                    "key": "region",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"bucketKey\": \"<string>\",\n  \"policyKey\": \"transient\",\n  \"allow\": [\n    {\n      \"authId\": \"<string>\",\n      \"access\": \"<string>\"\n    },\n    {\n      \"authId\": \"<string>\",\n      \"access\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"reason\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a5eb3889-8748-409f-a617-000fcda37536",
+              "name": "Internal failure while processing the request, reason depends on error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oss",
+                    "v2",
+                    "buckets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies where the bucket containing the object is stored. Possible values are:\n\n- ``US`` : (Default) Data center for the US region.\n- ``EMEA`` : Data center for the European Union, Middle East, and Africa.\n- ``AUS`` : (Beta) Data center for Australia.\n- ``CAN`` : Data center for the Canada region.\n- ``DEU`` : Data center for the Germany region.\n- ``IND`` : Data center for the India region.\n- ``JPN`` : Data center for the Japan region.\n- ``GBR`` : Data center for the United Kingdom region.\n\n**Note:** Beta features are subject to change. Please do not use in production environments.",
+                    "key": "region",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"bucketKey\": \"<string>\",\n  \"policyKey\": \"transient\",\n  \"allow\": [\n    {\n      \"authId\": \"<string>\",\n      \"access\": \"<string>\"\n    },\n    {\n      \"authId\": \"<string>\",\n      \"access\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6e2905eb-d765-43fc-b965-ad47fe096d17",
+          "name": "Delete Bucket",
+          "request": {
+            "name": "Delete Bucket",
+            "description": {
+              "content": "Deletes the specified bucket. Only the application that owns the bucket can call this operation. All other applications that call this operation will receive a \"403 Forbidden\" error. \n\nThe initial processing of a bucket deletion request can be time-consuming. So, we recommend only deleting buckets containing a few objects, like those typically used for acceptance testing and prototyping. \n\n**Note:** Bucket keys will not be immediately available for reuse. \n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "oss",
+                "v2",
+                "buckets",
+                ":bucketKey"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "bucketKey",
+                  "description": "(Required) The bucket key of the bucket to delete."
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "d5c7f984-3f30-4076-b47a-e78cc08ba5d8",
+              "name": "The bucket deletion request was accepted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oss",
+                    "v2",
+                    "buckets",
+                    ":bucketKey"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bucketKey",
+                      "description": "(Required) The bucket key of the bucket to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9dc3c7cf-a4e1-4d4e-b538-e23871cd3111",
+              "name": "BAD REQUEST, Invalid request due to malformed syntax or missing headers",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oss",
+                    "v2",
+                    "buckets",
+                    ":bucketKey"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bucketKey",
+                      "description": "(Required) The bucket key of the bucket to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "22d1488e-bbd3-44d2-83fe-6cc9c677e8de",
+              "name": "The supplied authorization header was not valid or the supplied token scope was not acceptable. Verify authentication and try again.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oss",
+                    "v2",
+                    "buckets",
+                    ":bucketKey"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bucketKey",
+                      "description": "(Required) The bucket key of the bucket to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "641006cd-113d-4cbf-8b17-84c1f972d5ce",
+              "name": "The request was successfully validated but lacking the required permissions. Verify your credentials and permissions before you send this request again.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oss",
+                    "v2",
+                    "buckets",
+                    ":bucketKey"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bucketKey",
+                      "description": "(Required) The bucket key of the bucket to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "33cd49bc-3222-429b-87f2-d0a991b418b4",
+              "name": "NOT FOUND, The specified ``bucketKey`` does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oss",
+                    "v2",
+                    "buckets",
+                    ":bucketKey"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bucketKey",
+                      "description": "(Required) The bucket key of the bucket to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "fc666ef1-f44b-4884-bb28-d997f24f991b",
+              "name": "CONFLICT, The specified bucket is already marked for deletion.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oss",
+                    "v2",
+                    "buckets",
+                    ":bucketKey"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bucketKey",
+                      "description": "(Required) The bucket key of the bucket to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8c7991c8-8509-4145-a95d-79046e8c0af3",
+              "name": "Internal failure while processing the request, reason depends on error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oss",
+                    "v2",
+                    "buckets",
+                    ":bucketKey"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bucketKey",
+                      "description": "(Required) The bucket key of the bucket to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "51984e4f-42c2-4e7e-a4c5-8cc309e05ee1",
+          "name": "Get Bucket Details",
+          "request": {
+            "name": "Get Bucket Details",
+            "description": {
+              "content": "Returns detailed information about the specified bucket.\n\n**Note:** Only the application that owns the bucket can call this operation. All other applications that call this operation will receive a \"403 Forbidden\" error. \n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "oss",
+                "v2",
+                "buckets",
+                ":bucketKey",
+                "details"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "bucketKey",
+                  "description": "(Required) The bucket key of the bucket to query."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "e7cf17a1-b44e-42ce-acc8-7cdc21a54fe8",
+              "name": "Bucket details were retrieved successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oss",
+                    "v2",
+                    "buckets",
+                    ":bucketKey",
+                    "details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bucketKey",
+                      "description": "(Required) The bucket key of the bucket to query."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"bucketKey\": \"string\",\n  \"bucketOwner\": \"string\",\n  \"createdDate\": 1512,\n  \"permissions\": [\n    {\n      \"authId\": \"string\",\n      \"access\": \"full\"\n    },\n    {\n      \"authId\": \"string\",\n      \"access\": \"read\"\n    }\n  ],\n  \"policyKey\": \"transient\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "930e29c1-749c-4d5b-b919-fb54508ef52a",
+              "name": "OSS was unable to process the request. The syntax of the request is malformed or the request is missing a required header. Do not repeat the request without fixing the issue. The response body may indicate what is wrong with the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oss",
+                    "v2",
+                    "buckets",
+                    ":bucketKey",
+                    "details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bucketKey",
+                      "description": "(Required) The bucket key of the bucket to query."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "432101ed-59ac-4555-ab92-bca1199d78dc",
+              "name": "The supplied authorization header was not valid or the supplied token scope was not acceptable. Verify authentication and try again.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oss",
+                    "v2",
+                    "buckets",
+                    ":bucketKey",
+                    "details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bucketKey",
+                      "description": "(Required) The bucket key of the bucket to query."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9a46eaac-8265-4775-b152-a6fb582a039a",
+              "name": "The request was successfully validated but lacking the required permissions. Verify your credentials and permissions before you send this request again.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oss",
+                    "v2",
+                    "buckets",
+                    ":bucketKey",
+                    "details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bucketKey",
+                      "description": "(Required) The bucket key of the bucket to query."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0c5a98cf-39ac-486e-b1c7-dc96947a7689",
+              "name": "NOT FOUND, Bucket does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oss",
+                    "v2",
+                    "buckets",
+                    ":bucketKey",
+                    "details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bucketKey",
+                      "description": "(Required) The bucket key of the bucket to query."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "74d1d679-3297-4a3d-a0bc-b08ceadc3200",
+              "name": "Internal failure while processing the request, reason depends on error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oss",
+                    "v2",
+                    "buckets",
+                    ":bucketKey",
+                    "details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bucketKey",
+                      "description": "(Required) The bucket key of the bucket to query."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://developer.api.autodesk.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "grant_type",
+        "value": "client_credentials"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "889f9120-8822-4ae4-96d5-db1967b05e6d",
+    "name": "Construction.Account.Admin Account Management Buckets API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Account Admin API automates creating and managing projects, assigning and managing project users, and managing member and partner company directories. You can also synchronize data with external systems.\n\n\nContact Support:\n Name: Autodesk Plaform Services\n Email: aps.help@autodesk.com",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,419 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Construction.Account.Admin Account Management Project Users API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "client_credentials",
+      "accessTokenUrl": "",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Project Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get project users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developer.api.autodesk.com/construction/admin/v1/projects/:projectId/users",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              },
+              {
+                "name": "Region",
+                "value": ""
+              },
+              {
+                "name": "User-Id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the project. This corresponds to project ID in the Data Management API. To convert a project ID in the Data Management API into a project ID in the ACC API you need to remove the “b.” prefix. For example, a project ID of b.a4be0c34a-4ab7 translates to a project ID of a4be0c34a-4ab7."
+              },
+              {
+                "name": "filter[products]",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of the products that the returned projects must use. Only projects that use one or more of the listed products are returned."
+              },
+              {
+                "name": "filter[name]",
+                "value": "",
+                "type": "query",
+                "description": "A user name or name pattern to filter users by. Can be a partial match based on the value of filterTextMatch that you provide; for example: filter[name]=ABCco filterTextMatch=startsWith.  Max length: 255"
+              },
+              {
+                "name": "filter[email]",
+                "value": "",
+                "type": "query",
+                "description": "A user email address or address pattern that the returned users must have. This can be a partial match based on the value of filterTextMatch that you provide. For example:  filter[email]=sample filterTextMatch=startsWith  Max length: 255"
+              },
+              {
+                "name": "filter[status]",
+                "value": "",
+                "type": "query",
+                "description": "A list of statuses that the returned project users must be in. The default values are active and pending."
+              },
+              {
+                "name": "filter[accessLevels]",
+                "value": "",
+                "type": "query",
+                "description": "A list of user access levels that the returned users must have."
+              },
+              {
+                "name": "filter[companyId]",
+                "value": "",
+                "type": "query",
+                "description": "The ID of a company that the returned users must represent."
+              },
+              {
+                "name": "filter[companyName]",
+                "value": "",
+                "type": "query",
+                "description": "The name of a company that returned users must be associated with. Can be a partial match based on the value of filterTextMatch that you provide. For example: filter[companyName]=Sample filterTextMatch=startsWith  Max length: 255"
+              },
+              {
+                "name": "filter[autodeskId]",
+                "value": "",
+                "type": "query",
+                "description": "A list of the Autodesk IDs of users to retrieve."
+              },
+              {
+                "name": "filter[id]",
+                "value": "",
+                "type": "query",
+                "description": "A list of the ACC IDs of users to retrieve."
+              },
+              {
+                "name": "filter[roleId]",
+                "value": "",
+                "type": "query",
+                "description": "The ID of a user role that the returned users must have. To obtain a role ID for this filter, you can inspect the roleId field in previous responses to this endpoint or to the GET projects/:projectId/users/:userId endpoint.  Max length: 255"
+              },
+              {
+                "name": "filter[roleIds]",
+                "value": "",
+                "type": "query",
+                "description": "A list of the IDs of user roles that the returned users must have. To obtain a role ID for this filter, you can inspect the roleId field in previous responses to this endpoint or to the GET projects/:projectId/users/:userId endpoint."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "A list of fields to sort the returned users by. Multiple sort fields are applied in sequence order — each sort field produces groupings of projects with the same values of that field; the next sort field applies within the groupings produced by the previous sort field."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "A list of the project fields to include in the response. Default value: all fields."
+              },
+              {
+                "name": "orFilters",
+                "value": "",
+                "type": "query",
+                "description": "A list of user fields to combine with the SQL OR operator for filtering the returned project users. The OR is automatically incorporated between the fields; any one of them can produce a valid match."
+              },
+              {
+                "name": "filterTextMatch",
+                "value": "",
+                "type": "query",
+                "description": "When filtering on a text-based field, this value indicates how to do the matching. Default value: contains. Possible values: contains, startsWith, endsWith and equals."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of records to return in a single request. Possible range: 1-200. Default value: 20."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The record number that the returned page should start with. When the total number of records exceeds the value of limit, increase the offset value in subsequent requests to continue getting the remaining results."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieves information about a filtered subset of users in the specified project.\n\nThere are two primary reasons to do this:\n\nTo verify that all users assigned to the project have been activated as members of the project.\nTo check other information about users, such as their project user ID, roles, and products.\nNote that if you want to retrieve information about users associated with a particular Autodesk account, call the GET users endpoint."
+        },
+        {
+          "info": {
+            "name": "Assigns a user to the specified project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://developer.api.autodesk.com/construction/admin/v1/projects/:projectId/users",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              },
+              {
+                "name": "Region",
+                "value": ""
+              },
+              {
+                "name": "User-Id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the project. This corresponds to project ID in the Data Management API. To convert a project ID in the Data Management API into a project ID in the ACC API you need to remove the “b.” prefix. For example, a project ID of b.a4be0c34a-4ab7 translates to a project ID of a4be0c34a-4ab7."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Assigns a user to the specified project."
+        },
+        {
+          "info": {
+            "name": "Assigns multiple users to a project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://developer.api.autodesk.com/construction/admin/v2/projects/:projectId/users:import",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              },
+              {
+                "name": "Region",
+                "value": ""
+              },
+              {
+                "name": "User-Id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the project. This corresponds to project ID in the Data Management API. To convert a project ID in the Data Management API into a project ID in the ACC API you need to remove the “b.” prefix. For example, a project ID of b.a4be0c34a-4ab7 translates to a project ID of a4be0c34a-4ab7."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Assigns multiple users to a project at once. This endpoint can assign up to 200 users per request."
+        },
+        {
+          "info": {
+            "name": "Get project user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developer.api.autodesk.com/construction/admin/v1/projects/:projectId/users/:userId",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              },
+              {
+                "name": "Region",
+                "value": ""
+              },
+              {
+                "name": "User-Id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the project. This corresponds to project ID in the Data Management API. To convert a project ID in the Data Management API into a project ID in the ACC API you need to remove the “b.” prefix. For example, a project ID of b.a4be0c34a-4ab7 translates to a project ID of a4be0c34a-4ab7."
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the user. You can use either the ACC ID (id) or the Autodesk ID (autodeskId)."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of the project fields to include in the response. Default value: all fields."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieves detailed information about the specified user in a project.\n\nThere are two primary reasons to do this:\n\nTo verify that a user assigned to the specified project has been activated as a member of the project.\nTo check other information about the user, such as their project user ID, roles, and products."
+        },
+        {
+          "info": {
+            "name": "Update user in project",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://developer.api.autodesk.com/construction/admin/v1/projects/:projectId/users/:userId",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              },
+              {
+                "name": "Region",
+                "value": ""
+              },
+              {
+                "name": "User-Id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the project. This corresponds to project ID in the Data Management API. To convert a project ID in the Data Management API into a project ID in the ACC API you need to remove the “b.” prefix. For example, a project ID of b.a4be0c34a-4ab7 translates to a project ID of a4be0c34a-4ab7."
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the user. You can use either the ACC ID (id) or the Autodesk ID (autodeskId)."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Updates information about the specified user in a project.\n\nNote that the Authorization header token can be obtained either via a three-legged OAuth flow, or via a two-legged Oauth flow with user impersonation, for which the User-Id header is also required."
+        },
+        {
+          "info": {
+            "name": "Remove Project User",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://developer.api.autodesk.com/construction/admin/v1/projects/:projectId/users/:userId",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              },
+              {
+                "name": "Region",
+                "value": ""
+              },
+              {
+                "name": "User-Id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the project. This corresponds to project ID in the Data Management API. To convert a project ID in the Data Management API into a project ID in the ACC API you need to remove the “b.” prefix. For example, a project ID of b.a4be0c34a-4ab7 translates to a project ID of a4be0c34a-4ab7."
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the user. You can use either the ACC ID (id) or the Autodesk ID (autodeskId)."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Removes the specified user from a project.\n\nNote that the Authorization header token can be obtained either via a three-legged OAuth flow, or via a two-legged Oauth flow with user impersonation, for which the User-Id header is also required."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

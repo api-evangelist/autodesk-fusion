@@ -1,0 +1,253 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Construction.Account.Admin Account Management Metadata API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "client_credentials",
+      "accessTokenUrl": "",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Metadata",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Model Views",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developer.api.autodesk.com/modelderivative/v2/designdata/:urn/metadata",
+            "headers": [
+              {
+                "name": "Accept-Encoding",
+                "value": ""
+              },
+              {
+                "name": "region",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "urn",
+                "value": "",
+                "type": "path",
+                "description": "The URL-safe Base64 encoded URN of the source design."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns a list of Model Views (Viewables) in the source design specified by the ``urn`` parameter. It also returns an ID that uniquely identifies the Model View. You can use these IDs with other metadata operations to obtain information about the objects within those Model Views.\n\nDesigns created with applications like Fusion 360 and Inventor contain only one Model View per design. Applications like Revit allow multiple Model Views per design.\n\n**Note:** You can retrieve metadata only from a des"
+        },
+        {
+          "info": {
+            "name": "Fetch Object tree",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developer.api.autodesk.com/modelderivative/v2/designdata/:urn/metadata/:modelGuid",
+            "headers": [
+              {
+                "name": "Accept-Encoding",
+                "value": ""
+              },
+              {
+                "name": "region",
+                "value": ""
+              },
+              {
+                "name": "x-ads-force",
+                "value": ""
+              },
+              {
+                "name": "x-ads-derivative-format",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "urn",
+                "value": "",
+                "type": "path",
+                "description": "The URL-safe Base64 encoded URN of the source design."
+              },
+              {
+                "name": "modelGuid",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the Model View you are extracting the object tree from. Use the `List Model Views </en/docs/model-derivative/v2/reference/http/metadata/urn-metadata-GET>`_ operation to get the IDs of the Model Views in the source design."
+              },
+              {
+                "name": "forceget",
+                "value": "",
+                "type": "query",
+                "description": "``true``: Retrieves large resources, even beyond the 20 MB limit. If exceptionally large (over 800 MB), the system acts as if ``forceget`` is ``false``. \n\n``false``: (Default) Does not retrieve resources if they are larger than 20 MB.\n"
+              },
+              {
+                "name": "objectid",
+                "value": "",
+                "type": "query",
+                "description": "If specified, retrieves the sub-tree that has the specified Object ID as its parent node. If this parameter is not specified, retrieves the entire object tree."
+              },
+              {
+                "name": "level",
+                "value": "",
+                "type": "query",
+                "description": "Specifies how many child levels of the hierarchy to return, when the ``objectid``  parameter is specified. Currently supports only ``level`` = ``1``."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieves the structured hierarchy of objects, known as an object tree, from the specified Model View (Viewable) within the specified source design. The object tree represents the arrangement and relationships of various objects present in that Model View.\n\n**Note:** A design file must be translated to SVF or SVF2 before you can retrieve its object tree.  \n\nBefore you call this operation:\n\n- Use the `List Model Views </en/docs/model-derivative/v2/reference/http/metadata/urn-metadata-GET/>`_ oper"
+        },
+        {
+          "info": {
+            "name": "Fetch All Properties",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developer.api.autodesk.com/modelderivative/v2/designdata/:urn/metadata/:modelGuid/properties",
+            "headers": [
+              {
+                "name": "Accept-Encoding",
+                "value": ""
+              },
+              {
+                "name": "x-ads-force",
+                "value": ""
+              },
+              {
+                "name": "x-ads-derivative-format",
+                "value": ""
+              },
+              {
+                "name": "region",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "urn",
+                "value": "",
+                "type": "path",
+                "description": "The URL-safe Base64 encoded URN of the source design."
+              },
+              {
+                "name": "modelGuid",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the Model View you are querying. Use the `List Model Views </en/docs/model-derivative/v2/reference/http/metadata/urn-metadata-GET>`_ operation to get the IDs of the Model Views in the source design."
+              },
+              {
+                "name": "objectid",
+                "value": "",
+                "type": "query",
+                "description": "The Object ID of the object you want to restrict the response to. If you do not specify this parameter, all properties of all objects within the Model View are returned.  "
+              },
+              {
+                "name": "forceget",
+                "value": "",
+                "type": "query",
+                "description": "``true``: Retrieves large resources, even beyond the 20 MB limit. If exceptionally large (over 800 MB), the system acts as if ``forceget`` is ``false``. \n\n``false``: (Default) Does not retrieve resources if they are larger than 20 MB.\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns a list of properties of all objects in the  Model View specified by the ``modelGuid`` parameter. \n\nThis operation returns properties of all objects by default. However, you can restrict the results to a specific object by specifying its ID as the ``objectid`` parameter.\n\nProperties are returned as a flat list, ordered, by their ``objectid``. The ``objectid`` is a non-persistent ID assigned to an object when the source design is translated to the SVF or SVF2 format. This means that:\n\n- A "
+        },
+        {
+          "info": {
+            "name": "Fetch Specific Properties",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://developer.api.autodesk.com/modelderivative/v2/designdata/:urn/metadata/:modelGuid/properties:query",
+            "headers": [
+              {
+                "name": "Accept-Encoding",
+                "value": ""
+              },
+              {
+                "name": "region",
+                "value": ""
+              },
+              {
+                "name": "x-ads-derivative-format",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "urn",
+                "value": "",
+                "type": "path",
+                "description": "The URL-safe Base64 encoded URN of the source design."
+              },
+              {
+                "name": "modelGuid",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the Model View you are querying. Use the `List Model Views </en/docs/model-derivative/v2/reference/http/metadata/urn-metadata-GET>`_ operation to get the IDs of the Model Views in the source design."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Queries the objects in the Model View (Viewable) specified by the ``modelGuid`` parameter and returns the specified properties in a paginated list. You can limit the number of objects to be queried by specifying a filter using the ``query`` attribute in the request body.\n\n**Note:** A design file must be translated to SVF or SVF2 before you can query object properties.  \n\nBefore you call this operation:\n\n- Use the `List Model Views </en/docs/model-derivative/v2/reference/http/metadata/urn-metadat"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

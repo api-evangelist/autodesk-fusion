@@ -1,0 +1,1347 @@
+{
+  "item": [
+    {
+      "id": "094a9e39-6b12-4388-a150-6734ed660886",
+      "name": "Tokens",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e7b372b4-cff6-4920-8969-de6f68f8b3be",
+          "name": "Create Secret Token",
+          "request": {
+            "name": "Create Secret Token",
+            "description": {
+              "content": "Sets a secret token to verify the authenticity of webhook payloads. \n\nWhen a webhook event occurs, the service calculates a hash signature using the token and includes it in the event notification. The receiving application listening at the callback URL can verify the payload's integrity by comparing the calculated signature to the one received.\n\nThe webhooks affected by this operation are determined by the type of access token you use.\n\n- Two-legged Access Token: Sets the secret token for all webhooks owned by calling the app.\n- Three-legged Access Token: Sets the secret token for all webhooks owned by the calling user\n\n**Note:** Use the [Update Webhook operation](/en/docs/webhooks/v1/reference/http/webhooks/systems-system-events-event-hooks-hook_id-PATCH/) to set a token for a specific webhook.\n\n\nSee the [Secret Token](/en/docs/webhooks/v1/developers_guide/basics/#secret-token) section in API Basics for more information.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "webhooks",
+                "v1",
+                "tokens"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "region",
+                  "value": "<string>",
+                  "description": "Specifies the geographical location (region) of the server the request must be executed on. This also corresponds to the region where the Webhook data is stored. It is also the location of the server that will make request to your callback URL. Possible values:\n\n- ``US`` - (Default) Data center dedicated to serve the United States region.\n- ``EMEA`` - Data center dedicated to serve the European Union, Middle East, and Africa regions.\n- ``AUS`` - (Beta) Data center dedicated to serve the Australia region.\n- ``CAN`` - Data center dedicated to serve the Canada region.\n- ``DEU`` - Data center dedicated to serve the Germany region.\n- ``IND`` - Data center dedicated to serve the India region.\n- ``JPN`` - Data center dedicated to serve the Japan region.\n- ``GBR`` - Data center dedicated to serve the United Kingdom region.\n\n**Note:** \n\n1. Beta features are subject to change. Please avoid using them in production environments.\n2. You can also use the ``x-ads-region`` header to specify the region. If you specify the ``region`` query string parameter as well as the ``x-ads-region`` header, the ``x-ads-region`` header takes precedence.\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Specifies the geographical location (region) of the server the request must be executed on. This also corresponds to the region where the Webhook data is stored. It is also the location of the server that will make requests to your callback URL. Possible values:\n\n- ``US`` - (Default) Data center dedicated to serve the United States region.\n- ``EMEA`` - Data center dedicated to serve the European Union, Middle East, and Africa regions.\n- ``AUS`` - (Beta) Data center dedicated to serve the Australia region.\n- ``CAN`` - Data center dedicated to serve the Canada region.\n- ``DEU`` - Data center dedicated to serve the Germany region.\n- ``IND`` - Data center dedicated to serve the India region.\n- ``JPN`` - Data center dedicated to serve the Japan region.\n- ``GBR`` - Data center dedicated to serve the United Kingdom region.\n\n**Note:** \n\n1. Beta features are subject to change. Please avoid using them in production environments.\n2. You can also use the ``region`` query string parameter to specify the region. If you specify the ``region`` query string parameter as well as the ``x-ads-region`` header, the ``x-ads-region`` header takes precedence.\n",
+                "key": "x-ads-region",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"token\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e88b3396-97dd-41c2-b8d5-d68973f5fe54",
+              "name": "The secret was set successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhooks",
+                    "v1",
+                    "tokens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "region",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies the geographical location (region) of the server the request must be executed on. This also corresponds to the region where the Webhook data is stored. It is also the location of the server that will make requests to your callback URL. Possible values:\n\n- ``US`` - (Default) Data center dedicated to serve the United States region.\n- ``EMEA`` - Data center dedicated to serve the European Union, Middle East, and Africa regions.\n- ``AUS`` - (Beta) Data center dedicated to serve the Australia region.\n- ``CAN`` - Data center dedicated to serve the Canada region.\n- ``DEU`` - Data center dedicated to serve the Germany region.\n- ``IND`` - Data center dedicated to serve the India region.\n- ``JPN`` - Data center dedicated to serve the Japan region.\n- ``GBR`` - Data center dedicated to serve the United Kingdom region.\n\n**Note:** \n\n1. Beta features are subject to change. Please avoid using them in production environments.\n2. You can also use the ``region`` query string parameter to specify the region. If you specify the ``region`` query string parameter as well as the ``x-ads-region`` header, the ``x-ads-region`` header takes precedence.\n",
+                    "key": "x-ads-region",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"token\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 4277.461003366172,\n  \"detail\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c6e2496e-213e-403a-8f26-24d2d15c75fc",
+              "name": "The request is invalid. Secret token already exists.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhooks",
+                    "v1",
+                    "tokens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "region",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies the geographical location (region) of the server the request must be executed on. This also corresponds to the region where the Webhook data is stored. It is also the location of the server that will make requests to your callback URL. Possible values:\n\n- ``US`` - (Default) Data center dedicated to serve the United States region.\n- ``EMEA`` - Data center dedicated to serve the European Union, Middle East, and Africa regions.\n- ``AUS`` - (Beta) Data center dedicated to serve the Australia region.\n- ``CAN`` - Data center dedicated to serve the Canada region.\n- ``DEU`` - Data center dedicated to serve the Germany region.\n- ``IND`` - Data center dedicated to serve the India region.\n- ``JPN`` - Data center dedicated to serve the Japan region.\n- ``GBR`` - Data center dedicated to serve the United Kingdom region.\n\n**Note:** \n\n1. Beta features are subject to change. Please avoid using them in production environments.\n2. You can also use the ``region`` query string parameter to specify the region. If you specify the ``region`` query string parameter as well as the ``x-ads-region`` header, the ``x-ads-region`` header takes precedence.\n",
+                    "key": "x-ads-region",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"token\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e6383453-2e8a-48a0-946a-5c746ee8e3a9",
+              "name": "Invalid authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhooks",
+                    "v1",
+                    "tokens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "region",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies the geographical location (region) of the server the request must be executed on. This also corresponds to the region where the Webhook data is stored. It is also the location of the server that will make requests to your callback URL. Possible values:\n\n- ``US`` - (Default) Data center dedicated to serve the United States region.\n- ``EMEA`` - Data center dedicated to serve the European Union, Middle East, and Africa regions.\n- ``AUS`` - (Beta) Data center dedicated to serve the Australia region.\n- ``CAN`` - Data center dedicated to serve the Canada region.\n- ``DEU`` - Data center dedicated to serve the Germany region.\n- ``IND`` - Data center dedicated to serve the India region.\n- ``JPN`` - Data center dedicated to serve the Japan region.\n- ``GBR`` - Data center dedicated to serve the United Kingdom region.\n\n**Note:** \n\n1. Beta features are subject to change. Please avoid using them in production environments.\n2. You can also use the ``region`` query string parameter to specify the region. If you specify the ``region`` query string parameter as well as the ``x-ads-region`` header, the ``x-ads-region`` header takes precedence.\n",
+                    "key": "x-ads-region",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"token\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "78cfb10a-7d36-4e6b-91bf-32235a3b7807",
+              "name": "Access denied regardless of authorization status.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhooks",
+                    "v1",
+                    "tokens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "region",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies the geographical location (region) of the server the request must be executed on. This also corresponds to the region where the Webhook data is stored. It is also the location of the server that will make requests to your callback URL. Possible values:\n\n- ``US`` - (Default) Data center dedicated to serve the United States region.\n- ``EMEA`` - Data center dedicated to serve the European Union, Middle East, and Africa regions.\n- ``AUS`` - (Beta) Data center dedicated to serve the Australia region.\n- ``CAN`` - Data center dedicated to serve the Canada region.\n- ``DEU`` - Data center dedicated to serve the Germany region.\n- ``IND`` - Data center dedicated to serve the India region.\n- ``JPN`` - Data center dedicated to serve the Japan region.\n- ``GBR`` - Data center dedicated to serve the United Kingdom region.\n\n**Note:** \n\n1. Beta features are subject to change. Please avoid using them in production environments.\n2. You can also use the ``region`` query string parameter to specify the region. If you specify the ``region`` query string parameter as well as the ``x-ads-region`` header, the ``x-ads-region`` header takes precedence.\n",
+                    "key": "x-ads-region",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"token\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "879c8946-342a-49fb-ba81-c5a27ad5f842",
+              "name": "The specified resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhooks",
+                    "v1",
+                    "tokens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "region",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies the geographical location (region) of the server the request must be executed on. This also corresponds to the region where the Webhook data is stored. It is also the location of the server that will make requests to your callback URL. Possible values:\n\n- ``US`` - (Default) Data center dedicated to serve the United States region.\n- ``EMEA`` - Data center dedicated to serve the European Union, Middle East, and Africa regions.\n- ``AUS`` - (Beta) Data center dedicated to serve the Australia region.\n- ``CAN`` - Data center dedicated to serve the Canada region.\n- ``DEU`` - Data center dedicated to serve the Germany region.\n- ``IND`` - Data center dedicated to serve the India region.\n- ``JPN`` - Data center dedicated to serve the Japan region.\n- ``GBR`` - Data center dedicated to serve the United Kingdom region.\n\n**Note:** \n\n1. Beta features are subject to change. Please avoid using them in production environments.\n2. You can also use the ``region`` query string parameter to specify the region. If you specify the ``region`` query string parameter as well as the ``x-ads-region`` header, the ``x-ads-region`` header takes precedence.\n",
+                    "key": "x-ads-region",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"token\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3ec3ddaf-e56a-4929-a12f-1907f6bc8699",
+              "name": "Unexpected service interruption",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhooks",
+                    "v1",
+                    "tokens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "region",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies the geographical location (region) of the server the request must be executed on. This also corresponds to the region where the Webhook data is stored. It is also the location of the server that will make requests to your callback URL. Possible values:\n\n- ``US`` - (Default) Data center dedicated to serve the United States region.\n- ``EMEA`` - Data center dedicated to serve the European Union, Middle East, and Africa regions.\n- ``AUS`` - (Beta) Data center dedicated to serve the Australia region.\n- ``CAN`` - Data center dedicated to serve the Canada region.\n- ``DEU`` - Data center dedicated to serve the Germany region.\n- ``IND`` - Data center dedicated to serve the India region.\n- ``JPN`` - Data center dedicated to serve the Japan region.\n- ``GBR`` - Data center dedicated to serve the United Kingdom region.\n\n**Note:** \n\n1. Beta features are subject to change. Please avoid using them in production environments.\n2. You can also use the ``region`` query string parameter to specify the region. If you specify the ``region`` query string parameter as well as the ``x-ads-region`` header, the ``x-ads-region`` header takes precedence.\n",
+                    "key": "x-ads-region",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"token\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b6671b6c-fe2b-457a-ab63-c8b9a97f3f9b",
+          "name": "Update Secret Token",
+          "request": {
+            "name": "Update Secret Token",
+            "description": {
+              "content": "Replaces an existing secret token with a new one. \n\nNote that there can be a delay of up to 10 minutes while the change takes effect. We recommend that your callback accept both secret token values for a period of time to allow all requests to go through.\n\nThe webhooks affected by this operation are determined by the type of access token you use.\n\n- Two-legged Access Token: Sets the secret token for all webhooks owned by calling the app.\n- Three-legged Access Token: Sets the secrety token for all webhooks owned by the calling user\n\n**Note:** Use the [Update Webhook operation](/en/docs/webhooks/v1/reference/http/webhooks/systems-system-events-event-hooks-hook_id-PATCH/) to set a token for a specific webhook.\n\n\nSee the [Secret Token](/en/docs/webhooks/v1/developers_guide/basics/#secret-token) section in API Basics for more information.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "webhooks",
+                "v1",
+                "tokens",
+                "@me"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "region",
+                  "value": "<string>",
+                  "description": "Specifies the geographical location (region) of the server the request must be executed on. This also corresponds to the region where the Webhook data is stored. It is also the location of the server that will make request to your callback URL. Possible values:\n\n- ``US`` - (Default) Data center dedicated to serve the United States region.\n- ``EMEA`` - Data center dedicated to serve the European Union, Middle East, and Africa regions.\n- ``AUS`` - (Beta) Data center dedicated to serve the Australia region.\n- ``CAN`` - Data center dedicated to serve the Canada region.\n- ``DEU`` - Data center dedicated to serve the Germany region.\n- ``IND`` - Data center dedicated to serve the India region.\n- ``JPN`` - Data center dedicated to serve the Japan region.\n- ``GBR`` - Data center dedicated to serve the United Kingdom region.\n\n**Note:** \n\n1. Beta features are subject to change. Please avoid using them in production environments.\n2. You can also use the ``x-ads-region`` header to specify the region. If you specify the ``region`` query string parameter as well as the ``x-ads-region`` header, the ``x-ads-region`` header takes precedence.\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Specifies the geographical location (region) of the server the request must be executed on. This also corresponds to the region where the Webhook data is stored. It is also the location of the server that will make requests to your callback URL. Possible values:\n\n- ``US`` - (Default) Data center dedicated to serve the United States region.\n- ``EMEA`` - Data center dedicated to serve the European Union, Middle East, and Africa regions.\n- ``AUS`` - (Beta) Data center dedicated to serve the Australia region.\n- ``CAN`` - Data center dedicated to serve the Canada region.\n- ``DEU`` - Data center dedicated to serve the Germany region.\n- ``IND`` - Data center dedicated to serve the India region.\n- ``JPN`` - Data center dedicated to serve the Japan region.\n- ``GBR`` - Data center dedicated to serve the United Kingdom region.\n\n**Note:** \n\n1. Beta features are subject to change. Please avoid using them in production environments.\n2. You can also use the ``region`` query string parameter to specify the region. If you specify the ``region`` query string parameter as well as the ``x-ads-region`` header, the ``x-ads-region`` header takes precedence.\n",
+                "key": "x-ads-region",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"token\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "48cd9dc6-072f-4b61-828d-d8bf65213a85",
+              "name": "The secret change request was accepted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhooks",
+                    "v1",
+                    "tokens",
+                    "@me"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "region",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies the geographical location (region) of the server the request must be executed on. This also corresponds to the region where the Webhook data is stored. It is also the location of the server that will make requests to your callback URL. Possible values:\n\n- ``US`` - (Default) Data center dedicated to serve the United States region.\n- ``EMEA`` - Data center dedicated to serve the European Union, Middle East, and Africa regions.\n- ``AUS`` - (Beta) Data center dedicated to serve the Australia region.\n- ``CAN`` - Data center dedicated to serve the Canada region.\n- ``DEU`` - Data center dedicated to serve the Germany region.\n- ``IND`` - Data center dedicated to serve the India region.\n- ``JPN`` - Data center dedicated to serve the Japan region.\n- ``GBR`` - Data center dedicated to serve the United Kingdom region.\n\n**Note:** \n\n1. Beta features are subject to change. Please avoid using them in production environments.\n2. You can also use the ``region`` query string parameter to specify the region. If you specify the ``region`` query string parameter as well as the ``x-ads-region`` header, the ``x-ads-region`` header takes precedence.\n",
+                    "key": "x-ads-region",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"token\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "895ecb51-69c7-402a-836e-85e911cd6f35",
+              "name": "The request is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhooks",
+                    "v1",
+                    "tokens",
+                    "@me"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "region",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies the geographical location (region) of the server the request must be executed on. This also corresponds to the region where the Webhook data is stored. It is also the location of the server that will make requests to your callback URL. Possible values:\n\n- ``US`` - (Default) Data center dedicated to serve the United States region.\n- ``EMEA`` - Data center dedicated to serve the European Union, Middle East, and Africa regions.\n- ``AUS`` - (Beta) Data center dedicated to serve the Australia region.\n- ``CAN`` - Data center dedicated to serve the Canada region.\n- ``DEU`` - Data center dedicated to serve the Germany region.\n- ``IND`` - Data center dedicated to serve the India region.\n- ``JPN`` - Data center dedicated to serve the Japan region.\n- ``GBR`` - Data center dedicated to serve the United Kingdom region.\n\n**Note:** \n\n1. Beta features are subject to change. Please avoid using them in production environments.\n2. You can also use the ``region`` query string parameter to specify the region. If you specify the ``region`` query string parameter as well as the ``x-ads-region`` header, the ``x-ads-region`` header takes precedence.\n",
+                    "key": "x-ads-region",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"token\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "70fa8e97-7985-4dd1-80e6-e5279da00c2d",
+              "name": "Invalid authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhooks",
+                    "v1",
+                    "tokens",
+                    "@me"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "region",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies the geographical location (region) of the server the request must be executed on. This also corresponds to the region where the Webhook data is stored. It is also the location of the server that will make requests to your callback URL. Possible values:\n\n- ``US`` - (Default) Data center dedicated to serve the United States region.\n- ``EMEA`` - Data center dedicated to serve the European Union, Middle East, and Africa regions.\n- ``AUS`` - (Beta) Data center dedicated to serve the Australia region.\n- ``CAN`` - Data center dedicated to serve the Canada region.\n- ``DEU`` - Data center dedicated to serve the Germany region.\n- ``IND`` - Data center dedicated to serve the India region.\n- ``JPN`` - Data center dedicated to serve the Japan region.\n- ``GBR`` - Data center dedicated to serve the United Kingdom region.\n\n**Note:** \n\n1. Beta features are subject to change. Please avoid using them in production environments.\n2. You can also use the ``region`` query string parameter to specify the region. If you specify the ``region`` query string parameter as well as the ``x-ads-region`` header, the ``x-ads-region`` header takes precedence.\n",
+                    "key": "x-ads-region",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"token\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f2d1bd22-267e-4683-91e8-52bd754110eb",
+              "name": "Access denied regardless of authorization status.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhooks",
+                    "v1",
+                    "tokens",
+                    "@me"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "region",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies the geographical location (region) of the server the request must be executed on. This also corresponds to the region where the Webhook data is stored. It is also the location of the server that will make requests to your callback URL. Possible values:\n\n- ``US`` - (Default) Data center dedicated to serve the United States region.\n- ``EMEA`` - Data center dedicated to serve the European Union, Middle East, and Africa regions.\n- ``AUS`` - (Beta) Data center dedicated to serve the Australia region.\n- ``CAN`` - Data center dedicated to serve the Canada region.\n- ``DEU`` - Data center dedicated to serve the Germany region.\n- ``IND`` - Data center dedicated to serve the India region.\n- ``JPN`` - Data center dedicated to serve the Japan region.\n- ``GBR`` - Data center dedicated to serve the United Kingdom region.\n\n**Note:** \n\n1. Beta features are subject to change. Please avoid using them in production environments.\n2. You can also use the ``region`` query string parameter to specify the region. If you specify the ``region`` query string parameter as well as the ``x-ads-region`` header, the ``x-ads-region`` header takes precedence.\n",
+                    "key": "x-ads-region",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"token\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ce587668-cf91-41af-92da-f4a4ce500341",
+              "name": "The specified resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhooks",
+                    "v1",
+                    "tokens",
+                    "@me"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "region",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies the geographical location (region) of the server the request must be executed on. This also corresponds to the region where the Webhook data is stored. It is also the location of the server that will make requests to your callback URL. Possible values:\n\n- ``US`` - (Default) Data center dedicated to serve the United States region.\n- ``EMEA`` - Data center dedicated to serve the European Union, Middle East, and Africa regions.\n- ``AUS`` - (Beta) Data center dedicated to serve the Australia region.\n- ``CAN`` - Data center dedicated to serve the Canada region.\n- ``DEU`` - Data center dedicated to serve the Germany region.\n- ``IND`` - Data center dedicated to serve the India region.\n- ``JPN`` - Data center dedicated to serve the Japan region.\n- ``GBR`` - Data center dedicated to serve the United Kingdom region.\n\n**Note:** \n\n1. Beta features are subject to change. Please avoid using them in production environments.\n2. You can also use the ``region`` query string parameter to specify the region. If you specify the ``region`` query string parameter as well as the ``x-ads-region`` header, the ``x-ads-region`` header takes precedence.\n",
+                    "key": "x-ads-region",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"token\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c1aeb5c4-369c-4d6c-98f6-6bab42dcb156",
+              "name": "Unexpected service interruption",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhooks",
+                    "v1",
+                    "tokens",
+                    "@me"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "region",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies the geographical location (region) of the server the request must be executed on. This also corresponds to the region where the Webhook data is stored. It is also the location of the server that will make requests to your callback URL. Possible values:\n\n- ``US`` - (Default) Data center dedicated to serve the United States region.\n- ``EMEA`` - Data center dedicated to serve the European Union, Middle East, and Africa regions.\n- ``AUS`` - (Beta) Data center dedicated to serve the Australia region.\n- ``CAN`` - Data center dedicated to serve the Canada region.\n- ``DEU`` - Data center dedicated to serve the Germany region.\n- ``IND`` - Data center dedicated to serve the India region.\n- ``JPN`` - Data center dedicated to serve the Japan region.\n- ``GBR`` - Data center dedicated to serve the United Kingdom region.\n\n**Note:** \n\n1. Beta features are subject to change. Please avoid using them in production environments.\n2. You can also use the ``region`` query string parameter to specify the region. If you specify the ``region`` query string parameter as well as the ``x-ads-region`` header, the ``x-ads-region`` header takes precedence.\n",
+                    "key": "x-ads-region",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"token\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f8e6a41d-dafa-4b4b-b66f-e510873887bb",
+          "name": "Delete Secret Token",
+          "request": {
+            "name": "Delete Secret Token",
+            "description": {
+              "content": "Removes an existing secret token from the webhooks impacted by this operation. \n\nThe webhooks affected by this operation are determined by the type of access token you use.\n\n- Two-legged Access Token: Sets the secret token for all webhooks owned by calling the app.\n- Three-legged Access Token: Sets the secrety token for all webhooks owned by the calling user\n\nNote that there can be a delay of up to 10 minutes while the change takes effect. We recommend that your callback accept both secret token values for a period of time to allow all requests to go through.\n\nSee the [Secret Token](/en/docs/webhooks/v1/developers_guide/basics/#secret-token) section in API Basics for more information.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "webhooks",
+                "v1",
+                "tokens",
+                "@me"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "region",
+                  "value": "<string>",
+                  "description": "Specifies the geographical location (region) of the server the request must be executed on. This also corresponds to the region where the Webhook data is stored. It is also the location of the server that will make request to your callback URL. Possible values:\n\n- ``US`` - (Default) Data center dedicated to serve the United States region.\n- ``EMEA`` - Data center dedicated to serve the European Union, Middle East, and Africa regions.\n- ``AUS`` - (Beta) Data center dedicated to serve the Australia region.\n- ``CAN`` - Data center dedicated to serve the Canada region.\n- ``DEU`` - Data center dedicated to serve the Germany region.\n- ``IND`` - Data center dedicated to serve the India region.\n- ``JPN`` - Data center dedicated to serve the Japan region.\n- ``GBR`` - Data center dedicated to serve the United Kingdom region.\n\n**Note:** \n\n1. Beta features are subject to change. Please avoid using them in production environments.\n2. You can also use the ``x-ads-region`` header to specify the region. If you specify the ``region`` query string parameter as well as the ``x-ads-region`` header, the ``x-ads-region`` header takes precedence.\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Specifies the geographical location (region) of the server the request must be executed on. This also corresponds to the region where the Webhook data is stored. It is also the location of the server that will make requests to your callback URL. Possible values:\n\n- ``US`` - (Default) Data center dedicated to serve the United States region.\n- ``EMEA`` - Data center dedicated to serve the European Union, Middle East, and Africa regions.\n- ``AUS`` - (Beta) Data center dedicated to serve the Australia region.\n- ``CAN`` - Data center dedicated to serve the Canada region.\n- ``DEU`` - Data center dedicated to serve the Germany region.\n- ``IND`` - Data center dedicated to serve the India region.\n- ``JPN`` - Data center dedicated to serve the Japan region.\n- ``GBR`` - Data center dedicated to serve the United Kingdom region.\n\n**Note:** \n\n1. Beta features are subject to change. Please avoid using them in production environments.\n2. You can also use the ``region`` query string parameter to specify the region. If you specify the ``region`` query string parameter as well as the ``x-ads-region`` header, the ``x-ads-region`` header takes precedence.\n",
+                "key": "x-ads-region",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ab92f2b3-57d4-473e-bde4-9657dcd3704a",
+              "name": "The secret deletion request was successfully accepted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhooks",
+                    "v1",
+                    "tokens",
+                    "@me"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "region",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies the geographical location (region) of the server the request must be executed on. This also corresponds to the region where the Webhook data is stored. It is also the location of the server that will make requests to your callback URL. Possible values:\n\n- ``US`` - (Default) Data center dedicated to serve the United States region.\n- ``EMEA`` - Data center dedicated to serve the European Union, Middle East, and Africa regions.\n- ``AUS`` - (Beta) Data center dedicated to serve the Australia region.\n- ``CAN`` - Data center dedicated to serve the Canada region.\n- ``DEU`` - Data center dedicated to serve the Germany region.\n- ``IND`` - Data center dedicated to serve the India region.\n- ``JPN`` - Data center dedicated to serve the Japan region.\n- ``GBR`` - Data center dedicated to serve the United Kingdom region.\n\n**Note:** \n\n1. Beta features are subject to change. Please avoid using them in production environments.\n2. You can also use the ``region`` query string parameter to specify the region. If you specify the ``region`` query string parameter as well as the ``x-ads-region`` header, the ``x-ads-region`` header takes precedence.\n",
+                    "key": "x-ads-region",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "04c56ba6-1890-4577-ae07-fa2ffc212ff7",
+              "name": "The request is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhooks",
+                    "v1",
+                    "tokens",
+                    "@me"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "region",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies the geographical location (region) of the server the request must be executed on. This also corresponds to the region where the Webhook data is stored. It is also the location of the server that will make requests to your callback URL. Possible values:\n\n- ``US`` - (Default) Data center dedicated to serve the United States region.\n- ``EMEA`` - Data center dedicated to serve the European Union, Middle East, and Africa regions.\n- ``AUS`` - (Beta) Data center dedicated to serve the Australia region.\n- ``CAN`` - Data center dedicated to serve the Canada region.\n- ``DEU`` - Data center dedicated to serve the Germany region.\n- ``IND`` - Data center dedicated to serve the India region.\n- ``JPN`` - Data center dedicated to serve the Japan region.\n- ``GBR`` - Data center dedicated to serve the United Kingdom region.\n\n**Note:** \n\n1. Beta features are subject to change. Please avoid using them in production environments.\n2. You can also use the ``region`` query string parameter to specify the region. If you specify the ``region`` query string parameter as well as the ``x-ads-region`` header, the ``x-ads-region`` header takes precedence.\n",
+                    "key": "x-ads-region",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "277865d5-4585-4c79-a01d-5cd731d9e659",
+              "name": "Invalid authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhooks",
+                    "v1",
+                    "tokens",
+                    "@me"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "region",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies the geographical location (region) of the server the request must be executed on. This also corresponds to the region where the Webhook data is stored. It is also the location of the server that will make requests to your callback URL. Possible values:\n\n- ``US`` - (Default) Data center dedicated to serve the United States region.\n- ``EMEA`` - Data center dedicated to serve the European Union, Middle East, and Africa regions.\n- ``AUS`` - (Beta) Data center dedicated to serve the Australia region.\n- ``CAN`` - Data center dedicated to serve the Canada region.\n- ``DEU`` - Data center dedicated to serve the Germany region.\n- ``IND`` - Data center dedicated to serve the India region.\n- ``JPN`` - Data center dedicated to serve the Japan region.\n- ``GBR`` - Data center dedicated to serve the United Kingdom region.\n\n**Note:** \n\n1. Beta features are subject to change. Please avoid using them in production environments.\n2. You can also use the ``region`` query string parameter to specify the region. If you specify the ``region`` query string parameter as well as the ``x-ads-region`` header, the ``x-ads-region`` header takes precedence.\n",
+                    "key": "x-ads-region",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c4d98f08-5090-4406-914d-348d15032bcb",
+              "name": "Access denied regardless of authorization status.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhooks",
+                    "v1",
+                    "tokens",
+                    "@me"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "region",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies the geographical location (region) of the server the request must be executed on. This also corresponds to the region where the Webhook data is stored. It is also the location of the server that will make requests to your callback URL. Possible values:\n\n- ``US`` - (Default) Data center dedicated to serve the United States region.\n- ``EMEA`` - Data center dedicated to serve the European Union, Middle East, and Africa regions.\n- ``AUS`` - (Beta) Data center dedicated to serve the Australia region.\n- ``CAN`` - Data center dedicated to serve the Canada region.\n- ``DEU`` - Data center dedicated to serve the Germany region.\n- ``IND`` - Data center dedicated to serve the India region.\n- ``JPN`` - Data center dedicated to serve the Japan region.\n- ``GBR`` - Data center dedicated to serve the United Kingdom region.\n\n**Note:** \n\n1. Beta features are subject to change. Please avoid using them in production environments.\n2. You can also use the ``region`` query string parameter to specify the region. If you specify the ``region`` query string parameter as well as the ``x-ads-region`` header, the ``x-ads-region`` header takes precedence.\n",
+                    "key": "x-ads-region",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dabcc30f-990c-4901-aa63-fa471c671bda",
+              "name": "The specified resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhooks",
+                    "v1",
+                    "tokens",
+                    "@me"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "region",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies the geographical location (region) of the server the request must be executed on. This also corresponds to the region where the Webhook data is stored. It is also the location of the server that will make requests to your callback URL. Possible values:\n\n- ``US`` - (Default) Data center dedicated to serve the United States region.\n- ``EMEA`` - Data center dedicated to serve the European Union, Middle East, and Africa regions.\n- ``AUS`` - (Beta) Data center dedicated to serve the Australia region.\n- ``CAN`` - Data center dedicated to serve the Canada region.\n- ``DEU`` - Data center dedicated to serve the Germany region.\n- ``IND`` - Data center dedicated to serve the India region.\n- ``JPN`` - Data center dedicated to serve the Japan region.\n- ``GBR`` - Data center dedicated to serve the United Kingdom region.\n\n**Note:** \n\n1. Beta features are subject to change. Please avoid using them in production environments.\n2. You can also use the ``region`` query string parameter to specify the region. If you specify the ``region`` query string parameter as well as the ``x-ads-region`` header, the ``x-ads-region`` header takes precedence.\n",
+                    "key": "x-ads-region",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "10fece1c-25e8-44f7-a8b9-85ef0efb553a",
+              "name": "Unexpected service interruption",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhooks",
+                    "v1",
+                    "tokens",
+                    "@me"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "region",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies the geographical location (region) of the server the request must be executed on. This also corresponds to the region where the Webhook data is stored. It is also the location of the server that will make requests to your callback URL. Possible values:\n\n- ``US`` - (Default) Data center dedicated to serve the United States region.\n- ``EMEA`` - Data center dedicated to serve the European Union, Middle East, and Africa regions.\n- ``AUS`` - (Beta) Data center dedicated to serve the Australia region.\n- ``CAN`` - Data center dedicated to serve the Canada region.\n- ``DEU`` - Data center dedicated to serve the Germany region.\n- ``IND`` - Data center dedicated to serve the India region.\n- ``JPN`` - Data center dedicated to serve the Japan region.\n- ``GBR`` - Data center dedicated to serve the United Kingdom region.\n\n**Note:** \n\n1. Beta features are subject to change. Please avoid using them in production environments.\n2. You can also use the ``region`` query string parameter to specify the region. If you specify the ``region`` query string parameter as well as the ``x-ads-region`` header, the ``x-ads-region`` header takes precedence.\n",
+                    "key": "x-ads-region",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://developer.api.autodesk.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "grant_type",
+        "value": "client_credentials"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "0b6393d1-60b3-4fdf-9540-f2903ebe7943",
+    "name": "Construction.Account.Admin Account Management Tokens API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Account Admin API automates creating and managing projects, assigning and managing project users, and managing member and partner company directories. You can also synchronize data with external systems.\n\n\nContact Support:\n Name: Autodesk Plaform Services\n Email: aps.help@autodesk.com",
+      "type": "text/plain"
+    }
+  }
+}

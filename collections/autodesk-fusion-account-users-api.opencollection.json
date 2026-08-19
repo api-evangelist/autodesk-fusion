@@ -1,0 +1,507 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Construction.Account.Admin Account Management Account Users API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "client_credentials",
+      "accessTokenUrl": "",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Account Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get account users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developer.api.autodesk.com/hq/v1/accounts/:account_id/users",
+            "headers": [
+              {
+                "name": "Region",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "The account ID of the users. This corresponds to hub ID in the Data Management API. To convert a hub ID into an account ID you need to remove the “b.” prefix. For example, a hub ID of b.c8b0c73d-3ae9 translates to an account ID of c8b0c73d-3ae9."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Response array’s size Default value: 10 Max limit: 100"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset of response array Default value: 0"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated fields to sort by in ascending order"
+              },
+              {
+                "name": "field",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated fields to include in response"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Query all the users in a specific BIM 360 account."
+        },
+        {
+          "info": {
+            "name": "Create User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://developer.api.autodesk.com/hq/v1/accounts/:account_id/users",
+            "headers": [
+              {
+                "name": "Region",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "The account ID of the users. This corresponds to hub ID in the Data Management API. To convert a hub ID into an account ID you need to remove the “b.” prefix. For example, a hub ID of b.c8b0c73d-3ae9 translates to an account ID of c8b0c73d-3ae9."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Create a new user in the BIM 360 member directory."
+        },
+        {
+          "info": {
+            "name": "Bulk import users",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://developer.api.autodesk.com/hq/v1/accounts/:account_id/users/import",
+            "headers": [
+              {
+                "name": "Region",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "The account ID of the users. This corresponds to hub ID in the Data Management API. To convert a hub ID into an account ID you need to remove the “b.” prefix. For example, a hub ID of b.c8b0c73d-3ae9 translates to an account ID of c8b0c73d-3ae9."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Bulk import users to the master member directory in a BIM 360 account. (50 users maximum can be included in each call.)"
+        },
+        {
+          "info": {
+            "name": "Get the details of a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developer.api.autodesk.com/hq/v1/accounts/:account_id/users/:user_id",
+            "headers": [
+              {
+                "name": "Region",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "The account ID of the user."
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Query the details of a specific user."
+        },
+        {
+          "info": {
+            "name": "Update User",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://developer.api.autodesk.com/hq/v1/accounts/:account_id/users/:user_id",
+            "headers": [
+              {
+                "name": "Region",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "The account ID of the user."
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Update a specific user’s status or default company."
+        },
+        {
+          "info": {
+            "name": "Search Users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developer.api.autodesk.com/hq/v1/accounts/:account_id/users/search",
+            "headers": [
+              {
+                "name": "Region",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "The account ID of the users."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "User name to match Max length: 255"
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "User email to match Max length: 255"
+              },
+              {
+                "name": "company_name",
+                "value": "",
+                "type": "query",
+                "description": "User company to match Max length: 255"
+              },
+              {
+                "name": "operator",
+                "value": "",
+                "type": "query",
+                "description": "Boolean operator to use: OR (default) or AND"
+              },
+              {
+                "name": "partial",
+                "value": "",
+                "type": "query",
+                "description": "If true (default), perform a fuzzy match"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Response array’s size Default value: 10 Max limit: 100"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset of response array Default value: 0"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated fields to sort by in ascending order"
+              },
+              {
+                "name": "field",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated fields to include in response"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Search users in the master member directory of a specific BIM 360 account by specified fields."
+        },
+        {
+          "info": {
+            "name": "Get user products",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developer.api.autodesk.com/construction/admin/v1/accounts/:accountId/users/:userId/products",
+            "headers": [
+              {
+                "name": "Region",
+                "value": ""
+              },
+              {
+                "name": "User-Id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the ACC account that contains the project being created or the projects being retrieved. This corresponds to the hub ID in the Data Management API. To convert a hub ID into an account ID, remove the “b.\" prefix. For example, a hub ID of b.c8b0c73d-3ae9 translates to an account ID of c8b0c73d-3ae9."
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the user. To find the ID call GET users. You can use either the ACC ID (id) or the Autodesk ID (autodeskId)."
+              },
+              {
+                "name": "filter[projectId]",
+                "value": "",
+                "type": "query",
+                "description": "A list of project IDs. Only results where the user is associated with one or more of the specified projects are returned."
+              },
+              {
+                "name": "filter[key]",
+                "value": "",
+                "type": "query",
+                "description": "Filters the list of products by product key — a machine-readable identifier for an ACC product (such as docs, build, or cost). You can specify one or more keys to return only those products the user is associated with.  Example: filter[key]=docs,build  Possible values: accountAdministration, autoSpecs, build, buildingConnected, capitalPlanning, cloudWorksharing, cost, designCollaboration, docs, financials, insight, modelCoordination, projectAdministration, takeoff, and workshopxr."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields to return in the response. Defaults to all fields. Possible values: projectIds, name and icon."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "The list of fields to sort by. Each property can be followed by a direction modifier of either asc (ascending) or desc (descending). The default is asc.  Possible values: name.  Default is the order in database."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of records to return in the response. Default: 20  Minimum: 1  Maximum: 200 (If a larger value is provided, only 200 records are returned)"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The index of the first record to return. Used for pagination in combination with the limit parameter.  Example: limit=20 and offset=40 returns records 41–60."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns a list of ACC products the user is associated with in their assigned projects.\r\n\r\nOnly account administrators can call this endpoint.\r\n\r\nNote that this endpoint is compatible with both BIM 360 and Autodesk Construction Cloud (ACC) projects."
+        },
+        {
+          "info": {
+            "name": "Get user roles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developer.api.autodesk.com/construction/admin/v1/accounts/:accountId/users/:userId/roles",
+            "headers": [
+              {
+                "name": "Region",
+                "value": ""
+              },
+              {
+                "name": "User-Id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the ACC account that contains the project being created or the projects being retrieved. This corresponds to the hub ID in the Data Management API. To convert a hub ID into an account ID, remove the “b.\" prefix. For example, a hub ID of b.c8b0c73d-3ae9 translates to an account ID of c8b0c73d-3ae9."
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the user. To find the ID call GET users. You can use either the ACC ID (id) or the Autodesk ID (autodeskId)."
+              },
+              {
+                "name": "filter[projectId]",
+                "value": "",
+                "type": "query",
+                "description": "A list of project IDs. Only results where the user is associated with one or more of the specified projects are returned."
+              },
+              {
+                "name": "filter[status]",
+                "value": "",
+                "type": "query",
+                "description": "Filters roles by their status. Accepts one or more of the following values: active – The role is currently in use.  inactive – The role has been removed or is no longer in use."
+              },
+              {
+                "name": "filter[name]",
+                "value": "",
+                "type": "query",
+                "description": "Filters roles by name. By default, this performs a partial match (case-insensitive).  You can control how the match behaves by using the filterTextMatch parameter. For example, to match only names that start with (startsWith), end with (endsWith), or exactly equal (equals) the provided value."
+              },
+              {
+                "name": "filterTextMatch",
+                "value": "",
+                "type": "query",
+                "description": "Specifies how text-based filters should match values in supported fields. This parameter can be used in any endpoint that supports text-based filtering (e.g., filter[name], filter[jobNumber], filter[companyName], etc.).  Possible values:  contains (default) – Matches if the field contains the specified text anywhere  startsWith – Matches if the field starts with the specified text  endsWith – Matches if the field ends with the specified text  equals – Matches only if the field exactly matches the specified text  Matching is case-insensitive.  Wildcards and regular expressions are not supported."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of response fields to include. Defaults to all fields if not specified. Use this parameter to reduce the response size by retrieving only the fields you need.  Possible values:  projectIds – Projects where the user holds this role  name – Role name  status – Role status (active or inactive)  key – Internal key used to translate the role name  createdAt – Timestamp when the role was created  updatedAt – Timestamp when the role was last updated"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sorts the results by one or more fields. Each field can be followed by a direction modifier:  asc – Ascending order (default)  desc – Descending order  Possible values: name, createdAt, updatedAt.  Default sort: name asc  Example: sort=name,updatedAt desc"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of records to return in the response. Default: 20  Minimum: 1  Maximum: 200 (If a larger value is provided, only 200 records are returned)"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The index of the first record to return. Used for pagination in combination with the limit parameter.  Example: limit=20 and offset=40 returns records 41–60."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns the roles assigned to a specific user across the projects they belong to.\r\n\r\nOnly users with account admin permissions can call this endpoint. To verify a user’s permissions, call GET users.\r\n\r\nNote that this endpoint is compatible with both BIM 360 and Autodesk Construction Cloud (ACC) projects."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
