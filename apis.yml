@@ -309,6 +309,8 @@ apis:
   humanURL: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
   baseURL: https://developer.api.autodesk.com
   tags:
+  - Hub
+  tags_raw:
   - Hubs
   properties:
   - type: OpenAPI
@@ -502,6 +504,8 @@ apis:
   humanURL: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
   baseURL: https://developer.api.autodesk.com
   tags:
+  - Item
+  tags_raw:
   - Items
   properties:
   - type: OpenAPI
@@ -521,6 +525,8 @@ apis:
   humanURL: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
   baseURL: https://developer.api.autodesk.com
   tags:
+  - Job
+  tags_raw:
   - Jobs
   properties:
   - type: OpenAPI
@@ -559,6 +565,8 @@ apis:
   humanURL: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
   baseURL: https://developer.api.autodesk.com
   tags:
+  - Manifests
+  tags_raw:
   - Manifest
   properties:
   - type: OpenAPI
@@ -635,6 +643,8 @@ apis:
   humanURL: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
   baseURL: https://developer.api.autodesk.com
   tags:
+  - Project
+  tags_raw:
   - Projects
   properties:
   - type: OpenAPI
@@ -730,6 +740,8 @@ apis:
   humanURL: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
   baseURL: https://developer.api.autodesk.com
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
