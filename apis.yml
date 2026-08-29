@@ -787,6 +787,9 @@ apis:
   - type: GraphQL
     url: graphql/autodesk-fusion-graphql.md
 common:
+- type: CapabilityMap
+  url: capabilities/autodesk-fusion-capability-edges.yml
+  name: Autodesk Fusion Business Capability Map
 - type: AgenticAccess
   url: agentic-access/autodesk-fusion-agentic-access.yml
 - type: DomainSecurity
