@@ -321,7 +321,7 @@ apis:
   humanURL: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
   baseURL: https://developer.api.autodesk.com
   tags:
-  - Hub
+  - Hubs
   tags_raw:
   - Hubs
   properties:
@@ -577,7 +577,7 @@ apis:
   humanURL: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
   baseURL: https://developer.api.autodesk.com
   tags:
-  - Manifests
+  - Manifest
   tags_raw:
   - Manifest
   properties:
