@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   title: Construction.Account.Admin Account Management Informational API
   version: '1.0'
@@ -66,15 +66,14 @@ paths:
       - 2-legged: []
       - 3-legged: []
 components:
+  parameters:
+    accept-encoding:
+      name: Accept-Encoding
+      in: header
+      schema:
+        type: string
+      description: "A comma separated list of the algorithms you want the response to be encoded in, specified in the order of preference.  \n\nIf you specify ``gzip`` or ``*``, content is compressed and returned in gzip format.\n"
   headers:
-    x-ads-startup-time:
-      description: 'The service startup time, in the following date format: ``EEE MMM dd HH:mm:ss Z yyyy``.'
-      schema:
-        type: string
-    x-ads-app-identifier:
-      description: The service identifier. Comprises of the service name, version, and environment.
-      schema:
-        type: string
     x-ads-duration:
       description: The amount of time spent servicing the request, in milliseconds.
       schema:
@@ -83,13 +82,14 @@ components:
       description: Provides information about server failures, if any.
       schema:
         type: string
-  parameters:
-    accept-encoding:
-      name: Accept-Encoding
-      in: header
+    x-ads-startup-time:
+      description: 'The service startup time, in the following date format: ``EEE MMM dd HH:mm:ss Z yyyy``.'
       schema:
         type: string
-      description: "A comma separated list of the algorithms you want the response to be encoded in, specified in the order of preference.  \n\nIf you specify ``gzip`` or ``*``, content is compressed and returned in gzip format.\n"
+    x-ads-app-identifier:
+      description: The service identifier. Comprises of the service name, version, and environment.
+      schema:
+        type: string
   schemas:
     SupportedFormats:
       description: Represents the successful response of a List Supported Formats operation.

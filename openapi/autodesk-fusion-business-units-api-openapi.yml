@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   title: Construction.Account.Admin Account Management Business Units API
   version: '1.0'
@@ -104,6 +104,65 @@ paths:
               $ref: '#/components/schemas/BusinessUnitsPayload'
 components:
   schemas:
+    Region:
+      title: Region
+      x-stoplight:
+        id: 5rz8jxdpgo4zq
+      type: string
+      enum:
+      - US
+      - EMEA
+      - AUS
+      - CAN
+      - DEU
+      - IND
+      - JPN
+      - GBR
+      description: 'Specifies the region where your request should be routed. Possible values are:
+
+        - ``US`` - Data center for the US region.
+
+        - ``EMEA`` - Data center for the European Union, Middle East, and Africa regions.
+
+        - ``AUS`` - Data center for the Australia region.
+
+        - ``CAN`` - Data center for the Canada region.
+
+        - ``DEU`` - Data center for the Germany region.
+
+        - ``IND`` - Data center for the India region.
+
+        - ``JPN`` - Data center for the Japan region.
+
+        - ``GBR`` - Data center for the United Kingdom region.'
+    BusinessUnits:
+      title: BusinessUnitsResponse
+      x-stoplight:
+        id: bje738qyuuz2v
+      type: object
+      properties:
+        business_units:
+          type: array
+          x-stoplight:
+            id: n5utlu9b7jz16
+          items:
+            $ref: '#/components/schemas/BusinessUnit'
+            x-stoplight:
+              id: 2sl170itvk70g
+    BusinessUnitsPayload:
+      title: BusinessUnitsPayload
+      x-stoplight:
+        id: vg238uncrewqq
+      type: object
+      properties:
+        business_units:
+          type: array
+          x-stoplight:
+            id: 9dce24721l40s
+          items:
+            $ref: '#/components/schemas/BusinessUnitsObject'
+            x-stoplight:
+              id: xmd2c1g2ax76z
     BusinessUnitsObject:
       title: BusinessUnitsObject
       x-stoplight:
@@ -196,65 +255,6 @@ components:
           type: string
           x-stoplight:
             id: epd0mv6uik60l
-    Region:
-      title: Region
-      x-stoplight:
-        id: 5rz8jxdpgo4zq
-      type: string
-      enum:
-      - US
-      - EMEA
-      - AUS
-      - CAN
-      - DEU
-      - IND
-      - JPN
-      - GBR
-      description: 'Specifies the region where your request should be routed. Possible values are:
-
-        - ``US`` - Data center for the US region.
-
-        - ``EMEA`` - Data center for the European Union, Middle East, and Africa regions.
-
-        - ``AUS`` - Data center for the Australia region.
-
-        - ``CAN`` - Data center for the Canada region.
-
-        - ``DEU`` - Data center for the Germany region.
-
-        - ``IND`` - Data center for the India region.
-
-        - ``JPN`` - Data center for the Japan region.
-
-        - ``GBR`` - Data center for the United Kingdom region.'
-    BusinessUnitsPayload:
-      title: BusinessUnitsPayload
-      x-stoplight:
-        id: vg238uncrewqq
-      type: object
-      properties:
-        business_units:
-          type: array
-          x-stoplight:
-            id: 9dce24721l40s
-          items:
-            $ref: '#/components/schemas/BusinessUnitsObject'
-            x-stoplight:
-              id: xmd2c1g2ax76z
-    BusinessUnits:
-      title: BusinessUnitsResponse
-      x-stoplight:
-        id: bje738qyuuz2v
-      type: object
-      properties:
-        business_units:
-          type: array
-          x-stoplight:
-            id: n5utlu9b7jz16
-          items:
-            $ref: '#/components/schemas/BusinessUnit'
-            x-stoplight:
-              id: 2sl170itvk70g
   securitySchemes:
     2-legged:
       type: oauth2

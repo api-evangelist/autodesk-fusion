@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   title: Construction.Account.Admin Account Management Issue Comments API
   version: '1.0'
@@ -110,20 +110,59 @@ paths:
       tags:
       - Issue Comments
 components:
-  parameters:
-    x-ads-region:
-      name: x-ads-region
-      in: header
-      schema:
-        $ref: '#/components/schemas/region'
   schemas:
-    sortBy_internal:
-      title: sortBy_internal
+    Pagination:
+      type: object
+      description: The pagination object.
+      properties:
+        limit:
+          type: integer
+          description: The number of items per page.
+        offset:
+          type: integer
+          description: The page number that the results begin from.
+        totalResults:
+          type: integer
+          description: The number of items in the response.
+    region:
+      title: region
       x-stoplight:
-        id: jf3fxohnckp1q
-      type: array
-      items:
-        $ref: '#/components/schemas/sortBy'
+        id: pvg574irwjt8w
+      type: string
+      enum:
+      - US
+      - EMEA
+      - AUS
+      - CAN
+      - DEU
+      - IND
+      - JPN
+      - GBR
+      description: "Specifies where the bucket containing the object is stored. Possible values are:\n            - ``US`` - (Default) Data center for the US region.\n            - ``EMEA`` - Data center for the European Union, Middle East, and Africa.\n            - ``AUS`` -  Data center for Australia.\n            - ``CAN`` - Data center for the Canada region.\n            - ``DEU`` - Data center for the Germany region.\n            - ``IND`` - Data center for the India region.\n            - ``JPN`` - Data center for the Japan region.\n            - ``GBR`` - Data center for the United Kingdom region.\n**Note:** Beta features are subject to change. Please do not use in production environments."
+    sortBy:
+      title: sortBy
+      x-stoplight:
+        id: j8v94gty0f6up
+      type: string
+      enum:
+      - createdAt
+      - updatedAt
+      - createdBy
+      - displayId
+      - title
+      - description
+      - status
+      - assignedTo
+      - assignedToType
+      - dueDate
+      - locationDetails
+      - published
+      - closedBy
+      - closedAt
+      - issueSubType
+      - issueType
+      - customAttributes
+      - startDate
     commentsPayload:
       title: commentsPayload
       x-stoplight:
@@ -178,34 +217,6 @@ components:
           description: Not relevant
           items:
             type: string
-    Pagination:
-      type: object
-      description: The pagination object.
-      properties:
-        limit:
-          type: integer
-          description: The number of items per page.
-        offset:
-          type: integer
-          description: The page number that the results begin from.
-        totalResults:
-          type: integer
-          description: The number of items in the response.
-    region:
-      title: region
-      x-stoplight:
-        id: pvg574irwjt8w
-      type: string
-      enum:
-      - US
-      - EMEA
-      - AUS
-      - CAN
-      - DEU
-      - IND
-      - JPN
-      - GBR
-      description: "Specifies where the bucket containing the object is stored. Possible values are:\n            - ``US`` - (Default) Data center for the US region.\n            - ``EMEA`` - Data center for the European Union, Middle East, and Africa.\n            - ``AUS`` -  Data center for Australia.\n            - ``CAN`` - Data center for the Canada region.\n            - ``DEU`` - Data center for the Germany region.\n            - ``IND`` - Data center for the India region.\n            - ``JPN`` - Data center for the Japan region.\n            - ``GBR`` - Data center for the United Kingdom region.\n**Note:** Beta features are subject to change. Please do not use in production environments."
     commentsPage:
       title: issue-comments
       type: object
@@ -219,30 +230,19 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/comment'
-    sortBy:
-      title: sortBy
+    sortBy_internal:
+      title: sortBy_internal
       x-stoplight:
-        id: j8v94gty0f6up
-      type: string
-      enum:
-      - createdAt
-      - updatedAt
-      - createdBy
-      - displayId
-      - title
-      - description
-      - status
-      - assignedTo
-      - assignedToType
-      - dueDate
-      - locationDetails
-      - published
-      - closedBy
-      - closedAt
-      - issueSubType
-      - issueType
-      - customAttributes
-      - startDate
+        id: jf3fxohnckp1q
+      type: array
+      items:
+        $ref: '#/components/schemas/sortBy'
+  parameters:
+    x-ads-region:
+      name: x-ads-region
+      in: header
+      schema:
+        $ref: '#/components/schemas/region'
   securitySchemes:
     2-legged:
       type: oauth2

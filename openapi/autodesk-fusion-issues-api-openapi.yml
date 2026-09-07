@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   title: Construction.Account.Admin Account Management Issues API
   version: '1.0'
@@ -296,6 +296,297 @@ paths:
       - Issues
 components:
   schemas:
+    Pagination:
+      type: object
+      description: The pagination object.
+      properties:
+        limit:
+          type: integer
+          description: The number of items per page.
+        offset:
+          type: integer
+          description: The page number that the results begin from.
+        totalResults:
+          type: integer
+          description: The number of items in the response.
+    filterassignedTo:
+      title: filterassignedTo
+      x-stoplight:
+        id: chrtdtj1ebfb3
+      type: array
+      items:
+        x-stoplight:
+          id: x44vzy9svtq9p
+        type: string
+    fields:
+      title: fields
+      x-stoplight:
+        id: hf9u470q32dn5
+      type: string
+      enum:
+      - id
+      - displayId
+      - title
+      - description
+      - issueTypeId
+      - issueSubtypeId
+      - status
+      - assignedTo
+      - assignedToType
+      - dueDate
+      - startDate
+      - locationId
+      - locationDetails
+      - rootCauseTitle
+      - rootCauseId
+      - permittedStatuses
+      - permittedAttributes
+      - permittedActions
+      - published
+      - commentCount
+      - openedBy
+      - openedAt
+      - closedBy
+      - closedAt
+      - createdBy
+      - createdAt
+      - updatedBy
+      - updatedAt
+      - customAttributes
+    filterlocationId:
+      title: filterrootCauseId
+      x-stoplight:
+        id: o6mccjxmn3fxg
+      type: array
+      items:
+        x-stoplight:
+          id: isppzqxf1r4c9
+        type: string
+    filterid:
+      title: filterid
+      x-stoplight:
+        id: az48o4u31pbvt
+      type: array
+      items:
+        x-stoplight:
+          id: 9dnhirox70yde
+        type: string
+    fields_internal:
+      title: fields_internal
+      x-stoplight:
+        id: 8s1gy4e6hc4pr
+      type: array
+      items:
+        $ref: '#/components/schemas/fields'
+    filterlinkedDocumentUrn:
+      title: filterlinkedDocumentUrn
+      x-stoplight:
+        id: e4lcm68omr5g2
+      type: array
+      items:
+        x-stoplight:
+          id: ex53iql10n0of
+        type: string
+      description: 'Retrieves pushpin issues associated with the specified files. We support all file types that are compatible with the Files tool. You need to specify the URL-encoded file item IDs. To find the file item IDs, use the Data Management API.
+
+        Note that you need to specify the 3D model item ID, which retrieves all pushpins associated with all 2D sheets and views associated with the 3D model. Similarly, if you specify a specific PDF file it retrieves all the pushpin issues associated with all the PDF file pages. We do not currently support retrieving pushpin issues associated with a specific 2D sheet or view.'
+    sortBy:
+      title: sortBy
+      x-stoplight:
+        id: j8v94gty0f6up
+      type: string
+      enum:
+      - createdAt
+      - updatedAt
+      - createdBy
+      - displayId
+      - title
+      - description
+      - status
+      - assignedTo
+      - assignedToType
+      - dueDate
+      - locationDetails
+      - published
+      - closedBy
+      - closedAt
+      - issueSubType
+      - issueType
+      - customAttributes
+      - startDate
+    filtercreatedBy:
+      title: filtercreatedBy
+      x-stoplight:
+        id: 2drtvpglpzdg5
+      type: array
+      items:
+        type: string
+    IssuePayload:
+      title: issue_payload
+      x-stoplight:
+        id: 8g2lbqjamv0x0
+      type: object
+      properties:
+        title:
+          type: string
+          x-stoplight:
+            id: 6doa4cbrd92a0
+          description: 'The description and purpose of the issue.
+
+            Max length: 10000'
+        description:
+          type: string
+          x-stoplight:
+            id: bjyfvqctzsmdg
+          description: 'The description and purpose of the issue.
+
+            Max length: 10000'
+        snapshotUrn:
+          type: string
+          x-stoplight:
+            id: klltd0816d9h0
+          description: Not relevant
+        issueSubtypeId:
+          type: string
+          x-stoplight:
+            id: w9cpekfm64k1q
+          description: The unique identifier of the subtype of the issue.
+        status:
+          $ref: '#/components/schemas/status'
+        assignedTo:
+          type: string
+          x-stoplight:
+            id: z2d8nyn4rrf12
+          description: The Autodesk ID of the member, role, or company you want to assign to the issue. Note that if you select an assignee ID, you also need to select a type (assignedToType).
+        assignedToType:
+          $ref: '#/components/schemas/assignedToType'
+        dueDate:
+          type: string
+          x-stoplight:
+            id: ie75gbeeuzb3b
+          description: The due date of the issue, in ISO8601 format.
+        startDate:
+          type: string
+          x-stoplight:
+            id: coswfmw4g9fup
+          description: The start date of the issue, in ISO8601 format.
+        locationId:
+          type: string
+          x-stoplight:
+            id: 4jai4n9ddyd6b
+          description: The unique LBS (Location Breakdown Structure) identifier that relates to the issue.
+        locationDetails:
+          type: string
+          x-stoplight:
+            id: z1gddbsieowy9
+          description: 'The location as plain text that relates to the issue.
+
+            Max length: 8300'
+        rootCauseId:
+          type: string
+          x-stoplight:
+            id: 17ecnk4d83fz0
+          description: The unique identifier of the type of root cause for the issue.
+        issueTemplateId:
+          type: string
+          x-stoplight:
+            id: 17ecnk4d83fz0
+          description: The unique identifier of the type of root cause for the issue.
+        published:
+          type: boolean
+          x-stoplight:
+            id: t4sq9mucm305q
+          description: 'States whether the issue is published. Default value: false (e.g. unpublished).'
+        permittedActions:
+          type: object
+          x-stoplight:
+            id: uih5ia7jit7hb
+          description: 'The list of actions permitted for the user for this issue in its current state.
+
+            Note that if a user with Create for my company permissions attempts to assign a user from a another company to the issue, it will return an error.
+
+
+            Possible Values: assign_all (can assign another user from another company to the issue), assign_same_company (can only assign another user from the same company to the issue), clear_assignee, delete, add_comment, add_attachment, remove_attachment.
+
+
+            The following values are not relevant: add_attachment, remove_attachment.'
+        watchers:
+          type: array
+          x-stoplight:
+            id: f62fnyar5mau5
+          description: The Autodesk ID of the member you want to assign as a watcher for the issue.
+          items:
+            x-stoplight:
+              id: sz01bet5mi110
+            type: string
+        customAttributes:
+          type: array
+          x-stoplight:
+            id: vblrg1nyyahq4
+          description: A list of custom attributes of the specific issue.
+          items:
+            x-stoplight:
+              id: 62j6v5j9s0ncc
+            type: object
+            properties:
+              attributeDefinitionId:
+                type: string
+                x-stoplight:
+                  id: 5b8h1b9n7jone
+                description: The unique identifier of the custom attribute.
+              value:
+                type: object
+                x-stoplight:
+                  id: 4fupsuku6bg1a
+                description: 'Custom attribute value. Possible value types: string, number, null.'
+            required:
+            - attributeDefinitionId
+            - value
+        gpsCoordinates:
+          type: object
+          x-stoplight:
+            id: 5cq95b24ifbl8
+          description: A GPS Coordinate which represents the geo location of the issue.
+          properties:
+            latitude:
+              type: number
+              x-stoplight:
+                id: 6f6pm9hf3oldd
+            longitude:
+              type: number
+              x-stoplight:
+                id: y0dndwiddez8y
+      required:
+      - title
+      - issueSubtypeId
+      - status
+    filterrootCauseId:
+      title: filterrootCauseId
+      x-stoplight:
+        id: yij9lduzyuzd1
+      type: array
+      items:
+        x-stoplight:
+          id: isppzqxf1r4c9
+        type: string
+    filterissueSubtypeId:
+      title: filterissueSubtypeId
+      x-stoplight:
+        id: kbtr780g1ioa3
+      type: array
+      items:
+        x-stoplight:
+          id: zmn50bfqs15li
+        type: string
+    filtersubLocationId:
+      title: filterrootCauseId
+      x-stoplight:
+        id: srhxvujb00n6a
+      type: array
+      items:
+        x-stoplight:
+          id: isppzqxf1r4c9
+        type: string
     sortBy_internal:
       title: sortBy_internal
       x-stoplight:
@@ -303,15 +594,6 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/sortBy'
-    filterissueTypeId:
-      title: filterissueTypeId
-      x-stoplight:
-        id: wiudkmxcv9nbu
-      type: array
-      items:
-        x-stoplight:
-          id: oes0op5k8yucv
-        type: string
     status:
       type: string
       x-stoplight:
@@ -327,27 +609,6 @@ components:
       - not_approved
       - in_dispute
       - closed
-    filterlinkedDocumentUrn:
-      title: filterlinkedDocumentUrn
-      x-stoplight:
-        id: e4lcm68omr5g2
-      type: array
-      items:
-        x-stoplight:
-          id: ex53iql10n0of
-        type: string
-      description: 'Retrieves pushpin issues associated with the specified files. We support all file types that are compatible with the Files tool. You need to specify the URL-encoded file item IDs. To find the file item IDs, use the Data Management API.
-
-        Note that you need to specify the 3D model item ID, which retrieves all pushpins associated with all 2D sheets and views associated with the 3D model. Similarly, if you specify a specific PDF file it retrieves all the pushpin issues associated with all the PDF file pages. We do not currently support retrieving pushpin issues associated with a specific 2D sheet or view.'
-    filterid:
-      title: filterid
-      x-stoplight:
-        id: az48o4u31pbvt
-      type: array
-      items:
-        x-stoplight:
-          id: 9dnhirox70yde
-        type: string
     assignedToType:
       title: assignedToType
       x-stoplight:
@@ -357,6 +618,19 @@ components:
       - user
       - company
       - role
+    IssuesPage:
+      title: issues
+      x-stoplight:
+        id: ea3111d9b097d
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        results:
+          type: array
+          description: The list of issues in the current page
+          items:
+            $ref: '#/components/schemas/Issue'
     Issue:
       title: issue
       type: object
@@ -612,166 +886,18 @@ components:
           type: boolean
           x-stoplight:
             id: n16cah32tk3r8
-          description: "Not relevant\r\n"
-    IssuePayload:
-      title: issue_payload
+          description: 'Not relevant
+
+            '
+    filterissueTypeId:
+      title: filterissueTypeId
       x-stoplight:
-        id: 8g2lbqjamv0x0
-      type: object
-      properties:
-        title:
-          type: string
-          x-stoplight:
-            id: 6doa4cbrd92a0
-          description: 'The description and purpose of the issue.
-
-            Max length: 10000'
-        description:
-          type: string
-          x-stoplight:
-            id: bjyfvqctzsmdg
-          description: 'The description and purpose of the issue.
-
-            Max length: 10000'
-        snapshotUrn:
-          type: string
-          x-stoplight:
-            id: klltd0816d9h0
-          description: Not relevant
-        issueSubtypeId:
-          type: string
-          x-stoplight:
-            id: w9cpekfm64k1q
-          description: The unique identifier of the subtype of the issue.
-        status:
-          $ref: '#/components/schemas/status'
-        assignedTo:
-          type: string
-          x-stoplight:
-            id: z2d8nyn4rrf12
-          description: The Autodesk ID of the member, role, or company you want to assign to the issue. Note that if you select an assignee ID, you also need to select a type (assignedToType).
-        assignedToType:
-          $ref: '#/components/schemas/assignedToType'
-        dueDate:
-          type: string
-          x-stoplight:
-            id: ie75gbeeuzb3b
-          description: The due date of the issue, in ISO8601 format.
-        startDate:
-          type: string
-          x-stoplight:
-            id: coswfmw4g9fup
-          description: The start date of the issue, in ISO8601 format.
-        locationId:
-          type: string
-          x-stoplight:
-            id: 4jai4n9ddyd6b
-          description: The unique LBS (Location Breakdown Structure) identifier that relates to the issue.
-        locationDetails:
-          type: string
-          x-stoplight:
-            id: z1gddbsieowy9
-          description: 'The location as plain text that relates to the issue.
-
-            Max length: 8300'
-        rootCauseId:
-          type: string
-          x-stoplight:
-            id: 17ecnk4d83fz0
-          description: The unique identifier of the type of root cause for the issue.
-        issueTemplateId:
-          type: string
-          x-stoplight:
-            id: 17ecnk4d83fz0
-          description: The unique identifier of the type of root cause for the issue.
-        published:
-          type: boolean
-          x-stoplight:
-            id: t4sq9mucm305q
-          description: 'States whether the issue is published. Default value: false (e.g. unpublished).'
-        permittedActions:
-          type: object
-          x-stoplight:
-            id: uih5ia7jit7hb
-          description: 'The list of actions permitted for the user for this issue in its current state.
-
-            Note that if a user with Create for my company permissions attempts to assign a user from a another company to the issue, it will return an error.
-
-
-            Possible Values: assign_all (can assign another user from another company to the issue), assign_same_company (can only assign another user from the same company to the issue), clear_assignee, delete, add_comment, add_attachment, remove_attachment.
-
-
-            The following values are not relevant: add_attachment, remove_attachment.'
-        watchers:
-          type: array
-          x-stoplight:
-            id: f62fnyar5mau5
-          description: The Autodesk ID of the member you want to assign as a watcher for the issue.
-          items:
-            x-stoplight:
-              id: sz01bet5mi110
-            type: string
-        customAttributes:
-          type: array
-          x-stoplight:
-            id: vblrg1nyyahq4
-          description: A list of custom attributes of the specific issue.
-          items:
-            x-stoplight:
-              id: 62j6v5j9s0ncc
-            type: object
-            properties:
-              attributeDefinitionId:
-                type: string
-                x-stoplight:
-                  id: 5b8h1b9n7jone
-                description: The unique identifier of the custom attribute.
-              value:
-                type: object
-                x-stoplight:
-                  id: 4fupsuku6bg1a
-                description: 'Custom attribute value. Possible value types: string, number, null.'
-            required:
-            - attributeDefinitionId
-            - value
-        gpsCoordinates:
-          type: object
-          x-stoplight:
-            id: 5cq95b24ifbl8
-          description: A GPS Coordinate which represents the geo location of the issue.
-          properties:
-            latitude:
-              type: number
-              x-stoplight:
-                id: 6f6pm9hf3oldd
-            longitude:
-              type: number
-              x-stoplight:
-                id: y0dndwiddez8y
-      required:
-      - title
-      - issueSubtypeId
-      - status
-    fields_internal:
-      title: fields_internal
-      x-stoplight:
-        id: 8s1gy4e6hc4pr
+        id: wiudkmxcv9nbu
       type: array
       items:
-        $ref: '#/components/schemas/fields'
-    Pagination:
-      type: object
-      description: The pagination object.
-      properties:
-        limit:
-          type: integer
-          description: The number of items per page.
-        offset:
-          type: integer
-          description: The page number that the results begin from.
-        totalResults:
-          type: integer
-          description: The number of items in the response.
+        x-stoplight:
+          id: oes0op5k8yucv
+        type: string
     region:
       title: region
       x-stoplight:
@@ -787,105 +913,6 @@ components:
       - JPN
       - GBR
       description: "Specifies where the bucket containing the object is stored. Possible values are:\n            - ``US`` - (Default) Data center for the US region.\n            - ``EMEA`` - Data center for the European Union, Middle East, and Africa.\n            - ``AUS`` -  Data center for Australia.\n            - ``CAN`` - Data center for the Canada region.\n            - ``DEU`` - Data center for the Germany region.\n            - ``IND`` - Data center for the India region.\n            - ``JPN`` - Data center for the Japan region.\n            - ``GBR`` - Data center for the United Kingdom region.\n**Note:** Beta features are subject to change. Please do not use in production environments."
-    IssuesPage:
-      title: issues
-      x-stoplight:
-        id: ea3111d9b097d
-      type: object
-      properties:
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-        results:
-          type: array
-          description: The list of issues in the current page
-          items:
-            $ref: '#/components/schemas/Issue'
-    fields:
-      title: fields
-      x-stoplight:
-        id: hf9u470q32dn5
-      type: string
-      enum:
-      - id
-      - displayId
-      - title
-      - description
-      - issueTypeId
-      - issueSubtypeId
-      - status
-      - assignedTo
-      - assignedToType
-      - dueDate
-      - startDate
-      - locationId
-      - locationDetails
-      - rootCauseTitle
-      - rootCauseId
-      - permittedStatuses
-      - permittedAttributes
-      - permittedActions
-      - published
-      - commentCount
-      - openedBy
-      - openedAt
-      - closedBy
-      - closedAt
-      - createdBy
-      - createdAt
-      - updatedBy
-      - updatedAt
-      - customAttributes
-    sortBy:
-      title: sortBy
-      x-stoplight:
-        id: j8v94gty0f6up
-      type: string
-      enum:
-      - createdAt
-      - updatedAt
-      - createdBy
-      - displayId
-      - title
-      - description
-      - status
-      - assignedTo
-      - assignedToType
-      - dueDate
-      - locationDetails
-      - published
-      - closedBy
-      - closedAt
-      - issueSubType
-      - issueType
-      - customAttributes
-      - startDate
-    filterclosedBy:
-      title: filterrootCauseId
-      x-stoplight:
-        id: jiz1hji0gp0o5
-      type: array
-      items:
-        x-stoplight:
-          id: isppzqxf1r4c9
-        type: string
-    filterassignedTo:
-      title: filterassignedTo
-      x-stoplight:
-        id: chrtdtj1ebfb3
-      type: array
-      items:
-        x-stoplight:
-          id: x44vzy9svtq9p
-        type: string
-    filterlocationId:
-      title: filterrootCauseId
-      x-stoplight:
-        id: o6mccjxmn3fxg
-      type: array
-      items:
-        x-stoplight:
-          id: isppzqxf1r4c9
-        type: string
     filterupdatedBy:
       title: filterupdatedBy
       x-stoplight:
@@ -896,22 +923,6 @@ components:
           id: 64w55gwhiyl87
         type: string
       description: Filter issues by the unique identifier of the user who updated the issue. Separate multiple values with commas.
-    filtercreatedBy:
-      title: filtercreatedBy
-      x-stoplight:
-        id: 2drtvpglpzdg5
-      type: array
-      items:
-        type: string
-    filterrootCauseId:
-      title: filterrootCauseId
-      x-stoplight:
-        id: yij9lduzyuzd1
-      type: array
-      items:
-        x-stoplight:
-          id: isppzqxf1r4c9
-        type: string
     filtercustomAttributes:
       title: filtercustomAttributes
       x-stoplight:
@@ -921,19 +932,10 @@ components:
         x-stoplight:
           id: nq5ihyumsc9l3
         type: string
-    filterissueSubtypeId:
-      title: filterissueSubtypeId
-      x-stoplight:
-        id: kbtr780g1ioa3
-      type: array
-      items:
-        x-stoplight:
-          id: zmn50bfqs15li
-        type: string
-    filtersubLocationId:
+    filterclosedBy:
       title: filterrootCauseId
       x-stoplight:
-        id: srhxvujb00n6a
+        id: jiz1hji0gp0o5
       type: array
       items:
         x-stoplight:

@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   title: Construction.Account.Admin Account Management Project Users API
   version: '1.0'
@@ -495,47 +495,266 @@ paths:
       - Project Users
 components:
   schemas:
-    filterID:
-      title: filterID
-      type: array
-      items:
-        type: string
-    accessLevels:
-      title: accessLevels
-      x-stoplight:
-        id: v2kbai7y3z4ls
+    productKeys:
+      title: productKeys
       type: string
       enum:
-      - accountAdmin
-      - projectAdmin
-      - executive
-    ProjectUsersUpdatePayload:
-      title: ProjectUsersUpdatePayload
+      - build
+      - docs
+      - takeoff
+      - cost
+      - autoSpecs
+      - financials
+      - buildingConnected
+      - capitalPlanning
+      - accountAdministration
+      - workshopxr
+      - insight
+      - projectAdministration
+      - modelCoordination
+      - designCollaboration
+      - cloudWorksharing
+    filterTextMatch:
+      title: filterTextMatch
       x-stoplight:
-        id: 7hpr38vcbofx7
+        id: l613i9qr8h8a6
+      type: string
+      enum:
+      - contains
+      - startsWith
+      - endsWith
+      - equals
+    Pagination:
+      title: Pagination
+      x-stoplight:
+        id: q1bi13503pl18
+      type: object
+      properties:
+        limit:
+          type: integer
+          x-stoplight:
+            id: 8izi1f176ek68
+        offset:
+          type: integer
+          x-stoplight:
+            id: v1vdhhbk5vhtj
+        totalResults:
+          type: integer
+          x-stoplight:
+            id: o7y9s28pvovds
+        nextUrl:
+          type: string
+          x-stoplight:
+            id: egebyg74p2y51
+        previousUrl:
+          type: string
+          x-stoplight:
+            id: rhoc949ms1w0p
+      description: "\tContains pagination details for the records returned by the endpoint."
+    statusFilter:
+      title: statusFilter
+      x-stoplight:
+        id: xqc12d47t2w4v
+      type: string
+      enum:
+      - active
+      - pending
+      - deleted
+    products:
+      title: products
+      x-stoplight:
+        id: qr6chlzpjohw0
+      type: string
+      enum:
+      - build
+      - docs
+      - takeoff
+      - cost
+      - autospecs
+      - financials
+      - buildingConnected
+      - capitalPlanning
+      - accountAdministration
+      - workshopxr
+      - insight
+      - projectAdministration
+      - modelCoordination
+      - designCollaboration
+      - cloudWorksharing
+      - fieldManagement
+      - costManagement
+      - glue
+      - documentManagement
+      - projectHome
+      - assets
+      - quantification
+      - plan
+      - field
+      - projectManagement
+      description: ''
+    ProjectUser:
+      title: ProjectUser
+      x-stoplight:
+        id: yr7m0t04g7srf
       type: object
       properties:
         email:
           type: string
           x-stoplight:
-            id: bhz1gjhsjijd7
-          description: 'The email address of the user.
+            id: 4l126as65h226
+          description: 'The email of the user.
 
             Max length: 255'
+        id:
+          type: string
+          description: The ACC ID of the user.
+        name:
+          type: string
+          description: The full name of the user.
+        firstName:
+          type: string
+          description: 'The user’s first name. This data syncs from the user’s Autodesk profile.
+
+            Max length: 255'
+        lastName:
+          type: string
+          description: 'The user’s last name. This data syncs from the user’s Autodesk profile.
+
+            Max length: 255'
+        autodeskId:
+          type: string
+          description: 'The ID of the user’s Autodesk profile.
+
+            Max length: 255'
+        analyticsId:
+          type: string
+          description: Not relevant
+        addressLine1:
+          type: string
+          description: 'The user’s address line 1. This data syncs from the user’s Autodesk profile.
+
+            Max length: 255'
+        addressLine2:
+          type: string
+          description: 'The user’s address line 2. This data syncs from the user’s Autodesk profile.
+
+            Max length: 255'
+        city:
+          type: string
+          description: 'The User’s city. This data syncs from the user’s Autodesk profile.
+
+            Max length: 255'
+        stateOrProvince:
+          type: string
+          description: 'The state or province of the user. The accepted values here change depending on which country is provided. This data syncs from the user’s Autodesk profile.
+
+            Max length: 255'
+        postalCode:
+          type: string
+          description: 'The zip or postal code of the user. This data syncs from the user’s Autodesk profile.
+
+            Max length: 255'
+        country:
+          type: string
+          description: 'The user’s country. This data syncs from the user’s Autodesk profile.
+
+            Max length: 255'
+        imageUrl:
+          type: string
+          description: 'The URL of the user’s avatar. This data syncs from the user’s Autodesk profile.
+
+            Max length: 255'
+        phone:
+          description: The user’s phone number. This data syncs from the user’s Autodesk profile.
+          type: object
+          properties:
+            number:
+              type: string
+              x-stoplight:
+                id: 9jn34var2c9nu
+              description: User’s phone number
+            phoneType:
+              type: string
+              x-stoplight:
+                id: i4870b3euojc3
+              description: The user’s phone type.
+            extension:
+              type: string
+              x-stoplight:
+                id: wz1h6mlxohgqp
+              description: User’s phone extension.
+        jobTitle:
+          type: string
+          description: 'The user’s job title. This data syncs from the user’s Autodesk profile.
+
+            Max length: 255'
+        industry:
+          type: string
+          description: 'The industry the user works in. This data syncs from the user’s Autodesk profile.
+
+            Max length: 255'
+        aboutMe:
+          type: string
+          description: 'A short bio about the user. This data syncs from the user’s Autodesk profile.
+
+            Max length: 255'
+        accessLevels:
+          description: Flags that identify a returned user’s access levels in the account or project.
+          type: object
+          properties:
+            accountAdmin:
+              type: boolean
+              x-stoplight:
+                id: uit3quf92pt7c
+              description: Indicates whether the user is an account administrator for the account.
+            projectAdmin:
+              type: boolean
+              x-stoplight:
+                id: 19r2u8did6fgi
+              description: Indicates whether the user is a project administrator for the project.
+            executive:
+              type: boolean
+              x-stoplight:
+                id: vwasqda2gcmm0
+              description: Indicates whether the user is an executive in the account.
+        addedOn:
+          type: string
+          description: The timestamp when the user was first given access to any product on the project.
+        updatedAt:
+          type: string
+          description: The timestamp when the project user was last updated, in ISO 8601 format.
         companyId:
           type: string
-          x-stoplight:
-            id: qjr3ljiek0a25
           description: The ID of the company that the user is representing in the project. To obtain a list of all company IDs associated with a project, call GET projects/:projectId/companies.
+        companyName:
+          type: string
+          description: 'The name of the company to which the user belongs.
+
+            Max length: 255'
         roleIds:
           type: array
-          x-stoplight:
-            id: k3j3e6w9zd7c3
-          description: A list of IDs of the roles that the user belongs to in the project.
           items:
-            x-stoplight:
-              id: ngp6d387c9q14
             type: string
+          description: A list of IDs of the roles that the user belongs to in the project.
+        roles:
+          description: A list of the role IDs and names that are associated with the user in the project.
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                x-stoplight:
+                  id: k4i4pyorywmgu
+                description: The ID of a role that the user belongs to in the project.
+              name:
+                type: string
+                x-stoplight:
+                  id: 06k3jj0ewbula
+                description: The name of a role that the user belongs to in the project.
+        status:
+          type: string
+          description: The status of the user in the project. A pending user could be waiting for their products to activate, or the user hasn’t accepted an email to create an account with Autodesk.
         products:
           type: array
           items:
@@ -544,18 +763,33 @@ components:
               id: hasrcy0zzx3bm
             properties:
               key:
-                $ref: '#/components/schemas/productKeys'
+                type: string
                 x-stoplight:
                   id: wkmu7n556lqbw
                 description: A keyword that identifies the product.
               access:
-                $ref: '#/components/schemas/productAccess'
+                type: string
                 x-stoplight:
                   id: 2hg7ktpbupezj
                 description: The user’s type of access to the product identified by key.
-          required:
-          - key
-          - access
+    products_internal:
+      title: products_internal
+      x-stoplight:
+        id: 9c80166a5fe5a
+      type: array
+      items:
+        $ref: '#/components/schemas/products'
+        x-stoplight:
+          id: qeezmlysbidw9
+    filterAutodeskId:
+      title: filterAutodeskId
+      x-stoplight:
+        id: 2avndceqj70a9
+      type: array
+      items:
+        x-stoplight:
+          id: 3ffftrtd5ie5v
+        type: string
     ProjectUserDetails:
       title: ProjectUserResponse
       x-stoplight:
@@ -741,34 +975,281 @@ components:
           x-stoplight:
             id: sykfft9q3jzuo
           description: Not relevant - we don’t currently support this field.
-    productKeys:
-      title: productKeys
-      type: string
-      enum:
-      - build
-      - docs
-      - takeoff
-      - cost
-      - autoSpecs
-      - financials
-      - buildingConnected
-      - capitalPlanning
-      - accountAdministration
-      - workshopxr
-      - insight
-      - projectAdministration
-      - modelCoordination
-      - designCollaboration
-      - cloudWorksharing
-    filterAutodeskId:
-      title: filterAutodeskId
+    userSortBy_internal:
+      title: userSortBy_internal
       x-stoplight:
-        id: 2avndceqj70a9
+        id: gtw01y7bwe28r
       type: array
       items:
+        $ref: '#/components/schemas/userSortBy'
         x-stoplight:
-          id: 3ffftrtd5ie5v
+          id: doc1w838c38cz
+    orFilters_internal:
+      title: orFilters_internal
+      x-stoplight:
+        id: el45nd3vlwq52
+      type: array
+      items:
+        $ref: '#/components/schemas/orFilters'
+        x-stoplight:
+          id: xms9nyrej26w8
+    productAccess:
+      title: productAccess
+      x-stoplight:
+        id: fb0367b9f7e57
+      type: string
+      enum:
+      - administrator
+      - member
+      - none
+    userSortBy:
+      title: userSortBy
+      x-stoplight:
+        id: 4pk6sj0cgqqan
+      type: string
+      enum:
+      - name asc
+      - email asc
+      - firstName asc
+      - lastName asc
+      - addressLine1 asc
+      - addressLine2 asc
+      - city asc
+      - companyName asc
+      - stateOrProvince asc
+      - status asc
+      - phone asc
+      - postalCode asc
+      - country asc
+      - addedOn asc
+      - name desc
+      - email desc
+      - firstName desc
+      - lastName desc
+      - addressLine1 desc
+      - addressLine2 desc
+      - city desc
+      - companyName desc
+      - stateOrProvince desc
+      - status desc
+      - phone desc
+      - postalCode desc
+      - country desc
+      - addedOn desc
+    userFields_internal:
+      title: userFields_internal
+      type: array
+      items:
+        $ref: '#/components/schemas/userFields'
+        x-stoplight:
+          id: web6yrp57burr
+    filterID:
+      title: filterID
+      type: array
+      items:
         type: string
+    accessLevels_internal:
+      title: accessLevels_internal
+      x-stoplight:
+        id: wmvzmw12gsy4j
+      type: array
+      items:
+        $ref: '#/components/schemas/accessLevels'
+        x-stoplight:
+          id: 8768wybirus40
+    ProjectUserPayload:
+      title: ProjectUserPayload
+      x-stoplight:
+        id: d7oxg934a3kf6
+      type: object
+      properties:
+        email:
+          type: string
+          x-stoplight:
+            id: bhz1gjhsjijd7
+          description: 'The email address of the user.
+
+            Max length: 255'
+        companyId:
+          type: string
+          x-stoplight:
+            id: qjr3ljiek0a25
+          description: The ID of the company that the user is representing in the project. To obtain a list of all company IDs associated with a project, call GET projects/:projectId/companies.
+        roleIds:
+          type: array
+          x-stoplight:
+            id: k3j3e6w9zd7c3
+          description: A list of IDs of the roles that the user belongs to in the project.
+          items:
+            x-stoplight:
+              id: ngp6d387c9q14
+            type: string
+        products:
+          type: array
+          items:
+            type: object
+            required:
+            - key
+            - access
+            properties:
+              key:
+                $ref: '#/components/schemas/productKeys'
+                x-stoplight:
+                  id: wkmu7n556lqbw
+                description: A keyword that identifies the product.
+              access:
+                $ref: '#/components/schemas/productAccess'
+                x-stoplight:
+                  id: 2hg7ktpbupezj
+                description: The user’s type of access to the product identified by key.
+      required:
+      - email
+      - products
+    ProjectUsersImport:
+      title: ProjectUsersImportResponse
+      x-stoplight:
+        id: 4vlcsf9vutqs8
+      type: object
+      properties:
+        jobId:
+          type: string
+          x-stoplight:
+            id: m7smt5frycgog
+          description: 'We don’t currently support this field, but expect to in a future release.
+
+            If the response returns jobId with a valid UUID value, the user import operation was successful.'
+    ProjectUsersPage:
+      title: ProjectUsers
+      x-stoplight:
+        id: f584b87ecf8ca
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        results:
+          type: array
+          description: The requested page of project users.
+          items:
+            $ref: '#/components/schemas/ProjectUser'
+    userFields:
+      title: userFields
+      x-stoplight:
+        id: 7zsag4qu2hd1k
+      type: string
+      enum:
+      - name
+      - email
+      - firstName
+      - lastName
+      - autodeskId
+      - addressLine1
+      - addressLine2
+      - city
+      - stateOrProvince
+      - postalCode
+      - country
+      - imageUrl
+      - lastSignIn
+      - phone
+      - jobTitle
+      - industry
+      - aboutMe
+      - createdAt
+      - updatedAt
+      - accessLevels
+      - companyId
+      - roleIds
+      - roles
+      - status
+      - addedOn
+      - products
+    Region:
+      title: Region
+      x-stoplight:
+        id: 5rz8jxdpgo4zq
+      type: string
+      enum:
+      - US
+      - EMEA
+      - AUS
+      - CAN
+      - DEU
+      - IND
+      - JPN
+      - GBR
+      description: 'Specifies the region where your request should be routed. Possible values are:
+
+        - ``US`` - Data center for the US region.
+
+        - ``EMEA`` - Data center for the European Union, Middle East, and Africa regions.
+
+        - ``AUS`` - Data center for the Australia region.
+
+        - ``CAN`` - Data center for the Canada region.
+
+        - ``DEU`` - Data center for the Germany region.
+
+        - ``IND`` - Data center for the India region.
+
+        - ``JPN`` - Data center for the Japan region.
+
+        - ``GBR`` - Data center for the United Kingdom region.'
+    ProjectUsersUpdatePayload:
+      title: ProjectUsersUpdatePayload
+      x-stoplight:
+        id: 7hpr38vcbofx7
+      type: object
+      properties:
+        email:
+          type: string
+          x-stoplight:
+            id: bhz1gjhsjijd7
+          description: 'The email address of the user.
+
+            Max length: 255'
+        companyId:
+          type: string
+          x-stoplight:
+            id: qjr3ljiek0a25
+          description: The ID of the company that the user is representing in the project. To obtain a list of all company IDs associated with a project, call GET projects/:projectId/companies.
+        roleIds:
+          type: array
+          x-stoplight:
+            id: k3j3e6w9zd7c3
+          description: A list of IDs of the roles that the user belongs to in the project.
+          items:
+            x-stoplight:
+              id: ngp6d387c9q14
+            type: string
+        products:
+          type: array
+          items:
+            type: object
+            x-stoplight:
+              id: hasrcy0zzx3bm
+            properties:
+              key:
+                $ref: '#/components/schemas/productKeys'
+                x-stoplight:
+                  id: wkmu7n556lqbw
+                description: A keyword that identifies the product.
+              access:
+                $ref: '#/components/schemas/productAccess'
+                x-stoplight:
+                  id: 2hg7ktpbupezj
+                description: The user’s type of access to the product identified by key.
+          required:
+          - key
+          - access
+    statusFilter_internal:
+      title: statusFilter_internal
+      x-stoplight:
+        id: egjtyb75hopy5
+      type: array
+      items:
+        $ref: '#/components/schemas/statusFilter'
+        x-stoplight:
+          id: hcsuxuefqfyhc
     ProjectUsersImportPayload:
       title: ProjectUsersImportPayload
       x-stoplight:
@@ -835,310 +1316,15 @@ components:
             required:
             - email
             - products
-    accessLevels_internal:
-      title: accessLevels_internal
+    accessLevels:
+      title: accessLevels
       x-stoplight:
-        id: wmvzmw12gsy4j
-      type: array
-      items:
-        $ref: '#/components/schemas/accessLevels'
-        x-stoplight:
-          id: 8768wybirus40
-    userFields_internal:
-      title: userFields_internal
-      type: array
-      items:
-        $ref: '#/components/schemas/userFields'
-        x-stoplight:
-          id: web6yrp57burr
-    ProjectUsersImport:
-      title: ProjectUsersImportResponse
-      x-stoplight:
-        id: 4vlcsf9vutqs8
-      type: object
-      properties:
-        jobId:
-          type: string
-          x-stoplight:
-            id: m7smt5frycgog
-          description: 'We don’t currently support this field, but expect to in a future release.
-
-            If the response returns jobId with a valid UUID value, the user import operation was successful.'
-    ProjectUser:
-      title: ProjectUser
-      x-stoplight:
-        id: yr7m0t04g7srf
-      type: object
-      properties:
-        email:
-          type: string
-          x-stoplight:
-            id: 4l126as65h226
-          description: 'The email of the user.
-
-            Max length: 255'
-        id:
-          type: string
-          description: The ACC ID of the user.
-        name:
-          type: string
-          description: The full name of the user.
-        firstName:
-          type: string
-          description: 'The user’s first name. This data syncs from the user’s Autodesk profile.
-
-            Max length: 255'
-        lastName:
-          type: string
-          description: 'The user’s last name. This data syncs from the user’s Autodesk profile.
-
-            Max length: 255'
-        autodeskId:
-          type: string
-          description: 'The ID of the user’s Autodesk profile.
-
-            Max length: 255'
-        analyticsId:
-          type: string
-          description: Not relevant
-        addressLine1:
-          type: string
-          description: 'The user’s address line 1. This data syncs from the user’s Autodesk profile.
-
-            Max length: 255'
-        addressLine2:
-          type: string
-          description: 'The user’s address line 2. This data syncs from the user’s Autodesk profile.
-
-            Max length: 255'
-        city:
-          type: string
-          description: 'The User’s city. This data syncs from the user’s Autodesk profile.
-
-            Max length: 255'
-        stateOrProvince:
-          type: string
-          description: 'The state or province of the user. The accepted values here change depending on which country is provided. This data syncs from the user’s Autodesk profile.
-
-            Max length: 255'
-        postalCode:
-          type: string
-          description: 'The zip or postal code of the user. This data syncs from the user’s Autodesk profile.
-
-            Max length: 255'
-        country:
-          type: string
-          description: 'The user’s country. This data syncs from the user’s Autodesk profile.
-
-            Max length: 255'
-        imageUrl:
-          type: string
-          description: 'The URL of the user’s avatar. This data syncs from the user’s Autodesk profile.
-
-            Max length: 255'
-        phone:
-          description: The user’s phone number. This data syncs from the user’s Autodesk profile.
-          type: object
-          properties:
-            number:
-              type: string
-              x-stoplight:
-                id: 9jn34var2c9nu
-              description: User’s phone number
-            phoneType:
-              type: string
-              x-stoplight:
-                id: i4870b3euojc3
-              description: The user’s phone type.
-            extension:
-              type: string
-              x-stoplight:
-                id: wz1h6mlxohgqp
-              description: User’s phone extension.
-        jobTitle:
-          type: string
-          description: 'The user’s job title. This data syncs from the user’s Autodesk profile.
-
-            Max length: 255'
-        industry:
-          type: string
-          description: 'The industry the user works in. This data syncs from the user’s Autodesk profile.
-
-            Max length: 255'
-        aboutMe:
-          type: string
-          description: 'A short bio about the user. This data syncs from the user’s Autodesk profile.
-
-            Max length: 255'
-        accessLevels:
-          description: Flags that identify a returned user’s access levels in the account or project.
-          type: object
-          properties:
-            accountAdmin:
-              type: boolean
-              x-stoplight:
-                id: uit3quf92pt7c
-              description: Indicates whether the user is an account administrator for the account.
-            projectAdmin:
-              type: boolean
-              x-stoplight:
-                id: 19r2u8did6fgi
-              description: Indicates whether the user is a project administrator for the project.
-            executive:
-              type: boolean
-              x-stoplight:
-                id: vwasqda2gcmm0
-              description: Indicates whether the user is an executive in the account.
-        addedOn:
-          type: string
-          description: The timestamp when the user was first given access to any product on the project.
-        updatedAt:
-          type: string
-          description: The timestamp when the project user was last updated, in ISO 8601 format.
-        companyId:
-          type: string
-          description: The ID of the company that the user is representing in the project. To obtain a list of all company IDs associated with a project, call GET projects/:projectId/companies.
-        companyName:
-          type: string
-          description: 'The name of the company to which the user belongs.
-
-            Max length: 255'
-        roleIds:
-          type: array
-          items:
-            type: string
-          description: A list of IDs of the roles that the user belongs to in the project.
-        roles:
-          description: A list of the role IDs and names that are associated with the user in the project.
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                x-stoplight:
-                  id: k4i4pyorywmgu
-                description: The ID of a role that the user belongs to in the project.
-              name:
-                type: string
-                x-stoplight:
-                  id: 06k3jj0ewbula
-                description: The name of a role that the user belongs to in the project.
-        status:
-          type: string
-          description: The status of the user in the project. A pending user could be waiting for their products to activate, or the user hasn’t accepted an email to create an account with Autodesk.
-        products:
-          type: array
-          items:
-            type: object
-            x-stoplight:
-              id: hasrcy0zzx3bm
-            properties:
-              key:
-                type: string
-                x-stoplight:
-                  id: wkmu7n556lqbw
-                description: A keyword that identifies the product.
-              access:
-                type: string
-                x-stoplight:
-                  id: 2hg7ktpbupezj
-                description: The user’s type of access to the product identified by key.
-    ProjectUserPayload:
-      title: ProjectUserPayload
-      x-stoplight:
-        id: d7oxg934a3kf6
-      type: object
-      properties:
-        email:
-          type: string
-          x-stoplight:
-            id: bhz1gjhsjijd7
-          description: 'The email address of the user.
-
-            Max length: 255'
-        companyId:
-          type: string
-          x-stoplight:
-            id: qjr3ljiek0a25
-          description: The ID of the company that the user is representing in the project. To obtain a list of all company IDs associated with a project, call GET projects/:projectId/companies.
-        roleIds:
-          type: array
-          x-stoplight:
-            id: k3j3e6w9zd7c3
-          description: A list of IDs of the roles that the user belongs to in the project.
-          items:
-            x-stoplight:
-              id: ngp6d387c9q14
-            type: string
-        products:
-          type: array
-          items:
-            type: object
-            required:
-            - key
-            - access
-            properties:
-              key:
-                $ref: '#/components/schemas/productKeys'
-                x-stoplight:
-                  id: wkmu7n556lqbw
-                description: A keyword that identifies the product.
-              access:
-                $ref: '#/components/schemas/productAccess'
-                x-stoplight:
-                  id: 2hg7ktpbupezj
-                description: The user’s type of access to the product identified by key.
-      required:
-      - email
-      - products
-    userSortBy:
-      title: userSortBy
-      x-stoplight:
-        id: 4pk6sj0cgqqan
+        id: v2kbai7y3z4ls
       type: string
       enum:
-      - name asc
-      - email asc
-      - firstName asc
-      - lastName asc
-      - addressLine1 asc
-      - addressLine2 asc
-      - city asc
-      - companyName asc
-      - stateOrProvince asc
-      - status asc
-      - phone asc
-      - postalCode asc
-      - country asc
-      - addedOn asc
-      - name desc
-      - email desc
-      - firstName desc
-      - lastName desc
-      - addressLine1 desc
-      - addressLine2 desc
-      - city desc
-      - companyName desc
-      - stateOrProvince desc
-      - status desc
-      - phone desc
-      - postalCode desc
-      - country desc
-      - addedOn desc
-    ProjectUsersPage:
-      title: ProjectUsers
-      x-stoplight:
-        id: f584b87ecf8ca
-      type: object
-      properties:
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-        results:
-          type: array
-          description: The requested page of project users.
-          items:
-            $ref: '#/components/schemas/ProjectUser'
+      - accountAdmin
+      - projectAdmin
+      - executive
     orFilters:
       title: orFilters
       x-stoplight:
@@ -1151,192 +1337,6 @@ components:
       - autodeskId
       - status
       - accessLevels
-    orFilters_internal:
-      title: orFilters_internal
-      x-stoplight:
-        id: el45nd3vlwq52
-      type: array
-      items:
-        $ref: '#/components/schemas/orFilters'
-        x-stoplight:
-          id: xms9nyrej26w8
-    products:
-      title: products
-      x-stoplight:
-        id: qr6chlzpjohw0
-      type: string
-      enum:
-      - build
-      - docs
-      - takeoff
-      - cost
-      - autospecs
-      - financials
-      - buildingConnected
-      - capitalPlanning
-      - accountAdministration
-      - workshopxr
-      - insight
-      - projectAdministration
-      - modelCoordination
-      - designCollaboration
-      - cloudWorksharing
-      - fieldManagement
-      - costManagement
-      - glue
-      - documentManagement
-      - projectHome
-      - assets
-      - quantification
-      - plan
-      - field
-      - projectManagement
-      description: ''
-    Region:
-      title: Region
-      x-stoplight:
-        id: 5rz8jxdpgo4zq
-      type: string
-      enum:
-      - US
-      - EMEA
-      - AUS
-      - CAN
-      - DEU
-      - IND
-      - JPN
-      - GBR
-      description: 'Specifies the region where your request should be routed. Possible values are:
-
-        - ``US`` - Data center for the US region.
-
-        - ``EMEA`` - Data center for the European Union, Middle East, and Africa regions.
-
-        - ``AUS`` - Data center for the Australia region.
-
-        - ``CAN`` - Data center for the Canada region.
-
-        - ``DEU`` - Data center for the Germany region.
-
-        - ``IND`` - Data center for the India region.
-
-        - ``JPN`` - Data center for the Japan region.
-
-        - ``GBR`` - Data center for the United Kingdom region.'
-    Pagination:
-      title: Pagination
-      x-stoplight:
-        id: q1bi13503pl18
-      type: object
-      properties:
-        limit:
-          type: integer
-          x-stoplight:
-            id: 8izi1f176ek68
-        offset:
-          type: integer
-          x-stoplight:
-            id: v1vdhhbk5vhtj
-        totalResults:
-          type: integer
-          x-stoplight:
-            id: o7y9s28pvovds
-        nextUrl:
-          type: string
-          x-stoplight:
-            id: egebyg74p2y51
-        previousUrl:
-          type: string
-          x-stoplight:
-            id: rhoc949ms1w0p
-      description: "\tContains pagination details for the records returned by the endpoint."
-    statusFilter:
-      title: statusFilter
-      x-stoplight:
-        id: xqc12d47t2w4v
-      type: string
-      enum:
-      - active
-      - pending
-      - deleted
-    productAccess:
-      title: productAccess
-      x-stoplight:
-        id: fb0367b9f7e57
-      type: string
-      enum:
-      - administrator
-      - member
-      - none
-    products_internal:
-      title: products_internal
-      x-stoplight:
-        id: 9c80166a5fe5a
-      type: array
-      items:
-        $ref: '#/components/schemas/products'
-        x-stoplight:
-          id: qeezmlysbidw9
-    userSortBy_internal:
-      title: userSortBy_internal
-      x-stoplight:
-        id: gtw01y7bwe28r
-      type: array
-      items:
-        $ref: '#/components/schemas/userSortBy'
-        x-stoplight:
-          id: doc1w838c38cz
-    userFields:
-      title: userFields
-      x-stoplight:
-        id: 7zsag4qu2hd1k
-      type: string
-      enum:
-      - name
-      - email
-      - firstName
-      - lastName
-      - autodeskId
-      - addressLine1
-      - addressLine2
-      - city
-      - stateOrProvince
-      - postalCode
-      - country
-      - imageUrl
-      - lastSignIn
-      - phone
-      - jobTitle
-      - industry
-      - aboutMe
-      - createdAt
-      - updatedAt
-      - accessLevels
-      - companyId
-      - roleIds
-      - roles
-      - status
-      - addedOn
-      - products
-    statusFilter_internal:
-      title: statusFilter_internal
-      x-stoplight:
-        id: egjtyb75hopy5
-      type: array
-      items:
-        $ref: '#/components/schemas/statusFilter'
-        x-stoplight:
-          id: hcsuxuefqfyhc
-    filterTextMatch:
-      title: filterTextMatch
-      x-stoplight:
-        id: l613i9qr8h8a6
-      type: string
-      enum:
-      - contains
-      - startsWith
-      - endsWith
-      - equals
     filterRoleIds:
       title: filterRoleIds
       x-stoplight:

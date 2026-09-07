@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   title: Construction.Account.Admin Account Management Manifest API
   version: '1.0'
@@ -94,157 +94,6 @@ paths:
       - $ref: '#/components/parameters/region'
 components:
   schemas:
-    ManifestDerivative:
-      type: object
-      description: Represents a derivative generated for the source design.
-      required:
-      - name
-      - hasThumbnail
-      - progress
-      - outputType
-      - status
-      properties:
-        name:
-          type: string
-          minLength: 1
-          description: The name of the source design.
-        hasThumbnail:
-          type: string
-          minLength: 1
-          description: '- ``true``: The derivative has a thumbnail.
-
-            - ``false``: The derivative does not have a thumbnail.
-
-            '
-        progress:
-          type: string
-          minLength: 1
-          description: Indicates the progress of the process generating this derivative, as a percentage. Once complete, the value changes to ``complete``.
-        outputType:
-          type: string
-          minLength: 1
-          description: 'The file type/format of the derivative. Possible values are: ``dwg``, ``fbx``, ``ifc``, ``iges``, ``obj`` , ``step``, ``stl``, ``svf``, ``svf2``,  ``thumbnail``.'
-        properties:
-          type: object
-          x-stoplight:
-            id: 67dws24oqffyw
-          description: 'A JSON object containing metadata extracted from the source design. This metadata provides valuable information about the model, such as its author, client name, project status, and other relevant details.
-
-
-            **Note:** This metadata is currently returned for the following source design types:
-
-
-            - RVT - Revit models
-
-            - NWD - Navisworks models
-
-            - DWG - AutoCAD models'
-        status:
-          type: string
-          minLength: 1
-          description: 'Status of the task generating this derivative. Possible values are: ``pending``, ``inprogress``, ``success``, ``failed``, ``timeout``.'
-        messages:
-          type: array
-          description: An array of objects where each object represents a message logged to the manifest during translation. For example, error messages and warning messages.
-          x-stoplight:
-            id: u09lec1rp7fpa
-          items:
-            $ref: '#/components/schemas/Messages'
-        children:
-          type: array
-          description: An array of objects, where each object represents a resource generated for the derivative. For example, a Model View (Viewable) of the source design.
-          items:
-            $ref: '#/components/schemas/ManifestResources'
-    ManifestResources:
-      type: object
-      description: Represents a resource generated for a derivative.
-      properties:
-        guid:
-          type: string
-          minLength: 1
-          description: An ID that uniquely identifies the resource.
-        type:
-          type: string
-          minLength: 1
-          description: Type of resource this JSON object represents.
-        urn:
-          type: string
-          minLength: 1
-          description: The URN that you can use to access the resource.
-        role:
-          type: string
-          minLength: 1
-          description: File type of the resource.
-        mime:
-          type: string
-          minLength: 1
-          description: MIME type of the content of the resource.
-        viewableID:
-          type: string
-          minLength: 1
-          description: An ID assigned to a resource that can be displayed in a viewer.
-        name:
-          type: string
-          minLength: 1
-          description: The name of the resource.
-        status:
-          type: string
-          minLength: 1
-          description: 'Status of the task generating this resource; Possible values are:  ``pending``, ``inprogress``, ``success``, ``failed``, ``timeout``'
-        hasThumbnail:
-          type: string
-          minLength: 1
-          description: '- ``true``: There is a thumbnail for the resource.
-
-            - ``false``: There is no thumbnail for the resource.
-
-            '
-        progress:
-          type: string
-          minLength: 1
-          description: Indicates the progress of the process generating this resource, as a percentage. Once complete, the value changes to ``complete``.
-        phaseNames:
-          description: The name of the phase the resource file was generated from. This attribute is present only on Model Views (Viewables) generated from a Revit source design. This attribute can be a string (for Revit non-sheet 2D or 3D views) or an array of strings (for Revit sheet views).
-          type: object
-        phaseIds:
-          description: The unique ID of the phase the resource file was generated from. This attribute is present only on Model Views (Viewables) generated from a Revit source design. This attribute can be a string (for Revit non-sheet 2D or 3D views) or an array of strings (for Revit sheet views).
-          type: object
-        camera:
-          type: array
-          description: The default viewpoint of a viewable 3D resource.
-          items:
-            type: number
-        resolution:
-          type: array
-          description: An array of two integers where the first number represents the width of a thumbnail in pixels, and the second the height. Available only for thumbnail resources.
-          items:
-            type: integer
-        messages:
-          type: array
-          items:
-            $ref: '#/components/schemas/Messages'
-        children:
-          description: An optional array of objects, where each object (of type ``children``) represents another resource generated for this resource.
-          type: array
-          items:
-            $ref: '#/components/schemas/ManifestResources'
-      required:
-      - guid
-      - type
-      - role
-      - status
-    Region:
-      type: string
-      description: "Specifies where the referenced files are stored. Possible values are: \n    \n- ``US`` - Data center for the US region.\n- ``EMEA`` - Data center for the European Union, Middle East, and Africa. \n- ``AUS`` - (Beta) Data center for the Australia region.\n- ``CAN`` - Data center for the Canada region.\n- ``DEU`` - Data center for the Germany region.\n- ``IND`` - Data center for the India region.\n- ``JPN`` - Data center for the Japan region.\n- ``GBR``  - Data center for the United Kingdom region.\n"
-      enum:
-      - US
-      - EMEA
-      - AUS
-      - CAN
-      - DEU
-      - IND
-      - JPN
-      - GBR
     Manifest:
       type: object
       properties:
@@ -414,6 +263,18 @@ components:
           version: '1.0'
           status: success
       description: Represents the successful response of a Fetch Manifest operation.
+    Region:
+      type: string
+      description: "Specifies where the referenced files are stored. Possible values are: \n    \n- ``US`` - Data center for the US region.\n- ``EMEA`` - Data center for the European Union, Middle East, and Africa. \n- ``AUS`` - (Beta) Data center for the Australia region.\n- ``CAN`` - Data center for the Canada region.\n- ``DEU`` - Data center for the Germany region.\n- ``IND`` - Data center for the India region.\n- ``JPN`` - Data center for the Japan region.\n- ``GBR``  - Data center for the United Kingdom region.\n"
+      enum:
+      - US
+      - EMEA
+      - AUS
+      - CAN
+      - DEU
+      - IND
+      - JPN
+      - GBR
     DeleteManifest:
       title: DeleteManifest
       x-stoplight:
@@ -426,6 +287,67 @@ components:
             id: nmoc4tg01iitw
           description: A message describing outcome of the operation. Always ``success`` for status ``200``.
       description: 'Represents the successful response of a Delete Manifest operation. '
+    ManifestDerivative:
+      type: object
+      description: Represents a derivative generated for the source design.
+      required:
+      - name
+      - hasThumbnail
+      - progress
+      - outputType
+      - status
+      properties:
+        name:
+          type: string
+          minLength: 1
+          description: The name of the source design.
+        hasThumbnail:
+          type: string
+          minLength: 1
+          description: '- ``true``: The derivative has a thumbnail.
+
+            - ``false``: The derivative does not have a thumbnail.
+
+            '
+        progress:
+          type: string
+          minLength: 1
+          description: Indicates the progress of the process generating this derivative, as a percentage. Once complete, the value changes to ``complete``.
+        outputType:
+          type: string
+          minLength: 1
+          description: 'The file type/format of the derivative. Possible values are: ``dwg``, ``fbx``, ``ifc``, ``iges``, ``obj`` , ``step``, ``stl``, ``svf``, ``svf2``,  ``thumbnail``.'
+        properties:
+          type: object
+          x-stoplight:
+            id: 67dws24oqffyw
+          description: 'A JSON object containing metadata extracted from the source design. This metadata provides valuable information about the model, such as its author, client name, project status, and other relevant details.
+
+
+            **Note:** This metadata is currently returned for the following source design types:
+
+
+            - RVT - Revit models
+
+            - NWD - Navisworks models
+
+            - DWG - AutoCAD models'
+        status:
+          type: string
+          minLength: 1
+          description: 'Status of the task generating this derivative. Possible values are: ``pending``, ``inprogress``, ``success``, ``failed``, ``timeout``.'
+        messages:
+          type: array
+          description: An array of objects where each object represents a message logged to the manifest during translation. For example, error messages and warning messages.
+          x-stoplight:
+            id: u09lec1rp7fpa
+          items:
+            $ref: '#/components/schemas/Messages'
+        children:
+          type: array
+          description: An array of objects, where each object represents a resource generated for the derivative. For example, a Model View (Viewable) of the source design.
+          items:
+            $ref: '#/components/schemas/ManifestResources'
     Messages:
       type: object
       description: An array of objects where each object represents a message logged to the manifest during translation. For example, error messages and warning messages.
@@ -445,7 +367,109 @@ components:
           x-stoplight:
             id: ii9qdtechgkph
           description: A human-readable explanation of the event being reported. Can be a string or an array of string.
+    ManifestResources:
+      type: object
+      description: Represents a resource generated for a derivative.
+      properties:
+        guid:
+          type: string
+          minLength: 1
+          description: An ID that uniquely identifies the resource.
+        type:
+          type: string
+          minLength: 1
+          description: Type of resource this JSON object represents.
+        urn:
+          type: string
+          minLength: 1
+          description: The URN that you can use to access the resource.
+        role:
+          type: string
+          minLength: 1
+          description: File type of the resource.
+        mime:
+          type: string
+          minLength: 1
+          description: MIME type of the content of the resource.
+        viewableID:
+          type: string
+          minLength: 1
+          description: An ID assigned to a resource that can be displayed in a viewer.
+        name:
+          type: string
+          minLength: 1
+          description: The name of the resource.
+        status:
+          type: string
+          minLength: 1
+          description: 'Status of the task generating this resource; Possible values are:  ``pending``, ``inprogress``, ``success``, ``failed``, ``timeout``'
+        hasThumbnail:
+          type: string
+          minLength: 1
+          description: '- ``true``: There is a thumbnail for the resource.
+
+            - ``false``: There is no thumbnail for the resource.
+
+            '
+        progress:
+          type: string
+          minLength: 1
+          description: Indicates the progress of the process generating this resource, as a percentage. Once complete, the value changes to ``complete``.
+        phaseNames:
+          description: The name of the phase the resource file was generated from. This attribute is present only on Model Views (Viewables) generated from a Revit source design. This attribute can be a string (for Revit non-sheet 2D or 3D views) or an array of strings (for Revit sheet views).
+          type: object
+        phaseIds:
+          description: The unique ID of the phase the resource file was generated from. This attribute is present only on Model Views (Viewables) generated from a Revit source design. This attribute can be a string (for Revit non-sheet 2D or 3D views) or an array of strings (for Revit sheet views).
+          type: object
+        camera:
+          type: array
+          description: The default viewpoint of a viewable 3D resource.
+          items:
+            type: number
+        resolution:
+          type: array
+          description: An array of two integers where the first number represents the width of a thumbnail in pixels, and the second the height. Available only for thumbnail resources.
+          items:
+            type: integer
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Messages'
+        children:
+          description: An optional array of objects, where each object (of type ``children``) represents another resource generated for this resource.
+          type: array
+          items:
+            $ref: '#/components/schemas/ManifestResources'
+      required:
+      - guid
+      - type
+      - role
+      - status
+  parameters:
+    accept-encoding:
+      name: Accept-Encoding
+      in: header
+      schema:
+        type: string
+      description: "A comma separated list of the algorithms you want the response to be encoded in, specified in the order of preference.  \n\nIf you specify ``gzip`` or ``*``, content is compressed and returned in gzip format.\n"
+    region:
+      name: region
+      in: header
+      schema:
+        $ref: '#/components/schemas/Region'
+      description: "Specifies the data center where the manifest and derivatives of the specified source design are stored. Possible values are:\n\n- ``US`` - (Default) Data center for the US region.\n- ``EMEA`` - Data center for the European Union, Middle East, and Africa. \n- ``AUS`` - Data center for the Australia region.\n- ``CAN`` - Data center for the Canada region.\n- ``DEU`` - Data center for the Germany region.\n- ``IND`` - Data center for the India region.\n- ``JPN`` - Data center for the Japan region.\n- ``GBR``  - Data center for the United Kingdom region.\n"
+    source-design-urn:
+      name: urn
+      in: path
+      schema:
+        type: string
+      description: The URL-safe Base64 encoded URN of the source design.
+      required: true
   headers:
+    x-ads-duration:
+      description: The amount of time spent servicing the request, in milliseconds.
+      schema:
+        type: string
     x-ads-startup-time:
       description: 'The service startup time, in the following date format: ``EEE MMM dd HH:mm:ss Z yyyy``.'
       schema:
@@ -454,30 +478,6 @@ components:
       description: The service identifier. Comprises of the service name, version, and environment.
       schema:
         type: string
-    x-ads-duration:
-      description: The amount of time spent servicing the request, in milliseconds.
-      schema:
-        type: string
-  parameters:
-    source-design-urn:
-      name: urn
-      in: path
-      schema:
-        type: string
-      description: The URL-safe Base64 encoded URN of the source design.
-      required: true
-    region:
-      name: region
-      in: header
-      schema:
-        $ref: '#/components/schemas/Region'
-      description: "Specifies the data center where the manifest and derivatives of the specified source design are stored. Possible values are:\n\n- ``US`` - (Default) Data center for the US region.\n- ``EMEA`` - Data center for the European Union, Middle East, and Africa. \n- ``AUS`` - Data center for the Australia region.\n- ``CAN`` - Data center for the Canada region.\n- ``DEU`` - Data center for the Germany region.\n- ``IND`` - Data center for the India region.\n- ``JPN`` - Data center for the Japan region.\n- ``GBR``  - Data center for the United Kingdom region.\n"
-    accept-encoding:
-      name: Accept-Encoding
-      in: header
-      schema:
-        type: string
-      description: "A comma separated list of the algorithms you want the response to be encoded in, specified in the order of preference.  \n\nIf you specify ``gzip`` or ``*``, content is compressed and returned in gzip format.\n"
   securitySchemes:
     2-legged:
       type: oauth2

@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   title: Construction.Account.Admin Account Management Items API
   version: '1.0'
@@ -390,322 +390,52 @@ paths:
               $ref: '#/components/schemas/ItemPayload'
         description: ''
 components:
-  responses:
-    403-general:
-      description: The request was successfully validated but permission is not granted, or the application has not been allowed access. Do not try again unless you resolve permissions first.
-      content:
-        application/json:
-          schema:
-            type: object
-            x-examples:
-              Example 1:
-                jsonapi: {}
-                links: {}
-                data: []
-                meta:
-                  warnings:
-                  - Id: null
-                    HttpStatusCode: '403'
-                    ErrorCode: BIM360DM_ERROR
-                    Title: Unable to get hubs from BIM360DM APAC.
-                    Detail: You don't have permission to access this API
-                    AboutLink: null
-                    Source: null
-                    meta: null
-            properties:
-              jsonapi:
-                type: object
-                description: The JSON API object.
-              links:
-                type: object
-                description: An object intended to contain the URI of a resource. Empty in this case, because an error has occurred.
-              data:
-                type: array
-                description: An object intended to contain the return data. Empty in this case, because an error has occurred.
-                items:
-                  type: object
-              meta:
-                type: object
-                description: Contains information about the error that occurred.
-                properties:
-                  warnings:
-                    type: array
-                    description: An array of objects, where each element of the array represents a warning.
-                    items:
-                      type: object
-                      properties:
-                        Id:
-                          description: An ID assigned to the warning.
-                          nullable: true
-                        HttpStatusCode:
-                          type: string
-                          description: The HTTP status code returned in response to the request.
-                        ErrorCode:
-                          type: string
-                          description: A code that indicates what went wrong.
-                        Title:
-                          type: string
-                          description: A quick summary of the issue, at a glance.
-                        Detail:
-                          type: string
-                          description: A more comprehensive explanation of the issue, providing specific information and potential solutions, if any.
-                        AboutLink:
-                          description: A hyperlink to documentation about the issue.
-                          nullable: true
-                        Source:
-                          description: Information about the service that detected the issue.
-                          nullable: true
-                        meta:
-                          description: Additional information about the issue.
-                          nullable: true
-    409-general:
-      description: The specified resource already exists or has been modified.
-      content:
-        application/json:
-          schema:
-            properties:
-              id:
-                type: string
-    404-general:
-      description: The specified resource was not found.
-      content:
-        application/json:
-          schema:
-            properties:
-              id:
-                type: string
-    400-general:
-      description: The request could not be understood by the server due to malformed syntax or missing request headers. The client SHOULD NOT repeat the request without modifications. The response body may give an indication of what is wrong with the request.
-      content:
-        application/json:
-          schema:
-            properties:
-              id:
-                type: string
-    423-general:
-      description: The source or destination resource is locked or being modified.
-      content:
-        application/json:
-          schema:
-            properties:
-              id:
-                type: string
   schemas:
-    json_api_meta_link:
-      title: json_api_meta_link
-      x-stoplight:
-        id: 6c1450io6o3zx
-      type: object
-      description: Meta-information on links to this resource.
-      properties:
-        link:
-          $ref: '#/components/schemas/json_api_link'
-          x-stoplight:
-            id: haazb0d04arzm
-    type_link:
-      type: string
-      x-stoplight:
-        id: f84280dd62b59
-      enum:
-      - links
-      description: The type of the resource. Possible values are ``links``.
-    type_entity:
+    json_api_version_value:
+      description: The version of JSON API. Will always be ``1.0``.
       type: string
       enum:
-      - folders
-      - items
-      - versions
-      description: The type of the resource. Possible values are ``folders``, ``items``, ``versions``.
-    web_view_link:
-      title: web_view_link
+      - '1.0'
+    json_api_links_self:
+      title: json_api_links_self
       x-stoplight:
-        id: b0lyf514eksq4
+        id: hedbm6v3pcz7k
       type: object
-      description: An object containing a link that opens the resource in a browser.
+      description: An object containing the URI of the endpoint to access this resource.
       properties:
-        href:
-          type: string
+        self:
+          type: object
           x-stoplight:
-            id: j0xj0hp05wo0l
-          description: The location (URL) of the resource the link points to.
-      required:
-      - href
-    json_api_relationships_links_versions:
-      title: json_api_relationships_links_internal
-      x-stoplight:
-        id: da5pz40rvqocl
-      type: object
-      description: Information about the existing versions of the item.
-      properties:
-        links:
-          $ref: '#/components/schemas/json_api_links_related'
-          x-stoplight:
-            id: s7etnb8jkm02f
-      required:
-      - links
+            id: xjz8a6shpmaya
+          description: An object containing the URI of the endpoint to access this resource.
+          properties:
+            href:
+              type: string
+              x-stoplight:
+                id: jx2lmnxrl8f10
+              description: "The URI of the endpoint to access this \nresource."
     type_folder:
       type: string
       enum:
       - folders
       description: The type of the resource. Possible values are ``folders``.
-    json_api_relationships_links_internal:
-      title: json_api_relationships_links_internal
+    metaForWebhooks:
+      title: metaForWebhooks
       x-stoplight:
-        id: da5pz40rvqocl
+        id: x20x6jb3udvzo
       type: object
-      description: Information on resources that are found under this resource.
+      description: Meta information required for webhooks.
       properties:
-        links:
-          $ref: '#/components/schemas/json_api_links_related'
-          x-stoplight:
-            id: s7etnb8jkm02f
-      required:
-      - links
-    VersionData:
-      title: 'Version Data:'
-      description: A container of data describing a version.
-      x-stoplight:
-        id: eb2zg50zz7eul
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/type_version'
-        id:
+        workflow:
           type: string
-          minLength: 1
-          description: URN of the version object.
-        attributes:
-          $ref: '#/components/schemas/VersionAttributes'
-        relationships:
-          type: object
-          description: Contains information on other resources related to this resource.
-          required:
-          - item
-          - refs
-          - links
-          properties:
-            item:
-              type: object
-              description: Contains information about the item this is a version of.
-              properties:
-                links:
-                  $ref: '#/components/schemas/json_api_links_related'
-                  x-stoplight:
-                    id: fklud6hg20fwz
-                data:
-                  $ref: '#/components/schemas/json_api_type_id'
-                  x-stoplight:
-                    id: g661wq5zxnxxz
-            refs:
-              $ref: '#/components/schemas/json_api_relationships_links_refs'
-            links:
-              $ref: '#/components/schemas/json_api_relationships_links_links'
-            storage:
-              type: object
-              x-stoplight:
-                id: p77erscy2c106
-              description: Contains information about the storage location that contains the binary data of this version.
-              properties:
-                data:
-                  $ref: '#/components/schemas/json_api_type_id'
-                meta:
-                  $ref: '#/components/schemas/json_api_meta_link'
-            derivatives:
-              type: object
-              x-stoplight:
-                id: 1by3hohlaohio
-              description: Contains information you can use to retrieve the derivatives of this version.
-              properties:
-                data:
-                  $ref: '#/components/schemas/json_api_type_id'
-                meta:
-                  $ref: '#/components/schemas/json_api_meta_link'
-            thumbnails:
-              type: object
-              x-stoplight:
-                id: hrzlgcn3r896v
-              description: 'Contains the information required to retrieve thumbnails of this version from the Model Derivative service. '
-              properties:
-                data:
-                  $ref: '#/components/schemas/json_api_type_id'
-                meta:
-                  $ref: '#/components/schemas/json_api_meta_link'
-            downloadFormats:
-              type: object
-              x-stoplight:
-                id: r875g22qvyi3v
-              description: Contains the endpoint you can use to find out what formats the version can be downloaded as.
-              properties:
-                links:
-                  $ref: '#/components/schemas/json_api_links_related'
-                  x-stoplight:
-                    id: 41n0be6z8nbng
-        links:
-          $ref: '#/components/schemas/json_api_links_self_and_web_view'
-      required:
-      - type
-      - id
-      - attributes
-      - relationships
-    base_attributes_extension_object_with_schema_link:
-      title: 'base_attributes_extension_object_with_schema_link:'
-      x-stoplight:
-        id: aj8zaihf7alzp
-      type: object
-      description: A container of additional properties that extends this resource.
-      properties:
-        type:
+          description: "The Workflow ID of a webhook that listens to Model Derivative events. Must be less than 36 characters. \nOnly ASCII characters (a-z, A-Z, 0-9), periods (.), and hyphens (-) are accepted.\nSee the [Creating a Webhook and Listening to Events](/en/docs/webhooks/v1/tutorials/create-a-hook-model-derivative) tutorial for more information.\n\n**Note**: This attribute applies to BIM 360 Docs only.\n"
+        workflowAttribute:
           type: string
-          x-stoplight:
-            id: jdli2qhh88jq3
-          description: The Type ID of the schema that defines the structure of the ``extension.data`` object.
-        version:
-          type: string
-          x-stoplight:
-            id: x1l84lpe0ce01
-          description: The version of the schema that applies to the ``extension.data`` object.
-        schema:
-          type: object
-          x-stoplight:
-            id: el8fixpzd4k3a
-          description: A container for the hyperlink to the schema of the type.
-          required:
-          - href
-          properties:
-            href:
-              type: string
-              x-stoplight:
-                id: oh11qown58iob
-              description: A hypertext reference to the location of the referenced resource.
-        data:
-          type: object
-          x-stoplight:
-            id: 5h0r1ilaapxra
-          description: The object that contains the additional properties that extends this resource.
-          additionalProperties:
-            type: object
-            description: 'Key-value pairs that contain the name and data of additional properties.
-
-              '
+          description: "A user defined JSON object containing custom workflow information for the specified webhook event. Must be less than 1KB.\n\n**Note**: Applicable only if a valid value has been specified for ``meta.workflow``. \n"
       required:
-      - type
-      - version
-      - schema
-    nested_xref:
-      type: string
-      x-stoplight:
-        id: e8d7c1f07c607
-      enum:
-      - attachment
-      - overlay
-      description: 'The type of the xref, which defines how nested xrefs are handled. Possible values are:
-
-
-        -  ``attachment``: Nested xrefs are not ignored.
-
-        -  ``overlay`` : Nested xrefs are ignored.'
-    ItemTip:
-      description: An object that represents the tip version of an item.
+      - workflow
+    Refs:
+      description: Successful retrieval of a resource collection.
       type: object
       x-examples:
         example-1:
@@ -713,9 +443,9 @@ components:
             version: '1.0'
           links:
             self:
-              href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/versions/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D2
+              href: /data/v1/projects/a.ZXhhbXBsZTp3aXAxZnFhYXV0b2Rlc2sxNjEjMjAyMzAzMTcwMDAwMDAx/items/urn:adsk.wipprod:dm.lineage:b909RzMKR4mhc3O7UBY_8g/refs
           data:
-            type: versions
+          - type: versions
             id: urn:adsk.wipprod:fs.file:vf.b909RzMKR4mhc3O7UBY_8g?version=2
             attributes:
               name: version-test.pdf
@@ -732,7 +462,7 @@ components:
                 type: versions:autodesk.bim360:File
                 version: '1.0'
                 schema:
-                  href: https://developer.api.autodesk.com/schema/v1/versions/versions%3Aautodesk.bim360%3AFile-1.0
+                  href: /schema/v1/versions/versions%3Aautodesk.bim360%3AFile-1.0
                 data:
                   tempUrn: null
                   properties: {}
@@ -741,27 +471,25 @@ components:
                   conformingStatus: NONE
             links:
               self:
-                href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/versions/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D2
-              webView:
-                href: https://docs.b360.autodesk.com/projects/c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/folders/urn%3Aadsk.wipprod%3Afs.folder%3Aco.0J4paz_FQgWPX2QRsaBkiw/detail/viewer/items/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D2
+                href: /data/v1/projects/b.6f8813fe-31a7-4440-bc63-d8ca97c856b4/versions/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D2
             relationships:
               item:
                 links:
                   related:
-                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/items/urn%3Aadsk.wipprod%3Adm.lineage%3Ab909RzMKR4mhc3O7UBY_8g
+                    href: /data/v1/projects/b.6f8813fe-31a7-4440-bc63-d8ca97c856b4/items/urn%3Aadsk.wipprod%3Adm.lineage%3Ab909RzMKR4mhc3O7UBY_8g
                 data:
                   type: items
                   id: urn:adsk.wipprod:dm.lineage:b909RzMKR4mhc3O7UBY_8g
               refs:
                 links:
                   self:
-                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/versions/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D2/relationships/refs
+                    href: /data/v1/projects/b.6f8813fe-31a7-4440-bc63-d8ca97c856b4/versions/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D2/relationships/refs
                   related:
-                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/versions/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D2/refs
+                    href: /data/v1/projects/b.6f8813fe-31a7-4440-bc63-d8ca97c856b4/versions/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D2/refs
               links:
                 links:
                   self:
-                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/versions/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D2/relationships/links
+                    href: /data/v1/projects/b.6f8813fe-31a7-4440-bc63-d8ca97c856b4/versions/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D2/relationships/links
               storage:
                 meta:
                   link:
@@ -769,197 +497,170 @@ components:
                 data:
                   type: objects
                   id: urn:adsk.objects:os.object:wip.dm.prod/9f8bdc3f-e29c-4ada-ab7b-bb8dfa821163.pdf
-              derivatives:
+          - type: versions
+            id: urn:adsk.wipprod:fs.file:vf.b909RzMKR4mhc3O7UBY_8g?version=1
+            attributes:
+              name: version-test.pdf
+              displayName: version-test.pdf
+              createTime: '2016-04-01T11:09:03.000Z'
+              createUserId: BW9RM76WZBGL
+              createUserName: John Doe
+              lastModifiedTime: '2016-04-01T11:11:18.000Z'
+              lastModifiedUserId: BW9RM76WZBGL
+              lastModifiedUserName: John Doe
+              versionNumber: 1
+              mimeType: application/pdf
+              extension:
+                type: versions:autodesk.bim360:File
+                version: '1.0'
+                schema:
+                  href: /schema/v1/versions/versions%3Aautodesk.bim360%3AFile-1.0
                 data:
-                  type: derivatives
-                  id: dXJuOmFkc2sud2lwcWE6ZnMuZmlsZTp2Zi50X3hodWwwYVFkbWhhN2FBaVBuXzlnP3ZlcnNpb249MQ
-                meta:
-                  link:
-                    href: /modelderivative/v2/designdata/dXJuOmFkc2sud2lwcWE6ZnMuZmlsZTp2Zi50X3hodWwwYVFkbWhhN2FBaVBuXzlnP3ZlcnNpb249MQ/manifest?scopes=b360project.6f8813fe-31a7-4440-bc63-d8ca97c856b4,global,O2tenant.tenantId
-              thumbnails:
-                data:
-                  type: thumbnails
-                  id: dXJuOmFkc2sud2lwcWE6ZnMuZmlsZTp2Zi50X3hodWwwYVFkbWhhN2FBaVBuXzlnP3ZlcnNpb249MQ
-                meta:
-                  link:
-                    href: /modelderivative/v2/designdata/dXJuOmFkc2sud2lwcWE6ZnMuZmlsZTp2Zi50X3hodWwwYVFkbWhhN2FBaVBuXzlnP3ZlcnNpb249MQ/thumbnail?scopes=b360project.295285be-9cac-44d6-b365-625ebd327483,global,O2tenant.tenantId
-              downloadFormats:
+                  tempUrn: null
+                  properties: {}
+                  storageUrn: urn:adsk.objects:os.object:wip.dm.prod/3c8f6bbc-fe5c-4815-a92e-8b8635e7b1cb.pdf
+                  storageType: OSS
+                  conformingStatus: NONE
+            links:
+              self:
+                href: /data/v1/projects/b.6f8813fe-31a7-4440-bc63-d8ca97c856b4/versions/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D1
+            relationships:
+              item:
                 links:
                   related:
-                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/versions/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D2/downloadFormats
-      title: ItemTip
+                    href: /data/v1/projects/b.6f8813fe-31a7-4440-bc63-d8ca97c856b4/items/urn%3Aadsk.wipprod%3Adm.lineage%3Ab909RzMKR4mhc3O7UBY_8g
+                data:
+                  type: items
+                  id: urn:adsk.wipprod:dm.lineage:b909RzMKR4mhc3O7UBY_8g
+              refs:
+                links:
+                  self:
+                    href: /data/v1/projects/b.6f8813fe-31a7-4440-bc63-d8ca97c856b4/versions/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D1/relationships/refs
+                  related:
+                    href: /data/v1/projects/b.6f8813fe-31a7-4440-bc63-d8ca97c856b4/versions/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D1/refs
+              links:
+                links:
+                  self:
+                    href: /data/v1/projects/b.6f8813fe-31a7-4440-bc63-d8ca97c856b4/versions/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D1/relationships/links
+              storage:
+                meta:
+                  link:
+                    href: /oss/v2/buckets/wipbucket/objects/3c8f6bbc-fe5c-4815-a92e-8b8635e7b1cb.pdf?scopes=b360project.6f8813fe-31a7-4440-bc63-d8ca97c856b4,global,O2tenant.tenantId
+                data:
+                  type: objects
+                  id: urn:adsk.objects:os.object:wip.dm.prod/3c8f6bbc-fe5c-4815-a92e-8b8635e7b1cb.pdf
+          - type: items
+            id: urn:adsk.wipprod:dm.lineage:b909RzMKR4mhc3O7UBY_8g
+            attributes:
+              displayName: version-test.pdf
+              createTime: '2016-04-01T11:09:03.000Z'
+              createUserId: BW9RM76WZBGL
+              createUserName: John Doe
+              lastModifiedTime: '2016-04-01T11:11:18.000Z'
+              lastModifiedUserId: BW9RM76WZBGL
+              lastModifiedUserName: John Doe
+              hidden: false
+              reserved: true
+              reservedTime: '2016-04-01T11:10:20.000Z'
+              reservedUserId: BW9RM76WZBGL
+              reservedUserName: John Doe
+              extension:
+                data: {}
+                version: '1.0'
+                type: items:autodesk.bim360:File
+                schema:
+                  href: https://developer.api.autodesk.com/schema/v1/versions/items%3Aautodesk.bim360%3AFile-1.0
+            relationships:
+              tip:
+                data:
+                  type: versions
+                  id: urn:adsk.wipprod:fs.file:vf.b909RzMKR4mhc3O7UBY_8g?version=2
+                links:
+                  related:
+                    href: /data/v1/projects/a.ZXhhbXBsZTp3aXAxZnFhYXV0b2Rlc2sxNjEjMjAyMzAzMTcwMDAwMDAx/items/urn%3Aadsk.wipprod%3Adm.lineage%3AhC6k4hndRWaeIVhIjvHu8w/tip
+              parent:
+                data:
+                  type: folders
+                  id: urn:adsk.wipprod:dm.folder:sdfedf8wefl
+                links:
+                  related:
+                    href: /data/v1/projects/a.ZXhhbXBsZTp3aXAxZnFhYXV0b2Rlc2sxNjEjMjAyMzAzMTcwMDAwMDAx/items/urn:adsk.wipprod:dm.lineage:b909RzMKR4mhc3O7UBY_8g/parent
+              versions:
+                links:
+                  related:
+                    href: /data/v1/projects/a.ZXhhbXBsZTp3aXAxZnFhYXV0b2Rlc2sxNjEjMjAyMzAzMTcwMDAwMDAx/items/urn:adsk.wipprod:dm.lineage:b909RzMKR4mhc3O7UBY_8g/versions
+              refs:
+                links:
+                  self:
+                    href: /data/v1/projects/a.ZXhhbXBsZTp3aXAxZnFhYXV0b2Rlc2sxNjEjMjAyMzAzMTcwMDAwMDAx/items/urn:adsk.wipprod:dm.lineage:b909RzMKR4mhc3O7UBY_8g/relationships/refs
+                  related:
+                    href: /data/v1/projects/a.ZXhhbXBsZTp3aXAxZnFhYXV0b2Rlc2sxNjEjMjAyMzAzMTcwMDAwMDAx/items/urn:adsk.wipprod:dm.lineage:b909RzMKR4mhc3O7UBY_8g/refs
+              links:
+                links:
+                  self:
+                    href: /data/v1/projects/a.ZXhhbXBsZTp3aXAxZnFhYXV0b2Rlc2sxNjEjMjAyMzAzMTcwMDAwMDAx/items/urn:adsk.wipprod:dm.lineage:b909RzMKR4mhc3O7UBY_8g/relationships/links
+            links:
+              self:
+                href: /data/v1/projects/a.ZXhhbXBsZTp3aXAxZnFhYXV0b2Rlc2sxNjEjMjAyMzAzMTcwMDAwMDAx/items/urn:adsk.wipprod:dm.lineage:b909RzMKR4mhc3O7UBY_8g
+      title: Refs
       properties:
         jsonapi:
           $ref: '#/components/schemas/json_api_version'
         links:
-          $ref: '#/components/schemas/json_api_link'
+          $ref: '#/components/schemas/json_api_links_self'
         data:
-          $ref: '#/components/schemas/VersionData'
-    type_version:
-      type: string
-      x-stoplight:
-        id: f8e280dd63a5b
-      enum:
-      - versions
-      description: The type of the resource. Possible values are ``versions``.
-    type_item:
-      type: string
-      enum:
-      - items
-      description: The type of the resource. Possible values are ``items``.
-    folder_extension_with_schema_link:
+          x-stoplight:
+            id: zlvce0hljvqwg
+          description: An array of objects, where each object represents a referenced resource (folder, item, or version).
+          type: array
+          items:
+            x-stoplight:
+              id: cy4i92ra7cxpr
+            oneOf:
+            - $ref: '#/components/schemas/FolderData'
+              x-stoplight:
+                id: rtffmltt1v80u
+            - $ref: '#/components/schemas/ItemData'
+              x-stoplight:
+                id: kmkkve99132f1
+            - $ref: '#/components/schemas/VersionData'
+              x-stoplight:
+                id: qqyd7tqmmhicv
+            discriminator:
+              propertyName: type
+              mapping:
+                folders: '#/components/schemas/FolderData'
+                items: '#/components/schemas/ItemData'
+                versions: '#/components/schemas/VersionData'
+      required:
+      - jsonapi
+      - links
+      - data
+    version_extension_with_schema_link:
       type: object
-      description: A container of additional properties that extends the default properties of this resource.
+      description: A container of additional properties that extends the default properties of a version.
       properties:
         type:
           type: string
-          minLength: 1
-          description: The type of folder the resource represents.
+          description: The Type ID of the schema that defines the structure of the ``extension.data`` object.
         version:
           type: string
-          minLength: 1
-          description: The version of the folder type.
+          description: The version of the schema that applies to the ``extension.data`` object.
         schema:
           $ref: '#/components/schemas/json_api_link'
         data:
           type: object
+          description: The object that contains the additional properties, which makes this resource extensible.
           additionalProperties:
             type: object
-            description: 'JSON objects that contain additional properties specific to the folder type.
+            description: 'Key-value pairs that contain the name and data of additional properties.
 
               '
-          description: The object that contains the additional properties, which makes this resource extensible.
       required:
       - type
       - version
       - schema
-    MetaRefs:
-      description: Metadata on the resources referenced by this resource.
-      type: object
-      title: MetaRefs
-      properties:
-        refType:
-          $ref: '#/components/schemas/type_ref'
-        direction:
-          $ref: '#/components/schemas/metarefs_direction'
-        fromId:
-          type: string
-          x-stoplight:
-            id: u4hxp7i1mdfuh
-          description: The ID of the resource from where data flows.
-        fromType:
-          $ref: '#/components/schemas/type_entity'
-          x-stoplight:
-            id: e061oc1d2clmi
-        toId:
-          type: string
-          x-stoplight:
-            id: 4hwdw63giy88s
-          description: The ID of the resource to where the data flows.
-        toType:
-          $ref: '#/components/schemas/type_entity'
-          x-stoplight:
-            id: xnhp75ludslo9
-        extension:
-          $ref: '#/components/schemas/base_attributes_extension_object_with_schema_link'
-          x-stoplight:
-            id: wnoe4cjsepp56
-    json_api_link:
-      title: json_api_link
-      x-stoplight:
-        id: 0eyqmow1ie1is
-      type: object
-      description: An object containing the hyperlink to the referenced resource.
-      properties:
-        href:
-          type: string
-          x-stoplight:
-            id: d9k2el45bomh9
-          description: A hypertext reference to the location of the referenced resource.
-      required:
-      - href
-    json_api_links_related:
-      title: json_api_links_related
-      x-stoplight:
-        id: fgwxlu5412wa7
-      type: object
-      description: Contains the endpoint you can use to retrieve the related resources.
-      properties:
-        related:
-          type: object
-          x-stoplight:
-            id: o5ksk96io3pui
-          description: "An object containing the endpoint to retrieve \na list of related resources."
-          properties:
-            href:
-              type: string
-              x-stoplight:
-                id: n8345byjqrj4f
-              description: The URI of the endpoint that returns the related resources.
-    json_api_relationships_links_links:
-      type: object
-      required:
-      - links
-      description: Information on the link resources found in this resource.
-      properties:
-        links:
-          type: object
-          required:
-          - self
-          description: The object containing information on links to this resource.
-          properties:
-            self:
-              $ref: '#/components/schemas/json_api_link'
-    json_api_relationships_links_to_tip_version:
-      title: json_api_relationships_links_to_tip_version
-      x-stoplight:
-        id: qmmyfor4fmle9
-      type: object
-      description: Information about the latest version of the item.
-      properties:
-        links:
-          $ref: '#/components/schemas/json_api_links_related'
-          x-stoplight:
-            id: e35szkgp1o7b8
-        data:
-          $ref: '#/components/schemas/json_api_type_id'
-          x-stoplight:
-            id: zdowc6ik9vvcu
-    json_api_version:
-      title: json_api_version
-      x-stoplight:
-        id: wtcnivkdziwr7
-      type: object
-      description: The JSON API object.
-      properties:
-        version:
-          description: The version of JSON API. Will always be ``1.0``.
-          $ref: '#/components/schemas/json_api_version_value'
-      required:
-      - version
-    filter_direction:
-      type: string
-      enum:
-      - from
-      - to
-      description: 'Filter by the direction of the reference. Possible values: ``from`` and ``to``.'
-    json_api_relationships_links_refs:
-      type: object
-      required:
-      - links
-      description: Information on other resources that have a custom relationship with this resource.
-      properties:
-        links:
-          type: object
-          required:
-          - self
-          - related
-          description: The object containing information on links of related resources that share a custom relationship with this resource.
-          properties:
-            self:
-              $ref: '#/components/schemas/json_api_link'
-            related:
-              $ref: '#/components/schemas/json_api_link'
+      title: ''
     json_api_relationships_refs:
       type: object
       description: 'Information on other resources that share a custom relationship with this resource.
@@ -1023,6 +724,28 @@ components:
             - meta
       required:
       - data
+    nested_xref:
+      type: string
+      x-stoplight:
+        id: e8d7c1f07c607
+      enum:
+      - attachment
+      - overlay
+      description: 'The type of the xref, which defines how nested xrefs are handled. Possible values are:
+
+
+        -  ``attachment``: Nested xrefs are not ignored.
+
+        -  ``overlay`` : Nested xrefs are ignored.'
+    filter_refType:
+      type: string
+      enum:
+      - derived
+      - dependencies
+      - auxiliary
+      - xrefs
+      - includes
+      description: 'Filter by ``refType``. Possible values: ``derived``, ``dependencies``, ``auxiliary``, ``xrefs``, and ``includes``.'
     metarefs_direction:
       type: string
       x-stoplight:
@@ -1036,596 +759,38 @@ components:
         - ``to`` - Data flows from this resource to the related resource.
 
         - ``from`` - Data flows from the related resource to this resource. '
-    RelationshipRefs:
-      description: ''
-      x-stoplight:
-        id: b8ed6741f539a
+    json_api_relationships_links_refs:
       type: object
-      x-examples:
-        example-1:
-          jsonapi:
-            version: '1.0'
-          links:
+      required:
+      - links
+      description: Information on other resources that have a custom relationship with this resource.
+      properties:
+        links:
+          type: object
+          required:
+          - self
+          - related
+          description: The object containing information on links of related resources that share a custom relationship with this resource.
+          properties:
             self:
-              href: /data/v1/projects/b.5ae9543e-abd5-45c5-8718-33d26652267f/items/urn:adsk.wipprod:dm.lineage:b909RzMKR4mhc3O7UBY_8g/relationships/refs
+              $ref: '#/components/schemas/json_api_link'
             related:
-              href: /data/v1/projects/b.5ae9543e-abd5-45c5-8718-33d26652267f/items/urn:adsk.wipprod:dm.lineage:b909RzMKR4mhc3O7UBY_8g/refs
-          data:
-          - type: items
-            id: urn:adsk.wipprod:fs.file:vf.b909RzMKR4mhc3O7UBY_8g?version=2
-            meta:
-              refType: xrefs
-              fromId: urn:adsk.wipprod:fs.file:vf.b909RzMKR4mhc3O7UBY_8g?version=2
-              fromType: versions
-              toId: urn:adsk.wipprod:dm.lineage:b909RzMKR4mhc3O7UBY_8g
-              toType: items
-              direction: from
-              extension:
-                type: xrefs:my.custom:Xref
-                version: '1.0'
-                schema:
-                  href: /schema/v1/versions/xrefs:my.custom:Xref-1.0
-                data: {}
-          included:
-          - type: versions
-            id: urn:adsk.wipprod:fs.file:vf.b909RzMKR4mhc3O7UBY_8g?version=2
-            attributes:
-              name: version-test.pdf
-              displayName: version-test.pdf
-              createTime: '2016-04-01T11:12:35.000Z'
-              createUserId: BW9RM76WZBGL
-              createUserName: John Doe
-              lastModifiedTime: '2016-04-01T11:15:22.000Z'
-              lastModifiedUserId: BW9RM76WZBGL
-              lastModifiedUserName: John Doe
-              versionNumber: 2
-              mimeType: application/pdf
-              extension:
-                type: versions:autodesk.bim360:File
-                version: '1.0'
-                schema:
-                  href: /schema/v1/versions/versions%3Aautodesk.bim360%3AFile-1.0
-                data:
-                  tempUrn: null
-                  properties: {}
-                  storageUrn: urn:adsk.objects:os.object:wip.dm.prod/9f8bdc3f-e29c-4ada-ab7b-bb8dfa821163.pdf
-                  storageType: OSS
-                  conformingStatus: NONE
-            links:
-              self:
-                href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/versions/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D2
-              webView:
-                href: https://docs.b360.autodesk.com/projects/c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/folders/urn%3Aadsk.wipprod%3Afs.folder%3Aco.0J4paz_FQgWPX2QRsaBkiw/detail/viewer/items/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D2
-            relationships:
-              item:
-                links:
-                  related:
-                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/items/urn%3Aadsk.wipprod%3Adm.lineage%3Ab909RzMKR4mhc3O7UBY_8g
-                data:
-                  type: items
-                  id: urn:adsk.wipprod:dm.lineage:b909RzMKR4mhc3O7UBY_8g
-              refs:
-                links:
-                  self:
-                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/versions/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D2/relationships/refs
-                  related:
-                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/versions/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D2/refs
-              links:
-                links:
-                  self:
-                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/versions/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D2/relationships/links
-              storage:
-                meta:
-                  link:
-                    href: /oss/v2/buckets/wipbucket/objects/9f8bdc3f-e29c-4ada-ab7b-bb8dfa821163.pdf?scopes=b360project.6f8813fe-31a7-4440-bc63-d8ca97c856b4,global,O2tenant.tenantId
-                data:
-                  type: objects
-                  id: urn:adsk.objects:os.object:wip.dm.prod/9f8bdc3f-e29c-4ada-ab7b-bb8dfa821163.pdf
-          - type: versions
-            id: urn:adsk.wipprod:fs.file:vf.b909RzMKR4mhc3O7UBY_8g?version=1
-            attributes:
-              name: version-test.pdf
-              displayName: version-test.pdf
-              createTime: '2016-04-01T11:09:03.000Z'
-              createUserId: BW9RM76WZBGL
-              createUserName: John Doe
-              lastModifiedTime: '2016-04-01T11:11:18.000Z'
-              lastModifiedUserId: BW9RM76WZBGL
-              lastModifiedUserName: John Doe
-              versionNumber: 1
-              mimeType: application/pdf
-              extension:
-                type: versions:autodesk.bim360:File
-                version: '1.0'
-                schema:
-                  href: /schema/v1/versions/versions%3Aautodesk.bim360%3AFile-1.0
-                data:
-                  tempUrn: null
-                  properties: {}
-                  storageUrn: urn:adsk.objects:os.object:wip.dm.prod/3c8f6bbc-fe5c-4815-a92e-8b8635e7b1cb.pdf
-                  storageType: OSS
-                  conformingStatus: NONE
-            links:
-              self:
-                href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/versions/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D1
-              webView:
-                href: https://docs.b360.autodesk.com/projects/c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/folders/urn%3Aadsk.wipprod%3Afs.folder%3Aco.0J4paz_FQgWPX2QRsaBkiw/detail/viewer/items/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D1
-            relationships:
-              item:
-                links:
-                  related:
-                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/items/urn%3Aadsk.wipprod%3Adm.lineage%3Ab909RzMKR4mhc3O7UBY_8g
-                data:
-                  type: items
-                  id: urn:adsk.wipprod:dm.lineage:b909RzMKR4mhc3O7UBY_8g
-              refs:
-                links:
-                  self:
-                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/versions/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D1/relationships/refs
-                  related:
-                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/versions/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D1/refs
-              links:
-                links:
-                  self:
-                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/versions/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D1/relationships/links
-              storage:
-                meta:
-                  link:
-                    href: /oss/v2/buckets/wipbucket/objects/3c8f6bbc-fe5c-4815-a92e-8b8635e7b1cb.pdf?scopes=b360project.6f8813fe-31a7-4440-bc63-d8ca97c856b4,global,O2tenant.tenantId
-                data:
-                  type: objects
-                  id: urn:adsk.objects:os.object:wip.dm.prod/3c8f6bbc-fe5c-4815-a92e-8b8635e7b1cb.pdf
-          - type: items
-            id: urn:adsk.wipprod:dm.lineage:b909RzMKR4mhc3O7UBY_8g
-            attributes:
-              displayName: version-test.pdf
-              createTime: '2016-04-01T11:09:03.000Z'
-              createUserId: BW9RM76WZBGL
-              createUserName: John Doe
-              lastModifiedTime: '2016-04-01T11:11:18.000Z'
-              lastModifiedUserId: BW9RM76WZBGL
-              lastModifiedUserName: John Doe
-              hidden: false
-              reserved: true
-              reservedTime: '2016-04-01T11:10:00.000Z'
-              reservedUserId: BW9RM76WZBGL
-              reservedUserName: John Doe
-              extension:
-                data: {}
-                version: '1.0'
-                type: items:autodesk.bim360:File
-                schema:
-                  href: https://developer.api.autodesk.com/schema/v1/versions/items%3Aautodesk.bim360%3AFile-1.0
-            relationships:
-              tip:
-                data:
-                  type: versions
-                  id: urn:adsk.wipprod:fs.file:vf.b909RzMKR4mhc3O7UBY_8g?version=2
-                links:
-                  related:
-                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/items/urn%3Aadsk.wipprod%3Adm.lineage%3AhC6k4hndRWaeIVhIjvHu8w/tip
-              parent:
-                data:
-                  type: folders
-                  id: urn:adsk.wipprod:dm.folder:sdfedf8wefl
-                links:
-                  related:
-                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/items/urn:adsk.wipprod:dm.lineage:b909RzMKR4mhc3O7UBY_8g/parent
-              versions:
-                links:
-                  related:
-                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/items/urn:adsk.wipprod:dm.lineage:b909RzMKR4mhc3O7UBY_8g/versions
-              refs:
-                links:
-                  self:
-                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/items/urn:adsk.wipprod:dm.lineage:b909RzMKR4mhc3O7UBY_8g/relationships/refs
-                  related:
-                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/items/urn:adsk.wipprod:dm.lineage:b909RzMKR4mhc3O7UBY_8g/refs
-              links:
-                links:
-                  self:
-                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/items/urn:adsk.wipprod:dm.lineage:b909RzMKR4mhc3O7UBY_8g/relationships/links
-            links:
-              self:
-                href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/items/urn:adsk.wipprod:dm.lineage:b909RzMKR4mhc3O7UBY_8g
-              webView:
-                href: https://docs.b360.autodesk.com/projects/c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/folders/urn%3Aadsk.wipprod%3Afs.folder%3Aco.0J4paz_FQgWPX2QRsaBkiw/detail/viewer/items/urn:adsk.wipprod:dm.lineage:b909RzMKR4mhc3O7UBY_8g
-      title: RelationshipRefs
+              $ref: '#/components/schemas/json_api_link'
+    json_api_relationships_links_to_tip_version:
+      title: json_api_relationships_links_to_tip_version
+      x-stoplight:
+        id: qmmyfor4fmle9
+      type: object
+      description: Information about the latest version of the item.
       properties:
-        jsonapi:
-          $ref: '#/components/schemas/json_api_version'
         links:
-          oneOf:
-          - $ref: '#/components/schemas/json_api_links_self'
-            x-stoplight:
-              id: ncsj1gqlzx0w1
-          - $ref: '#/components/schemas/json_api_links_related'
-            x-stoplight:
-              id: 6typpmchmdrk0
-          description: Information on links to this resource.
-        data:
-          type: array
-          uniqueItems: true
-          minItems: 1
-          description: An array of objects where each object represents the data of a folder, item, or resource.
-          items:
-            type: object
-            properties:
-              type:
-                $ref: '#/components/schemas/type_entity'
-                x-stoplight:
-                  id: h9tic0vwmri2v
-              id:
-                type: string
-                x-stoplight:
-                  id: x2owtaamfdr3z
-                description: The ID that uniquely identifies the resource.
-              meta:
-                $ref: '#/components/schemas/MetaRefs'
-                x-stoplight:
-                  id: rp3g1jl3ze12n
-        included:
-          type: array
+          $ref: '#/components/schemas/json_api_links_related'
           x-stoplight:
-            id: 5qk2m98clernk
-          description: An array of objects, where each object represents a folder, item, or version included within this resource.
-          items:
-            x-stoplight:
-              id: i9y1frfztzdsr
-            oneOf:
-            - $ref: '#/components/schemas/FolderData'
-              x-stoplight:
-                id: xmpzaxcb1y34e
-            - $ref: '#/components/schemas/ItemData'
-              x-stoplight:
-                id: hd6qe25i2uegf
-            - $ref: '#/components/schemas/VersionData'
-              x-stoplight:
-                id: byujkhsqw5k90
-            discriminator:
-              propertyName: type
-              mapping:
-                folders: '#/components/schemas/FolderData'
-                items: '#/components/schemas/ItemData'
-                versions: '#/components/schemas/VersionData'
-    PaginationInfo:
-      title: PaginationInfo
-      x-stoplight:
-        id: izgy4eslaw38w
-      type: object
-      description: An object that is returned with responses that can be split across multiple pages. "Next," "Previous," and "First" are available only if the response is split across multiple pages.
-      properties:
-        self:
-          type: object
-          x-stoplight:
-            id: dc46tnxbc2ulb
-          description: A container for the link to the current page of the response.
-          properties:
-            href:
-              type: string
-              x-stoplight:
-                id: ljxuu5c8q9luz
-              description: A hypertext reference to the location of the referenced resource.
-        first:
-          type: object
-          x-stoplight:
-            id: hnog0slu3ma0c
-          description: A container for the link to the first page of the response.
-          properties:
-            href:
-              type: string
-              x-stoplight:
-                id: g7npt0viv619d
-              description: A hypertext reference to the location of the referenced resource.
-        next:
-          type: object
-          x-stoplight:
-            id: dc46tnxbc2ulb
-          description: A container for the link to the next page of the response.
-          properties:
-            href:
-              type: string
-              x-stoplight:
-                id: ljxuu5c8q9luz
-              description: A hypertext reference to the location of the referenced resource.
-        prev:
-          type: object
-          x-stoplight:
-            id: dc46tnxbc2ulb
-          description: A container for the link to the previous page of the response.
-          properties:
-            href:
-              type: string
-              x-stoplight:
-                id: ljxuu5c8q9luz
-              description: A hypertext reference to the location of the referenced resource.
-      required:
-      - self
-    Item:
-      description: An object that represents an item.
-      type: object
-      x-examples:
-        example-1:
-          jsonapi:
-            version: '1.0'
-          links:
-            self:
-              href: https://developer.api.autodesk.com/data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/items/urn:adsk.wipprod:dm.lineage:hC6k4hndRWaeIVhIjvHu8w
-          data:
-            type: items
-            id: urn:adsk.wipprod:dm.lineage:hC6k4hndRWaeIVhIjvHu8w
-            attributes:
-              displayName: my_model.rvt
-              createTime: '2018-01-17T11:52:11.0000000Z'
-              createUserId: BW9RM76WZBGL
-              createUserName: John Doe
-              lastModifiedTime: '2018-01-17T11:53:19.0000000Z'
-              lastModifiedUserId: BW9RM76WZBGL
-              lastModifiedUserName: John Doe
-              hidden: false
-              reserved: false
-              extension:
-                type: items:autodesk.bim360:C4RModel
-                version: 1.0.0
-                schema:
-                  href: https://developer.api.autodesk.com/schema/v1/versions/items:autodesk.bim360:C4RModel-1.0.0
-                data:
-                  sourceFileName: my_model.rvt
-            links:
-              self:
-                href: https://developer.api.autodesk.com/data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/items/urn:adsk.wipprod:dm.lineage:hC6k4hndRWaeIVhIjvHu8w
-              webView:
-                href: https://docs.b360.autodesk.com/projects/c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/folders/urn%3Aadsk.wipprod%3Afs.folder%3Aco.0J4paz_FQgWPX2QRsaBkiw/detail/viewer/items/urn:adsk.wipprod:dm.lineage:hC6k4hndRWaeIVhIjvHu8w
-            relationships:
-              tip:
-                data:
-                  type: versions
-                  id: urn:adsk.wipprod:fs.file:vf.hC6k4hndRWaeIVhIjvHu8w?version=2
-                links:
-                  related:
-                    href: https://developer.api.autodesk.com/data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/items/urn:adsk.wipprod:dm.lineage:hC6k4hndRWaeIVhIjvHu8w/tip
-              versions:
-                links:
-                  related:
-                    href: https://developer.api.autodesk.com/data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/items/urn:adsk.wipprod:dm.lineage:hC6k4hndRWaeIVhIjvHu8w/versions
-              parent:
-                data:
-                  type: folders
-                  id: urn:adsk.wipprod:fs.folder:co.sdfedf8wef
-                links:
-                  related:
-                    href: https://developer.api.autodesk.com/data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/items/urn:adsk.wipprod:dm.lineage:hC6k4hndRWaeIVhIjvHu8w/parent
-              refs:
-                links:
-                  self:
-                    href: https://developer.api.autodesk.com/data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/items/urn:adsk.wipprod:dm.lineage:hC6k4hndRWaeIVhIjvHu8w/relationships/refs
-                  related:
-                    href: https://developer.api.autodesk.com/data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/items/urn:adsk.wipprod:dm.lineage:hC6k4hndRWaeIVhIjvHu8w/refs
-              links:
-                links:
-                  self:
-                    href: https://developer.api.autodesk.com/data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/items/urn:adsk.wipprod:dm.lineage:hC6k4hndRWaeIVhIjvHu8w/relationships/links
-          included:
-          - type: versions
-            id: urn:adsk.wipprod:fs.file:vf.hC6k4hndRWaeIVhIjvHu8w?version=2
-            attributes:
-              name: my_model.rvt
-              displayName: my_model
-              createTime: '2018-01-17T11:52:34.0000000Z'
-              createUserId: BW9RM76WZBGL
-              createUserName: John Doe
-              lastModifiedTime: '2018-01-17T11:53:20.0000000Z'
-              lastModifiedUserId: BW9RM76WZBGL
-              lastModifiedUserName: John Doe
-              versionNumber: 2
-              mimeType: application/vnd.autodesk.r360
-              fileType: rvt
-              extension:
-                type: versions:autodesk.bim360:C4RModel
-                version: 1.0.0
-                schema:
-                  href: https://developer.api.autodesk.com/schema/v1/versions/versions:autodesk.bim360:C4RModel-1.0.0
-                data:
-                  modelVersion: 2
-                  projectGuid: project-guid
-                  originalItemUrn: urn:adsk.wipprod:dm.lineage:hC6k4hndRWaeIVhIjvHu8w
-                  isCompositeDesign: false
-                  modelType: multiuser
-                  mimeType: application/vnd.autodesk.r360
-                  modelGuid: model-guid
-                  processState: PROCESSING_COMPLETE
-                  extractionState: SUCCESS
-                  splittingState: NOT_SPLIT
-                  reviewState: NOT_IN_REVIEW
-                  revisionDisplayLabel: '2'
-                  sourceFileName: my_model.rvt
-                  conformingStatus: NONE
-            links:
-              self:
-                href: https://developer.api.autodesk.com/data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/versions/urn:adsk.wipprod:fs.file:vf.hC6k4hndRWaeIVhIjvHu8w%3Fversion=2
-              webView:
-                href: https://docs.b360.autodesk.com/projects/c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/folders/urn%3Aadsk.wipprod%3Afs.folder%3Aco.0J4paz_FQgWPX2QRsaBkiw/detail/viewer/items/urn:adsk.wipprod:fs.file:vf.hC6k4hndRWaeIVhIjvHu8w%3Fversion%3D2
-            relationships:
-              item:
-                data:
-                  type: items
-                  id: urn:adsk.wipprod:dm.lineage:hC6k4hndRWaeIVhIjvHu8w
-                links:
-                  related:
-                    href: https://developer.api.autodesk.com/data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/versions/urn:adsk.wipprod:fs.file:vf.hC6k4hndRWaeIVhIjvHu8w%3Fversion=2/item
-              links:
-                links:
-                  self:
-                    href: https://developer.api.autodesk.com/data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/versions/urn:adsk.wipprod:fs.file:vf.hC6k4hndRWaeIVhIjvHu8w%3Fversion=2/relationships/links
-              refs:
-                links:
-                  self:
-                    href: https://developer.api.autodesk.com/data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/versions/urn:adsk.wipprod:fs.file:vf.hC6k4hndRWaeIVhIjvHu8w%3Fversion=2/relationships/refs
-                  related:
-                    href: https://developer.api.autodesk.com/data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/versions/urn:adsk.wipprod:fs.file:vf.hC6k4hndRWaeIVhIjvHu8w%3Fversion=2/refs
-              downloadFormats:
-                links:
-                  related:
-                    href: https://developer.api.autodesk.com/data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/versions/urn:adsk.wipprod:fs.file:vf.hC6k4hndRWaeIVhIjvHu8w%3Fversion=2/downloadFormats
-              derivatives:
-                data:
-                  type: derivatives
-                  id: derivative-id
-                meta:
-                  link:
-                    href: https://developer.api.autodesk.com/modelderivative/v2/designdata/derivative-id/manifest?scopes=b360project.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d,O2tenant.tenant-id
-              thumbnails:
-                data:
-                  type: thumbnails
-                  id: derivative-id
-                meta:
-                  link:
-                    href: https://developer.api.autodesk.com/modelderivative/v2/designdata/derivative-id/thumbnail?scopes=b360project.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d,O2tenant.tenant-id
-              storage:
-                data:
-                  type: objects
-                  id: urn:adsk.objects:os.object:wip.dm.prod/3c8f6bbc-fe5c-4815-a92e-8b8635e7b1cb.rvt
-                meta:
-                  link:
-                    href: https://developer.api.autodesk.com/oss/v2/buckets/wip.dm.prod/objects/3c8f6bbc-fe5c-4815-a92e-8b8635e7b1cb.rvt?scopes=b360project.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d,O2tenant.tenant-id
-      title: Item
-      properties:
-        jsonapi:
-          $ref: '#/components/schemas/json_api_version'
-        links:
-          $ref: '#/components/schemas/json_api_links_self'
+            id: e35szkgp1o7b8
         data:
-          $ref: '#/components/schemas/ItemData'
-        included:
-          type: array
-          description: An object containing information about the tip version of this item.
-          items:
-            $ref: '#/components/schemas/VersionData'
-    filter_type_version_internal:
-      type: array
-      items:
-        $ref: '#/components/schemas/filter_type_version'
-      description: Filter by the ``type`` of the ``ref`` target. Supported values include ``folders``, ``items``, and ``versions``.
-    filter_refType:
-      type: string
-      enum:
-      - derived
-      - dependencies
-      - auxiliary
-      - xrefs
-      - includes
-      description: 'Filter by ``refType``. Possible values: ``derived``, ``dependencies``, ``auxiliary``, ``xrefs``, and ``includes``.'
-    version_extension_with_schema_link:
-      type: object
-      description: A container of additional properties that extends the default properties of a version.
-      properties:
-        type:
-          type: string
-          description: The Type ID of the schema that defines the structure of the ``extension.data`` object.
-        version:
-          type: string
-          description: The version of the schema that applies to the ``extension.data`` object.
-        schema:
-          $ref: '#/components/schemas/json_api_link'
-        data:
-          type: object
-          description: The object that contains the additional properties, which makes this resource extensible.
-          additionalProperties:
-            type: object
-            description: 'Key-value pairs that contain the name and data of additional properties.
-
-              '
-      required:
-      - type
-      - version
-      - schema
-      title: ''
-    item_extension_with_schema_link:
-      type: object
-      x-stoplight:
-        id: 7vkthmto6jc8p
-      description: A container of additional properties that extends the default properties of this resource.
-      properties:
-        type:
-          type: string
-          description: The Type ID of the schema that defines the structure of the ``extension.data`` object.
-        version:
-          type: string
-          description: The version of the schema that applies to the ``extension.data`` object.
-        schema:
-          $ref: '#/components/schemas/json_api_link'
-        data:
-          type: object
-          description: The object that contains the additional properties that extends this resource.
-          additionalProperties:
-            type: object
-            description: 'Key-value pairs that contain the name and data of additional properties.
-
-              '
-      required:
-      - type
-      - version
-      - schema
-    reftypes_xref:
-      type: string
-      enum:
-      - xrefs
-      description: The type of custom relationship. Will always be ``xrefs``.
-    metaForWebhooks:
-      title: metaForWebhooks
-      x-stoplight:
-        id: x20x6jb3udvzo
-      type: object
-      description: Meta information required for webhooks.
-      properties:
-        workflow:
-          type: string
-          description: "The Workflow ID of a webhook that listens to Model Derivative events. Must be less than 36 characters. \nOnly ASCII characters (a-z, A-Z, 0-9), periods (.), and hyphens (-) are accepted.\nSee the [Creating a Webhook and Listening to Events](/en/docs/webhooks/v1/tutorials/create-a-hook-model-derivative) tutorial for more information.\n\n**Note**: This attribute applies to BIM 360 Docs only.\n"
-        workflowAttribute:
-          type: string
-          description: "A user defined JSON object containing custom workflow information for the specified webhook event. Must be less than 1KB.\n\n**Note**: Applicable only if a valid value has been specified for ``meta.workflow``. \n"
-      required:
-      - workflow
-    CreatedItem:
-      title: CreatedItem
-      description: Create item response
-      type: object
-      properties:
-        jsonapi:
-          $ref: '#/components/schemas/json_api_version'
-        links:
-          $ref: '#/components/schemas/json_api_links_self'
-        data:
-          $ref: '#/components/schemas/ItemData'
-        included:
-          type: array
-          description: An object containing information about the tip version of this item.
-          items:
-            $ref: '#/components/schemas/VersionData'
-        meta:
-          type: object
-          description: The object containing the information on the command ID of the command processor.
-          properties:
-            bim360DmCommandId:
-              type: string
-              x-stoplight:
-                id: i8pl226xnlkcx
-              description: 'The command id of the command processor. You can use this ID to check the status of processing.
-
-                '
-    json_api_links_self_and_web_view:
-      title: json_api_links_self_and_web_view
-      x-stoplight:
-        id: go4472ydw5y6e
-      type: object
-      description: Information on links to this resource.
-      required:
-      - self
-      properties:
-        self:
-          $ref: '#/components/schemas/json_api_link'
-        webView:
-          $ref: '#/components/schemas/web_view_link'
+          $ref: '#/components/schemas/json_api_type_id'
+          x-stoplight:
+            id: zdowc6ik9vvcu
     RelationshipRefsPayload:
       description: An object that describes the custom relationship to be created.
       type: object
@@ -1669,6 +834,269 @@ components:
       required:
       - jsonapi
       - data
+    json_api_meta_link:
+      title: json_api_meta_link
+      x-stoplight:
+        id: 6c1450io6o3zx
+      type: object
+      description: Meta-information on links to this resource.
+      properties:
+        link:
+          $ref: '#/components/schemas/json_api_link'
+          x-stoplight:
+            id: haazb0d04arzm
+    ModifyItemPayload:
+      description: An object that defines the attributes of an item that must be updated.
+      x-stoplight:
+        id: 291d5d43ed407
+      type: object
+      x-examples:
+        example-1:
+          jsonapi:
+            version: '1.0'
+          data:
+            type: items
+            id: urn:adsk.wipprod:dm.lineage:AeYgDtcTSuqYoyMweWFhhQ
+            attributes:
+              displayName: new name for drawing.dwg
+      title: ModifyItemPayload
+      properties:
+        jsonapi:
+          $ref: '#/components/schemas/json_api_version'
+        data:
+          type: object
+          required:
+          - type
+          - id
+          description: The data that describes what must be modified.
+          properties:
+            type:
+              $ref: '#/components/schemas/type_item'
+            id:
+              type: string
+              minLength: 1
+              description: The ID of the item to be patched.
+            attributes:
+              type: object
+              description: A container of the attributes to be updated.
+              properties:
+                displayName:
+                  type: string
+                  minLength: 1
+                  description: "A human friendly name to identify an item. \n\n**Note:** For BIM 360 projects this attribute is reserved for future releases and should not be used. For such items use a version's ``attributes.name`` as the item's name.\n"
+      required:
+      - jsonapi
+      - data
+    json_api_link:
+      title: json_api_link
+      x-stoplight:
+        id: 0eyqmow1ie1is
+      type: object
+      description: An object containing the hyperlink to the referenced resource.
+      properties:
+        href:
+          type: string
+          x-stoplight:
+            id: d9k2el45bomh9
+          description: A hypertext reference to the location of the referenced resource.
+      required:
+      - href
+    json_api_links_related:
+      title: json_api_links_related
+      x-stoplight:
+        id: fgwxlu5412wa7
+      type: object
+      description: Contains the endpoint you can use to retrieve the related resources.
+      properties:
+        related:
+          type: object
+          x-stoplight:
+            id: o5ksk96io3pui
+          description: "An object containing the endpoint to retrieve \na list of related resources."
+          properties:
+            href:
+              type: string
+              x-stoplight:
+                id: n8345byjqrj4f
+              description: The URI of the endpoint that returns the related resources.
+    filter_type_version_internal:
+      type: array
+      items:
+        $ref: '#/components/schemas/filter_type_version'
+      description: Filter by the ``type`` of the ``ref`` target. Supported values include ``folders``, ``items``, and ``versions``.
+    item_extension_with_schema_link:
+      type: object
+      x-stoplight:
+        id: 7vkthmto6jc8p
+      description: A container of additional properties that extends the default properties of this resource.
+      properties:
+        type:
+          type: string
+          description: The Type ID of the schema that defines the structure of the ``extension.data`` object.
+        version:
+          type: string
+          description: The version of the schema that applies to the ``extension.data`` object.
+        schema:
+          $ref: '#/components/schemas/json_api_link'
+        data:
+          type: object
+          description: The object that contains the additional properties that extends this resource.
+          additionalProperties:
+            type: object
+            description: 'Key-value pairs that contain the name and data of additional properties.
+
+              '
+      required:
+      - type
+      - version
+      - schema
+    ItemAttributes:
+      description: Properties of an item.
+      title: 'Item Attributes:'
+      type: object
+      required:
+      - displayName
+      - createTime
+      - createUserId
+      - createUserName
+      - lastModifiedTime
+      - lastModifiedUserId
+      - lastModifiedUserName
+      - extension
+      properties:
+        displayName:
+          type: string
+          minLength: 1
+          description: "A human friendly name to identify the item. \nNote that for BIM 360 projects, this attribute is reserved for future releases and should not be used. Use a version's ``attributes.name`` for the file name."
+        createTime:
+          type: string
+          format: date-time
+          description: The time that the resource was created at.
+        createUserId:
+          type: string
+          minLength: 1
+          description: The ID of the user that created the version.
+        createUserName:
+          type: string
+          minLength: 1
+          description: The user name of the user that created the version.
+        lastModifiedTime:
+          type: string
+          format: date-time
+          description: The time that the version was last modified.
+        lastModifiedUserId:
+          type: string
+          minLength: 1
+          description: The ID of the user that last modified the version.
+        lastModifiedUserName:
+          type: string
+          minLength: 1
+          description: The user name of the user that last modified the version.
+        hidden:
+          type: boolean
+          description: "``true``: The file has been deleted. \n\n``false``: The file has not been deleted.\n"
+        reserved:
+          type: boolean
+          description: "``true``: The file is locked.\n\n``false`` The file is not locked. \n\n**Note:** You can lock BIM 360 Project Files folder files and A360 files, but you cannot lock BIM 360 Plans Folder files.\n"
+        reservedTime:
+          type: string
+          format: date-time
+          description: 'The time the item was reserved in the following format: ``YYYY-MM-DDThh:mm:ss.sz``.'
+        reservedUserId:
+          type: string
+          description: The unique identifier of the user who reserved the item.
+        reservedUserName:
+          type: string
+          description: The name of the user who reserved the item.
+        extension:
+          $ref: '#/components/schemas/item_extension_with_schema_link'
+        pathInProject:
+          type: string
+          x-stoplight:
+            id: weoan682ts8ft
+          description: The relative path of the item starting from project’s root folder.
+    extension_type_core_xref:
+      type: string
+      x-stoplight:
+        id: b89a9e7482efd
+      enum:
+      - xrefs:autodesk.core:Xref
+      description: The type of the relationship. Will always be ``xrefs:autodesk.core:Xref``.
+    Folder:
+      description: An object that represents a folder.
+      type: object
+      x-examples:
+        example-1:
+          jsonapi:
+            version: '1.0'
+          links:
+            self:
+              href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/folders/urn%3Aadsk.wipprod%3Adm.folder%3AhC6k4hndRWaeIVhIjvHu8w
+          data:
+            type: folders
+            id: urn:adsk.wipprod:dm.folder:hC6k4hndRWaeIVhIjvHu8w
+            attributes:
+              name: Plans
+              displayName: Plans
+              createTime: '2015-11-27T11:11:23.000Z'
+              createUserId: BW9RM76WZBGL
+              createUserName: John Doe
+              lastModifiedTime: '2015-11-27T11:11:27.000Z'
+              lastModifiedUserId: BW9RM76WZBGL
+              lastModifiedUserName: John Doe
+              lastModifiedTimeRollup: '2015-11-27T11:11:27.000Z'
+              objectCount: 4
+              hidden: false
+              extension:
+                type: folders:autodesk.bim360:Folder
+                version: '1.0'
+                schema:
+                  href: https://developer.api.autodesk.com/schema/v1/versions/folders%3Aautodesk.bim360%3AFolder-1.0
+                data:
+                  allowedTypes:
+                  - folders
+                  - items:autodesk.bim360:File
+                  - items:autodesk.bim360:Document
+                  - items:autodesk.bim360:TitleBlock
+                  visibleTypes:
+                  - folders
+                  - items:autodesk.bim360:Document
+                  namingStandardIds: []
+            links:
+              self:
+                href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/folders/urn%3Aadsk.wipprod%3Adm.folder%3AhC6k4hndRWaeIVhIjvHu8w
+              webView:
+                href: https://docs.b360.autodesk.com/projects/c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/folders/urn%3Aadsk.wipprod%3Adm.folder%3AhC6k4hndRWaeIVhIjvHu8w
+            relationships:
+              parent:
+                links:
+                  related:
+                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/folders/urn%3Aadsk.wipprod%3Adm.folder%3AhC6k4hndRWaeIVhIjvHu8w/parent
+                data:
+                  type: folders
+                  id: urn:adsk.wipprod:dm.folder:sdfedf8wefl
+              refs:
+                links:
+                  self:
+                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/folders/urn%3Aadsk.wipprod%3Adm.folder%3AhC6k4hndRWaeIVhIjvHu8w/relationships/refs
+                  related:
+                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/folders/urn%3Aadsk.wipprod%3Adm.folder%3AhC6k4hndRWaeIVhIjvHu8w/refs
+              links:
+                links:
+                  self:
+                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/folders/urn%3Aadsk.wipprod%3Adm.folder%3AhC6k4hndRWaeIVhIjvHu8w/relationships/links
+              contents:
+                links:
+                  related:
+                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/folders/urn%3Aadsk.wipprod%3Adm.folder%3AhC6k4hndRWaeIVhIjvHu8w/contents
+      title: Folder
+      properties:
+        jsonapi:
+          $ref: '#/components/schemas/json_api_version'
+        links:
+          $ref: '#/components/schemas/json_api_links_self'
+        data:
+          $ref: '#/components/schemas/FolderData'
     ItemPayload:
       description: Describe the item to be created.
       x-stoplight:
@@ -1923,94 +1351,6 @@ components:
       - jsonapi
       - data
       - included
-    RelationshipLinks:
-      description: An object containing relationship links of a resource.
-      type: object
-      x-examples:
-        example-1:
-          jsonapi:
-            version: '1.0'
-          links:
-            self:
-              href: /data/v1/projects/{some_project_id}/folders/{some_folder_id}/relationships/links
-          data:
-          - type: links
-            id: 96af4f60-53b8-4efe-b890-1eaa9ea5cb08
-            meta:
-              link:
-                href: /oss/v2/buckets/wipbucket/objects/myfolder.zip
-              data:
-                type: objects
-                id: urn:adsk.objects:os.object:wipbucket/myfolder.zip
-              mimeType: application/x-zip-compressed
-              extension:
-                type: links:A360:DownloadArchiveFolder
-                version: '1.0'
-                schema:
-                  href: /schema/v1/versions/links%3AA360%3ADownloadArchiveFolder-1.0
-                data:
-                  createdTime: '2015-05-22T14:56:28.000Z'
-          - type: links
-            id: cf755d5e-7876-41c2-a58e-2175f9b0cd4b
-            meta:
-              link:
-                href: /a360/v2/items/{a360folder_id}/create_archive
-              extension:
-                type: links:A360:CreateFolderArchive
-                version: '1.0'
-                schema:
-                  href: /schema/v1/versions/links%3AA360%3ACreateFolderArchive-1.0
-      title: RelationshipLinks
-      properties:
-        jsonapi:
-          $ref: '#/components/schemas/json_api_version'
-        links:
-          $ref: '#/components/schemas/json_api_links_self'
-        data:
-          type: array
-          uniqueItems: true
-          minItems: 1
-          description: An array of objects where each object represents link.
-          items:
-            type: object
-            properties:
-              type:
-                $ref: '#/components/schemas/type_link'
-              id:
-                type: string
-                minLength: 1
-                description: The ID of the resource.
-              meta:
-                type: object
-                description: The meta-information of the links of this resource.
-                properties:
-                  link:
-                    $ref: '#/components/schemas/json_api_link'
-                  data:
-                    type: object
-                    description: The object containing meta-information on the data of the links of this resource.
-                    properties:
-                      type:
-                        type: string
-                        minLength: 1
-                        description: The type of the resource data.
-                      id:
-                        type: string
-                        minLength: 1
-                        description: The ID or URN of the resource.
-                  mimeType:
-                    type: string
-                    minLength: 1
-                    description: The MIME type of the content of the resource.
-                  extension:
-                    $ref: '#/components/schemas/base_attributes_extension_object_with_schema_link'
-    extension_type_core_xref:
-      type: string
-      x-stoplight:
-        id: b89a9e7482efd
-      enum:
-      - xrefs:autodesk.core:Xref
-      description: The type of the relationship. Will always be ``xrefs:autodesk.core:Xref``.
     Versions:
       description: Successful retrieval of the versions collection associated with a specific item.
       type: object
@@ -2149,8 +1489,41 @@ components:
           description: An array of objects, where each object represents a version.
           items:
             $ref: '#/components/schemas/VersionData'
-    Folder:
-      description: An object that represents a folder.
+    MetaRefs:
+      description: Metadata on the resources referenced by this resource.
+      type: object
+      title: MetaRefs
+      properties:
+        refType:
+          $ref: '#/components/schemas/type_ref'
+        direction:
+          $ref: '#/components/schemas/metarefs_direction'
+        fromId:
+          type: string
+          x-stoplight:
+            id: u4hxp7i1mdfuh
+          description: The ID of the resource from where data flows.
+        fromType:
+          $ref: '#/components/schemas/type_entity'
+          x-stoplight:
+            id: e061oc1d2clmi
+        toId:
+          type: string
+          x-stoplight:
+            id: 4hwdw63giy88s
+          description: The ID of the resource to where the data flows.
+        toType:
+          $ref: '#/components/schemas/type_entity'
+          x-stoplight:
+            id: xnhp75ludslo9
+        extension:
+          $ref: '#/components/schemas/base_attributes_extension_object_with_schema_link'
+          x-stoplight:
+            id: wnoe4cjsepp56
+    RelationshipRefs:
+      description: ''
+      x-stoplight:
+        id: b8ed6741f539a
       type: object
       x-examples:
         example-1:
@@ -2158,285 +1531,247 @@ components:
             version: '1.0'
           links:
             self:
-              href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/folders/urn%3Aadsk.wipprod%3Adm.folder%3AhC6k4hndRWaeIVhIjvHu8w
+              href: /data/v1/projects/b.5ae9543e-abd5-45c5-8718-33d26652267f/items/urn:adsk.wipprod:dm.lineage:b909RzMKR4mhc3O7UBY_8g/relationships/refs
+            related:
+              href: /data/v1/projects/b.5ae9543e-abd5-45c5-8718-33d26652267f/items/urn:adsk.wipprod:dm.lineage:b909RzMKR4mhc3O7UBY_8g/refs
           data:
-            type: folders
-            id: urn:adsk.wipprod:dm.folder:hC6k4hndRWaeIVhIjvHu8w
-            attributes:
-              name: Plans
-              displayName: Plans
-              createTime: '2015-11-27T11:11:23.000Z'
-              createUserId: BW9RM76WZBGL
-              createUserName: John Doe
-              lastModifiedTime: '2015-11-27T11:11:27.000Z'
-              lastModifiedUserId: BW9RM76WZBGL
-              lastModifiedUserName: John Doe
-              lastModifiedTimeRollup: '2015-11-27T11:11:27.000Z'
-              objectCount: 4
-              hidden: false
+          - type: items
+            id: urn:adsk.wipprod:fs.file:vf.b909RzMKR4mhc3O7UBY_8g?version=2
+            meta:
+              refType: xrefs
+              fromId: urn:adsk.wipprod:fs.file:vf.b909RzMKR4mhc3O7UBY_8g?version=2
+              fromType: versions
+              toId: urn:adsk.wipprod:dm.lineage:b909RzMKR4mhc3O7UBY_8g
+              toType: items
+              direction: from
               extension:
-                type: folders:autodesk.bim360:Folder
+                type: xrefs:my.custom:Xref
                 version: '1.0'
                 schema:
-                  href: https://developer.api.autodesk.com/schema/v1/versions/folders%3Aautodesk.bim360%3AFolder-1.0
+                  href: /schema/v1/versions/xrefs:my.custom:Xref-1.0
+                data: {}
+          included:
+          - type: versions
+            id: urn:adsk.wipprod:fs.file:vf.b909RzMKR4mhc3O7UBY_8g?version=2
+            attributes:
+              name: version-test.pdf
+              displayName: version-test.pdf
+              createTime: '2016-04-01T11:12:35.000Z'
+              createUserId: BW9RM76WZBGL
+              createUserName: John Doe
+              lastModifiedTime: '2016-04-01T11:15:22.000Z'
+              lastModifiedUserId: BW9RM76WZBGL
+              lastModifiedUserName: John Doe
+              versionNumber: 2
+              mimeType: application/pdf
+              extension:
+                type: versions:autodesk.bim360:File
+                version: '1.0'
+                schema:
+                  href: /schema/v1/versions/versions%3Aautodesk.bim360%3AFile-1.0
                 data:
-                  allowedTypes:
-                  - folders
-                  - items:autodesk.bim360:File
-                  - items:autodesk.bim360:Document
-                  - items:autodesk.bim360:TitleBlock
-                  visibleTypes:
-                  - folders
-                  - items:autodesk.bim360:Document
-                  namingStandardIds: []
+                  tempUrn: null
+                  properties: {}
+                  storageUrn: urn:adsk.objects:os.object:wip.dm.prod/9f8bdc3f-e29c-4ada-ab7b-bb8dfa821163.pdf
+                  storageType: OSS
+                  conformingStatus: NONE
             links:
               self:
-                href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/folders/urn%3Aadsk.wipprod%3Adm.folder%3AhC6k4hndRWaeIVhIjvHu8w
+                href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/versions/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D2
               webView:
-                href: https://docs.b360.autodesk.com/projects/c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/folders/urn%3Aadsk.wipprod%3Adm.folder%3AhC6k4hndRWaeIVhIjvHu8w
+                href: https://docs.b360.autodesk.com/projects/c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/folders/urn%3Aadsk.wipprod%3Afs.folder%3Aco.0J4paz_FQgWPX2QRsaBkiw/detail/viewer/items/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D2
             relationships:
-              parent:
+              item:
                 links:
                   related:
-                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/folders/urn%3Aadsk.wipprod%3Adm.folder%3AhC6k4hndRWaeIVhIjvHu8w/parent
+                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/items/urn%3Aadsk.wipprod%3Adm.lineage%3Ab909RzMKR4mhc3O7UBY_8g
                 data:
-                  type: folders
-                  id: urn:adsk.wipprod:dm.folder:sdfedf8wefl
+                  type: items
+                  id: urn:adsk.wipprod:dm.lineage:b909RzMKR4mhc3O7UBY_8g
               refs:
                 links:
                   self:
-                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/folders/urn%3Aadsk.wipprod%3Adm.folder%3AhC6k4hndRWaeIVhIjvHu8w/relationships/refs
+                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/versions/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D2/relationships/refs
                   related:
-                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/folders/urn%3Aadsk.wipprod%3Adm.folder%3AhC6k4hndRWaeIVhIjvHu8w/refs
+                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/versions/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D2/refs
               links:
                 links:
                   self:
-                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/folders/urn%3Aadsk.wipprod%3Adm.folder%3AhC6k4hndRWaeIVhIjvHu8w/relationships/links
-              contents:
+                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/versions/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D2/relationships/links
+              storage:
+                meta:
+                  link:
+                    href: /oss/v2/buckets/wipbucket/objects/9f8bdc3f-e29c-4ada-ab7b-bb8dfa821163.pdf?scopes=b360project.6f8813fe-31a7-4440-bc63-d8ca97c856b4,global,O2tenant.tenantId
+                data:
+                  type: objects
+                  id: urn:adsk.objects:os.object:wip.dm.prod/9f8bdc3f-e29c-4ada-ab7b-bb8dfa821163.pdf
+          - type: versions
+            id: urn:adsk.wipprod:fs.file:vf.b909RzMKR4mhc3O7UBY_8g?version=1
+            attributes:
+              name: version-test.pdf
+              displayName: version-test.pdf
+              createTime: '2016-04-01T11:09:03.000Z'
+              createUserId: BW9RM76WZBGL
+              createUserName: John Doe
+              lastModifiedTime: '2016-04-01T11:11:18.000Z'
+              lastModifiedUserId: BW9RM76WZBGL
+              lastModifiedUserName: John Doe
+              versionNumber: 1
+              mimeType: application/pdf
+              extension:
+                type: versions:autodesk.bim360:File
+                version: '1.0'
+                schema:
+                  href: /schema/v1/versions/versions%3Aautodesk.bim360%3AFile-1.0
+                data:
+                  tempUrn: null
+                  properties: {}
+                  storageUrn: urn:adsk.objects:os.object:wip.dm.prod/3c8f6bbc-fe5c-4815-a92e-8b8635e7b1cb.pdf
+                  storageType: OSS
+                  conformingStatus: NONE
+            links:
+              self:
+                href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/versions/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D1
+              webView:
+                href: https://docs.b360.autodesk.com/projects/c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/folders/urn%3Aadsk.wipprod%3Afs.folder%3Aco.0J4paz_FQgWPX2QRsaBkiw/detail/viewer/items/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D1
+            relationships:
+              item:
                 links:
                   related:
-                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/folders/urn%3Aadsk.wipprod%3Adm.folder%3AhC6k4hndRWaeIVhIjvHu8w/contents
-      title: Folder
-      properties:
-        jsonapi:
-          $ref: '#/components/schemas/json_api_version'
-        links:
-          $ref: '#/components/schemas/json_api_links_self'
-        data:
-          $ref: '#/components/schemas/FolderData'
-    json_api_relationships_links_folder_parent:
-      title: json_api_relationships_links_folder_parent
-      x-stoplight:
-        id: qmmyfor4fmle9
-      type: object
-      description: Information on the parent of this resource in the folder hierarchy.
-      properties:
-        links:
-          $ref: '#/components/schemas/json_api_links_related'
-          x-stoplight:
-            id: e35szkgp1o7b8
-        data:
-          $ref: '#/components/schemas/json_api_type_id'
-          x-stoplight:
-            id: zdowc6ik9vvcu
-    ItemAttributes:
-      description: Properties of an item.
-      title: 'Item Attributes:'
-      type: object
-      required:
-      - displayName
-      - createTime
-      - createUserId
-      - createUserName
-      - lastModifiedTime
-      - lastModifiedUserId
-      - lastModifiedUserName
-      - extension
-      properties:
-        displayName:
-          type: string
-          minLength: 1
-          description: "A human friendly name to identify the item. \nNote that for BIM 360 projects, this attribute is reserved for future releases and should not be used. Use a version's ``attributes.name`` for the file name."
-        createTime:
-          type: string
-          format: date-time
-          description: The time that the resource was created at.
-        createUserId:
-          type: string
-          minLength: 1
-          description: The ID of the user that created the version.
-        createUserName:
-          type: string
-          minLength: 1
-          description: The user name of the user that created the version.
-        lastModifiedTime:
-          type: string
-          format: date-time
-          description: The time that the version was last modified.
-        lastModifiedUserId:
-          type: string
-          minLength: 1
-          description: The ID of the user that last modified the version.
-        lastModifiedUserName:
-          type: string
-          minLength: 1
-          description: The user name of the user that last modified the version.
-        hidden:
-          type: boolean
-          description: "``true``: The file has been deleted. \n\n``false``: The file has not been deleted.\n"
-        reserved:
-          type: boolean
-          description: "``true``: The file is locked.\n\n``false`` The file is not locked. \n\n**Note:** You can lock BIM 360 Project Files folder files and A360 files, but you cannot lock BIM 360 Plans Folder files.\n"
-        reservedTime:
-          type: string
-          format: date-time
-          description: 'The time the item was reserved in the following format: ``YYYY-MM-DDThh:mm:ss.sz``.'
-        reservedUserId:
-          type: string
-          description: The unique identifier of the user who reserved the item.
-        reservedUserName:
-          type: string
-          description: The name of the user who reserved the item.
-        extension:
-          $ref: '#/components/schemas/item_extension_with_schema_link'
-        pathInProject:
-          type: string
-          x-stoplight:
-            id: weoan682ts8ft
-          description: The relative path of the item starting from project’s root folder.
-    json_api_version_value:
-      description: The version of JSON API. Will always be ``1.0``.
-      type: string
-      enum:
-      - '1.0'
-    ModifyItemPayload:
-      description: An object that defines the attributes of an item that must be updated.
-      x-stoplight:
-        id: 291d5d43ed407
-      type: object
-      x-examples:
-        example-1:
-          jsonapi:
-            version: '1.0'
-          data:
-            type: items
-            id: urn:adsk.wipprod:dm.lineage:AeYgDtcTSuqYoyMweWFhhQ
+                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/items/urn%3Aadsk.wipprod%3Adm.lineage%3Ab909RzMKR4mhc3O7UBY_8g
+                data:
+                  type: items
+                  id: urn:adsk.wipprod:dm.lineage:b909RzMKR4mhc3O7UBY_8g
+              refs:
+                links:
+                  self:
+                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/versions/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D1/relationships/refs
+                  related:
+                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/versions/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D1/refs
+              links:
+                links:
+                  self:
+                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/versions/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D1/relationships/links
+              storage:
+                meta:
+                  link:
+                    href: /oss/v2/buckets/wipbucket/objects/3c8f6bbc-fe5c-4815-a92e-8b8635e7b1cb.pdf?scopes=b360project.6f8813fe-31a7-4440-bc63-d8ca97c856b4,global,O2tenant.tenantId
+                data:
+                  type: objects
+                  id: urn:adsk.objects:os.object:wip.dm.prod/3c8f6bbc-fe5c-4815-a92e-8b8635e7b1cb.pdf
+          - type: items
+            id: urn:adsk.wipprod:dm.lineage:b909RzMKR4mhc3O7UBY_8g
             attributes:
-              displayName: new name for drawing.dwg
-      title: ModifyItemPayload
-      properties:
-        jsonapi:
-          $ref: '#/components/schemas/json_api_version'
-        data:
-          type: object
-          required:
-          - type
-          - id
-          description: The data that describes what must be modified.
-          properties:
-            type:
-              $ref: '#/components/schemas/type_item'
-            id:
-              type: string
-              minLength: 1
-              description: The ID of the item to be patched.
-            attributes:
-              type: object
-              description: A container of the attributes to be updated.
-              properties:
-                displayName:
-                  type: string
-                  minLength: 1
-                  description: "A human friendly name to identify an item. \n\n**Note:** For BIM 360 projects this attribute is reserved for future releases and should not be used. For such items use a version's ``attributes.name`` as the item's name.\n"
-      required:
-      - jsonapi
-      - data
-    filter_type_version:
-      type: string
-      enum:
-      - folders
-      - items
-      - versions
-      description: Filter by the ``type`` of the ``ref`` target. Supported values include ``folders``, ``items``, and ``versions``.
-    base_attributes_extension_object_without_schema_link:
-      title: 'base_attributes_extension_object_with_schema_link:'
-      x-stoplight:
-        id: rwbl8xfimitn3
-      type: object
-      description: A container of additional properties that extends this resource.
-      properties:
-        type:
-          type: string
-          x-stoplight:
-            id: jdli2qhh88jq3
-          description: The Type ID of the schema that defines the structure of the ``extension.data`` object.
-        version:
-          type: string
-          x-stoplight:
-            id: x1l84lpe0ce01
-          description: The version of the schema that applies to the ``extension.data`` object.
-        data:
-          type: object
-          x-stoplight:
-            id: 5h0r1ilaapxra
-          description: The object that contains the additional properties, which makes this resource extensible.
-          additionalProperties:
-            type: object
-            description: 'Key-value pairs that contain the name and data of additional properties.
-
-              '
-      required:
-      - type
-      - version
-    FolderData:
-      title: 'Folder Data:'
-      x-stoplight:
-        id: 0crrh7a4rnsne
-      type: object
-      description: A container of data describing a folder.
-      properties:
-        type:
-          $ref: '#/components/schemas/type_folder'
-        id:
-          type: string
-          minLength: 1
-          description: The unique identifier of the folder.
-        attributes:
-          $ref: '#/components/schemas/FolderAttributesWithExtensions'
-        links:
-          $ref: '#/components/schemas/json_api_links_self_and_web_view'
-        relationships:
-          type: object
-          description: Contains links to resources that are directly related to this folder.
-          required:
-          - parent
-          - refs
-          - links
-          - contents
-          properties:
-            parent:
-              $ref: '#/components/schemas/json_api_relationships_links_folder_parent'
-            refs:
-              $ref: '#/components/schemas/json_api_relationships_links_refs'
+              displayName: version-test.pdf
+              createTime: '2016-04-01T11:09:03.000Z'
+              createUserId: BW9RM76WZBGL
+              createUserName: John Doe
+              lastModifiedTime: '2016-04-01T11:11:18.000Z'
+              lastModifiedUserId: BW9RM76WZBGL
+              lastModifiedUserName: John Doe
+              hidden: false
+              reserved: true
+              reservedTime: '2016-04-01T11:10:00.000Z'
+              reservedUserId: BW9RM76WZBGL
+              reservedUserName: John Doe
+              extension:
+                data: {}
+                version: '1.0'
+                type: items:autodesk.bim360:File
+                schema:
+                  href: https://developer.api.autodesk.com/schema/v1/versions/items%3Aautodesk.bim360%3AFile-1.0
+            relationships:
+              tip:
+                data:
+                  type: versions
+                  id: urn:adsk.wipprod:fs.file:vf.b909RzMKR4mhc3O7UBY_8g?version=2
+                links:
+                  related:
+                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/items/urn%3Aadsk.wipprod%3Adm.lineage%3AhC6k4hndRWaeIVhIjvHu8w/tip
+              parent:
+                data:
+                  type: folders
+                  id: urn:adsk.wipprod:dm.folder:sdfedf8wefl
+                links:
+                  related:
+                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/items/urn:adsk.wipprod:dm.lineage:b909RzMKR4mhc3O7UBY_8g/parent
+              versions:
+                links:
+                  related:
+                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/items/urn:adsk.wipprod:dm.lineage:b909RzMKR4mhc3O7UBY_8g/versions
+              refs:
+                links:
+                  self:
+                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/items/urn:adsk.wipprod:dm.lineage:b909RzMKR4mhc3O7UBY_8g/relationships/refs
+                  related:
+                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/items/urn:adsk.wipprod:dm.lineage:b909RzMKR4mhc3O7UBY_8g/refs
+              links:
+                links:
+                  self:
+                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/items/urn:adsk.wipprod:dm.lineage:b909RzMKR4mhc3O7UBY_8g/relationships/links
             links:
-              $ref: '#/components/schemas/json_api_relationships_links_links'
-            contents:
-              $ref: '#/components/schemas/json_api_relationships_links_internal'
-      required:
-      - type
-      - id
-      - attributes
-      - links
-      - relationships
-    type_ref:
-      type: string
-      enum:
-      - derived
-      - dependencies
-      - auxiliary
-      - xrefs
-      - includes
-      description: The type of the resource. Possible values are ``derived``, ``dependencies``, ``auxiliary``, ``xrefs``, and ``includes``.
+              self:
+                href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/items/urn:adsk.wipprod:dm.lineage:b909RzMKR4mhc3O7UBY_8g
+              webView:
+                href: https://docs.b360.autodesk.com/projects/c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/folders/urn%3Aadsk.wipprod%3Afs.folder%3Aco.0J4paz_FQgWPX2QRsaBkiw/detail/viewer/items/urn:adsk.wipprod:dm.lineage:b909RzMKR4mhc3O7UBY_8g
+      title: RelationshipRefs
+      properties:
+        jsonapi:
+          $ref: '#/components/schemas/json_api_version'
+        links:
+          oneOf:
+          - $ref: '#/components/schemas/json_api_links_self'
+            x-stoplight:
+              id: ncsj1gqlzx0w1
+          - $ref: '#/components/schemas/json_api_links_related'
+            x-stoplight:
+              id: 6typpmchmdrk0
+          description: Information on links to this resource.
+        data:
+          type: array
+          uniqueItems: true
+          minItems: 1
+          description: An array of objects where each object represents the data of a folder, item, or resource.
+          items:
+            type: object
+            properties:
+              type:
+                $ref: '#/components/schemas/type_entity'
+                x-stoplight:
+                  id: h9tic0vwmri2v
+              id:
+                type: string
+                x-stoplight:
+                  id: x2owtaamfdr3z
+                description: The ID that uniquely identifies the resource.
+              meta:
+                $ref: '#/components/schemas/MetaRefs'
+                x-stoplight:
+                  id: rp3g1jl3ze12n
+        included:
+          type: array
+          x-stoplight:
+            id: 5qk2m98clernk
+          description: An array of objects, where each object represents a folder, item, or version included within this resource.
+          items:
+            x-stoplight:
+              id: i9y1frfztzdsr
+            oneOf:
+            - $ref: '#/components/schemas/FolderData'
+              x-stoplight:
+                id: xmpzaxcb1y34e
+            - $ref: '#/components/schemas/ItemData'
+              x-stoplight:
+                id: hd6qe25i2uegf
+            - $ref: '#/components/schemas/VersionData'
+              x-stoplight:
+                id: byujkhsqw5k90
+            discriminator:
+              propertyName: type
+              mapping:
+                folders: '#/components/schemas/FolderData'
+                items: '#/components/schemas/ItemData'
+                versions: '#/components/schemas/VersionData'
     VersionAttributes:
       description: The properties of a version.
       type: object
@@ -2510,26 +1845,265 @@ components:
           description: The user name of the user that last modified the version.
         extension:
           $ref: '#/components/schemas/version_extension_with_schema_link'
-    json_api_type_id:
-      title: json_api_type_id
-      x-stoplight:
-        id: vj150c8bxpc9d
+    CreatedItem:
+      title: CreatedItem
+      description: Create item response
       type: object
-      description: An object containing the ``id`` and ``type`` properties of a resource.
       properties:
+        jsonapi:
+          $ref: '#/components/schemas/json_api_version'
+        links:
+          $ref: '#/components/schemas/json_api_links_self'
+        data:
+          $ref: '#/components/schemas/ItemData'
+        included:
+          type: array
+          description: An object containing information about the tip version of this item.
+          items:
+            $ref: '#/components/schemas/VersionData'
+        meta:
+          type: object
+          description: The object containing the information on the command ID of the command processor.
+          properties:
+            bim360DmCommandId:
+              type: string
+              x-stoplight:
+                id: i8pl226xnlkcx
+              description: 'The command id of the command processor. You can use this ID to check the status of processing.
+
+                '
+    FolderData:
+      title: 'Folder Data:'
+      x-stoplight:
+        id: 0crrh7a4rnsne
+      type: object
+      description: A container of data describing a folder.
+      properties:
+        type:
+          $ref: '#/components/schemas/type_folder'
         id:
           type: string
-          description: The URN of the resource.
+          minLength: 1
+          description: The unique identifier of the folder.
+        attributes:
+          $ref: '#/components/schemas/FolderAttributesWithExtensions'
+        links:
+          $ref: '#/components/schemas/json_api_links_self_and_web_view'
+        relationships:
+          type: object
+          description: Contains links to resources that are directly related to this folder.
+          required:
+          - parent
+          - refs
+          - links
+          - contents
+          properties:
+            parent:
+              $ref: '#/components/schemas/json_api_relationships_links_folder_parent'
+            refs:
+              $ref: '#/components/schemas/json_api_relationships_links_refs'
+            links:
+              $ref: '#/components/schemas/json_api_relationships_links_links'
+            contents:
+              $ref: '#/components/schemas/json_api_relationships_links_internal'
+      required:
+      - type
+      - id
+      - attributes
+      - links
+      - relationships
+    type_item:
+      type: string
+      enum:
+      - items
+      description: The type of the resource. Possible values are ``items``.
+    json_api_version:
+      title: json_api_version
+      x-stoplight:
+        id: wtcnivkdziwr7
+      type: object
+      description: The JSON API object.
+      properties:
+        version:
+          description: The version of JSON API. Will always be ``1.0``.
+          $ref: '#/components/schemas/json_api_version_value'
+      required:
+      - version
+    folder_extension_with_schema_link:
+      type: object
+      description: A container of additional properties that extends the default properties of this resource.
+      properties:
+        type:
+          type: string
+          minLength: 1
+          description: The type of folder the resource represents.
+        version:
+          type: string
+          minLength: 1
+          description: The version of the folder type.
+        schema:
+          $ref: '#/components/schemas/json_api_link'
+        data:
+          type: object
+          additionalProperties:
+            type: object
+            description: 'JSON objects that contain additional properties specific to the folder type.
+
+              '
+          description: The object that contains the additional properties, which makes this resource extensible.
+      required:
+      - type
+      - version
+      - schema
+    filter_direction:
+      type: string
+      enum:
+      - from
+      - to
+      description: 'Filter by the direction of the reference. Possible values: ``from`` and ``to``.'
+    base_attributes_extension_object_with_schema_link:
+      title: 'base_attributes_extension_object_with_schema_link:'
+      x-stoplight:
+        id: aj8zaihf7alzp
+      type: object
+      description: A container of additional properties that extends this resource.
+      properties:
         type:
           type: string
           x-stoplight:
-            id: j3iiuzs5pdley
-          description: The type of the resource.
+            id: jdli2qhh88jq3
+          description: The Type ID of the schema that defines the structure of the ``extension.data`` object.
+        version:
+          type: string
+          x-stoplight:
+            id: x1l84lpe0ce01
+          description: The version of the schema that applies to the ``extension.data`` object.
+        schema:
+          type: object
+          x-stoplight:
+            id: el8fixpzd4k3a
+          description: A container for the hyperlink to the schema of the type.
+          required:
+          - href
+          properties:
+            href:
+              type: string
+              x-stoplight:
+                id: oh11qown58iob
+              description: A hypertext reference to the location of the referenced resource.
+        data:
+          type: object
+          x-stoplight:
+            id: 5h0r1ilaapxra
+          description: The object that contains the additional properties that extends this resource.
+          additionalProperties:
+            type: object
+            description: 'Key-value pairs that contain the name and data of additional properties.
+
+              '
+      required:
+      - type
+      - version
+      - schema
     type_object:
       type: string
       enum:
       - objects
       description: The type of this resource. Possible values are ``objects``.
+    json_api_relationships_links_internal:
+      title: json_api_relationships_links_internal
+      x-stoplight:
+        id: da5pz40rvqocl
+      type: object
+      description: Information on resources that are found under this resource.
+      properties:
+        links:
+          $ref: '#/components/schemas/json_api_links_related'
+          x-stoplight:
+            id: s7etnb8jkm02f
+      required:
+      - links
+    RelationshipLinks:
+      description: An object containing relationship links of a resource.
+      type: object
+      x-examples:
+        example-1:
+          jsonapi:
+            version: '1.0'
+          links:
+            self:
+              href: /data/v1/projects/{some_project_id}/folders/{some_folder_id}/relationships/links
+          data:
+          - type: links
+            id: 96af4f60-53b8-4efe-b890-1eaa9ea5cb08
+            meta:
+              link:
+                href: /oss/v2/buckets/wipbucket/objects/myfolder.zip
+              data:
+                type: objects
+                id: urn:adsk.objects:os.object:wipbucket/myfolder.zip
+              mimeType: application/x-zip-compressed
+              extension:
+                type: links:A360:DownloadArchiveFolder
+                version: '1.0'
+                schema:
+                  href: /schema/v1/versions/links%3AA360%3ADownloadArchiveFolder-1.0
+                data:
+                  createdTime: '2015-05-22T14:56:28.000Z'
+          - type: links
+            id: cf755d5e-7876-41c2-a58e-2175f9b0cd4b
+            meta:
+              link:
+                href: /a360/v2/items/{a360folder_id}/create_archive
+              extension:
+                type: links:A360:CreateFolderArchive
+                version: '1.0'
+                schema:
+                  href: /schema/v1/versions/links%3AA360%3ACreateFolderArchive-1.0
+      title: RelationshipLinks
+      properties:
+        jsonapi:
+          $ref: '#/components/schemas/json_api_version'
+        links:
+          $ref: '#/components/schemas/json_api_links_self'
+        data:
+          type: array
+          uniqueItems: true
+          minItems: 1
+          description: An array of objects where each object represents link.
+          items:
+            type: object
+            properties:
+              type:
+                $ref: '#/components/schemas/type_link'
+              id:
+                type: string
+                minLength: 1
+                description: The ID of the resource.
+              meta:
+                type: object
+                description: The meta-information of the links of this resource.
+                properties:
+                  link:
+                    $ref: '#/components/schemas/json_api_link'
+                  data:
+                    type: object
+                    description: The object containing meta-information on the data of the links of this resource.
+                    properties:
+                      type:
+                        type: string
+                        minLength: 1
+                        description: The type of the resource data.
+                      id:
+                        type: string
+                        minLength: 1
+                        description: The ID or URN of the resource.
+                  mimeType:
+                    type: string
+                    minLength: 1
+                    description: The MIME type of the content of the resource.
+                  extension:
+                    $ref: '#/components/schemas/base_attributes_extension_object_with_schema_link'
     FolderAttributesWithExtensions:
       title: 'Folder Attributes:'
       type: object
@@ -2591,24 +2165,13 @@ components:
           description: The folder’s current visibility state.
         extension:
           $ref: '#/components/schemas/folder_extension_with_schema_link'
-    json_api_links_self:
-      title: json_api_links_self
+    type_version:
+      type: string
       x-stoplight:
-        id: hedbm6v3pcz7k
-      type: object
-      description: An object containing the URI of the endpoint to access this resource.
-      properties:
-        self:
-          type: object
-          x-stoplight:
-            id: xjz8a6shpmaya
-          description: An object containing the URI of the endpoint to access this resource.
-          properties:
-            href:
-              type: string
-              x-stoplight:
-                id: jx2lmnxrl8f10
-              description: "The URI of the endpoint to access this \nresource."
+        id: f8e280dd63a5b
+      enum:
+      - versions
+      description: The type of the resource. Possible values are ``versions``.
     ItemData:
       title: 'Item Data:'
       x-stoplight:
@@ -2652,8 +2215,120 @@ components:
       - attributes
       - relationships
       - links
-    Refs:
-      description: Successful retrieval of a resource collection.
+    filter_type_version:
+      type: string
+      enum:
+      - folders
+      - items
+      - versions
+      description: Filter by the ``type`` of the ``ref`` target. Supported values include ``folders``, ``items``, and ``versions``.
+    reftypes_xref:
+      type: string
+      enum:
+      - xrefs
+      description: The type of custom relationship. Will always be ``xrefs``.
+    web_view_link:
+      title: web_view_link
+      x-stoplight:
+        id: b0lyf514eksq4
+      type: object
+      description: An object containing a link that opens the resource in a browser.
+      properties:
+        href:
+          type: string
+          x-stoplight:
+            id: j0xj0hp05wo0l
+          description: The location (URL) of the resource the link points to.
+      required:
+      - href
+    VersionData:
+      title: 'Version Data:'
+      description: A container of data describing a version.
+      x-stoplight:
+        id: eb2zg50zz7eul
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/type_version'
+        id:
+          type: string
+          minLength: 1
+          description: URN of the version object.
+        attributes:
+          $ref: '#/components/schemas/VersionAttributes'
+        relationships:
+          type: object
+          description: Contains information on other resources related to this resource.
+          required:
+          - item
+          - refs
+          - links
+          properties:
+            item:
+              type: object
+              description: Contains information about the item this is a version of.
+              properties:
+                links:
+                  $ref: '#/components/schemas/json_api_links_related'
+                  x-stoplight:
+                    id: fklud6hg20fwz
+                data:
+                  $ref: '#/components/schemas/json_api_type_id'
+                  x-stoplight:
+                    id: g661wq5zxnxxz
+            refs:
+              $ref: '#/components/schemas/json_api_relationships_links_refs'
+            links:
+              $ref: '#/components/schemas/json_api_relationships_links_links'
+            storage:
+              type: object
+              x-stoplight:
+                id: p77erscy2c106
+              description: Contains information about the storage location that contains the binary data of this version.
+              properties:
+                data:
+                  $ref: '#/components/schemas/json_api_type_id'
+                meta:
+                  $ref: '#/components/schemas/json_api_meta_link'
+            derivatives:
+              type: object
+              x-stoplight:
+                id: 1by3hohlaohio
+              description: Contains information you can use to retrieve the derivatives of this version.
+              properties:
+                data:
+                  $ref: '#/components/schemas/json_api_type_id'
+                meta:
+                  $ref: '#/components/schemas/json_api_meta_link'
+            thumbnails:
+              type: object
+              x-stoplight:
+                id: hrzlgcn3r896v
+              description: 'Contains the information required to retrieve thumbnails of this version from the Model Derivative service. '
+              properties:
+                data:
+                  $ref: '#/components/schemas/json_api_type_id'
+                meta:
+                  $ref: '#/components/schemas/json_api_meta_link'
+            downloadFormats:
+              type: object
+              x-stoplight:
+                id: r875g22qvyi3v
+              description: Contains the endpoint you can use to find out what formats the version can be downloaded as.
+              properties:
+                links:
+                  $ref: '#/components/schemas/json_api_links_related'
+                  x-stoplight:
+                    id: 41n0be6z8nbng
+        links:
+          $ref: '#/components/schemas/json_api_links_self_and_web_view'
+      required:
+      - type
+      - id
+      - attributes
+      - relationships
+    Item:
+      description: An object that represents an item.
       type: object
       x-examples:
         example-1:
@@ -2661,9 +2336,169 @@ components:
             version: '1.0'
           links:
             self:
-              href: /data/v1/projects/a.ZXhhbXBsZTp3aXAxZnFhYXV0b2Rlc2sxNjEjMjAyMzAzMTcwMDAwMDAx/items/urn:adsk.wipprod:dm.lineage:b909RzMKR4mhc3O7UBY_8g/refs
+              href: https://developer.api.autodesk.com/data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/items/urn:adsk.wipprod:dm.lineage:hC6k4hndRWaeIVhIjvHu8w
           data:
+            type: items
+            id: urn:adsk.wipprod:dm.lineage:hC6k4hndRWaeIVhIjvHu8w
+            attributes:
+              displayName: my_model.rvt
+              createTime: '2018-01-17T11:52:11.0000000Z'
+              createUserId: BW9RM76WZBGL
+              createUserName: John Doe
+              lastModifiedTime: '2018-01-17T11:53:19.0000000Z'
+              lastModifiedUserId: BW9RM76WZBGL
+              lastModifiedUserName: John Doe
+              hidden: false
+              reserved: false
+              extension:
+                type: items:autodesk.bim360:C4RModel
+                version: 1.0.0
+                schema:
+                  href: https://developer.api.autodesk.com/schema/v1/versions/items:autodesk.bim360:C4RModel-1.0.0
+                data:
+                  sourceFileName: my_model.rvt
+            links:
+              self:
+                href: https://developer.api.autodesk.com/data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/items/urn:adsk.wipprod:dm.lineage:hC6k4hndRWaeIVhIjvHu8w
+              webView:
+                href: https://docs.b360.autodesk.com/projects/c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/folders/urn%3Aadsk.wipprod%3Afs.folder%3Aco.0J4paz_FQgWPX2QRsaBkiw/detail/viewer/items/urn:adsk.wipprod:dm.lineage:hC6k4hndRWaeIVhIjvHu8w
+            relationships:
+              tip:
+                data:
+                  type: versions
+                  id: urn:adsk.wipprod:fs.file:vf.hC6k4hndRWaeIVhIjvHu8w?version=2
+                links:
+                  related:
+                    href: https://developer.api.autodesk.com/data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/items/urn:adsk.wipprod:dm.lineage:hC6k4hndRWaeIVhIjvHu8w/tip
+              versions:
+                links:
+                  related:
+                    href: https://developer.api.autodesk.com/data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/items/urn:adsk.wipprod:dm.lineage:hC6k4hndRWaeIVhIjvHu8w/versions
+              parent:
+                data:
+                  type: folders
+                  id: urn:adsk.wipprod:fs.folder:co.sdfedf8wef
+                links:
+                  related:
+                    href: https://developer.api.autodesk.com/data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/items/urn:adsk.wipprod:dm.lineage:hC6k4hndRWaeIVhIjvHu8w/parent
+              refs:
+                links:
+                  self:
+                    href: https://developer.api.autodesk.com/data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/items/urn:adsk.wipprod:dm.lineage:hC6k4hndRWaeIVhIjvHu8w/relationships/refs
+                  related:
+                    href: https://developer.api.autodesk.com/data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/items/urn:adsk.wipprod:dm.lineage:hC6k4hndRWaeIVhIjvHu8w/refs
+              links:
+                links:
+                  self:
+                    href: https://developer.api.autodesk.com/data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/items/urn:adsk.wipprod:dm.lineage:hC6k4hndRWaeIVhIjvHu8w/relationships/links
+          included:
           - type: versions
+            id: urn:adsk.wipprod:fs.file:vf.hC6k4hndRWaeIVhIjvHu8w?version=2
+            attributes:
+              name: my_model.rvt
+              displayName: my_model
+              createTime: '2018-01-17T11:52:34.0000000Z'
+              createUserId: BW9RM76WZBGL
+              createUserName: John Doe
+              lastModifiedTime: '2018-01-17T11:53:20.0000000Z'
+              lastModifiedUserId: BW9RM76WZBGL
+              lastModifiedUserName: John Doe
+              versionNumber: 2
+              mimeType: application/vnd.autodesk.r360
+              fileType: rvt
+              extension:
+                type: versions:autodesk.bim360:C4RModel
+                version: 1.0.0
+                schema:
+                  href: https://developer.api.autodesk.com/schema/v1/versions/versions:autodesk.bim360:C4RModel-1.0.0
+                data:
+                  modelVersion: 2
+                  projectGuid: project-guid
+                  originalItemUrn: urn:adsk.wipprod:dm.lineage:hC6k4hndRWaeIVhIjvHu8w
+                  isCompositeDesign: false
+                  modelType: multiuser
+                  mimeType: application/vnd.autodesk.r360
+                  modelGuid: model-guid
+                  processState: PROCESSING_COMPLETE
+                  extractionState: SUCCESS
+                  splittingState: NOT_SPLIT
+                  reviewState: NOT_IN_REVIEW
+                  revisionDisplayLabel: '2'
+                  sourceFileName: my_model.rvt
+                  conformingStatus: NONE
+            links:
+              self:
+                href: https://developer.api.autodesk.com/data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/versions/urn:adsk.wipprod:fs.file:vf.hC6k4hndRWaeIVhIjvHu8w%3Fversion=2
+              webView:
+                href: https://docs.b360.autodesk.com/projects/c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/folders/urn%3Aadsk.wipprod%3Afs.folder%3Aco.0J4paz_FQgWPX2QRsaBkiw/detail/viewer/items/urn:adsk.wipprod:fs.file:vf.hC6k4hndRWaeIVhIjvHu8w%3Fversion%3D2
+            relationships:
+              item:
+                data:
+                  type: items
+                  id: urn:adsk.wipprod:dm.lineage:hC6k4hndRWaeIVhIjvHu8w
+                links:
+                  related:
+                    href: https://developer.api.autodesk.com/data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/versions/urn:adsk.wipprod:fs.file:vf.hC6k4hndRWaeIVhIjvHu8w%3Fversion=2/item
+              links:
+                links:
+                  self:
+                    href: https://developer.api.autodesk.com/data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/versions/urn:adsk.wipprod:fs.file:vf.hC6k4hndRWaeIVhIjvHu8w%3Fversion=2/relationships/links
+              refs:
+                links:
+                  self:
+                    href: https://developer.api.autodesk.com/data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/versions/urn:adsk.wipprod:fs.file:vf.hC6k4hndRWaeIVhIjvHu8w%3Fversion=2/relationships/refs
+                  related:
+                    href: https://developer.api.autodesk.com/data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/versions/urn:adsk.wipprod:fs.file:vf.hC6k4hndRWaeIVhIjvHu8w%3Fversion=2/refs
+              downloadFormats:
+                links:
+                  related:
+                    href: https://developer.api.autodesk.com/data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/versions/urn:adsk.wipprod:fs.file:vf.hC6k4hndRWaeIVhIjvHu8w%3Fversion=2/downloadFormats
+              derivatives:
+                data:
+                  type: derivatives
+                  id: derivative-id
+                meta:
+                  link:
+                    href: https://developer.api.autodesk.com/modelderivative/v2/designdata/derivative-id/manifest?scopes=b360project.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d,O2tenant.tenant-id
+              thumbnails:
+                data:
+                  type: thumbnails
+                  id: derivative-id
+                meta:
+                  link:
+                    href: https://developer.api.autodesk.com/modelderivative/v2/designdata/derivative-id/thumbnail?scopes=b360project.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d,O2tenant.tenant-id
+              storage:
+                data:
+                  type: objects
+                  id: urn:adsk.objects:os.object:wip.dm.prod/3c8f6bbc-fe5c-4815-a92e-8b8635e7b1cb.rvt
+                meta:
+                  link:
+                    href: https://developer.api.autodesk.com/oss/v2/buckets/wip.dm.prod/objects/3c8f6bbc-fe5c-4815-a92e-8b8635e7b1cb.rvt?scopes=b360project.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d,O2tenant.tenant-id
+      title: Item
+      properties:
+        jsonapi:
+          $ref: '#/components/schemas/json_api_version'
+        links:
+          $ref: '#/components/schemas/json_api_links_self'
+        data:
+          $ref: '#/components/schemas/ItemData'
+        included:
+          type: array
+          description: An object containing information about the tip version of this item.
+          items:
+            $ref: '#/components/schemas/VersionData'
+    ItemTip:
+      description: An object that represents the tip version of an item.
+      type: object
+      x-examples:
+        example-1:
+          jsonapi:
+            version: '1.0'
+          links:
+            self:
+              href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/versions/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D2
+          data:
+            type: versions
             id: urn:adsk.wipprod:fs.file:vf.b909RzMKR4mhc3O7UBY_8g?version=2
             attributes:
               name: version-test.pdf
@@ -2680,7 +2515,7 @@ components:
                 type: versions:autodesk.bim360:File
                 version: '1.0'
                 schema:
-                  href: /schema/v1/versions/versions%3Aautodesk.bim360%3AFile-1.0
+                  href: https://developer.api.autodesk.com/schema/v1/versions/versions%3Aautodesk.bim360%3AFile-1.0
                 data:
                   tempUrn: null
                   properties: {}
@@ -2689,25 +2524,27 @@ components:
                   conformingStatus: NONE
             links:
               self:
-                href: /data/v1/projects/b.6f8813fe-31a7-4440-bc63-d8ca97c856b4/versions/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D2
+                href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/versions/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D2
+              webView:
+                href: https://docs.b360.autodesk.com/projects/c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/folders/urn%3Aadsk.wipprod%3Afs.folder%3Aco.0J4paz_FQgWPX2QRsaBkiw/detail/viewer/items/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D2
             relationships:
               item:
                 links:
                   related:
-                    href: /data/v1/projects/b.6f8813fe-31a7-4440-bc63-d8ca97c856b4/items/urn%3Aadsk.wipprod%3Adm.lineage%3Ab909RzMKR4mhc3O7UBY_8g
+                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/items/urn%3Aadsk.wipprod%3Adm.lineage%3Ab909RzMKR4mhc3O7UBY_8g
                 data:
                   type: items
                   id: urn:adsk.wipprod:dm.lineage:b909RzMKR4mhc3O7UBY_8g
               refs:
                 links:
                   self:
-                    href: /data/v1/projects/b.6f8813fe-31a7-4440-bc63-d8ca97c856b4/versions/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D2/relationships/refs
+                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/versions/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D2/relationships/refs
                   related:
-                    href: /data/v1/projects/b.6f8813fe-31a7-4440-bc63-d8ca97c856b4/versions/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D2/refs
+                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/versions/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D2/refs
               links:
                 links:
                   self:
-                    href: /data/v1/projects/b.6f8813fe-31a7-4440-bc63-d8ca97c856b4/versions/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D2/relationships/links
+                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/versions/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D2/relationships/links
               storage:
                 meta:
                   link:
@@ -2715,153 +2552,216 @@ components:
                 data:
                   type: objects
                   id: urn:adsk.objects:os.object:wip.dm.prod/9f8bdc3f-e29c-4ada-ab7b-bb8dfa821163.pdf
-          - type: versions
-            id: urn:adsk.wipprod:fs.file:vf.b909RzMKR4mhc3O7UBY_8g?version=1
-            attributes:
-              name: version-test.pdf
-              displayName: version-test.pdf
-              createTime: '2016-04-01T11:09:03.000Z'
-              createUserId: BW9RM76WZBGL
-              createUserName: John Doe
-              lastModifiedTime: '2016-04-01T11:11:18.000Z'
-              lastModifiedUserId: BW9RM76WZBGL
-              lastModifiedUserName: John Doe
-              versionNumber: 1
-              mimeType: application/pdf
-              extension:
-                type: versions:autodesk.bim360:File
-                version: '1.0'
-                schema:
-                  href: /schema/v1/versions/versions%3Aautodesk.bim360%3AFile-1.0
+              derivatives:
                 data:
-                  tempUrn: null
-                  properties: {}
-                  storageUrn: urn:adsk.objects:os.object:wip.dm.prod/3c8f6bbc-fe5c-4815-a92e-8b8635e7b1cb.pdf
-                  storageType: OSS
-                  conformingStatus: NONE
-            links:
-              self:
-                href: /data/v1/projects/b.6f8813fe-31a7-4440-bc63-d8ca97c856b4/versions/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D1
-            relationships:
-              item:
-                links:
-                  related:
-                    href: /data/v1/projects/b.6f8813fe-31a7-4440-bc63-d8ca97c856b4/items/urn%3Aadsk.wipprod%3Adm.lineage%3Ab909RzMKR4mhc3O7UBY_8g
-                data:
-                  type: items
-                  id: urn:adsk.wipprod:dm.lineage:b909RzMKR4mhc3O7UBY_8g
-              refs:
-                links:
-                  self:
-                    href: /data/v1/projects/b.6f8813fe-31a7-4440-bc63-d8ca97c856b4/versions/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D1/relationships/refs
-                  related:
-                    href: /data/v1/projects/b.6f8813fe-31a7-4440-bc63-d8ca97c856b4/versions/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D1/refs
-              links:
-                links:
-                  self:
-                    href: /data/v1/projects/b.6f8813fe-31a7-4440-bc63-d8ca97c856b4/versions/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D1/relationships/links
-              storage:
+                  type: derivatives
+                  id: dXJuOmFkc2sud2lwcWE6ZnMuZmlsZTp2Zi50X3hodWwwYVFkbWhhN2FBaVBuXzlnP3ZlcnNpb249MQ
                 meta:
                   link:
-                    href: /oss/v2/buckets/wipbucket/objects/3c8f6bbc-fe5c-4815-a92e-8b8635e7b1cb.pdf?scopes=b360project.6f8813fe-31a7-4440-bc63-d8ca97c856b4,global,O2tenant.tenantId
+                    href: /modelderivative/v2/designdata/dXJuOmFkc2sud2lwcWE6ZnMuZmlsZTp2Zi50X3hodWwwYVFkbWhhN2FBaVBuXzlnP3ZlcnNpb249MQ/manifest?scopes=b360project.6f8813fe-31a7-4440-bc63-d8ca97c856b4,global,O2tenant.tenantId
+              thumbnails:
                 data:
-                  type: objects
-                  id: urn:adsk.objects:os.object:wip.dm.prod/3c8f6bbc-fe5c-4815-a92e-8b8635e7b1cb.pdf
-          - type: items
-            id: urn:adsk.wipprod:dm.lineage:b909RzMKR4mhc3O7UBY_8g
-            attributes:
-              displayName: version-test.pdf
-              createTime: '2016-04-01T11:09:03.000Z'
-              createUserId: BW9RM76WZBGL
-              createUserName: John Doe
-              lastModifiedTime: '2016-04-01T11:11:18.000Z'
-              lastModifiedUserId: BW9RM76WZBGL
-              lastModifiedUserName: John Doe
-              hidden: false
-              reserved: true
-              reservedTime: '2016-04-01T11:10:20.000Z'
-              reservedUserId: BW9RM76WZBGL
-              reservedUserName: John Doe
-              extension:
-                data: {}
-                version: '1.0'
-                type: items:autodesk.bim360:File
-                schema:
-                  href: https://developer.api.autodesk.com/schema/v1/versions/items%3Aautodesk.bim360%3AFile-1.0
-            relationships:
-              tip:
-                data:
-                  type: versions
-                  id: urn:adsk.wipprod:fs.file:vf.b909RzMKR4mhc3O7UBY_8g?version=2
+                  type: thumbnails
+                  id: dXJuOmFkc2sud2lwcWE6ZnMuZmlsZTp2Zi50X3hodWwwYVFkbWhhN2FBaVBuXzlnP3ZlcnNpb249MQ
+                meta:
+                  link:
+                    href: /modelderivative/v2/designdata/dXJuOmFkc2sud2lwcWE6ZnMuZmlsZTp2Zi50X3hodWwwYVFkbWhhN2FBaVBuXzlnP3ZlcnNpb249MQ/thumbnail?scopes=b360project.295285be-9cac-44d6-b365-625ebd327483,global,O2tenant.tenantId
+              downloadFormats:
                 links:
                   related:
-                    href: /data/v1/projects/a.ZXhhbXBsZTp3aXAxZnFhYXV0b2Rlc2sxNjEjMjAyMzAzMTcwMDAwMDAx/items/urn%3Aadsk.wipprod%3Adm.lineage%3AhC6k4hndRWaeIVhIjvHu8w/tip
-              parent:
-                data:
-                  type: folders
-                  id: urn:adsk.wipprod:dm.folder:sdfedf8wefl
-                links:
-                  related:
-                    href: /data/v1/projects/a.ZXhhbXBsZTp3aXAxZnFhYXV0b2Rlc2sxNjEjMjAyMzAzMTcwMDAwMDAx/items/urn:adsk.wipprod:dm.lineage:b909RzMKR4mhc3O7UBY_8g/parent
-              versions:
-                links:
-                  related:
-                    href: /data/v1/projects/a.ZXhhbXBsZTp3aXAxZnFhYXV0b2Rlc2sxNjEjMjAyMzAzMTcwMDAwMDAx/items/urn:adsk.wipprod:dm.lineage:b909RzMKR4mhc3O7UBY_8g/versions
-              refs:
-                links:
-                  self:
-                    href: /data/v1/projects/a.ZXhhbXBsZTp3aXAxZnFhYXV0b2Rlc2sxNjEjMjAyMzAzMTcwMDAwMDAx/items/urn:adsk.wipprod:dm.lineage:b909RzMKR4mhc3O7UBY_8g/relationships/refs
-                  related:
-                    href: /data/v1/projects/a.ZXhhbXBsZTp3aXAxZnFhYXV0b2Rlc2sxNjEjMjAyMzAzMTcwMDAwMDAx/items/urn:adsk.wipprod:dm.lineage:b909RzMKR4mhc3O7UBY_8g/refs
-              links:
-                links:
-                  self:
-                    href: /data/v1/projects/a.ZXhhbXBsZTp3aXAxZnFhYXV0b2Rlc2sxNjEjMjAyMzAzMTcwMDAwMDAx/items/urn:adsk.wipprod:dm.lineage:b909RzMKR4mhc3O7UBY_8g/relationships/links
-            links:
-              self:
-                href: /data/v1/projects/a.ZXhhbXBsZTp3aXAxZnFhYXV0b2Rlc2sxNjEjMjAyMzAzMTcwMDAwMDAx/items/urn:adsk.wipprod:dm.lineage:b909RzMKR4mhc3O7UBY_8g
-      title: Refs
+                    href: /data/v1/projects/b.c2960674-2d1e-4cc8-a5f0-4b9026fd3f5d/versions/urn%3Aadsk.wipprod%3Afs.file%3Avf.b909RzMKR4mhc3O7UBY_8g%3Fversion%3D2/downloadFormats
+      title: ItemTip
       properties:
         jsonapi:
           $ref: '#/components/schemas/json_api_version'
         links:
-          $ref: '#/components/schemas/json_api_links_self'
+          $ref: '#/components/schemas/json_api_link'
         data:
-          x-stoplight:
-            id: zlvce0hljvqwg
-          description: An array of objects, where each object represents a referenced resource (folder, item, or version).
-          type: array
-          items:
-            x-stoplight:
-              id: cy4i92ra7cxpr
-            oneOf:
-            - $ref: '#/components/schemas/FolderData'
-              x-stoplight:
-                id: rtffmltt1v80u
-            - $ref: '#/components/schemas/ItemData'
-              x-stoplight:
-                id: kmkkve99132f1
-            - $ref: '#/components/schemas/VersionData'
-              x-stoplight:
-                id: qqyd7tqmmhicv
-            discriminator:
-              propertyName: type
-              mapping:
-                folders: '#/components/schemas/FolderData'
-                items: '#/components/schemas/ItemData'
-                versions: '#/components/schemas/VersionData'
-      required:
-      - jsonapi
+          $ref: '#/components/schemas/VersionData'
+    type_link:
+      type: string
+      x-stoplight:
+        id: f84280dd62b59
+      enum:
       - links
-      - data
+      description: The type of the resource. Possible values are ``links``.
+    type_ref:
+      type: string
+      enum:
+      - derived
+      - dependencies
+      - auxiliary
+      - xrefs
+      - includes
+      description: The type of the resource. Possible values are ``derived``, ``dependencies``, ``auxiliary``, ``xrefs``, and ``includes``.
+    PaginationInfo:
+      title: PaginationInfo
+      x-stoplight:
+        id: izgy4eslaw38w
+      type: object
+      description: An object that is returned with responses that can be split across multiple pages. "Next," "Previous," and "First" are available only if the response is split across multiple pages.
+      properties:
+        self:
+          type: object
+          x-stoplight:
+            id: dc46tnxbc2ulb
+          description: A container for the link to the current page of the response.
+          properties:
+            href:
+              type: string
+              x-stoplight:
+                id: ljxuu5c8q9luz
+              description: A hypertext reference to the location of the referenced resource.
+        first:
+          type: object
+          x-stoplight:
+            id: hnog0slu3ma0c
+          description: A container for the link to the first page of the response.
+          properties:
+            href:
+              type: string
+              x-stoplight:
+                id: g7npt0viv619d
+              description: A hypertext reference to the location of the referenced resource.
+        next:
+          type: object
+          x-stoplight:
+            id: dc46tnxbc2ulb
+          description: A container for the link to the next page of the response.
+          properties:
+            href:
+              type: string
+              x-stoplight:
+                id: ljxuu5c8q9luz
+              description: A hypertext reference to the location of the referenced resource.
+        prev:
+          type: object
+          x-stoplight:
+            id: dc46tnxbc2ulb
+          description: A container for the link to the previous page of the response.
+          properties:
+            href:
+              type: string
+              x-stoplight:
+                id: ljxuu5c8q9luz
+              description: A hypertext reference to the location of the referenced resource.
+      required:
+      - self
+    json_api_relationships_links_links:
+      type: object
+      required:
+      - links
+      description: Information on the link resources found in this resource.
+      properties:
+        links:
+          type: object
+          required:
+          - self
+          description: The object containing information on links to this resource.
+          properties:
+            self:
+              $ref: '#/components/schemas/json_api_link'
+    base_attributes_extension_object_without_schema_link:
+      title: 'base_attributes_extension_object_with_schema_link:'
+      x-stoplight:
+        id: rwbl8xfimitn3
+      type: object
+      description: A container of additional properties that extends this resource.
+      properties:
+        type:
+          type: string
+          x-stoplight:
+            id: jdli2qhh88jq3
+          description: The Type ID of the schema that defines the structure of the ``extension.data`` object.
+        version:
+          type: string
+          x-stoplight:
+            id: x1l84lpe0ce01
+          description: The version of the schema that applies to the ``extension.data`` object.
+        data:
+          type: object
+          x-stoplight:
+            id: 5h0r1ilaapxra
+          description: The object that contains the additional properties, which makes this resource extensible.
+          additionalProperties:
+            type: object
+            description: 'Key-value pairs that contain the name and data of additional properties.
+
+              '
+      required:
+      - type
+      - version
+    json_api_relationships_links_versions:
+      title: json_api_relationships_links_internal
+      x-stoplight:
+        id: da5pz40rvqocl
+      type: object
+      description: Information about the existing versions of the item.
+      properties:
+        links:
+          $ref: '#/components/schemas/json_api_links_related'
+          x-stoplight:
+            id: s7etnb8jkm02f
+      required:
+      - links
+    json_api_relationships_links_folder_parent:
+      title: json_api_relationships_links_folder_parent
+      x-stoplight:
+        id: qmmyfor4fmle9
+      type: object
+      description: Information on the parent of this resource in the folder hierarchy.
+      properties:
+        links:
+          $ref: '#/components/schemas/json_api_links_related'
+          x-stoplight:
+            id: e35szkgp1o7b8
+        data:
+          $ref: '#/components/schemas/json_api_type_id'
+          x-stoplight:
+            id: zdowc6ik9vvcu
+    type_entity:
+      type: string
+      enum:
+      - folders
+      - items
+      - versions
+      description: The type of the resource. Possible values are ``folders``, ``items``, ``versions``.
+    json_api_type_id:
+      title: json_api_type_id
+      x-stoplight:
+        id: vj150c8bxpc9d
+      type: object
+      description: An object containing the ``id`` and ``type`` properties of a resource.
+      properties:
+        id:
+          type: string
+          description: The URN of the resource.
+        type:
+          type: string
+          x-stoplight:
+            id: j3iiuzs5pdley
+          description: The type of the resource.
+    json_api_links_self_and_web_view:
+      title: json_api_links_self_and_web_view
+      x-stoplight:
+        id: go4472ydw5y6e
+      type: object
+      description: Information on links to this resource.
+      required:
+      - self
+      properties:
+        self:
+          $ref: '#/components/schemas/json_api_link'
+        webView:
+          $ref: '#/components/schemas/web_view_link'
   parameters:
-    filter_type_version:
-      name: filter[type]
+    filter_refType:
+      name: filter[refType]
       in: query
       required: false
       schema:
-        $ref: '#/components/schemas/filter_type_version_internal'
-      description: Filter by the ``type`` of the ``ref`` target. Supported values include ``folders``, ``items``, and ``versions``.
+        $ref: '#/components/schemas/filter_refType'
+      description: 'Filter by ``refType``. Possible values: ``derived``, ``dependencies``, ``auxiliary``, ``xrefs``, and ``includes``.'
     copyFrom:
       name: copyFrom
       in: query
@@ -2869,51 +2769,6 @@ components:
       schema:
         type: string
       description: "The Version ID (URN) of the version to copy from. \n\n**Note**: This parameter is relevant only for copying files to BIM 360 Docs.\n\nFor information on how to find the URN, see the initial steps of the [Download a File](/en/docs/data/v2/tutorials/download-file/) tutorial.\n\nYou can only copy files to the Plans folder or to subfolders of the Plans folder with an ``item:autodesk.bim360:Document`` item extension type. You can only copy files to the Project Files folder or to subfolders of the Project Files folder with an ``item:autodesk.bim360:File`` item extension type.  \n\nTo verify an item’s extension type, use the [Get an Item](/en/docs/data/v2/reference/http/projects-project_id-items-item_id-GET/) operation, and check the ``attributes.extension.type`` attribute.  \n\nNote that if you copy a file to the Plans folder or to a subfolder of the Plans folder, the copied file inherits the permissions of the source file. For example, if users of your app did not have permission to download files in the source folder, but does have permission to download files in the target folder, they will not be able to download the copied file.  \n\nNote that you cannot copy a file while it is being uploaded, updated, or copied. To verify the current process state of a file, call the [Get an Item](en/docs/data/v2/reference/http/projects-project_id-items-item_id-GET/) operation , and check the ``attributes.extension.data.processState`` attribute.\n"
-    item_id:
-      name: item_id
-      in: path
-      required: true
-      schema:
-        type: string
-      description: The unique identifier of an item.
-    filter_id:
-      name: filter[id]
-      in: query
-      required: false
-      schema:
-        type: array
-        items:
-          type: string
-      description: Filter by the ``id`` of the ``ref`` target.
-    page_number:
-      name: page[number]
-      in: query
-      required: false
-      schema:
-        type: integer
-        format: int32
-      description: Specifies what page to return. Page numbers are 0-based (the first page is page 0).
-    project_id:
-      name: project_id
-      in: path
-      required: true
-      schema:
-        type: string
-      description: "The unique identifier of a project. \n\nFor BIM 360 Docs and ACC Docs, a hub ID corresponds to an Account ID. To convert a BIM 360 or ACC Account ID to a hub ID, prefix the Account ID with ``b.``. For example, an Account ID of ```c8b0c73d-3ae9``` translates to a hub ID of ``b.c8b0c73d-3ae9``.\n\nSimilarly, to convert an ACC or BIM 360 project ID to a Data Management project ID prefix the ACC or BIM 360 project ID with ``b.``. For example, a project ID of ``c8b0c73d-3ae9`` translates to a project ID of ``b.c8b0c73d-3ae9``.\n"
-    x-user-id:
-      name: x-user-id
-      in: header
-      required: false
-      schema:
-        type: string
-      description: In a two-legged authentication context, an app has access to all users specified by the administrator in the SaaS integrations UI. By providing this header, the API call will be limited to act only on behalf of the specified user.
-    page_limit:
-      name: page[limit]
-      in: query
-      required: false
-      schema:
-        type: integer
-      description: Specifies the maximum number of elements to return in the page. The default value is 200. The min value is 1. The max value is 200.
     filter_direction:
       name: filter[direction]
       in: query
@@ -2930,6 +2785,58 @@ components:
         items:
           type: string
       description: "Filter by the extension type. \n"
+    x-user-id:
+      name: x-user-id
+      in: header
+      required: false
+      schema:
+        type: string
+      description: In a two-legged authentication context, an app has access to all users specified by the administrator in the SaaS integrations UI. By providing this header, the API call will be limited to act only on behalf of the specified user.
+    project_id:
+      name: project_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: "The unique identifier of a project. \n\nFor BIM 360 Docs and ACC Docs, a hub ID corresponds to an Account ID. To convert a BIM 360 or ACC Account ID to a hub ID, prefix the Account ID with ``b.``. For example, an Account ID of ```c8b0c73d-3ae9``` translates to a hub ID of ``b.c8b0c73d-3ae9``.\n\nSimilarly, to convert an ACC or BIM 360 project ID to a Data Management project ID prefix the ACC or BIM 360 project ID with ``b.``. For example, a project ID of ``c8b0c73d-3ae9`` translates to a project ID of ``b.c8b0c73d-3ae9``.\n"
+    page_limit:
+      name: page[limit]
+      in: query
+      required: false
+      schema:
+        type: integer
+      description: Specifies the maximum number of elements to return in the page. The default value is 200. The min value is 1. The max value is 200.
+    filter_type_version:
+      name: filter[type]
+      in: query
+      required: false
+      schema:
+        $ref: '#/components/schemas/filter_type_version_internal'
+      description: Filter by the ``type`` of the ``ref`` target. Supported values include ``folders``, ``items``, and ``versions``.
+    page_number:
+      name: page[number]
+      in: query
+      required: false
+      schema:
+        type: integer
+        format: int32
+      description: Specifies what page to return. Page numbers are 0-based (the first page is page 0).
+    includePathInProject:
+      name: includePathInProject
+      in: query
+      required: false
+      schema:
+        type: boolean
+      description: "Specify whether to return ``pathInProject`` attribute in response for BIM 360 Docs projects. ``pathInProject`` is the relative path of the item starting from project’s root folder. \n\n- ``true``: Response will include the ``pathInProject`` attribute for BIM 360 Docs projects.  \n- ``false``: (Default) Response will not include ``pathInProject`` attribute for BIM 360 Docs projects.\n"
+    filter_id:
+      name: filter[id]
+      in: query
+      required: false
+      schema:
+        type: array
+        items:
+          type: string
+      description: Filter by the ``id`` of the ``ref`` target.
     filter_versionNumber:
       name: filter[versionNumber]
       in: query
@@ -2939,20 +2846,109 @@ components:
         items:
           type: integer
       description: Filter by versionNumber.
-    includePathInProject:
-      name: includePathInProject
-      in: query
-      required: false
+    item_id:
+      name: item_id
+      in: path
+      required: true
       schema:
-        type: boolean
-      description: "Specify whether to return ``pathInProject`` attribute in response for BIM 360 Docs projects. ``pathInProject`` is the relative path of the item starting from project’s root folder. \n\n- ``true``: Response will include the ``pathInProject`` attribute for BIM 360 Docs projects.  \n- ``false``: (Default) Response will not include ``pathInProject`` attribute for BIM 360 Docs projects.\n"
-    filter_refType:
-      name: filter[refType]
-      in: query
-      required: false
-      schema:
-        $ref: '#/components/schemas/filter_refType'
-      description: 'Filter by ``refType``. Possible values: ``derived``, ``dependencies``, ``auxiliary``, ``xrefs``, and ``includes``.'
+        type: string
+      description: The unique identifier of an item.
+  responses:
+    404-general:
+      description: The specified resource was not found.
+      content:
+        application/json:
+          schema:
+            properties:
+              id:
+                type: string
+    423-general:
+      description: The source or destination resource is locked or being modified.
+      content:
+        application/json:
+          schema:
+            properties:
+              id:
+                type: string
+    400-general:
+      description: The request could not be understood by the server due to malformed syntax or missing request headers. The client SHOULD NOT repeat the request without modifications. The response body may give an indication of what is wrong with the request.
+      content:
+        application/json:
+          schema:
+            properties:
+              id:
+                type: string
+    409-general:
+      description: The specified resource already exists or has been modified.
+      content:
+        application/json:
+          schema:
+            properties:
+              id:
+                type: string
+    403-general:
+      description: The request was successfully validated but permission is not granted, or the application has not been allowed access. Do not try again unless you resolve permissions first.
+      content:
+        application/json:
+          schema:
+            type: object
+            x-examples:
+              Example 1:
+                jsonapi: {}
+                links: {}
+                data: []
+                meta:
+                  warnings:
+                  - Id: null
+                    HttpStatusCode: '403'
+                    ErrorCode: BIM360DM_ERROR
+                    Title: Unable to get hubs from BIM360DM APAC.
+                    Detail: You don't have permission to access this API
+                    AboutLink: null
+                    Source: null
+                    meta: null
+            properties:
+              jsonapi:
+                type: object
+                description: The JSON API object.
+              links:
+                type: object
+                description: An object intended to contain the URI of a resource. Empty in this case, because an error has occurred.
+              data:
+                type: array
+                description: An object intended to contain the return data. Empty in this case, because an error has occurred.
+                items:
+                  type: object
+              meta:
+                type: object
+                description: Contains information about the error that occurred.
+                properties:
+                  warnings:
+                    type: array
+                    description: An array of objects, where each element of the array represents a warning.
+                    items:
+                      type: object
+                      properties:
+                        Id:
+                          description: An ID assigned to the warning.
+                        HttpStatusCode:
+                          type: string
+                          description: The HTTP status code returned in response to the request.
+                        ErrorCode:
+                          type: string
+                          description: A code that indicates what went wrong.
+                        Title:
+                          type: string
+                          description: A quick summary of the issue, at a glance.
+                        Detail:
+                          type: string
+                          description: A more comprehensive explanation of the issue, providing specific information and potential solutions, if any.
+                        AboutLink:
+                          description: A hyperlink to documentation about the issue.
+                        Source:
+                          description: Information about the service that detected the issue.
+                        meta:
+                          description: Additional information about the issue.
   securitySchemes:
     2-legged:
       type: oauth2
