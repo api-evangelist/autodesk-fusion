@@ -695,6 +695,8 @@ apis:
   humanURL: https://aps.autodesk.com/developer/overview/autodesk-fusion-api
   baseURL: https://developer.api.autodesk.com
   tags:
+  - Tokens
+  tags_raw:
   - Token
   properties:
   - type: OpenAPI
