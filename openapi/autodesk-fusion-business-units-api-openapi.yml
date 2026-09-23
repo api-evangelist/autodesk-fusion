@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Construction.Account.Admin Account Management Business Units API
+  title: Construction.Account.Admin Business Units API
   version: '1.0'
   contact:
     name: Autodesk Plaform Services
@@ -8,9 +8,7 @@ info:
     email: aps.help@autodesk.com
   termsOfService: https://www.autodesk.com/company/legal-notices-trademarks/terms-of-service-autodesk360-web-services/forge-platform-web-services-api-terms-of-service
   x-support: https://stackoverflow.com/questions/tagged/autodesk-platform-services
-  description: 'The Account Admin API automates creating and managing projects, assigning and managing project users, and managing member and partner company directories. You can also synchronize data with external systems.
-
-    '
+  description: The Account Admin API automates creating and managing projects, assigning and managing project users, and managing member and partner company directories. You can also synchronize data with external systems.
 servers:
 - url: https://developer.api.autodesk.com
 security:
@@ -149,66 +147,6 @@ components:
             $ref: '#/components/schemas/BusinessUnit'
             x-stoplight:
               id: 2sl170itvk70g
-    BusinessUnitsPayload:
-      title: BusinessUnitsPayload
-      x-stoplight:
-        id: vg238uncrewqq
-      type: object
-      properties:
-        business_units:
-          type: array
-          x-stoplight:
-            id: 9dce24721l40s
-          items:
-            $ref: '#/components/schemas/BusinessUnitsObject'
-            x-stoplight:
-              id: xmd2c1g2ax76z
-    BusinessUnitsObject:
-      title: BusinessUnitsObject
-      x-stoplight:
-        id: ofwz7wxle2i79
-      type: object
-      properties:
-        id:
-          type: string
-          x-stoplight:
-            id: 1t6r79la6n8xx
-          description: 'Business unit ID
-
-
-            If specified and already existing, the existing business unit will be replaced
-
-            with the provided attributes.
-
-
-            If specified and not already existing, a new business unit will be created with the id.
-
-
-            If unspecified, a new business unit will be created with a server-generated id.'
-        parent_id:
-          type: string
-          x-stoplight:
-            id: vaqvh4gbvaq4i
-          description: 'The ID of the parent business unit
-
-
-            Note that an entire business unit hierarchy can be created by manually specifying the id
-
-            attribute for each business unit and using it as appropriate in other parent_id
-
-            attributes.'
-        name:
-          type: string
-          x-stoplight:
-            id: vp8m48lup86mn
-          description: The name of the business unit
-        description:
-          type: string
-          x-stoplight:
-            id: gjwcknccphtzc
-          description: The description of the business unit
-      required:
-      - name
     BusinessUnit:
       title: BusinessUnit
       x-stoplight:
@@ -255,6 +193,66 @@ components:
           type: string
           x-stoplight:
             id: epd0mv6uik60l
+    BusinessUnitsObject:
+      title: BusinessUnitsObject
+      x-stoplight:
+        id: ofwz7wxle2i79
+      type: object
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 1t6r79la6n8xx
+          description: 'Business unit ID
+
+
+            If specified and already existing, the existing business unit will be replaced
+
+            with the provided attributes.
+
+
+            If specified and not already existing, a new business unit will be created with the id.
+
+
+            If unspecified, a new business unit will be created with a server-generated id.'
+        parent_id:
+          type: string
+          x-stoplight:
+            id: vaqvh4gbvaq4i
+          description: 'The ID of the parent business unit
+
+
+            Note that an entire business unit hierarchy can be created by manually specifying the id
+
+            attribute for each business unit and using it as appropriate in other parent_id
+
+            attributes.'
+        name:
+          type: string
+          x-stoplight:
+            id: vp8m48lup86mn
+          description: The name of the business unit
+        description:
+          type: string
+          x-stoplight:
+            id: gjwcknccphtzc
+          description: The description of the business unit
+      required:
+      - name
+    BusinessUnitsPayload:
+      title: BusinessUnitsPayload
+      x-stoplight:
+        id: vg238uncrewqq
+      type: object
+      properties:
+        business_units:
+          type: array
+          x-stoplight:
+            id: 9dce24721l40s
+          items:
+            $ref: '#/components/schemas/BusinessUnitsObject'
+            x-stoplight:
+              id: xmd2c1g2ax76z
   securitySchemes:
     2-legged:
       type: oauth2

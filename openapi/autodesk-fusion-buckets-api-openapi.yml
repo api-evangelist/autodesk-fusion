@@ -1,21 +1,16 @@
 openapi: 3.2.0
 info:
-  title: Construction.Account.Admin Account Management Buckets API
+  title: oss Buckets API
   version: '1.0'
+  description: The Object Storage Service (OSS) allows your application to download and upload raw files (such as PDF, XLS, DWG, or RVT) that are managed by the Data service.
   contact:
-    name: Autodesk Plaform Services
+    name: Autodesk Platform Services
     url: https://aps.autodesk.com/
     email: aps.help@autodesk.com
   termsOfService: https://www.autodesk.com/company/legal-notices-trademarks/terms-of-service-autodesk360-web-services/forge-platform-web-services-api-terms-of-service
-  x-support: https://stackoverflow.com/questions/tagged/autodesk-platform-services
-  description: 'The Account Admin API automates creating and managing projects, assigning and managing project users, and managing member and partner company directories. You can also synchronize data with external systems.
-
-    '
+  x-support: https://stackoverflow.com/questions/tagged/autodesk-data-management
 servers:
 - url: https://developer.api.autodesk.com
-security:
-- 2-legged: []
-- 3-legged: []
 tags:
 - name: Buckets
   description: Bucket related operations
@@ -25,7 +20,7 @@ paths:
       tags:
       - Buckets
       summary: List Buckets
-      description: "Returns a list of buckets owned by the application. \n"
+      description: Returns a list of buckets owned by the application.
       operationId: get_buckets
       parameters:
       - $ref: '#/components/parameters/region'
@@ -59,7 +54,13 @@ paths:
       tags:
       - Buckets
       summary: Create Bucket
-      description: "Creates a bucket. \n\nBuckets are virtual container within the Object Storage Service (OSS), which you can use to store and manage objects (files) in the cloud. The application creating the bucket is the owner of the bucket.\n\n**Note:** Do not use this operation to create buckets for BIM360 Document Management. Use [POST projects/{project_id}/storage](/en/docs/data/v2/reference/http/projects-project_id-storage-POST>) instead. For details, see [Upload Files to BIM 360 Document Management](/en/docs/bim360/v1/tutorials/document-management/upload-document).\n"
+      description: 'Creates a bucket.
+
+
+        Buckets are virtual container within the Object Storage Service (OSS), which you can use to store and manage objects (files) in the cloud. The application creating the bucket is the owner of the bucket.
+
+
+        **Note:** Do not use this operation to create buckets for BIM360 Document Management. Use POST projects/{project_id}/storage instead. For details, see Upload Files to BIM 360 Document Management.'
       operationId: create_bucket
       parameters:
       - $ref: '#/components/parameters/region_header'
@@ -105,7 +106,13 @@ paths:
       tags:
       - Buckets
       summary: Delete Bucket
-      description: "Deletes the specified bucket. Only the application that owns the bucket can call this operation. All other applications that call this operation will receive a \"403 Forbidden\" error. \n\nThe initial processing of a bucket deletion request can be time-consuming. So, we recommend only deleting buckets containing a few objects, like those typically used for acceptance testing and prototyping. \n\n**Note:** Bucket keys will not be immediately available for reuse. \n"
+      description: 'Deletes the specified bucket. Only the application that owns the bucket can call this operation. All other applications that call this operation will receive a "403 Forbidden" error.
+
+
+        The initial processing of a bucket deletion request can be time-consuming. So, we recommend only deleting buckets containing a few objects, like those typically used for acceptance testing and prototyping.
+
+
+        **Note:** Bucket keys will not be immediately available for reuse.'
       operationId: delete_bucket
       parameters:
       - name: bucketKey
@@ -142,7 +149,10 @@ paths:
       tags:
       - Buckets
       summary: Get Bucket Details
-      description: "Returns detailed information about the specified bucket.\n\n**Note:** Only the application that owns the bucket can call this operation. All other applications that call this operation will receive a \"403 Forbidden\" error. \n"
+      description: 'Returns detailed information about the specified bucket.
+
+
+        **Note:** Only the application that owns the bucket can call this operation. All other applications that call this operation will receive a "403 Forbidden" error.'
       operationId: get_bucket_details
       parameters:
       - name: bucketKey
@@ -179,6 +189,95 @@ paths:
         - viewables:read
       x-ads_command_line_example: 'curl -v "https://developer.api.autodesk.com/oss/v2/buckets" -X GET -H "Authorization: Bearer RhS6iEVMnEfl77MBSK3l2je06UHj"'
 components:
+  responses:
+    INTERNAL_SERVER_ERROR:
+      description: Internal failure while processing the request, reason depends on error.
+      content: {}
+    UNAUTHORIZED:
+      description: The supplied authorization header was not valid or the supplied token scope was not acceptable. Verify authentication and try again.
+      content: {}
+    BAD_REQUEST:
+      description: OSS was unable to process the request. The syntax of the request is malformed or the request is missing a required header. Do not repeat the request without fixing the issue. The response body may indicate what is wrong with the request
+      content: {}
+    NOT_FOUND:
+      description: ' The requested resource could not be found. Verify the IDs of the resources you requested before you send this request again.'
+      content: {}
+    FORBIDDEN:
+      description: The request was successfully validated but lacking the required permissions. Verify your credentials and permissions before you send this request again.
+      content: {}
+  parameters:
+    limit:
+      name: limit
+      in: query
+      description: 'The number of items you want per page.
+
+        Acceptable values = 1-100. Default = 10.
+
+        '
+      schema:
+        type: integer
+        default: 10
+    region:
+      name: region
+      in: query
+      description: 'Specifies where the bucket containing the object is stored. Possible values are:
+
+
+        - ``US`` : (Default) Data center for the US region.
+
+        - ``EMEA`` : Data center for the European Union, Middle East, and Africa.
+
+        - ``AUS`` : (Beta) Data center for Australia.
+
+        - ``CAN`` : Data center for the Canada region.
+
+        - ``DEU`` : Data center for the Germany region.
+
+        - ``IND`` : Data center for the India region.
+
+        - ``JPN`` : Data center for the Japan region.
+
+        - ``GBR`` : Data center for the United Kingdom region.
+
+
+        **Note:** Beta features are subject to change. Please do not use in production environments.'
+      schema:
+        $ref: '#/components/schemas/region'
+    startAt:
+      name: startAt
+      in: query
+      description: 'The ID of the last item that was returned in the previous result set.  It enables the system to return subsequent items starting from the next one after the specified ID.
+
+        '
+      schema:
+        type: string
+    region_header:
+      name: region
+      in: header
+      required: true
+      description: 'Specifies where the bucket containing the object is stored. Possible values are:
+
+
+        - ``US`` : (Default) Data center for the US region.
+
+        - ``EMEA`` : Data center for the European Union, Middle East, and Africa.
+
+        - ``AUS`` : (Beta) Data center for Australia.
+
+        - ``CAN`` : Data center for the Canada region.
+
+        - ``DEU`` : Data center for the Germany region.
+
+        - ``IND`` : Data center for the India region.
+
+        - ``JPN`` : Data center for the Japan region.
+
+        - ``GBR`` : Data center for the United Kingdom region.
+
+
+        **Note:** Beta features are subject to change. Please do not use in production environments.'
+      schema:
+        $ref: '#/components/schemas/region'
   schemas:
     allowAccess:
       title: allowAccess
@@ -188,6 +287,22 @@ components:
       - full
       - read
       description: "Specifies the level of permission the application has. Required when ``allow`` is specified. Possible values are:\n\n - ``full`` - Unrestricted access to objects within the bucket.\n- ``read_only`` - Read only access to the objects within the bucket. Modification or deletion of objects is not allowed."
+    permission_access:
+      title: permission_access
+      x-stoplight:
+        id: 5rtb0xo1tipoq
+      type: string
+      description: 'Specifies the level of permission the application has. Possible values are:
+
+
+        - ``full`` - Unrestricted access to objects within the bucket.
+
+        - ``read_only`` - Read only access to the objects within the bucket. Modification and deletion of objects is not allowed.
+
+        '
+      enum:
+      - full
+      - read
     create_buckets_payload_allow:
       type: object
       description: An object that represents the permissions allowed for a bucket.
@@ -200,23 +315,15 @@ components:
           description: The Client ID of the application.
         access:
           $ref: '#/components/schemas/allowAccess'
-    buckets_items:
-      required:
-      - bucketKey
-      - createdDate
-      - policyKey
+    Permission:
       type: object
-      description: An object containing the properties of a bucket.
+      description: An object representing the permissions for accessing a bucket.
       properties:
-        bucketKey:
+        authId:
           type: string
-          description: 'Bucket key: An ID that uniquely identifies the bucket.'
-        createdDate:
-          type: integer
-          description: The time the bucket was created, represented as a Unix timestamp.
-          format: int64
-        policyKey:
-          $ref: '#/components/schemas/PolicyKey'
+          description: The Client ID of the application.
+        access:
+          $ref: '#/components/schemas/permission_access'
     bucket:
       type: object
       description: An object representing a bucket.
@@ -238,22 +345,30 @@ components:
             $ref: '#/components/schemas/Permission'
         policyKey:
           $ref: '#/components/schemas/PolicyKey'
-    permission_access:
-      title: permission_access
-      x-stoplight:
-        id: 5rtb0xo1tipoq
-      type: string
-      description: 'Specifies the level of permission the application has. Possible values are:
-
-
-        - ``full`` - Unrestricted access to objects within the bucket.
-
-        - ``read_only`` - Read only access to the objects within the bucket. Modification and deletion of objects is not allowed.
-
-        '
-      enum:
-      - full
-      - read
+    buckets:
+      title: buckets
+      required:
+      - items
+      type: object
+      description: An object that represents a collection of buckets.
+      properties:
+        items:
+          type: array
+          description: Array of objects, where each object represents a bucket.
+          items:
+            $ref: '#/components/schemas/buckets_items'
+        next:
+          type: string
+          description: The URL to be used to retrieve the next page of results, if available. It will be present only when there are more items to be retrieved after the current set.
+    reason:
+      required:
+      - reason
+      type: object
+      properties:
+        reason:
+          type: string
+          description: reason for failure
+      description: An object returned with an error describing the reason for failure.
     create_buckets_payload:
       type: object
       description: The request payload for the Create Bucket operation.
@@ -276,39 +391,23 @@ components:
       required:
       - bucketKey
       - policyKey
-    buckets:
-      title: buckets
+    buckets_items:
       required:
-      - items
+      - bucketKey
+      - createdDate
+      - policyKey
       type: object
-      description: An object that represents a collection of buckets.
+      description: An object containing the properties of a bucket.
       properties:
-        items:
-          type: array
-          description: Array of objects, where each object represents a bucket.
-          items:
-            $ref: '#/components/schemas/buckets_items'
-        next:
+        bucketKey:
           type: string
-          description: The URL to be used to retrieve the next page of results, if available. It will be present only when there are more items to be retrieved after the current set.
-    Permission:
-      type: object
-      description: An object representing the permissions for accessing a bucket.
-      properties:
-        authId:
-          type: string
-          description: The Client ID of the application.
-        access:
-          $ref: '#/components/schemas/permission_access'
-    reason:
-      required:
-      - reason
-      type: object
-      properties:
-        reason:
-          type: string
-          description: reason for failure
-      description: An object returned with an error describing the reason for failure.
+          description: 'Bucket key: An ID that uniquely identifies the bucket.'
+        createdDate:
+          type: integer
+          description: The time the bucket was created, represented as a Unix timestamp.
+          format: int64
+        policyKey:
+          $ref: '#/components/schemas/PolicyKey'
     region:
       title: region
       x-stoplight:
@@ -356,117 +455,42 @@ components:
       - transient
       - temporary
       - persistent
-  parameters:
-    limit:
-      name: limit
-      in: query
-      description: 'The number of items you want per page.
-
-        Acceptable values = 1-100. Default = 10.
-
-        '
-      schema:
-        type: integer
-        default: 10
-    region_header:
-      name: region
-      in: header
-      required: true
-      description: 'Specifies where the bucket containing the object is stored. Possible values are:
-
-
-        - ``US`` : (Default) Data center for the US region.
-
-        - ``EMEA`` : Data center for the European Union, Middle East, and Africa.
-
-        - ``AUS`` : (Beta) Data center for Australia.
-
-        - ``CAN`` : Data center for the Canada region.
-
-        - ``DEU`` : Data center for the Germany region.
-
-        - ``IND`` : Data center for the India region.
-
-        - ``JPN`` : Data center for the Japan region.
-
-        - ``GBR`` : Data center for the United Kingdom region.
-
-
-        **Note:** Beta features are subject to change. Please do not use in production environments.'
-      schema:
-        $ref: '#/components/schemas/region'
-    region:
-      name: region
-      in: query
-      description: 'Specifies where the bucket containing the object is stored. Possible values are:
-
-
-        - ``US`` : (Default) Data center for the US region.
-
-        - ``EMEA`` : Data center for the European Union, Middle East, and Africa.
-
-        - ``AUS`` : (Beta) Data center for Australia.
-
-        - ``CAN`` : Data center for the Canada region.
-
-        - ``DEU`` : Data center for the Germany region.
-
-        - ``IND`` : Data center for the India region.
-
-        - ``JPN`` : Data center for the Japan region.
-
-        - ``GBR`` : Data center for the United Kingdom region.
-
-
-        **Note:** Beta features are subject to change. Please do not use in production environments.'
-      schema:
-        $ref: '#/components/schemas/region'
-    startAt:
-      name: startAt
-      in: query
-      description: 'The ID of the last item that was returned in the previous result set.  It enables the system to return subsequent items starting from the next one after the specified ID.
-
-        '
-      schema:
-        type: string
-  responses:
-    FORBIDDEN:
-      description: The request was successfully validated but lacking the required permissions. Verify your credentials and permissions before you send this request again.
-      content: {}
-    UNAUTHORIZED:
-      description: The supplied authorization header was not valid or the supplied token scope was not acceptable. Verify authentication and try again.
-      content: {}
-    NOT_FOUND:
-      description: ' The requested resource could not be found. Verify the IDs of the resources you requested before you send this request again.'
-      content: {}
-    BAD_REQUEST:
-      description: OSS was unable to process the request. The syntax of the request is malformed or the request is missing a required header. Do not repeat the request without fixing the issue. The response body may indicate what is wrong with the request
-      content: {}
-    INTERNAL_SERVER_ERROR:
-      description: Internal failure while processing the request, reason depends on error.
-      content: {}
   securitySchemes:
-    2-legged:
+    oauth2_application:
       type: oauth2
       flows:
         clientCredentials:
-          tokenUrl: ''
-          refreshUrl: ''
-          scopes: {}
-    3-legged-implicit:
-      type: oauth2
-      flows:
-        implicit:
-          authorizationUrl: ''
-          refreshUrl: ''
-          scopes: {}
+          tokenUrl: /authentication/v1/authenticate
+          scopes:
+            data:read: The application will be able to read the end user’s data within the Autodesk ecosystem.
+            data:write: The application will be able to create, update, and delete data on behalf of the end user within the Autodesk ecosystem.
+            data:create: The application will be able to create data on behalf of the end user within the Autodesk ecosystem.
+            bucket:delete: The application will be able to delete an OSS bucket it will own.
+            bucket:create: The application will be able to create an OSS bucket it will own.
+            bucket:read: The application will be able to read the metadata and list contents for OSS buckets that it has access to.
+            bucket:update: The application will be able to set permissions and entitlements for OSS buckets that it has permission to modify.
+      x-authentication_context: application context required
     3-legged:
       type: oauth2
       flows:
         authorizationCode:
-          authorizationUrl: ''
-          tokenUrl: ''
-          refreshUrl: ''
-          scopes: {}
-x-stoplight:
-  id: zm6m3b30rcbon
+          authorizationUrl: https://developer.api.autodesk.com/authentication/v2/authorize
+          tokenUrl: https://developer.api.autodesk.com/authentication/v2/token
+          refreshUrl: https://developer.api.autodesk.com/authentication/v2/token
+          scopes:
+            data:read: read your data
+            data:write: modify your data
+            data:create: create new data
+      x-authentication_context: user context required
+      description: User context required.
+    2-legged:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://developer.api.autodesk.com/authentication/v2/token
+          scopes:
+            data:read: read application accessible data
+            data:write: write application accessible data
+            data:create: create application accessible data
+      x-authentication_context: application context required
+      description: Application context required.

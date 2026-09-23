@@ -1,21 +1,16 @@
 openapi: 3.2.0
 info:
-  title: Construction.Account.Admin Account Management Token API
-  version: '1.0'
+  title: Authentication Token API
+  description: OAuth2 token management APIs.
   contact:
     name: Autodesk Plaform Services
-    url: https://aps.autodesk.com/
     email: aps.help@autodesk.com
+    url: https://aps.autodesk.com/
+  version: '2.0'
   termsOfService: https://www.autodesk.com/company/legal-notices-trademarks/terms-of-service-autodesk360-web-services/forge-platform-web-services-api-terms-of-service
   x-support: https://stackoverflow.com/questions/tagged/autodesk-platform-services
-  description: 'The Account Admin API automates creating and managing projects, assigning and managing project users, and managing member and partner company directories. You can also synchronize data with external systems.
-
-    '
 servers:
 - url: https://developer.api.autodesk.com
-security:
-- 2-legged: []
-- 3-legged: []
 tags:
 - name: Token
 paths:
@@ -164,7 +159,13 @@ paths:
     parameters: []
     get:
       summary: Get JWKS
-      description: "Returns a set of public keys in the JSON Web Key Set (JWKS) format.\n\nPublic keys returned by this operation can be used to validate the asymmetric JWT signature of an access token without making network calls. It can be used to validate both two-legged access tokens and three-legged access tokens. \n\nSee the Developer's Guide topic on `Asymmetric Signing </en/docs/oauth/v2/developers_guide/asymmetric-encryption/>`_ for more information. \n"
+      description: 'Returns a set of public keys in the JSON Web Key Set (JWKS) format.
+
+
+        Public keys returned by this operation can be used to validate the asymmetric JWT signature of an access token without making network calls. It can be used to validate both two-legged access tokens and three-legged access tokens.
+
+
+        See the Developer''s Guide topic on `Asymmetric Signing `_ for more information.'
       operationId: get-keys
       responses:
         '200':
@@ -187,7 +188,20 @@ paths:
     parameters: []
     post:
       summary: Acquire Token
-      description: "Returns an access token or refresh token.\n\n* If `grant_type` is `authorization_code`, returns a 3-legged access token for authorization code grant. \n* If `grant_type` is `client_credentials`, returns a 2-legged access token for client credentials grant.\n* If `grant_type` is `refresh_token`, returns new access token using the refresh token provided in the request.\n\nTraditional Web Apps and Server-to-Server Apps should use the ``Authorization`` header with Basic Authentication for this operation. Desktop, Mobile, and Single-Page Apps should use ``client_id`` in the form body instead.\n\nThis operation has a rate limit of 500 calls per minute.\n"
+      description: 'Returns an access token or refresh token.
+
+
+        * If `grant_type` is `authorization_code`, returns a 3-legged access token for authorization code grant.
+
+        * If `grant_type` is `client_credentials`, returns a 2-legged access token for client credentials grant.
+
+        * If `grant_type` is `refresh_token`, returns new access token using the refresh token provided in the request.
+
+
+        Traditional Web Apps and Server-to-Server Apps should use the ``Authorization`` header with Basic Authentication for this operation. Desktop, Mobile, and Single-Page Apps should use ``client_id`` in the form body instead.
+
+
+        This operation has a rate limit of 500 calls per minute.'
       operationId: fetch-token
       requestBody:
         content:
@@ -294,9 +308,7 @@ paths:
       description: 'Signs out the currently authenticated user from the APS authorization server. Thereafter, this operation redirects the user to the ``post_logout_redirect_uri``, or to the Autodesk Sign-in page when no ``post_logout_redirect_uri`` is provided.
 
 
-        This operation has a rate limit of 500 calls per minute.
-
-        '
+        This operation has a rate limit of 500 calls per minute.'
       parameters:
       - schema:
           type: string
@@ -305,6 +317,20 @@ paths:
         description: "The URI to redirect your users to once logout is performed. If you do not specify this parameter your users are redirected to the Autodesk Sign-in page. \n\n**Note:**  You must provide a redirect URI that is pre-registered with APS. This precaution is taken to prevent unauthorized applications from hijacking the logout process.\n"
 components:
   schemas:
+    jwks:
+      title: JWKS Payload
+      x-stoplight:
+        id: 54hqs1b4gv5fy
+      type: object
+      description: Represents a successful response to a Get JWKS operation.
+      properties:
+        keys:
+          type: array
+          x-stoplight:
+            id: mrc2tc7y5gded
+          description: An array of objects where each object represents a JSON Web Key Set (JWKS).
+          items:
+            $ref: '#/components/schemas/jwksKey'
     tokenTypeHint:
       title: tokenTypeHint
       x-stoplight:
@@ -316,38 +342,33 @@ components:
       description: 'The type of token to revoke. Possible values are: ``access_token`` and ``refresh_token``.
 
         '
-    introspectToken:
-      title: Introspect Token Response
-      description: Represents the payload returned for an introspect token request.
-      required:
-      - active
-      - client_id
-      - exp
-      - scope
+    jwksKey:
+      title: jwkskey
       type: object
       properties:
-        active:
-          type: boolean
-          description: '``true``: The token is active.
+        kid:
+          type: string
+          description: The ID of the key. Acts as a unique identifier for a specific key within the JWKS.
+        kty:
+          type: string
+          description: The cryptographic algorithm family used with the key. Currently, always ``RSA``.
+        use:
+          type: string
+          description: 'The intended use of the public key. Possible values:
 
 
-            ``false``: The token is expired, invalid, or revoked.
+            - ``sig`` - Verify the signature on data.
 
             '
-        scope:
+        n:
           type: string
-          description: A URL-encoded, space separated list of scopes associated with the token.
-        client_id:
+          description: The RSA modulus value.
+        e:
           type: string
-          description: The Client ID of the application associated with the token.
-        exp:
-          type: integer
-          description: The expiration time of the token, represented as a Unix timestamp.
-        userid:
-          type: string
-          description: The ID of the user who authorized the token.
+          description: The RSA exponent value.
       x-stoplight:
-        id: ovhi8qyq55tzp
+        id: wp3vjpqnp0rt9
+      description: Represents a JSON Web Key Set (JWKS).
     OidcSpec:
       title: OIDC Specification Response
       type: object
@@ -456,6 +477,24 @@ components:
       - authorization_code
       - refresh_token
       description: "Specifies the grant type you are requesting the code for. Possible values are: \n\n- ``client_credentials`` -  For a 2-legged access token.\n- ``authorization_code`` - For a 3-legged access token.\n- ``refresh_token`` - For a refresh token.\n"
+    responseType:
+      title: responseType
+      x-stoplight:
+        id: pzowclrc6omzd
+      type: string
+      enum:
+      - code
+      - id_token
+      description: "The type of response you want to receive. Possible values are: \n\n -  ``code`` - Authorization code grant.\n -  ``id_token`` - OpenID Connect ID token.\n"
+    clientId:
+      title: clientId
+      x-stoplight:
+        id: j0qsjvxe873qp
+      type: string
+      description: 'The Client ID of the application making the request.
+
+
+        **Note** This is required only for Traditional Web Apps and Server-to-Server Apps. It is not required for Desktop, Mobile, and Single-Page Apps.'
     Scopes:
       title: Scopes
       x-stoplight:
@@ -482,65 +521,38 @@ components:
       - account:read
       - account:write
       - openid
-    responseType:
-      title: responseType
-      x-stoplight:
-        id: pzowclrc6omzd
-      type: string
-      enum:
-      - code
-      - id_token
-      description: "The type of response you want to receive. Possible values are: \n\n -  ``code`` - Authorization code grant.\n -  ``id_token`` - OpenID Connect ID token.\n"
-    jwks:
-      title: JWKS Payload
-      x-stoplight:
-        id: 54hqs1b4gv5fy
-      type: object
-      description: Represents a successful response to a Get JWKS operation.
-      properties:
-        keys:
-          type: array
-          x-stoplight:
-            id: mrc2tc7y5gded
-          description: An array of objects where each object represents a JSON Web Key Set (JWKS).
-          items:
-            $ref: '#/components/schemas/jwksKey'
-    jwksKey:
-      title: jwkskey
+    introspectToken:
+      title: Introspect Token Response
+      description: Represents the payload returned for an introspect token request.
+      required:
+      - active
+      - client_id
+      - exp
+      - scope
       type: object
       properties:
-        kid:
-          type: string
-          description: The ID of the key. Acts as a unique identifier for a specific key within the JWKS.
-        kty:
-          type: string
-          description: The cryptographic algorithm family used with the key. Currently, always ``RSA``.
-        use:
-          type: string
-          description: 'The intended use of the public key. Possible values:
+        active:
+          type: boolean
+          description: '``true``: The token is active.
 
 
-            - ``sig`` - Verify the signature on data.
+            ``false``: The token is expired, invalid, or revoked.
 
             '
-        n:
+        scope:
           type: string
-          description: The RSA modulus value.
-        e:
+          description: A URL-encoded, space separated list of scopes associated with the token.
+        client_id:
           type: string
-          description: The RSA exponent value.
+          description: The Client ID of the application associated with the token.
+        exp:
+          type: integer
+          description: The expiration time of the token, represented as a Unix timestamp.
+        userid:
+          type: string
+          description: The ID of the user who authorized the token.
       x-stoplight:
-        id: wp3vjpqnp0rt9
-      description: Represents a JSON Web Key Set (JWKS).
-    clientId:
-      title: clientId
-      x-stoplight:
-        id: j0qsjvxe873qp
-      type: string
-      description: 'The Client ID of the application making the request.
-
-
-        **Note** This is required only for Traditional Web Apps and Server-to-Server Apps. It is not required for Desktop, Mobile, and Single-Page Apps.'
+        id: ovhi8qyq55tzp
   parameters:
     Authorization:
       name: Authorization
@@ -555,27 +567,37 @@ components:
 
         '
   securitySchemes:
-    2-legged:
-      type: oauth2
-      flows:
-        clientCredentials:
-          tokenUrl: ''
-          refreshUrl: ''
-          scopes: {}
-    3-legged-implicit:
-      type: oauth2
-      flows:
-        implicit:
-          authorizationUrl: ''
-          refreshUrl: ''
-          scopes: {}
+    client-credentials:
+      type: http
+      description: Basic Authorization by providing client id and client secret.
+      scheme: basic
+    basic-auth:
+      type: http
+      description: 'Authorization:  Basic clientIdclientsecret'
+      scheme: basic
     3-legged:
       type: oauth2
       flows:
         authorizationCode:
-          authorizationUrl: ''
-          tokenUrl: ''
-          refreshUrl: ''
-          scopes: {}
+          authorizationUrl: https://developer.api.autodesk.com/authentication/v2/authorize
+          tokenUrl: https://developer.api.autodesk.com/authentication/v2/token
+          refreshUrl: https://developer.api.autodesk.com/authentication/v2/token
+          scopes:
+            data:read: read your data
+            data:write: modify your data
+            data:create: create new data
+      x-authentication_context: user context required
+      description: User context required.
+    2-legged:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://developer.api.autodesk.com/authentication/v2/token
+          scopes:
+            data:read: read application accessible data
+            data:write: write application accessible data
+            data:create: create application accessible data
+      x-authentication_context: application context required
+      description: Application context required.
 x-stoplight:
-  id: zm6m3b30rcbon
+  id: a5p3h5029y9kz

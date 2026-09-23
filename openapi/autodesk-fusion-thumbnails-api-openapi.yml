@@ -1,21 +1,23 @@
 openapi: 3.2.0
 info:
-  title: Construction.Account.Admin Account Management Thumbnails API
-  version: '1.0'
+  title: Model Derivative Thumbnails API
+  version: '2.0'
+  description: Use the Model Derivative API to translate designs from one CAD format to another. You can also use this API to extract metadata from a model.
+  termsOfService: https://www.autodesk.com/company/legal-notices-trademarks/terms-of-service-autodesk360-web-services/forge-platform-web-services-api-terms-of-service
+  x-support: https://stackoverflow.com/questions/tagged/autodesk-model-derivative
   contact:
-    name: Autodesk Plaform Services
+    name: Autodesk Platform Services
     url: https://aps.autodesk.com/
     email: aps.help@autodesk.com
-  termsOfService: https://www.autodesk.com/company/legal-notices-trademarks/terms-of-service-autodesk360-web-services/forge-platform-web-services-api-terms-of-service
-  x-support: https://stackoverflow.com/questions/tagged/autodesk-platform-services
-  description: 'The Account Admin API automates creating and managing projects, assigning and managing project users, and managing member and partner company directories. You can also synchronize data with external systems.
-
-    '
 servers:
 - url: https://developer.api.autodesk.com
 security:
-- 2-legged: []
-- 3-legged: []
+- 2-legged:
+  - data:read
+  - data:write
+- 3-legged:
+  - data:read
+  - data:write
 tags:
 - name: Thumbnails
 paths:
@@ -74,6 +76,24 @@ paths:
         curl -X "GET" -H "Authorization: Bearer PtnrvrtSRpWwUi3407QhgvqdUVKL" -v "https://developer.api.autodesk.com/modelderivative/v2/designdata/dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWxkZXJpdmF0aXZlL0E1LnppcA/thumbnail"
 components:
   schemas:
+    Width:
+      type: integer
+      x-stoplight:
+        id: 538da198a6bd0
+      description: 'Width of thumbnail in pixels.  Possible values are: ``100``, ``200``, ``400``  If ``width`` is omitted, but ``height`` is specified, ``width`` defaults to ``height``. If both ``width`` and ``height`` are omitted, the server will return a thumbnail closest to ``200``, if such a thumbnail is available.'
+      enum:
+      - 100
+      - 200
+      - 400
+    Height:
+      type: integer
+      x-stoplight:
+        id: 91ad401a43ef2
+      description: 'Height of thumbnails. Possible values are: ``100``, ``200``, ``400``.If ``height`` is omitted, but ``width`` is specified, ``height`` defaults to ``width``.  If both ``width`` and ``height`` are omitted, the server will return a thumbnail closest to ``200``, if such a thumbnail is available'
+      enum:
+      - 100
+      - 200
+      - 400
     Region:
       type: string
       description: "Specifies where the referenced files are stored. Possible values are: \n    \n- ``US`` - Data center for the US region.\n- ``EMEA`` - Data center for the European Union, Middle East, and Africa. \n- ``AUS`` - (Beta) Data center for the Australia region.\n- ``CAN`` - Data center for the Canada region.\n- ``DEU`` - Data center for the Germany region.\n- ``IND`` - Data center for the India region.\n- ``JPN`` - Data center for the Japan region.\n- ``GBR``  - Data center for the United Kingdom region.\n"
@@ -94,24 +114,6 @@ components:
       - rendered
       - extracted
       description: "The source of the thumbnail:  Possible values are:\n\n- ``rendered`` - Generated pursuant to this API call \n- ``extracted`` - Obtained from the original design file'"
-    Width:
-      type: integer
-      x-stoplight:
-        id: 538da198a6bd0
-      description: 'Width of thumbnail in pixels.  Possible values are: ``100``, ``200``, ``400``  If ``width`` is omitted, but ``height`` is specified, ``width`` defaults to ``height``. If both ``width`` and ``height`` are omitted, the server will return a thumbnail closest to ``200``, if such a thumbnail is available.'
-      enum:
-      - 100
-      - 200
-      - 400
-    Height:
-      type: integer
-      x-stoplight:
-        id: 91ad401a43ef2
-      description: 'Height of thumbnails. Possible values are: ``100``, ``200``, ``400``.If ``height`` is omitted, but ``width`` is specified, ``height`` defaults to ``width``.  If both ``width`` and ``height`` are omitted, the server will return a thumbnail closest to ``200``, if such a thumbnail is available'
-      enum:
-      - 100
-      - 200
-      - 400
     XAdsJobStatus:
       type: string
       x-stoplight:
@@ -123,14 +125,6 @@ components:
       - timedout
       description: 'The execution status of the translation job.  Possible values are: ``inprogress``, ``success``, ``failed``, ``timedout``'
   headers:
-    x-ads-duration:
-      description: The amount of time spent servicing the request, in milliseconds.
-      schema:
-        type: string
-    x-ads-troubleshooting:
-      description: Provides information about server failures, if any.
-      schema:
-        type: string
     x-ads-startup-time:
       description: 'The service startup time, in the following date format: ``EEE MMM dd HH:mm:ss Z yyyy``.'
       schema:
@@ -139,27 +133,15 @@ components:
       description: The service identifier. Comprises of the service name, version, and environment.
       schema:
         type: string
-  parameters:
-    height:
-      name: height
-      in: query
-      required: false
-      schema:
-        $ref: '#/components/schemas/Height'
-      description: 'Height of thumbnails. Possible values are: ``100``, ``200``, ``400``.If ``height`` is omitted, but ``width`` is specified, ``height`` defaults to ``width``.  If both ``width`` and ``height`` are omitted, the server will return a thumbnail closest to ``200``, if such a thumbnail is available'
-    region:
-      name: region
-      in: header
-      schema:
-        $ref: '#/components/schemas/Region'
-      description: "Specifies the data center where the manifest and derivatives of the specified source design are stored. Possible values are:\n\n- ``US`` - (Default) Data center for the US region.\n- ``EMEA`` - Data center for the European Union, Middle East, and Africa. \n- ``AUS`` - Data center for the Australia region.\n- ``CAN`` - Data center for the Canada region.\n- ``DEU`` - Data center for the Germany region.\n- ``IND`` - Data center for the India region.\n- ``JPN`` - Data center for the Japan region.\n- ``GBR``  - Data center for the United Kingdom region.\n"
-    source-design-urn:
-      name: urn
-      in: path
+    x-ads-duration:
+      description: The amount of time spent servicing the request, in milliseconds.
       schema:
         type: string
-      description: The URL-safe Base64 encoded URN of the source design.
-      required: true
+    x-ads-troubleshooting:
+      description: Provides information about server failures, if any.
+      schema:
+        type: string
+  parameters:
     width:
       name: width
       in: query
@@ -167,28 +149,48 @@ components:
       schema:
         $ref: '#/components/schemas/Width'
       description: 'Width of thumbnail in pixels.  Possible values are: ``100``, ``200``, ``400``  If ``width`` is omitted, but ``height`` is specified, ``width`` defaults to ``height``. If both ``width`` and ``height`` are omitted, the server will return a thumbnail closest to ``200``, if such a thumbnail is available.'
+    height:
+      name: height
+      in: query
+      required: false
+      schema:
+        $ref: '#/components/schemas/Height'
+      description: 'Height of thumbnails. Possible values are: ``100``, ``200``, ``400``.If ``height`` is omitted, but ``width`` is specified, ``height`` defaults to ``width``.  If both ``width`` and ``height`` are omitted, the server will return a thumbnail closest to ``200``, if such a thumbnail is available'
+    source-design-urn:
+      name: urn
+      in: path
+      schema:
+        type: string
+      description: The URL-safe Base64 encoded URN of the source design.
+      required: true
+    region:
+      name: region
+      in: header
+      schema:
+        $ref: '#/components/schemas/Region'
+      description: "Specifies the data center where the manifest and derivatives of the specified source design are stored. Possible values are:\n\n- ``US`` - (Default) Data center for the US region.\n- ``EMEA`` - Data center for the European Union, Middle East, and Africa. \n- ``AUS`` - Data center for the Australia region.\n- ``CAN`` - Data center for the Canada region.\n- ``DEU`` - Data center for the Germany region.\n- ``IND`` - Data center for the India region.\n- ``JPN`` - Data center for the Japan region.\n- ``GBR``  - Data center for the United Kingdom region.\n"
   securitySchemes:
-    2-legged:
-      type: oauth2
-      flows:
-        clientCredentials:
-          tokenUrl: ''
-          refreshUrl: ''
-          scopes: {}
-    3-legged-implicit:
-      type: oauth2
-      flows:
-        implicit:
-          authorizationUrl: ''
-          refreshUrl: ''
-          scopes: {}
     3-legged:
       type: oauth2
       flows:
         authorizationCode:
-          authorizationUrl: ''
-          tokenUrl: ''
-          refreshUrl: ''
-          scopes: {}
-x-stoplight:
-  id: zm6m3b30rcbon
+          authorizationUrl: https://developer.api.autodesk.com/authentication/v2/authorize
+          tokenUrl: https://developer.api.autodesk.com/authentication/v2/token
+          refreshUrl: https://developer.api.autodesk.com/authentication/v2/token
+          scopes:
+            data:read: read your data
+            data:write: modify your data
+            data:create: create new data
+      x-authentication_context: user context required
+      description: User context required.
+    2-legged:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://developer.api.autodesk.com/authentication/v2/token
+          scopes:
+            data:read: read application accessible data
+            data:write: write application accessible data
+            data:create: create application accessible data
+      x-authentication_context: application context required
+      description: Application context required.

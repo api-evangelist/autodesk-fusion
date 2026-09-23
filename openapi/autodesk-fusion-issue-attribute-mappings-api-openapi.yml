@@ -1,16 +1,14 @@
 openapi: 3.2.0
 info:
-  title: Construction.Account.Admin Account Management Issue Attribute Mappings API
+  title: Construction.Issues Issue Attribute Mappings API
   version: '1.0'
+  description: An issue is an item that is created in ACC for tracking, managing and communicating tasks, problems and other points of concern through to resolution. You can manage different types of issues, such as design, safety, and commissioning. We currently support issues that are associated with a project.
   contact:
-    name: Autodesk Plaform Services
+    name: Autodesk Platform Services
     url: https://aps.autodesk.com/
     email: aps.help@autodesk.com
   termsOfService: https://www.autodesk.com/company/legal-notices-trademarks/terms-of-service-autodesk360-web-services/forge-platform-web-services-api-terms-of-service
   x-support: https://stackoverflow.com/questions/tagged/autodesk-platform-services
-  description: 'The Account Admin API automates creating and managing projects, assigning and managing project users, and managing member and partner company directories. You can also synchronize data with external systems.
-
-    '
 servers:
 - url: https://developer.api.autodesk.com
 security:
@@ -83,6 +81,21 @@ paths:
       - Issue Attribute Mappings
 components:
   schemas:
+    region:
+      title: region
+      x-stoplight:
+        id: pvg574irwjt8w
+      type: string
+      enum:
+      - US
+      - EMEA
+      - AUS
+      - CAN
+      - DEU
+      - IND
+      - JPN
+      - GBR
+      description: "Specifies where the bucket containing the object is stored. Possible values are:\n            - ``US`` - (Default) Data center for the US region.\n            - ``EMEA`` - Data center for the European Union, Middle East, and Africa.\n            - ``AUS`` -  Data center for Australia.\n            - ``CAN`` - Data center for the Canada region.\n            - ``DEU`` - Data center for the Germany region.\n            - ``IND`` - Data center for the India region.\n            - ``JPN`` - Data center for the Japan region.\n            - ``GBR`` - Data center for the United Kingdom region.\n**Note:** Beta features are subject to change. Please do not use in production environments."
     attr_mapping:
       title: attr_mapping
       x-stoplight:
@@ -148,21 +161,6 @@ components:
           x-stoplight:
             id: jcsrljuzc5ltj
           description: The description of the custom attribute.
-    region:
-      title: region
-      x-stoplight:
-        id: pvg574irwjt8w
-      type: string
-      enum:
-      - US
-      - EMEA
-      - AUS
-      - CAN
-      - DEU
-      - IND
-      - JPN
-      - GBR
-      description: "Specifies where the bucket containing the object is stored. Possible values are:\n            - ``US`` - (Default) Data center for the US region.\n            - ``EMEA`` - Data center for the European Union, Middle East, and Africa.\n            - ``AUS`` -  Data center for Australia.\n            - ``CAN`` - Data center for the Canada region.\n            - ``DEU`` - Data center for the Germany region.\n            - ``IND`` - Data center for the India region.\n            - ``JPN`` - Data center for the Japan region.\n            - ``GBR`` - Data center for the United Kingdom region.\n**Note:** Beta features are subject to change. Please do not use in production environments."
     Pagination:
       type: object
       description: The pagination object.
@@ -204,13 +202,6 @@ components:
           tokenUrl: ''
           refreshUrl: ''
           scopes: {}
-    3-legged-implicit:
-      type: oauth2
-      flows:
-        implicit:
-          authorizationUrl: ''
-          refreshUrl: ''
-          scopes: {}
     3-legged:
       type: oauth2
       flows:
@@ -219,5 +210,12 @@ components:
           tokenUrl: ''
           refreshUrl: ''
           scopes: {}
+    3-legged-implicit:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: ''
+          refreshUrl: ''
+          scopes: {}
 x-stoplight:
-  id: zm6m3b30rcbon
+  id: 3ncpsdhr5f5bp

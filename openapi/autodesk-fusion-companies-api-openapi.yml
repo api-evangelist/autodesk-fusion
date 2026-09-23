@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Construction.Account.Admin Account Management Companies API
+  title: Construction.Account.Admin Companies API
   version: '1.0'
   contact:
     name: Autodesk Plaform Services
@@ -8,9 +8,7 @@ info:
     email: aps.help@autodesk.com
   termsOfService: https://www.autodesk.com/company/legal-notices-trademarks/terms-of-service-autodesk360-web-services/forge-platform-web-services-api-terms-of-service
   x-support: https://stackoverflow.com/questions/tagged/autodesk-platform-services
-  description: 'The Account Admin API automates creating and managing projects, assigning and managing project users, and managing member and partner company directories. You can also synchronize data with external systems.
-
-    '
+  description: The Account Admin API automates creating and managing projects, assigning and managing project users, and managing member and partner company directories. You can also synchronize data with external systems.
 servers:
 - url: https://developer.api.autodesk.com
 security:
@@ -616,520 +614,6 @@ paths:
       - 3-legged: []
 components:
   schemas:
-    filterTextMatch:
-      title: filterTextMatch
-      x-stoplight:
-        id: l613i9qr8h8a6
-      type: string
-      enum:
-      - contains
-      - startsWith
-      - endsWith
-      - equals
-    AccountCompanyAddress:
-      title: AccountCompanyAddress
-      x-stoplight:
-        id: w83g4phsegjmc
-      type: object
-      properties:
-        type:
-          type: string
-          x-stoplight:
-            id: vta9ily9vtev0
-        addressLine1:
-          type: string
-          x-stoplight:
-            id: dibe53qdw3a5a
-        addressLine2:
-          type: string
-          x-stoplight:
-            id: 5cudpup7l7yoy
-        city:
-          type: string
-          x-stoplight:
-            id: awsdybgl6g2qh
-        stateOrProvince:
-          type: string
-          x-stoplight:
-            id: 98sc9ieedaak8
-        postalCode:
-          type: string
-          x-stoplight:
-            id: 1mz7lqqjcnvqo
-        country:
-          type: string
-          x-stoplight:
-            id: t9pw98u1logv2
-        phone:
-          type: string
-          x-stoplight:
-            id: m4r6utt1gzmnb
-    Pagination:
-      title: Pagination
-      x-stoplight:
-        id: q1bi13503pl18
-      type: object
-      properties:
-        limit:
-          type: integer
-          x-stoplight:
-            id: 8izi1f176ek68
-        offset:
-          type: integer
-          x-stoplight:
-            id: v1vdhhbk5vhtj
-        totalResults:
-          type: integer
-          x-stoplight:
-            id: o7y9s28pvovds
-        nextUrl:
-          type: string
-          x-stoplight:
-            id: egebyg74p2y51
-        previousUrl:
-          type: string
-          x-stoplight:
-            id: rhoc949ms1w0p
-      description: "\tContains pagination details for the records returned by the endpoint."
-    Company:
-      title: Company
-      x-stoplight:
-        id: a07ikbbdxen99
-      type: object
-      properties:
-        id:
-          type: string
-          description: Company ID
-        account_id:
-          type: string
-          x-stoplight:
-            id: p5xb64wnh4wmx
-          description: Account ID
-        name:
-          type: string
-          x-stoplight:
-            id: iet5cvhxxlpk0
-          description: Company name should be unique under an account
-        trade:
-          type: string
-          x-stoplight:
-            id: 1b2guw2drwxjr
-          description: Trade type based on specialization
-        address_line_1:
-          type: string
-          x-stoplight:
-            id: 12voppe6n4dem
-          description: Company address line 1
-        address_line_2:
-          type: string
-          x-stoplight:
-            id: ovz2wunnvpu7r
-          description: Company address line 2
-        city:
-          type: string
-          x-stoplight:
-            id: cxd0ahqxpo1en
-          description: City in which company is located
-        state_or_province:
-          type: string
-          x-stoplight:
-            id: 3z6lmdqunni69
-          description: State or province in which company is located
-        postal_code:
-          type: string
-          x-stoplight:
-            id: mrqr2ey51mfag
-          description: Postal code for the company location
-        country:
-          type: string
-          x-stoplight:
-            id: q8j06kajtg0v8
-          description: Country for this company
-        phone:
-          type: string
-          x-stoplight:
-            id: x5siwgk3npdvx
-          description: Business phone number for the company
-        website_url:
-          type: string
-          x-stoplight:
-            id: lubzf7q51z7o8
-          description: Company website
-        description:
-          type: string
-          x-stoplight:
-            id: i6e14q3h6b0sx
-          description: Short description or overview for company
-        erp_id:
-          type: string
-          x-stoplight:
-            id: jz2sci73ene74
-          description: Used to associate a company in BIM 360 with the company data in an ERP system
-        tax_id:
-          type: string
-          x-stoplight:
-            id: k6ponb7ozqs5j
-          description: Used to associate a company in BIM 360 with the company data from public and industry sources
-    Region:
-      title: Region
-      x-stoplight:
-        id: 5rz8jxdpgo4zq
-      type: string
-      enum:
-      - US
-      - EMEA
-      - AUS
-      - CAN
-      - DEU
-      - IND
-      - JPN
-      - GBR
-      description: 'Specifies the region where your request should be routed. Possible values are:
-
-        - ``US`` - Data center for the US region.
-
-        - ``EMEA`` - Data center for the European Union, Middle East, and Africa regions.
-
-        - ``AUS`` - Data center for the Australia region.
-
-        - ``CAN`` - Data center for the Canada region.
-
-        - ``DEU`` - Data center for the Germany region.
-
-        - ``IND`` - Data center for the India region.
-
-        - ``JPN`` - Data center for the Japan region.
-
-        - ``GBR`` - Data center for the United Kingdom region.'
-    CompaniesPage:
-      title: AccountCompaniesPage
-      x-stoplight:
-        id: wuh03fw48u7sk
-      type: object
-      properties:
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-        results:
-          type: array
-          x-stoplight:
-            id: ivk9ommljka7z
-          items:
-            $ref: '#/components/schemas/AccountCompany'
-    filterCompanyFields:
-      title: filterCompanyFields
-      x-stoplight:
-        id: hp5r12lpjjgfa
-      enum:
-      - accountId
-      - name
-      - trade
-      - addresses
-      - websiteUrl
-      - description
-      - erpId
-      - taxId
-      - imageUrl
-      - status
-      - createdAt
-      - updatedAt
-      - projectSize
-      - userSize
-      - originalName
-    CompanyImport:
-      title: CompanyImportResponse
-      x-stoplight:
-        id: w1u6pqi8dlrys
-      type: object
-      properties:
-        success:
-          type: integer
-          x-stoplight:
-            id: vfh38q2zhm7vr
-          description: Import success company count
-        failure:
-          type: integer
-          x-stoplight:
-            id: wbnrw0ceazwkh
-          description: Import failure company count
-        success_items:
-          type: array
-          x-stoplight:
-            id: b91r3bdiu4916
-          description: Array of company objects that were successfully imported
-          items:
-            $ref: '#/components/schemas/Company'
-            x-stoplight:
-              id: yreisjgu8c84e
-        failure_items:
-          type: array
-          x-stoplight:
-            id: spdgokc6tgfr3
-          description: Array of company objects that failed to import, along with content and error information
-          items:
-            $ref: '#/components/schemas/Company'
-            x-stoplight:
-              id: h3qbrhrr4tpef
-      description: ''
-    CompanyPatchPayload:
-      title: CompanyPatchPayload
-      x-stoplight:
-        id: 3w00n26opiju3
-      type: object
-      properties:
-        name:
-          type: string
-          x-stoplight:
-            id: iet5cvhxxlpk0
-          description: Company name should be unique under an account
-        trade:
-          $ref: '#/components/schemas/trade'
-          x-stoplight:
-            id: 1b2guw2drwxjr
-          description: Trade type based on specialization
-        address_line_1:
-          type: string
-          x-stoplight:
-            id: 12voppe6n4dem
-          description: Company address line 1
-        address_line_2:
-          type: string
-          x-stoplight:
-            id: ovz2wunnvpu7r
-          description: Company address line 2
-        city:
-          type: string
-          x-stoplight:
-            id: cxd0ahqxpo1en
-          description: City in which company is located
-        state_or_province:
-          type: string
-          x-stoplight:
-            id: 3z6lmdqunni69
-          description: State or province in which company is located
-        postal_code:
-          type: string
-          x-stoplight:
-            id: mrqr2ey51mfag
-          description: Postal code for the company location
-        country:
-          type: string
-          x-stoplight:
-            id: q8j06kajtg0v8
-          description: Country for this company
-        phone:
-          type: string
-          x-stoplight:
-            id: x5siwgk3npdvx
-          description: Business phone number for the company
-        website_url:
-          type: string
-          x-stoplight:
-            id: lubzf7q51z7o8
-          description: Company website
-        description:
-          type: string
-          x-stoplight:
-            id: i6e14q3h6b0sx
-          description: Short description or overview for company
-        erp_id:
-          type: string
-          x-stoplight:
-            id: jz2sci73ene74
-          description: Used to associate a company in BIM 360 with the company data in an ERP system
-        tax_id:
-          type: string
-          x-stoplight:
-            id: k6ponb7ozqs5j
-          description: Used to associate a company in BIM 360 with the company data from public and industry sources
-    filterCompanySort:
-      title: filterCompanySort
-      x-stoplight:
-        id: 5yrds3d69hbdb
-      enum:
-      - name asc
-      - trade asc
-      - erpId asc
-      - taxId asc
-      - status asc
-      - createdAt asc
-      - updatedAt asc
-      - projectSize asc
-      - userSize asc
-      - name desc
-      - trade desc
-      - erpId desc
-      - taxId desc
-      - status desc
-      - createdAt desc
-      - updatedAt desc
-      - projectSize desc
-      - userSize desc
-    trade:
-      title: trade
-      x-stoplight:
-        id: l2gbhaf1mw5jg
-      type: string
-      enum:
-      - Architecture
-      - Communications
-      - Communications | Data
-      - Concrete
-      - Concrete | Cast-in-Place
-      - Concrete | Precast
-      - Construction Management
-      - Conveying Equipment
-      - Conveying Equipment | Elevators
-      - Demolition
-      - Earthwork
-      - Earthwork | Site Excavation & Grading
-      - Electrical
-      - Electrical Power Generation
-      - Electronic Safety & Security
-      - Equipment
-      - Equipment | Kitchen Appliances
-      - Exterior Improvements
-      - Exterior | Fences & Gates
-      - Exterior | Landscaping
-      - Exterior | Irrigation
-      - Finishes
-      - Finishes | Carpeting
-      - Finishes | Ceiling
-      - Finishes | Drywall
-      - Finishes | Flooring
-      - Finishes | Painting & Coating
-      - Finishes | Tile
-      - Fire Suppression
-      - Furnishings
-      - Furnishings | Casework & Cabinets
-      - Furnishings | Countertops
-      - Furnishings | Window Treatments
-      - General Contractor
-      - HVAC Heating, Ventilating, & Air Conditioning
-      - Industry-Specific Manufacturing Processing
-      - Integrated Automation
-      - Masonry
-      - Material Processing & Handling Equipment
-      - Metals
-      - Metals | Structural Steel / Framing
-      - Moisture Protection
-      - Moisture Protection | Roofing
-      - Moisture Protection | Waterproofing
-      - Openings
-      - Openings | Doors & Frames
-      - Openings | Entrances & Storefronts
-      - Openings | Glazing
-      - Openings | Roof Windows & Skylights
-      - Openings | Windows
-      - Owner
-      - Plumbing
-      - Pollution & Waste Control Equipment
-      - Process Gas & Liquid Handling, Purification, & Storage Equipment
-      - Process Heating, Cooling, & Drying Equipment
-      - Process Integration
-      - Process Integration | Piping
-      - Special Construction
-      - Specialties
-      - Specialties | Signage
-      - Utilities
-      - Water & Wastewater Equipment
-      - Waterway & Marine Construction
-      - Wood & Plastics
-      - Wood & Plastics | Millwork
-      - Wood & Plastics | Rough Carpentry
-    companyOrFilters:
-      title: companyOrFilters
-      x-stoplight:
-        id: f204luot495u0
-      enum:
-      - erpId
-      - name
-      - taxId
-      - trade
-      - updatedAt
-    filterCompanySort_internal:
-      title: filterCompanySort_internal
-      x-stoplight:
-        id: 6rvwix917rwby
-      type: array
-      items:
-        $ref: '#/components/schemas/filterCompanySort'
-    AccountCompany:
-      title: AccountCompany
-      x-stoplight:
-        id: dakt3mogkiqky
-      type: object
-      properties:
-        id:
-          type: string
-          x-stoplight:
-            id: ugixz7bx82y2w
-        accountId:
-          type: string
-          x-stoplight:
-            id: 726lpvp41ydqw
-        name:
-          type: string
-          x-stoplight:
-            id: e0gc4yiblj4sv
-        trade:
-          type: string
-          x-stoplight:
-            id: zmuamaitunhm3
-        addresses:
-          type: array
-          x-stoplight:
-            id: 8kkwb15qm8yiu
-          items:
-            $ref: '#/components/schemas/AccountCompanyAddress'
-        websiteUrl:
-          type: string
-          x-stoplight:
-            id: fvtvf2kxtu9c2
-        description:
-          type: string
-          x-stoplight:
-            id: qmcsqg0cptopm
-        erpId:
-          type: string
-          x-stoplight:
-            id: u7ixxmf1zmzmy
-        taxId:
-          type: string
-          x-stoplight:
-            id: jefyyyzhm87wo
-        imageUrl:
-          type: string
-          x-stoplight:
-            id: c7pk6958k6a3t
-        status:
-          type: string
-        createdAt:
-          type: string
-          x-stoplight:
-            id: pzy21nq11aest
-        updatedAt:
-          type: string
-          x-stoplight:
-            id: orpi3lguftr9n
-        originalName:
-          type: string
-          x-stoplight:
-            id: fgsaidhu4mqvh
-        projectSize:
-          type: integer
-          x-stoplight:
-            id: n3d4f06fgayfp
-        userSize:
-          type: integer
-          x-stoplight:
-            id: z0yopb69ae5er
-    companyOrFilters_internal:
-      title: companyOrFilters_internal
-      x-stoplight:
-        id: wopm3nw7uinr6
-      type: array
-      items:
-        $ref: '#/components/schemas/companyOrFilters'
     CompanyPayload:
       title: CompanyPayload
       x-stoplight:
@@ -1204,6 +688,274 @@ components:
       required:
       - name
       - trade
+    AccountCompany:
+      title: AccountCompany
+      x-stoplight:
+        id: dakt3mogkiqky
+      type: object
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: ugixz7bx82y2w
+        accountId:
+          type: string
+          x-stoplight:
+            id: 726lpvp41ydqw
+        name:
+          type: string
+          x-stoplight:
+            id: e0gc4yiblj4sv
+        trade:
+          type: string
+          x-stoplight:
+            id: zmuamaitunhm3
+        addresses:
+          type: array
+          x-stoplight:
+            id: 8kkwb15qm8yiu
+          items:
+            $ref: '#/components/schemas/AccountCompanyAddress'
+        websiteUrl:
+          type: string
+          x-stoplight:
+            id: fvtvf2kxtu9c2
+        description:
+          type: string
+          x-stoplight:
+            id: qmcsqg0cptopm
+        erpId:
+          type: string
+          x-stoplight:
+            id: u7ixxmf1zmzmy
+        taxId:
+          type: string
+          x-stoplight:
+            id: jefyyyzhm87wo
+        imageUrl:
+          type: string
+          x-stoplight:
+            id: c7pk6958k6a3t
+        status:
+          type: string
+        createdAt:
+          type: string
+          x-stoplight:
+            id: pzy21nq11aest
+        updatedAt:
+          type: string
+          x-stoplight:
+            id: orpi3lguftr9n
+        originalName:
+          type: string
+          x-stoplight:
+            id: fgsaidhu4mqvh
+        projectSize:
+          type: integer
+          x-stoplight:
+            id: n3d4f06fgayfp
+        userSize:
+          type: integer
+          x-stoplight:
+            id: z0yopb69ae5er
+    CompaniesPage:
+      title: AccountCompaniesPage
+      x-stoplight:
+        id: wuh03fw48u7sk
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        results:
+          type: array
+          x-stoplight:
+            id: ivk9ommljka7z
+          items:
+            $ref: '#/components/schemas/AccountCompany'
+    CompanyImport:
+      title: CompanyImportResponse
+      x-stoplight:
+        id: w1u6pqi8dlrys
+      type: object
+      properties:
+        success:
+          type: integer
+          x-stoplight:
+            id: vfh38q2zhm7vr
+          description: Import success company count
+        failure:
+          type: integer
+          x-stoplight:
+            id: wbnrw0ceazwkh
+          description: Import failure company count
+        success_items:
+          type: array
+          x-stoplight:
+            id: b91r3bdiu4916
+          description: Array of company objects that were successfully imported
+          items:
+            $ref: '#/components/schemas/Company'
+            x-stoplight:
+              id: yreisjgu8c84e
+        failure_items:
+          type: array
+          x-stoplight:
+            id: spdgokc6tgfr3
+          description: Array of company objects that failed to import, along with content and error information
+          items:
+            $ref: '#/components/schemas/Company'
+            x-stoplight:
+              id: h3qbrhrr4tpef
+      description: ''
+    filterCompanyFields:
+      title: filterCompanyFields
+      x-stoplight:
+        id: hp5r12lpjjgfa
+      enum:
+      - accountId
+      - name
+      - trade
+      - addresses
+      - websiteUrl
+      - description
+      - erpId
+      - taxId
+      - imageUrl
+      - status
+      - createdAt
+      - updatedAt
+      - projectSize
+      - userSize
+      - originalName
+    filterTextMatch:
+      title: filterTextMatch
+      x-stoplight:
+        id: l613i9qr8h8a6
+      type: string
+      enum:
+      - contains
+      - startsWith
+      - endsWith
+      - equals
+    Region:
+      title: Region
+      x-stoplight:
+        id: 5rz8jxdpgo4zq
+      type: string
+      enum:
+      - US
+      - EMEA
+      - AUS
+      - CAN
+      - DEU
+      - IND
+      - JPN
+      - GBR
+      description: 'Specifies the region where your request should be routed. Possible values are:
+
+        - ``US`` - Data center for the US region.
+
+        - ``EMEA`` - Data center for the European Union, Middle East, and Africa regions.
+
+        - ``AUS`` - Data center for the Australia region.
+
+        - ``CAN`` - Data center for the Canada region.
+
+        - ``DEU`` - Data center for the Germany region.
+
+        - ``IND`` - Data center for the India region.
+
+        - ``JPN`` - Data center for the Japan region.
+
+        - ``GBR`` - Data center for the United Kingdom region.'
+    CompanyPatchPayload:
+      title: CompanyPatchPayload
+      x-stoplight:
+        id: 3w00n26opiju3
+      type: object
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: iet5cvhxxlpk0
+          description: Company name should be unique under an account
+        trade:
+          $ref: '#/components/schemas/trade'
+          x-stoplight:
+            id: 1b2guw2drwxjr
+          description: Trade type based on specialization
+        address_line_1:
+          type: string
+          x-stoplight:
+            id: 12voppe6n4dem
+          description: Company address line 1
+        address_line_2:
+          type: string
+          x-stoplight:
+            id: ovz2wunnvpu7r
+          description: Company address line 2
+        city:
+          type: string
+          x-stoplight:
+            id: cxd0ahqxpo1en
+          description: City in which company is located
+        state_or_province:
+          type: string
+          x-stoplight:
+            id: 3z6lmdqunni69
+          description: State or province in which company is located
+        postal_code:
+          type: string
+          x-stoplight:
+            id: mrqr2ey51mfag
+          description: Postal code for the company location
+        country:
+          type: string
+          x-stoplight:
+            id: q8j06kajtg0v8
+          description: Country for this company
+        phone:
+          type: string
+          x-stoplight:
+            id: x5siwgk3npdvx
+          description: Business phone number for the company
+        website_url:
+          type: string
+          x-stoplight:
+            id: lubzf7q51z7o8
+          description: Company website
+        description:
+          type: string
+          x-stoplight:
+            id: i6e14q3h6b0sx
+          description: Short description or overview for company
+        erp_id:
+          type: string
+          x-stoplight:
+            id: jz2sci73ene74
+          description: Used to associate a company in BIM 360 with the company data in an ERP system
+        tax_id:
+          type: string
+          x-stoplight:
+            id: k6ponb7ozqs5j
+          description: Used to associate a company in BIM 360 with the company data from public and industry sources
+    companyOrFilters:
+      title: companyOrFilters
+      x-stoplight:
+        id: f204luot495u0
+      enum:
+      - erpId
+      - name
+      - taxId
+      - trade
+      - updatedAt
+    companyOrFilters_internal:
+      title: companyOrFilters_internal
+      x-stoplight:
+        id: wopm3nw7uinr6
+      type: array
+      items:
+        $ref: '#/components/schemas/companyOrFilters'
     ProjectCompanies:
       title: Companies
       x-stoplight:
@@ -1300,6 +1052,252 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/filterCompanyFields'
+    Pagination:
+      title: Pagination
+      x-stoplight:
+        id: q1bi13503pl18
+      type: object
+      properties:
+        limit:
+          type: integer
+          x-stoplight:
+            id: 8izi1f176ek68
+        offset:
+          type: integer
+          x-stoplight:
+            id: v1vdhhbk5vhtj
+        totalResults:
+          type: integer
+          x-stoplight:
+            id: o7y9s28pvovds
+        nextUrl:
+          type: string
+          x-stoplight:
+            id: egebyg74p2y51
+        previousUrl:
+          type: string
+          x-stoplight:
+            id: rhoc949ms1w0p
+      description: "\tContains pagination details for the records returned by the endpoint."
+    AccountCompanyAddress:
+      title: AccountCompanyAddress
+      x-stoplight:
+        id: w83g4phsegjmc
+      type: object
+      properties:
+        type:
+          type: string
+          x-stoplight:
+            id: vta9ily9vtev0
+        addressLine1:
+          type: string
+          x-stoplight:
+            id: dibe53qdw3a5a
+        addressLine2:
+          type: string
+          x-stoplight:
+            id: 5cudpup7l7yoy
+        city:
+          type: string
+          x-stoplight:
+            id: awsdybgl6g2qh
+        stateOrProvince:
+          type: string
+          x-stoplight:
+            id: 98sc9ieedaak8
+        postalCode:
+          type: string
+          x-stoplight:
+            id: 1mz7lqqjcnvqo
+        country:
+          type: string
+          x-stoplight:
+            id: t9pw98u1logv2
+        phone:
+          type: string
+          x-stoplight:
+            id: m4r6utt1gzmnb
+    Company:
+      title: Company
+      x-stoplight:
+        id: a07ikbbdxen99
+      type: object
+      properties:
+        id:
+          type: string
+          description: Company ID
+        account_id:
+          type: string
+          x-stoplight:
+            id: p5xb64wnh4wmx
+          description: Account ID
+        name:
+          type: string
+          x-stoplight:
+            id: iet5cvhxxlpk0
+          description: Company name should be unique under an account
+        trade:
+          type: string
+          x-stoplight:
+            id: 1b2guw2drwxjr
+          description: Trade type based on specialization
+        address_line_1:
+          type: string
+          x-stoplight:
+            id: 12voppe6n4dem
+          description: Company address line 1
+        address_line_2:
+          type: string
+          x-stoplight:
+            id: ovz2wunnvpu7r
+          description: Company address line 2
+        city:
+          type: string
+          x-stoplight:
+            id: cxd0ahqxpo1en
+          description: City in which company is located
+        state_or_province:
+          type: string
+          x-stoplight:
+            id: 3z6lmdqunni69
+          description: State or province in which company is located
+        postal_code:
+          type: string
+          x-stoplight:
+            id: mrqr2ey51mfag
+          description: Postal code for the company location
+        country:
+          type: string
+          x-stoplight:
+            id: q8j06kajtg0v8
+          description: Country for this company
+        phone:
+          type: string
+          x-stoplight:
+            id: x5siwgk3npdvx
+          description: Business phone number for the company
+        website_url:
+          type: string
+          x-stoplight:
+            id: lubzf7q51z7o8
+          description: Company website
+        description:
+          type: string
+          x-stoplight:
+            id: i6e14q3h6b0sx
+          description: Short description or overview for company
+        erp_id:
+          type: string
+          x-stoplight:
+            id: jz2sci73ene74
+          description: Used to associate a company in BIM 360 with the company data in an ERP system
+        tax_id:
+          type: string
+          x-stoplight:
+            id: k6ponb7ozqs5j
+          description: Used to associate a company in BIM 360 with the company data from public and industry sources
+    filterCompanySort_internal:
+      title: filterCompanySort_internal
+      x-stoplight:
+        id: 6rvwix917rwby
+      type: array
+      items:
+        $ref: '#/components/schemas/filterCompanySort'
+    filterCompanySort:
+      title: filterCompanySort
+      x-stoplight:
+        id: 5yrds3d69hbdb
+      enum:
+      - name asc
+      - trade asc
+      - erpId asc
+      - taxId asc
+      - status asc
+      - createdAt asc
+      - updatedAt asc
+      - projectSize asc
+      - userSize asc
+      - name desc
+      - trade desc
+      - erpId desc
+      - taxId desc
+      - status desc
+      - createdAt desc
+      - updatedAt desc
+      - projectSize desc
+      - userSize desc
+    trade:
+      title: trade
+      x-stoplight:
+        id: l2gbhaf1mw5jg
+      type: string
+      enum:
+      - Architecture
+      - Communications
+      - Communications | Data
+      - Concrete
+      - Concrete | Cast-in-Place
+      - Concrete | Precast
+      - Construction Management
+      - Conveying Equipment
+      - Conveying Equipment | Elevators
+      - Demolition
+      - Earthwork
+      - Earthwork | Site Excavation & Grading
+      - Electrical
+      - Electrical Power Generation
+      - Electronic Safety & Security
+      - Equipment
+      - Equipment | Kitchen Appliances
+      - Exterior Improvements
+      - Exterior | Fences & Gates
+      - Exterior | Landscaping
+      - Exterior | Irrigation
+      - Finishes
+      - Finishes | Carpeting
+      - Finishes | Ceiling
+      - Finishes | Drywall
+      - Finishes | Flooring
+      - Finishes | Painting & Coating
+      - Finishes | Tile
+      - Fire Suppression
+      - Furnishings
+      - Furnishings | Casework & Cabinets
+      - Furnishings | Countertops
+      - Furnishings | Window Treatments
+      - General Contractor
+      - HVAC Heating, Ventilating, & Air Conditioning
+      - Industry-Specific Manufacturing Processing
+      - Integrated Automation
+      - Masonry
+      - Material Processing & Handling Equipment
+      - Metals
+      - Metals | Structural Steel / Framing
+      - Moisture Protection
+      - Moisture Protection | Roofing
+      - Moisture Protection | Waterproofing
+      - Openings
+      - Openings | Doors & Frames
+      - Openings | Entrances & Storefronts
+      - Openings | Glazing
+      - Openings | Roof Windows & Skylights
+      - Openings | Windows
+      - Owner
+      - Plumbing
+      - Pollution & Waste Control Equipment
+      - Process Gas & Liquid Handling, Purification, & Storage Equipment
+      - Process Heating, Cooling, & Drying Equipment
+      - Process Integration
+      - Process Integration | Piping
+      - Special Construction
+      - Specialties
+      - Specialties | Signage
+      - Utilities
+      - Water & Wastewater Equipment
+      - Waterway & Marine Construction
+      - Wood & Plastics
+      - Wood & Plastics | Millwork
+      - Wood & Plastics | Rough Carpentry
   securitySchemes:
     2-legged:
       type: oauth2
