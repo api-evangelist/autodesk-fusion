@@ -75,7 +75,42 @@ paths:
       tags:
       - Issue Root Cause Categories
 components:
+  parameters:
+    x-ads-region:
+      name: x-ads-region
+      in: header
+      schema:
+        $ref: '#/components/schemas/region'
   schemas:
+    region:
+      title: region
+      x-stoplight:
+        id: pvg574irwjt8w
+      type: string
+      enum:
+      - US
+      - EMEA
+      - AUS
+      - CAN
+      - DEU
+      - IND
+      - JPN
+      - GBR
+      description: "Specifies where the bucket containing the object is stored. Possible values are:\n            - ``US`` - (Default) Data center for the US region.\n            - ``EMEA`` - Data center for the European Union, Middle East, and Africa.\n            - ``AUS`` -  Data center for Australia.\n            - ``CAN`` - Data center for the Canada region.\n            - ``DEU`` - Data center for the Germany region.\n            - ``IND`` - Data center for the India region.\n            - ``JPN`` - Data center for the Japan region.\n            - ``GBR`` - Data center for the United Kingdom region.\n**Note:** Beta features are subject to change. Please do not use in production environments."
+    root_cause_categories_page:
+      title: root-cause-categories-page
+      type: object
+      description: The pagination object.
+      x-stoplight:
+        id: ltnxakw21gumz
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        results:
+          type: array
+          description: A list of issue root cause categories.
+          items:
+            $ref: '#/components/schemas/root_cause_category'
     root_cause_category:
       title: root_cause_category
       x-stoplight:
@@ -162,21 +197,6 @@ components:
           type: string
           description: The Autodesk ID of the user who deleted the custom attribute.
       description: ''
-    region:
-      title: region
-      x-stoplight:
-        id: pvg574irwjt8w
-      type: string
-      enum:
-      - US
-      - EMEA
-      - AUS
-      - CAN
-      - DEU
-      - IND
-      - JPN
-      - GBR
-      description: "Specifies where the bucket containing the object is stored. Possible values are:\n            - ``US`` - (Default) Data center for the US region.\n            - ``EMEA`` - Data center for the European Union, Middle East, and Africa.\n            - ``AUS`` -  Data center for Australia.\n            - ``CAN`` - Data center for the Canada region.\n            - ``DEU`` - Data center for the Germany region.\n            - ``IND`` - Data center for the India region.\n            - ``JPN`` - Data center for the Japan region.\n            - ``GBR`` - Data center for the United Kingdom region.\n**Note:** Beta features are subject to change. Please do not use in production environments."
     Pagination:
       type: object
       description: The pagination object.
@@ -190,26 +210,6 @@ components:
         totalResults:
           type: integer
           description: The number of items in the response.
-    root_cause_categories_page:
-      title: root-cause-categories-page
-      type: object
-      description: The pagination object.
-      x-stoplight:
-        id: ltnxakw21gumz
-      properties:
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-        results:
-          type: array
-          description: A list of issue root cause categories.
-          items:
-            $ref: '#/components/schemas/root_cause_category'
-  parameters:
-    x-ads-region:
-      name: x-ads-region
-      in: header
-      schema:
-        $ref: '#/components/schemas/region'
   securitySchemes:
     2-legged:
       type: oauth2

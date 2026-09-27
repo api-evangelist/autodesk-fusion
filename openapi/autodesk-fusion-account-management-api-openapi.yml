@@ -237,29 +237,6 @@ paths:
         - application:service_account:write
 components:
   schemas:
-    service-accounts:
-      title: Service Accounts
-      description: ''
-      type: object
-      properties:
-        serviceAccounts:
-          type: array
-          description: Contains details of a list of service accounts
-          items:
-            $ref: '#/components/schemas/service-account-details'
-    enable-disable-service-account-payload:
-      title: Enable or Disable Service Account Request
-      x-stoplight:
-        id: r1ar35l7hi8a7
-      type: object
-      description: The request body for enable or disable service account
-      properties:
-        status:
-          type: string
-          description: The status of the service account
-          $ref: '#/components/schemas/status'
-      required:
-      - status
     service-account-details:
       title: Service Account Details
       type: object
@@ -298,19 +275,6 @@ components:
       enum:
       - ENABLED
       - DISABLED
-    service-account:
-      title: Service Account
-      x-stoplight:
-        id: fc1272d6180f6
-      type: object
-      description: Contains the details of a newly created service account
-      properties:
-        serviceAccountId:
-          type: string
-          description: The Autodesk ID of the service account
-        email:
-          type: string
-          description: The email address of the service account. It is of the form <serviceAccountName>@<clientID>.adskserviceaccount.autodesk.com.
     create-service-account-payload:
       title: Create Service Account Payload
       x-stoplight:
@@ -331,6 +295,42 @@ components:
       - name
       - firstName
       - lastName
+    enable-disable-service-account-payload:
+      title: Enable or Disable Service Account Request
+      x-stoplight:
+        id: r1ar35l7hi8a7
+      type: object
+      description: The request body for enable or disable service account
+      properties:
+        status:
+          type: string
+          description: The status of the service account
+          $ref: '#/components/schemas/status'
+      required:
+      - status
+    service-account:
+      title: Service Account
+      x-stoplight:
+        id: fc1272d6180f6
+      type: object
+      description: Contains the details of a newly created service account
+      properties:
+        serviceAccountId:
+          type: string
+          description: The Autodesk ID of the service account
+        email:
+          type: string
+          description: The email address of the service account. It is of the form <serviceAccountName>@<clientID>.adskserviceaccount.autodesk.com.
+    service-accounts:
+      title: Service Accounts
+      description: ''
+      type: object
+      properties:
+        serviceAccounts:
+          type: array
+          description: Contains details of a list of service accounts
+          items:
+            $ref: '#/components/schemas/service-account-details'
   securitySchemes:
     basic-authorization:
       type: http

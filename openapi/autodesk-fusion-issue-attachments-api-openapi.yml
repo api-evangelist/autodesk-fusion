@@ -168,19 +168,67 @@ paths:
       - 3-legged-implicit: []
 components:
   schemas:
-    attachments:
-      title: attachments
+    attachmentsPayload:
+      title: attachmentspayload
       x-stoplight:
-        id: hmg2bcxm6uj5e
+        id: pki5fadhz4lko
       type: object
-      description: An optional array of attachments associated with this object.
       properties:
+        domainEntityId:
+          type: string
+          x-stoplight:
+            id: h11ppw3rpqquf
+          description: The unique identifier of the issue to which the attachments will be added.
         attachments:
           type: array
-          x-stoplight:
-            id: 2euxnmoyqwhop
           items:
-            $ref: '#/components/schemas/attachment'
+            $ref: '#/components/schemas/attachmentObject'
+          description: The list of attachments to be added to the issue.
+      description: Represents the payload for adding attachments to an issue.
+    attachmentObject:
+      title: attachmentObject
+      x-stoplight:
+        id: hgky8a2aqiaya
+      type: object
+      description: A list of attachments to add to the issue.
+      required:
+      - attachmentId
+      - displayName
+      - fileName
+      - attachmentType
+      - storageUrn
+      properties:
+        attachmentId:
+          type: string
+          x-stoplight:
+            id: xf0rx7ndbzv7q
+          description: The unique identifier for the attachment, set by the client when creating the attachment reference. This can be any unique GUID, but it is recommended to use the OSS storage GUID. For more information, see the Upload Issue Attachment tutorial.
+        displayName:
+          type: string
+          x-stoplight:
+            id: w6gu5hswzintj
+          description: The human-readable display name for the attachment, including the file extension (for example, .pdf, .jpg, .dwg). This name appears in the ACC web UI and is used when downloading the file from the issue.
+        fileName:
+          type: string
+          x-stoplight:
+            id: 66aop0tgqlw3j
+          description: 'The unique filename of the attachment, typically formatted as {attachmentId}.{fileExtension}.
+
+            This value must exactly match the name of the file stored in Autodesk Docs (OSS) that you uploaded via the OSS process.
+
+
+            For more information, see the Upload Issue Attachment tutorial.'
+        attachmentType:
+          x-stoplight:
+            id: a2yqbbh35br8y
+          enum:
+          - issue-attachment
+          description: 'The type of attachment to create. Set to issue-attachment. Will always be: issue-attachment'
+        storageUrn:
+          type: string
+          x-stoplight:
+            id: voywegs8sir9k
+          description: The Object Storage Service (OSS) URN that uniquely identifies where the file is stored in Autodesk’s cloud infrastructure. You obtain this value after uploading the file to OSS (see the Upload Issue Attachment tutorial) or by retrieving it from an existing attachment (see the Downloading Issue Attachments tutorial).
     attachment:
       title: attachment
       x-stoplight:
@@ -286,67 +334,19 @@ components:
           description: 'true: The attachment has been deleted.
 
             false: (default) The attachment has not been deleted.'
-    attachmentObject:
-      title: attachmentObject
+    attachments:
+      title: attachments
       x-stoplight:
-        id: hgky8a2aqiaya
+        id: hmg2bcxm6uj5e
       type: object
-      description: A list of attachments to add to the issue.
-      required:
-      - attachmentId
-      - displayName
-      - fileName
-      - attachmentType
-      - storageUrn
+      description: An optional array of attachments associated with this object.
       properties:
-        attachmentId:
-          type: string
-          x-stoplight:
-            id: xf0rx7ndbzv7q
-          description: The unique identifier for the attachment, set by the client when creating the attachment reference. This can be any unique GUID, but it is recommended to use the OSS storage GUID. For more information, see the Upload Issue Attachment tutorial.
-        displayName:
-          type: string
-          x-stoplight:
-            id: w6gu5hswzintj
-          description: The human-readable display name for the attachment, including the file extension (for example, .pdf, .jpg, .dwg). This name appears in the ACC web UI and is used when downloading the file from the issue.
-        fileName:
-          type: string
-          x-stoplight:
-            id: 66aop0tgqlw3j
-          description: 'The unique filename of the attachment, typically formatted as {attachmentId}.{fileExtension}.
-
-            This value must exactly match the name of the file stored in Autodesk Docs (OSS) that you uploaded via the OSS process.
-
-
-            For more information, see the Upload Issue Attachment tutorial.'
-        attachmentType:
-          x-stoplight:
-            id: a2yqbbh35br8y
-          enum:
-          - issue-attachment
-          description: 'The type of attachment to create. Set to issue-attachment. Will always be: issue-attachment'
-        storageUrn:
-          type: string
-          x-stoplight:
-            id: voywegs8sir9k
-          description: The Object Storage Service (OSS) URN that uniquely identifies where the file is stored in Autodesk’s cloud infrastructure. You obtain this value after uploading the file to OSS (see the Upload Issue Attachment tutorial) or by retrieving it from an existing attachment (see the Downloading Issue Attachments tutorial).
-    attachmentsPayload:
-      title: attachmentspayload
-      x-stoplight:
-        id: pki5fadhz4lko
-      type: object
-      properties:
-        domainEntityId:
-          type: string
-          x-stoplight:
-            id: h11ppw3rpqquf
-          description: The unique identifier of the issue to which the attachments will be added.
         attachments:
           type: array
+          x-stoplight:
+            id: 2euxnmoyqwhop
           items:
-            $ref: '#/components/schemas/attachmentObject'
-          description: The list of attachments to be added to the issue.
-      description: Represents the payload for adding attachments to an issue.
+            $ref: '#/components/schemas/attachment'
   securitySchemes:
     2-legged:
       type: oauth2

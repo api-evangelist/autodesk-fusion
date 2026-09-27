@@ -83,6 +83,24 @@ paths:
           $ref: '#/components/schemas/filterdataType_internal'
 components:
   schemas:
+    dataType:
+      title: filterdataType
+      x-stoplight:
+        id: szgoga8vkzknv
+      type: string
+      enum:
+      - list
+      - text
+      - paragraph
+      - numeric
+      description: Retrieves issue custom attribute definitions with the specified data type
+    filterdataType_internal:
+      title: fields_internal
+      x-stoplight:
+        id: 56htsvb8tnfwo
+      type: array
+      items:
+        $ref: '#/components/schemas/dataType'
     region:
       title: region
       x-stoplight:
@@ -98,26 +116,6 @@ components:
       - JPN
       - GBR
       description: "Specifies where the bucket containing the object is stored. Possible values are:\n            - ``US`` - (Default) Data center for the US region.\n            - ``EMEA`` - Data center for the European Union, Middle East, and Africa.\n            - ``AUS`` -  Data center for Australia.\n            - ``CAN`` - Data center for the Canada region.\n            - ``DEU`` - Data center for the Germany region.\n            - ``IND`` - Data center for the India region.\n            - ``JPN`` - Data center for the Japan region.\n            - ``GBR`` - Data center for the United Kingdom region.\n**Note:** Beta features are subject to change. Please do not use in production environments."
-    filterdataType_internal:
-      title: fields_internal
-      x-stoplight:
-        id: 56htsvb8tnfwo
-      type: array
-      items:
-        $ref: '#/components/schemas/dataType'
-    Pagination:
-      type: object
-      description: The pagination object.
-      properties:
-        limit:
-          type: integer
-          description: The number of items per page.
-        offset:
-          type: integer
-          description: The page number that the results begin from.
-        totalResults:
-          type: integer
-          description: The number of items in the response.
     attr_definition_page:
       title: attr_definition
       type: object
@@ -218,17 +216,19 @@ components:
         deletedBy:
           type: string
           description: The Autodesk ID of the user who deleted the custom attribute.
-    dataType:
-      title: filterdataType
-      x-stoplight:
-        id: szgoga8vkzknv
-      type: string
-      enum:
-      - list
-      - text
-      - paragraph
-      - numeric
-      description: Retrieves issue custom attribute definitions with the specified data type
+    Pagination:
+      type: object
+      description: The pagination object.
+      properties:
+        limit:
+          type: integer
+          description: The number of items per page.
+        offset:
+          type: integer
+          description: The page number that the results begin from.
+        totalResults:
+          type: integer
+          description: The number of items in the response.
   parameters:
     x-ads-region:
       name: x-ads-region

@@ -351,6 +351,18 @@ components:
           version: '1.0'
           status: success
       description: Represents the successful response of a Fetch Manifest operation.
+    DeleteManifest:
+      title: DeleteManifest
+      x-stoplight:
+        id: 7uai98fnb6fdc
+      type: object
+      properties:
+        result:
+          type: string
+          x-stoplight:
+            id: nmoc4tg01iitw
+          description: A message describing outcome of the operation. Always ``success`` for status ``200``.
+      description: 'Represents the successful response of a Delete Manifest operation. '
     ManifestResources:
       type: object
       description: Represents a resource generated for a derivative.
@@ -448,38 +460,26 @@ components:
           x-stoplight:
             id: ii9qdtechgkph
           description: A human-readable explanation of the event being reported. Can be a string or an array of string.
-    DeleteManifest:
-      title: DeleteManifest
-      x-stoplight:
-        id: 7uai98fnb6fdc
-      type: object
-      properties:
-        result:
-          type: string
-          x-stoplight:
-            id: nmoc4tg01iitw
-          description: A message describing outcome of the operation. Always ``success`` for status ``200``.
-      description: 'Represents the successful response of a Delete Manifest operation. '
   headers:
     x-ads-startup-time:
       description: 'The service startup time, in the following date format: ``EEE MMM dd HH:mm:ss Z yyyy``.'
-      schema:
-        type: string
-    x-ads-app-identifier:
-      description: The service identifier. Comprises of the service name, version, and environment.
       schema:
         type: string
     x-ads-duration:
       description: The amount of time spent servicing the request, in milliseconds.
       schema:
         type: string
-  parameters:
-    accept-encoding:
-      name: Accept-Encoding
-      in: header
+    x-ads-app-identifier:
+      description: The service identifier. Comprises of the service name, version, and environment.
       schema:
         type: string
-      description: "A comma separated list of the algorithms you want the response to be encoded in, specified in the order of preference.  \n\nIf you specify ``gzip`` or ``*``, content is compressed and returned in gzip format.\n"
+  parameters:
+    region:
+      name: region
+      in: header
+      schema:
+        $ref: '#/components/schemas/Region'
+      description: "Specifies the data center where the manifest and derivatives of the specified source design are stored. Possible values are:\n\n- ``US`` - (Default) Data center for the US region.\n- ``EMEA`` - Data center for the European Union, Middle East, and Africa. \n- ``AUS`` - Data center for the Australia region.\n- ``CAN`` - Data center for the Canada region.\n- ``DEU`` - Data center for the Germany region.\n- ``IND`` - Data center for the India region.\n- ``JPN`` - Data center for the Japan region.\n- ``GBR``  - Data center for the United Kingdom region.\n"
     source-design-urn:
       name: urn
       in: path
@@ -487,12 +487,12 @@ components:
         type: string
       description: The URL-safe Base64 encoded URN of the source design.
       required: true
-    region:
-      name: region
+    accept-encoding:
+      name: Accept-Encoding
       in: header
       schema:
-        $ref: '#/components/schemas/Region'
-      description: "Specifies the data center where the manifest and derivatives of the specified source design are stored. Possible values are:\n\n- ``US`` - (Default) Data center for the US region.\n- ``EMEA`` - Data center for the European Union, Middle East, and Africa. \n- ``AUS`` - Data center for the Australia region.\n- ``CAN`` - Data center for the Canada region.\n- ``DEU`` - Data center for the Germany region.\n- ``IND`` - Data center for the India region.\n- ``JPN`` - Data center for the Japan region.\n- ``GBR``  - Data center for the United Kingdom region.\n"
+        type: string
+      description: "A comma separated list of the algorithms you want the response to be encoded in, specified in the order of preference.  \n\nIf you specify ``gzip`` or ``*``, content is compressed and returned in gzip format.\n"
   securitySchemes:
     3-legged:
       type: oauth2

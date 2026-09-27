@@ -75,21 +75,40 @@ paths:
       x-ads_command_line_example:
         curl -X "GET" -H "Authorization: Bearer PtnrvrtSRpWwUi3407QhgvqdUVKL" -v "https://developer.api.autodesk.com/modelderivative/v2/designdata/dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWxkZXJpdmF0aXZlL0E1LnppcA/thumbnail"
 components:
+  parameters:
+    height:
+      name: height
+      in: query
+      required: false
+      schema:
+        $ref: '#/components/schemas/Height'
+      description: 'Height of thumbnails. Possible values are: ``100``, ``200``, ``400``.If ``height`` is omitted, but ``width`` is specified, ``height`` defaults to ``width``.  If both ``width`` and ``height`` are omitted, the server will return a thumbnail closest to ``200``, if such a thumbnail is available'
+    region:
+      name: region
+      in: header
+      schema:
+        $ref: '#/components/schemas/Region'
+      description: "Specifies the data center where the manifest and derivatives of the specified source design are stored. Possible values are:\n\n- ``US`` - (Default) Data center for the US region.\n- ``EMEA`` - Data center for the European Union, Middle East, and Africa. \n- ``AUS`` - Data center for the Australia region.\n- ``CAN`` - Data center for the Canada region.\n- ``DEU`` - Data center for the Germany region.\n- ``IND`` - Data center for the India region.\n- ``JPN`` - Data center for the Japan region.\n- ``GBR``  - Data center for the United Kingdom region.\n"
+    width:
+      name: width
+      in: query
+      required: false
+      schema:
+        $ref: '#/components/schemas/Width'
+      description: 'Width of thumbnail in pixels.  Possible values are: ``100``, ``200``, ``400``  If ``width`` is omitted, but ``height`` is specified, ``width`` defaults to ``height``. If both ``width`` and ``height`` are omitted, the server will return a thumbnail closest to ``200``, if such a thumbnail is available.'
+    source-design-urn:
+      name: urn
+      in: path
+      schema:
+        type: string
+      description: The URL-safe Base64 encoded URN of the source design.
+      required: true
   schemas:
     Width:
       type: integer
       x-stoplight:
         id: 538da198a6bd0
       description: 'Width of thumbnail in pixels.  Possible values are: ``100``, ``200``, ``400``  If ``width`` is omitted, but ``height`` is specified, ``width`` defaults to ``height``. If both ``width`` and ``height`` are omitted, the server will return a thumbnail closest to ``200``, if such a thumbnail is available.'
-      enum:
-      - 100
-      - 200
-      - 400
-    Height:
-      type: integer
-      x-stoplight:
-        id: 91ad401a43ef2
-      description: 'Height of thumbnails. Possible values are: ``100``, ``200``, ``400``.If ``height`` is omitted, but ``width`` is specified, ``height`` defaults to ``width``.  If both ``width`` and ``height`` are omitted, the server will return a thumbnail closest to ``200``, if such a thumbnail is available'
       enum:
       - 100
       - 200
@@ -114,6 +133,15 @@ components:
       - rendered
       - extracted
       description: "The source of the thumbnail:  Possible values are:\n\n- ``rendered`` - Generated pursuant to this API call \n- ``extracted`` - Obtained from the original design file'"
+    Height:
+      type: integer
+      x-stoplight:
+        id: 91ad401a43ef2
+      description: 'Height of thumbnails. Possible values are: ``100``, ``200``, ``400``.If ``height`` is omitted, but ``width`` is specified, ``height`` defaults to ``width``.  If both ``width`` and ``height`` are omitted, the server will return a thumbnail closest to ``200``, if such a thumbnail is available'
+      enum:
+      - 100
+      - 200
+      - 400
     XAdsJobStatus:
       type: string
       x-stoplight:
@@ -129,46 +157,18 @@ components:
       description: 'The service startup time, in the following date format: ``EEE MMM dd HH:mm:ss Z yyyy``.'
       schema:
         type: string
-    x-ads-app-identifier:
-      description: The service identifier. Comprises of the service name, version, and environment.
-      schema:
-        type: string
     x-ads-duration:
       description: The amount of time spent servicing the request, in milliseconds.
+      schema:
+        type: string
+    x-ads-app-identifier:
+      description: The service identifier. Comprises of the service name, version, and environment.
       schema:
         type: string
     x-ads-troubleshooting:
       description: Provides information about server failures, if any.
       schema:
         type: string
-  parameters:
-    width:
-      name: width
-      in: query
-      required: false
-      schema:
-        $ref: '#/components/schemas/Width'
-      description: 'Width of thumbnail in pixels.  Possible values are: ``100``, ``200``, ``400``  If ``width`` is omitted, but ``height`` is specified, ``width`` defaults to ``height``. If both ``width`` and ``height`` are omitted, the server will return a thumbnail closest to ``200``, if such a thumbnail is available.'
-    height:
-      name: height
-      in: query
-      required: false
-      schema:
-        $ref: '#/components/schemas/Height'
-      description: 'Height of thumbnails. Possible values are: ``100``, ``200``, ``400``.If ``height`` is omitted, but ``width`` is specified, ``height`` defaults to ``width``.  If both ``width`` and ``height`` are omitted, the server will return a thumbnail closest to ``200``, if such a thumbnail is available'
-    source-design-urn:
-      name: urn
-      in: path
-      schema:
-        type: string
-      description: The URL-safe Base64 encoded URN of the source design.
-      required: true
-    region:
-      name: region
-      in: header
-      schema:
-        $ref: '#/components/schemas/Region'
-      description: "Specifies the data center where the manifest and derivatives of the specified source design are stored. Possible values are:\n\n- ``US`` - (Default) Data center for the US region.\n- ``EMEA`` - Data center for the European Union, Middle East, and Africa. \n- ``AUS`` - Data center for the Australia region.\n- ``CAN`` - Data center for the Canada region.\n- ``DEU`` - Data center for the Germany region.\n- ``IND`` - Data center for the India region.\n- ``JPN`` - Data center for the Japan region.\n- ``GBR``  - Data center for the United Kingdom region.\n"
   securitySchemes:
     3-legged:
       type: oauth2

@@ -102,51 +102,6 @@ paths:
               $ref: '#/components/schemas/BusinessUnitsPayload'
 components:
   schemas:
-    Region:
-      title: Region
-      x-stoplight:
-        id: 5rz8jxdpgo4zq
-      type: string
-      enum:
-      - US
-      - EMEA
-      - AUS
-      - CAN
-      - DEU
-      - IND
-      - JPN
-      - GBR
-      description: 'Specifies the region where your request should be routed. Possible values are:
-
-        - ``US`` - Data center for the US region.
-
-        - ``EMEA`` - Data center for the European Union, Middle East, and Africa regions.
-
-        - ``AUS`` - Data center for the Australia region.
-
-        - ``CAN`` - Data center for the Canada region.
-
-        - ``DEU`` - Data center for the Germany region.
-
-        - ``IND`` - Data center for the India region.
-
-        - ``JPN`` - Data center for the Japan region.
-
-        - ``GBR`` - Data center for the United Kingdom region.'
-    BusinessUnits:
-      title: BusinessUnitsResponse
-      x-stoplight:
-        id: bje738qyuuz2v
-      type: object
-      properties:
-        business_units:
-          type: array
-          x-stoplight:
-            id: n5utlu9b7jz16
-          items:
-            $ref: '#/components/schemas/BusinessUnit'
-            x-stoplight:
-              id: 2sl170itvk70g
     BusinessUnit:
       title: BusinessUnit
       x-stoplight:
@@ -193,6 +148,51 @@ components:
           type: string
           x-stoplight:
             id: epd0mv6uik60l
+    Region:
+      title: Region
+      x-stoplight:
+        id: 5rz8jxdpgo4zq
+      type: string
+      enum:
+      - US
+      - EMEA
+      - AUS
+      - CAN
+      - DEU
+      - IND
+      - JPN
+      - GBR
+      description: 'Specifies the region where your request should be routed. Possible values are:
+
+        - ``US`` - Data center for the US region.
+
+        - ``EMEA`` - Data center for the European Union, Middle East, and Africa regions.
+
+        - ``AUS`` - Data center for the Australia region.
+
+        - ``CAN`` - Data center for the Canada region.
+
+        - ``DEU`` - Data center for the Germany region.
+
+        - ``IND`` - Data center for the India region.
+
+        - ``JPN`` - Data center for the Japan region.
+
+        - ``GBR`` - Data center for the United Kingdom region.'
+    BusinessUnits:
+      title: BusinessUnitsResponse
+      x-stoplight:
+        id: bje738qyuuz2v
+      type: object
+      properties:
+        business_units:
+          type: array
+          x-stoplight:
+            id: n5utlu9b7jz16
+          items:
+            $ref: '#/components/schemas/BusinessUnit'
+            x-stoplight:
+              id: 2sl170itvk70g
     BusinessUnitsObject:
       title: BusinessUnitsObject
       x-stoplight:

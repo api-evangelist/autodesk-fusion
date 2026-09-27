@@ -317,20 +317,15 @@ paths:
         description: "The URI to redirect your users to once logout is performed. If you do not specify this parameter your users are redirected to the Autodesk Sign-in page. \n\n**Note:**  You must provide a redirect URI that is pre-registered with APS. This precaution is taken to prevent unauthorized applications from hijacking the logout process.\n"
 components:
   schemas:
-    jwks:
-      title: JWKS Payload
+    clientId:
+      title: clientId
       x-stoplight:
-        id: 54hqs1b4gv5fy
-      type: object
-      description: Represents a successful response to a Get JWKS operation.
-      properties:
-        keys:
-          type: array
-          x-stoplight:
-            id: mrc2tc7y5gded
-          description: An array of objects where each object represents a JSON Web Key Set (JWKS).
-          items:
-            $ref: '#/components/schemas/jwksKey'
+        id: j0qsjvxe873qp
+      type: string
+      description: 'The Client ID of the application making the request.
+
+
+        **Note** This is required only for Traditional Web Apps and Server-to-Server Apps. It is not required for Desktop, Mobile, and Single-Page Apps.'
     tokenTypeHint:
       title: tokenTypeHint
       x-stoplight:
@@ -342,6 +337,41 @@ components:
       description: 'The type of token to revoke. Possible values are: ``access_token`` and ``refresh_token``.
 
         '
+    Scopes:
+      title: Scopes
+      x-stoplight:
+        id: l6ukt54b1u998
+      type: string
+      description: 'Specifies the scope for the token you are requesting. See the `Developer''s Guide documentation on scopes </en/docs/oauth/v2/developers_guide/scopes/>`_ for a complete list of possible values.
+
+        '
+      enum:
+      - user:read
+      - user:write
+      - user-profile:read
+      - viewables:read
+      - data:read
+      - data:read:<URN_OF_RESOURCE>
+      - data:write
+      - data:create
+      - data:search
+      - bucket:create
+      - bucket:read
+      - bucket:update
+      - bucket:delete
+      - code:all
+      - account:read
+      - account:write
+      - openid
+    responseType:
+      title: responseType
+      x-stoplight:
+        id: pzowclrc6omzd
+      type: string
+      enum:
+      - code
+      - id_token
+      description: "The type of response you want to receive. Possible values are: \n\n -  ``code`` - Authorization code grant.\n -  ``id_token`` - OpenID Connect ID token.\n"
     jwksKey:
       title: jwkskey
       type: object
@@ -369,6 +399,48 @@ components:
       x-stoplight:
         id: wp3vjpqnp0rt9
       description: Represents a JSON Web Key Set (JWKS).
+    introspectToken:
+      title: Introspect Token Response
+      description: Represents the payload returned for an introspect token request.
+      required:
+      - active
+      - client_id
+      - exp
+      - scope
+      type: object
+      properties:
+        active:
+          type: boolean
+          description: '``true``: The token is active.
+
+
+            ``false``: The token is expired, invalid, or revoked.
+
+            '
+        scope:
+          type: string
+          description: A URL-encoded, space separated list of scopes associated with the token.
+        client_id:
+          type: string
+          description: The Client ID of the application associated with the token.
+        exp:
+          type: integer
+          description: The expiration time of the token, represented as a Unix timestamp.
+        userid:
+          type: string
+          description: The ID of the user who authorized the token.
+      x-stoplight:
+        id: ovhi8qyq55tzp
+    GrantType:
+      title: grantType
+      x-stoplight:
+        id: qabq62fprc7su
+      type: string
+      enum:
+      - client_credentials
+      - authorization_code
+      - refresh_token
+      description: "Specifies the grant type you are requesting the code for. Possible values are: \n\n- ``client_credentials`` -  For a 2-legged access token.\n- ``authorization_code`` - For a 3-legged access token.\n- ``refresh_token`` - For a refresh token.\n"
     OidcSpec:
       title: OIDC Specification Response
       type: object
@@ -467,92 +539,20 @@ components:
           id_token_signing_alg_values_supported:
           - RS256
       description: Represents a successful response to a Get OIDC Specification operation.
-    GrantType:
-      title: grantType
+    jwks:
+      title: JWKS Payload
       x-stoplight:
-        id: qabq62fprc7su
-      type: string
-      enum:
-      - client_credentials
-      - authorization_code
-      - refresh_token
-      description: "Specifies the grant type you are requesting the code for. Possible values are: \n\n- ``client_credentials`` -  For a 2-legged access token.\n- ``authorization_code`` - For a 3-legged access token.\n- ``refresh_token`` - For a refresh token.\n"
-    responseType:
-      title: responseType
-      x-stoplight:
-        id: pzowclrc6omzd
-      type: string
-      enum:
-      - code
-      - id_token
-      description: "The type of response you want to receive. Possible values are: \n\n -  ``code`` - Authorization code grant.\n -  ``id_token`` - OpenID Connect ID token.\n"
-    clientId:
-      title: clientId
-      x-stoplight:
-        id: j0qsjvxe873qp
-      type: string
-      description: 'The Client ID of the application making the request.
-
-
-        **Note** This is required only for Traditional Web Apps and Server-to-Server Apps. It is not required for Desktop, Mobile, and Single-Page Apps.'
-    Scopes:
-      title: Scopes
-      x-stoplight:
-        id: l6ukt54b1u998
-      type: string
-      description: 'Specifies the scope for the token you are requesting. See the `Developer''s Guide documentation on scopes </en/docs/oauth/v2/developers_guide/scopes/>`_ for a complete list of possible values.
-
-        '
-      enum:
-      - user:read
-      - user:write
-      - user-profile:read
-      - viewables:read
-      - data:read
-      - data:read:<URN_OF_RESOURCE>
-      - data:write
-      - data:create
-      - data:search
-      - bucket:create
-      - bucket:read
-      - bucket:update
-      - bucket:delete
-      - code:all
-      - account:read
-      - account:write
-      - openid
-    introspectToken:
-      title: Introspect Token Response
-      description: Represents the payload returned for an introspect token request.
-      required:
-      - active
-      - client_id
-      - exp
-      - scope
+        id: 54hqs1b4gv5fy
       type: object
+      description: Represents a successful response to a Get JWKS operation.
       properties:
-        active:
-          type: boolean
-          description: '``true``: The token is active.
-
-
-            ``false``: The token is expired, invalid, or revoked.
-
-            '
-        scope:
-          type: string
-          description: A URL-encoded, space separated list of scopes associated with the token.
-        client_id:
-          type: string
-          description: The Client ID of the application associated with the token.
-        exp:
-          type: integer
-          description: The expiration time of the token, represented as a Unix timestamp.
-        userid:
-          type: string
-          description: The ID of the user who authorized the token.
-      x-stoplight:
-        id: ovhi8qyq55tzp
+        keys:
+          type: array
+          x-stoplight:
+            id: mrc2tc7y5gded
+          description: An array of objects where each object represents a JSON Web Key Set (JWKS).
+          items:
+            $ref: '#/components/schemas/jwksKey'
   parameters:
     Authorization:
       name: Authorization

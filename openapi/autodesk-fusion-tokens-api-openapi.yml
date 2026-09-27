@@ -170,14 +170,6 @@ paths:
         - data:write
 components:
   responses:
-    401-general:
-      description: Invalid authorization header.
-      content:
-        application/json:
-          schema:
-            properties:
-              id:
-                type: string
     500-general:
       description: Unexpected service interruption
       content:
@@ -186,8 +178,16 @@ components:
             properties:
               id:
                 type: string
-    400-general:
-      description: The request is invalid.
+    404-general:
+      description: The specified resource was not found.
+      content:
+        application/json:
+          schema:
+            properties:
+              id:
+                type: string
+    401-general:
+      description: Invalid authorization header.
       content:
         application/json:
           schema:
@@ -202,8 +202,8 @@ components:
             properties:
               id:
                 type: string
-    404-general:
-      description: The specified resource was not found.
+    400-general:
+      description: The request is invalid.
       content:
         application/json:
           schema:
@@ -226,7 +226,21 @@ components:
         $ref: '#/components/schemas/x-ads-region'
       description: "Specifies the geographical location (region) of the server the request must be executed on. This also corresponds to the region where the Webhook data is stored. It is also the location of the server that will make requests to your callback URL. Possible values:\n\n- ``US`` - (Default) Data center dedicated to serve the United States region.\n- ``EMEA`` - Data center dedicated to serve the European Union, Middle East, and Africa regions.\n- ``AUS`` - (Beta) Data center dedicated to serve the Australia region.\n- ``CAN`` - Data center dedicated to serve the Canada region.\n- ``DEU`` - Data center dedicated to serve the Germany region.\n- ``IND`` - Data center dedicated to serve the India region.\n- ``JPN`` - Data center dedicated to serve the Japan region.\n- ``GBR`` - Data center dedicated to serve the United Kingdom region.\n\n**Note:** \n\n1. Beta features are subject to change. Please avoid using them in production environments.\n2. You can also use the ``region`` query string parameter to specify the region. If you specify the ``region`` query string parameter as well as the ``x-ads-region`` header, the ``x-ads-region`` header takes precedence.\n"
   schemas:
-    region:
+    TokenPayload:
+      type: object
+      x-examples:
+        example-1:
+          token: awffbvdb3trf4fvdfbUyt39suHnbe5Mnrks3
+      title: TokenPayload
+      properties:
+        token:
+          type: string
+          minLength: 1
+          description: The new secret to set.
+      required:
+      - token
+      description: The request body for an Update Secret Token operation.
+    x-ads-region:
       type: string
       enum:
       - US
@@ -280,21 +294,7 @@ components:
           description: An array of strings, where each string is a human-readable description of the request's outcome.
           items:
             type: string
-    TokenPayload:
-      type: object
-      x-examples:
-        example-1:
-          token: awffbvdb3trf4fvdfbUyt39suHnbe5Mnrks3
-      title: TokenPayload
-      properties:
-        token:
-          type: string
-          minLength: 1
-          description: The new secret to set.
-      required:
-      - token
-      description: The request body for an Update Secret Token operation.
-    x-ads-region:
+    region:
       type: string
       enum:
       - US

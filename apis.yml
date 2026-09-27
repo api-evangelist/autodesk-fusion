@@ -7,15 +7,19 @@ description: Autodesk Fusion is a cloud-based CAD/CAM/CAE/PCB platform that prov
   sync production data, and connect Fusion with ERP, PLM, and BI systems.
 deliveryModel:
   model: saas
-  open_source: false
+  license_evidence:
+    not_product:
+    - autodesk-platform-services/aps-fusion-data-samples
+  open_source: unknown
   commercial: true
   callable_host: true
   label: Hosted service · you call their endpoint
-  confidence: high
+  confidence: low
   source:
   - openapi
   - pricing
-  generated: '2026-08-28'
+  - repository-not-product
+  generated: '2026-09-25'
   method: derived
 accessModel:
   pricing: freemium

@@ -73,12 +73,12 @@ components:
       description: 'The service startup time, in the following date format: ``EEE MMM dd HH:mm:ss Z yyyy``.'
       schema:
         type: string
-    x-ads-app-identifier:
-      description: The service identifier. Comprises of the service name, version, and environment.
-      schema:
-        type: string
     x-ads-duration:
       description: The amount of time spent servicing the request, in milliseconds.
+      schema:
+        type: string
+    x-ads-app-identifier:
+      description: The service identifier. Comprises of the service name, version, and environment.
       schema:
         type: string
     x-ads-troubleshooting:

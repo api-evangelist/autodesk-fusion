@@ -82,11 +82,6 @@ paths:
         id: y6swq0s0v49xx
 components:
   schemas:
-    grant_type:
-      type: string
-      description: Must be "urn:ietf:params:oauth:grant-type:jwt-bearer".
-      enum:
-      - urn:ietf:params:oauth:grant-type:jwt-bearer
     exchange-jwt-token:
       title: Exchange JWT Token
       type: object
@@ -128,6 +123,11 @@ components:
       - application:service_account:read
       - application:service_account_key:write
       - application:service_account_key:read
+    grant_type:
+      type: string
+      description: Must be "urn:ietf:params:oauth:grant-type:jwt-bearer".
+      enum:
+      - urn:ietf:params:oauth:grant-type:jwt-bearer
   securitySchemes:
     basic-authorization:
       type: http

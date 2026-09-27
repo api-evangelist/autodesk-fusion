@@ -78,21 +78,6 @@ paths:
       - $ref: '#/components/parameters/x-ads-region'
 components:
   schemas:
-    region:
-      title: region
-      x-stoplight:
-        id: pvg574irwjt8w
-      type: string
-      enum:
-      - US
-      - EMEA
-      - AUS
-      - CAN
-      - DEU
-      - IND
-      - JPN
-      - GBR
-      description: "Specifies where the bucket containing the object is stored. Possible values are:\n            - ``US`` - (Default) Data center for the US region.\n            - ``EMEA`` - Data center for the European Union, Middle East, and Africa.\n            - ``AUS`` -  Data center for Australia.\n            - ``CAN`` - Data center for the Canada region.\n            - ``DEU`` - Data center for the Germany region.\n            - ``IND`` - Data center for the India region.\n            - ``JPN`` - Data center for the Japan region.\n            - ``GBR`` - Data center for the United Kingdom region.\n**Note:** Beta features are subject to change. Please do not use in production environments."
     issue_type:
       title: issue_type
       x-stoplight:
@@ -200,19 +185,21 @@ components:
         deletedAt:
           type: string
           description: The date and time the issue type was deleted, in ISO8601 format.
-    Pagination:
-      type: object
-      description: The pagination object.
-      properties:
-        limit:
-          type: integer
-          description: The number of items per page.
-        offset:
-          type: integer
-          description: The page number that the results begin from.
-        totalResults:
-          type: integer
-          description: The number of items in the response.
+    region:
+      title: region
+      x-stoplight:
+        id: pvg574irwjt8w
+      type: string
+      enum:
+      - US
+      - EMEA
+      - AUS
+      - CAN
+      - DEU
+      - IND
+      - JPN
+      - GBR
+      description: "Specifies where the bucket containing the object is stored. Possible values are:\n            - ``US`` - (Default) Data center for the US region.\n            - ``EMEA`` - Data center for the European Union, Middle East, and Africa.\n            - ``AUS`` -  Data center for Australia.\n            - ``CAN`` - Data center for the Canada region.\n            - ``DEU`` - Data center for the Germany region.\n            - ``IND`` - Data center for the India region.\n            - ``JPN`` - Data center for the Japan region.\n            - ``GBR`` - Data center for the United Kingdom region.\n**Note:** Beta features are subject to change. Please do not use in production environments."
     issue_types_page:
       title: types_page
       type: object
@@ -226,6 +213,19 @@ components:
           description: A list of issue type categories.
           items:
             $ref: '#/components/schemas/issue_type'
+    Pagination:
+      type: object
+      description: The pagination object.
+      properties:
+        limit:
+          type: integer
+          description: The number of items per page.
+        offset:
+          type: integer
+          description: The page number that the results begin from.
+        totalResults:
+          type: integer
+          description: The number of items in the response.
   parameters:
     x-ads-region:
       name: x-ads-region
