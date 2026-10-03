@@ -89,25 +89,49 @@ paths:
         '404':
           $ref: '#/components/responses/404-general'
 components:
+  parameters:
+    x-user-id:
+      name: x-user-id
+      in: header
+      required: false
+      schema:
+        type: string
+      description: In a two-legged authentication context, an app has access to all users specified by the administrator in the SaaS integrations UI. By providing this header, the API call will be limited to act only on behalf of the specified user.
+    hub_id:
+      name: hub_id
+      in: path
+      schema:
+        type: string
+      description: The unique identifier of a hub.
+      required: true
+    filter_extension_type:
+      name: filter[extension.type]
+      in: query
+      required: false
+      schema:
+        type: array
+        items:
+          type: string
+      description: "Filter by the extension type. \n"
+    filter_id:
+      name: filter[id]
+      in: query
+      required: false
+      schema:
+        type: array
+        items:
+          type: string
+      description: Filter by the ``id`` of the ``ref`` target.
+    filter_name:
+      name: filter[name]
+      in: query
+      required: false
+      schema:
+        type: array
+        items:
+          type: string
+      description: Filter by the ``name`` of the ``ref`` target.
   schemas:
-    json_api_links_self:
-      title: json_api_links_self
-      x-stoplight:
-        id: hedbm6v3pcz7k
-      type: object
-      description: An object containing the URI of the endpoint to access this resource.
-      properties:
-        self:
-          type: object
-          x-stoplight:
-            id: xjz8a6shpmaya
-          description: An object containing the URI of the endpoint to access this resource.
-          properties:
-            href:
-              type: string
-              x-stoplight:
-                id: jx2lmnxrl8f10
-              description: "The URI of the endpoint to access this \nresource."
     json_api_type_id:
       title: json_api_type_id
       x-stoplight:
@@ -123,95 +147,37 @@ components:
           x-stoplight:
             id: j3iiuzs5pdley
           description: The type of the resource.
-    json_api_links_related:
-      title: json_api_links_related
-      x-stoplight:
-        id: fgwxlu5412wa7
-      type: object
-      description: Contains the endpoint you can use to retrieve the related resources.
-      properties:
-        related:
-          type: object
-          x-stoplight:
-            id: o5ksk96io3pui
-          description: "An object containing the endpoint to retrieve \na list of related resources."
-          properties:
-            href:
-              type: string
-              x-stoplight:
-                id: n8345byjqrj4f
-              description: The URI of the endpoint that returns the related resources.
-    json_api_version_value:
-      description: The version of JSON API. Will always be ``1.0``.
+    region:
       type: string
       enum:
-      - '1.0'
-    type_hub:
-      type: string
+      - US
+      - EMEA
+      - AUS
+      - CAN
+      - DEU
+      - IND
+      - JPN
+      - GBR
       x-stoplight:
-        id: f84280dd62b59
-      enum:
-      - hubs
-      description: The type of the resource. Possible values are ``hubs``.
-    HubData:
-      title: HubData
-      x-stoplight:
-        id: nthprwqm1o6lv
-      type: object
-      description: The object containing information about the hub.
-      properties:
-        type:
-          $ref: '#/components/schemas/type_hub'
-          x-stoplight:
-            id: tc7fa3ac13r6h
-        id:
-          type: string
-          x-stoplight:
-            id: 9f2ogpb91zghy
-          description: The hub ID, which uniquely identifies the hub.
-        attributes:
-          type: object
-          x-stoplight:
-            id: xjchsug8c2rw7
-          description: The properties of the hub.
-          properties:
-            name:
-              type: string
-              x-stoplight:
-                id: vw18qagfrio57
-              description: A human friendly name to identify the hub.
-            extension:
-              $ref: '#/components/schemas/base_attributes_extension_object_with_schema_link'
-            region:
-              $ref: '#/components/schemas/region'
-              x-stoplight:
-                id: qy609yu6fbfsf
-        relationships:
-          type: object
-          x-stoplight:
-            id: 0skjm84h82gng
-          description: Contains links to resources that are directly related to this hub.
-          properties:
-            projects:
-              type: object
-              x-stoplight:
-                id: dj2kh2hqjxzuu
-              description: "Contains the endpoint you can use to \nlist the projects in this hub."
-              properties:
-                links:
-                  $ref: '#/components/schemas/json_api_links_related'
-            pimCollection:
-              type: object
-              x-stoplight:
-                id: q1erud678lf5y
-              description: Information on the ``id`` and ``type`` properties of a resource. This is available only for Fusion Team hubs and A360 Personal hubs.
-              properties:
-                data:
-                  $ref: '#/components/schemas/json_api_type_id'
-        links:
-          $ref: '#/components/schemas/json_api_links_self'
-      required:
-      - links
+        id: qy609yu6fbfsf
+      description: 'Specifies where the hub is stored. Possible values are:
+
+
+        - ``US`` - Data center for the US region.
+
+        - ``EMEA`` - Data center for the European Union, Middle East, and Africa regions.
+
+        - ``AUS`` - Data center for the Australia region.
+
+        - ``CAN`` - Data center for the Canada region.
+
+        - ``DEU`` - Data center for the Germany region.
+
+        - ``IND`` - Data center for the India region.
+
+        - ``JPN`` - Data center for the Japan region.
+
+        - ``GBR`` - Data center for the United Kingdom region.'
     Hub:
       description: An object representing a hub.
       type: object
@@ -254,49 +220,31 @@ components:
           $ref: '#/components/schemas/json_api_links_self'
         data:
           $ref: '#/components/schemas/HubData'
-    json_api_version:
-      title: json_api_version
-      x-stoplight:
-        id: wtcnivkdziwr7
-      type: object
-      description: The JSON API object.
-      properties:
-        version:
-          description: The version of JSON API. Will always be ``1.0``.
-          $ref: '#/components/schemas/json_api_version_value'
-      required:
-      - version
-    region:
+    type_hub:
       type: string
-      enum:
-      - US
-      - EMEA
-      - AUS
-      - CAN
-      - DEU
-      - IND
-      - JPN
-      - GBR
       x-stoplight:
-        id: qy609yu6fbfsf
-      description: 'Specifies where the hub is stored. Possible values are:
-
-
-        - ``US`` - Data center for the US region.
-
-        - ``EMEA`` - Data center for the European Union, Middle East, and Africa regions.
-
-        - ``AUS`` - Data center for the Australia region.
-
-        - ``CAN`` - Data center for the Canada region.
-
-        - ``DEU`` - Data center for the Germany region.
-
-        - ``IND`` - Data center for the India region.
-
-        - ``JPN`` - Data center for the Japan region.
-
-        - ``GBR`` - Data center for the United Kingdom region.'
+        id: f84280dd62b59
+      enum:
+      - hubs
+      description: The type of the resource. Possible values are ``hubs``.
+    json_api_links_related:
+      title: json_api_links_related
+      x-stoplight:
+        id: fgwxlu5412wa7
+      type: object
+      description: Contains the endpoint you can use to retrieve the related resources.
+      properties:
+        related:
+          type: object
+          x-stoplight:
+            id: o5ksk96io3pui
+          description: "An object containing the endpoint to retrieve \na list of related resources."
+          properties:
+            href:
+              type: string
+              x-stoplight:
+                id: n8345byjqrj4f
+              description: The URI of the endpoint that returns the related resources.
     Hubs:
       description: Successful retrieval of the hubs collection.
       type: object
@@ -365,6 +313,24 @@ components:
           description: An array of objects where each object represents a hub.
           items:
             $ref: '#/components/schemas/HubData'
+    json_api_links_self:
+      title: json_api_links_self
+      x-stoplight:
+        id: hedbm6v3pcz7k
+      type: object
+      description: An object containing the URI of the endpoint to access this resource.
+      properties:
+        self:
+          type: object
+          x-stoplight:
+            id: xjz8a6shpmaya
+          description: An object containing the URI of the endpoint to access this resource.
+          properties:
+            href:
+              type: string
+              x-stoplight:
+                id: jx2lmnxrl8f10
+              description: "The URI of the endpoint to access this \nresource."
     base_attributes_extension_object_with_schema_link:
       title: 'base_attributes_extension_object_with_schema_link:'
       x-stoplight:
@@ -409,23 +375,83 @@ components:
       - type
       - version
       - schema
+    json_api_version_value:
+      description: The version of JSON API. Will always be ``1.0``.
+      type: string
+      enum:
+      - '1.0'
+    json_api_version:
+      title: json_api_version
+      x-stoplight:
+        id: wtcnivkdziwr7
+      type: object
+      description: The JSON API object.
+      properties:
+        version:
+          description: The version of JSON API. Will always be ``1.0``.
+          $ref: '#/components/schemas/json_api_version_value'
+      required:
+      - version
+    HubData:
+      title: HubData
+      x-stoplight:
+        id: nthprwqm1o6lv
+      type: object
+      description: The object containing information about the hub.
+      properties:
+        type:
+          $ref: '#/components/schemas/type_hub'
+          x-stoplight:
+            id: tc7fa3ac13r6h
+        id:
+          type: string
+          x-stoplight:
+            id: 9f2ogpb91zghy
+          description: The hub ID, which uniquely identifies the hub.
+        attributes:
+          type: object
+          x-stoplight:
+            id: xjchsug8c2rw7
+          description: The properties of the hub.
+          properties:
+            name:
+              type: string
+              x-stoplight:
+                id: vw18qagfrio57
+              description: A human friendly name to identify the hub.
+            extension:
+              $ref: '#/components/schemas/base_attributes_extension_object_with_schema_link'
+            region:
+              $ref: '#/components/schemas/region'
+              x-stoplight:
+                id: qy609yu6fbfsf
+        relationships:
+          type: object
+          x-stoplight:
+            id: 0skjm84h82gng
+          description: Contains links to resources that are directly related to this hub.
+          properties:
+            projects:
+              type: object
+              x-stoplight:
+                id: dj2kh2hqjxzuu
+              description: "Contains the endpoint you can use to \nlist the projects in this hub."
+              properties:
+                links:
+                  $ref: '#/components/schemas/json_api_links_related'
+            pimCollection:
+              type: object
+              x-stoplight:
+                id: q1erud678lf5y
+              description: Information on the ``id`` and ``type`` properties of a resource. This is available only for Fusion Team hubs and A360 Personal hubs.
+              properties:
+                data:
+                  $ref: '#/components/schemas/json_api_type_id'
+        links:
+          $ref: '#/components/schemas/json_api_links_self'
+      required:
+      - links
   responses:
-    401-general:
-      description: The supplied Authorization header was not valid or the supplied token scope was not acceptable. Verify Authentication and try again.
-      content:
-        application/json:
-          schema:
-            properties:
-              id:
-                type: string
-    404-general:
-      description: The specified resource was not found.
-      content:
-        application/json:
-          schema:
-            properties:
-              id:
-                type: string
     403-general:
       description: The request was successfully validated but permission is not granted, or the application has not been allowed access. Do not try again unless you resolve permissions first.
       content:
@@ -489,6 +515,14 @@ components:
                           description: Information about the service that detected the issue.
                         meta:
                           description: Additional information about the issue.
+    404-general:
+      description: The specified resource was not found.
+      content:
+        application/json:
+          schema:
+            properties:
+              id:
+                type: string
     400-general:
       description: The request could not be understood by the server due to malformed syntax or missing request headers. The client SHOULD NOT repeat the request without modifications. The response body may give an indication of what is wrong with the request.
       content:
@@ -497,48 +531,14 @@ components:
             properties:
               id:
                 type: string
-  parameters:
-    filter_extension_type:
-      name: filter[extension.type]
-      in: query
-      required: false
-      schema:
-        type: array
-        items:
-          type: string
-      description: "Filter by the extension type. \n"
-    hub_id:
-      name: hub_id
-      in: path
-      schema:
-        type: string
-      description: The unique identifier of a hub.
-      required: true
-    filter_id:
-      name: filter[id]
-      in: query
-      required: false
-      schema:
-        type: array
-        items:
-          type: string
-      description: Filter by the ``id`` of the ``ref`` target.
-    filter_name:
-      name: filter[name]
-      in: query
-      required: false
-      schema:
-        type: array
-        items:
-          type: string
-      description: Filter by the ``name`` of the ``ref`` target.
-    x-user-id:
-      name: x-user-id
-      in: header
-      required: false
-      schema:
-        type: string
-      description: In a two-legged authentication context, an app has access to all users specified by the administrator in the SaaS integrations UI. By providing this header, the API call will be limited to act only on behalf of the specified user.
+    401-general:
+      description: The supplied Authorization header was not valid or the supplied token scope was not acceptable. Verify Authentication and try again.
+      content:
+        application/json:
+          schema:
+            properties:
+              id:
+                type: string
   securitySchemes:
     3-legged:
       type: oauth2

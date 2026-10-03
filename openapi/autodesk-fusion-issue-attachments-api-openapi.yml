@@ -168,23 +168,19 @@ paths:
       - 3-legged-implicit: []
 components:
   schemas:
-    attachmentsPayload:
-      title: attachmentspayload
+    attachments:
+      title: attachments
       x-stoplight:
-        id: pki5fadhz4lko
+        id: hmg2bcxm6uj5e
       type: object
+      description: An optional array of attachments associated with this object.
       properties:
-        domainEntityId:
-          type: string
-          x-stoplight:
-            id: h11ppw3rpqquf
-          description: The unique identifier of the issue to which the attachments will be added.
         attachments:
           type: array
+          x-stoplight:
+            id: 2euxnmoyqwhop
           items:
-            $ref: '#/components/schemas/attachmentObject'
-          description: The list of attachments to be added to the issue.
-      description: Represents the payload for adding attachments to an issue.
+            $ref: '#/components/schemas/attachment'
     attachmentObject:
       title: attachmentObject
       x-stoplight:
@@ -334,19 +330,23 @@ components:
           description: 'true: The attachment has been deleted.
 
             false: (default) The attachment has not been deleted.'
-    attachments:
-      title: attachments
+    attachmentsPayload:
+      title: attachmentspayload
       x-stoplight:
-        id: hmg2bcxm6uj5e
+        id: pki5fadhz4lko
       type: object
-      description: An optional array of attachments associated with this object.
       properties:
+        domainEntityId:
+          type: string
+          x-stoplight:
+            id: h11ppw3rpqquf
+          description: The unique identifier of the issue to which the attachments will be added.
         attachments:
           type: array
-          x-stoplight:
-            id: 2euxnmoyqwhop
           items:
-            $ref: '#/components/schemas/attachment'
+            $ref: '#/components/schemas/attachmentObject'
+          description: The list of attachments to be added to the issue.
+      description: Represents the payload for adding attachments to an issue.
   securitySchemes:
     2-legged:
       type: oauth2

@@ -296,63 +296,81 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    filterclosedBy:
+    fields_internal:
+      title: fields_internal
+      x-stoplight:
+        id: 8s1gy4e6hc4pr
+      type: array
+      items:
+        $ref: '#/components/schemas/fields'
+    filterupdatedBy:
+      title: filterupdatedBy
+      x-stoplight:
+        id: ejp0bn4ejooyj
+      type: array
+      items:
+        x-stoplight:
+          id: 64w55gwhiyl87
+        type: string
+      description: Filter issues by the unique identifier of the user who updated the issue. Separate multiple values with commas.
+    filtercustomAttributes:
+      title: filtercustomAttributes
+      x-stoplight:
+        id: ja16zkxz19t3s
+      type: array
+      items:
+        x-stoplight:
+          id: nq5ihyumsc9l3
+        type: string
+    filtercreatedBy:
+      title: filtercreatedBy
+      x-stoplight:
+        id: 2drtvpglpzdg5
+      type: array
+      items:
+        type: string
+    filterissueSubtypeId:
+      title: filterissueSubtypeId
+      x-stoplight:
+        id: kbtr780g1ioa3
+      type: array
+      items:
+        x-stoplight:
+          id: zmn50bfqs15li
+        type: string
+    region:
+      title: region
+      x-stoplight:
+        id: pvg574irwjt8w
+      type: string
+      enum:
+      - US
+      - EMEA
+      - AUS
+      - CAN
+      - DEU
+      - IND
+      - JPN
+      - GBR
+      description: "Specifies where the bucket containing the object is stored. Possible values are:\n            - ``US`` - (Default) Data center for the US region.\n            - ``EMEA`` - Data center for the European Union, Middle East, and Africa.\n            - ``AUS`` -  Data center for Australia.\n            - ``CAN`` - Data center for the Canada region.\n            - ``DEU`` - Data center for the Germany region.\n            - ``IND`` - Data center for the India region.\n            - ``JPN`` - Data center for the Japan region.\n            - ``GBR`` - Data center for the United Kingdom region.\n**Note:** Beta features are subject to change. Please do not use in production environments."
+    assignedToType:
+      title: assignedToType
+      x-stoplight:
+        id: b4ak99p50pp97
+      type: string
+      enum:
+      - user
+      - company
+      - role
+    filterrootCauseId:
       title: filterrootCauseId
       x-stoplight:
-        id: jiz1hji0gp0o5
+        id: yij9lduzyuzd1
       type: array
       items:
         x-stoplight:
           id: isppzqxf1r4c9
         type: string
-    IssuesPage:
-      title: issues
-      x-stoplight:
-        id: ea3111d9b097d
-      type: object
-      properties:
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-        results:
-          type: array
-          description: The list of issues in the current page
-          items:
-            $ref: '#/components/schemas/Issue'
-    fields:
-      title: fields
-      x-stoplight:
-        id: hf9u470q32dn5
-      type: string
-      enum:
-      - id
-      - displayId
-      - title
-      - description
-      - issueTypeId
-      - issueSubtypeId
-      - status
-      - assignedTo
-      - assignedToType
-      - dueDate
-      - startDate
-      - locationId
-      - locationDetails
-      - rootCauseTitle
-      - rootCauseId
-      - permittedStatuses
-      - permittedAttributes
-      - permittedActions
-      - published
-      - commentCount
-      - openedBy
-      - openedAt
-      - closedBy
-      - closedAt
-      - createdBy
-      - createdAt
-      - updatedBy
-      - updatedAt
-      - customAttributes
     IssuePayload:
       title: issue_payload
       x-stoplight:
@@ -492,31 +510,6 @@ components:
       - title
       - issueSubtypeId
       - status
-    filterissueTypeId:
-      title: filterissueTypeId
-      x-stoplight:
-        id: wiudkmxcv9nbu
-      type: array
-      items:
-        x-stoplight:
-          id: oes0op5k8yucv
-        type: string
-    filterlocationId:
-      title: filterrootCauseId
-      x-stoplight:
-        id: o6mccjxmn3fxg
-      type: array
-      items:
-        x-stoplight:
-          id: isppzqxf1r4c9
-        type: string
-    fields_internal:
-      title: fields_internal
-      x-stoplight:
-        id: 8s1gy4e6hc4pr
-      type: array
-      items:
-        $ref: '#/components/schemas/fields'
     status:
       type: string
       x-stoplight:
@@ -532,25 +525,57 @@ components:
       - not_approved
       - in_dispute
       - closed
-    filterrootCauseId:
+    IssuesPage:
+      title: issues
+      x-stoplight:
+        id: ea3111d9b097d
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        results:
+          type: array
+          description: The list of issues in the current page
+          items:
+            $ref: '#/components/schemas/Issue'
+    sortBy_internal:
+      title: sortBy_internal
+      x-stoplight:
+        id: jf3fxohnckp1q
+      type: array
+      items:
+        $ref: '#/components/schemas/sortBy'
+    filterlocationId:
       title: filterrootCauseId
       x-stoplight:
-        id: yij9lduzyuzd1
+        id: o6mccjxmn3fxg
       type: array
       items:
         x-stoplight:
           id: isppzqxf1r4c9
         type: string
-    filterupdatedBy:
-      title: filterupdatedBy
+    Pagination:
+      type: object
+      description: The pagination object.
+      properties:
+        limit:
+          type: integer
+          description: The number of items per page.
+        offset:
+          type: integer
+          description: The page number that the results begin from.
+        totalResults:
+          type: integer
+          description: The number of items in the response.
+    filterassignedTo:
+      title: filterassignedTo
       x-stoplight:
-        id: ejp0bn4ejooyj
+        id: chrtdtj1ebfb3
       type: array
       items:
         x-stoplight:
-          id: 64w55gwhiyl87
+          id: x44vzy9svtq9p
         type: string
-      description: Filter issues by the unique identifier of the user who updated the issue. Separate multiple values with commas.
     filterlinkedDocumentUrn:
       title: filterlinkedDocumentUrn
       x-stoplight:
@@ -563,15 +588,50 @@ components:
       description: 'Retrieves pushpin issues associated with the specified files. We support all file types that are compatible with the Files tool. You need to specify the URL-encoded file item IDs. To find the file item IDs, use the Data Management API.
 
         Note that you need to specify the 3D model item ID, which retrieves all pushpins associated with all 2D sheets and views associated with the 3D model. Similarly, if you specify a specific PDF file it retrieves all the pushpin issues associated with all the PDF file pages. We do not currently support retrieving pushpin issues associated with a specific 2D sheet or view.'
-    filtersubLocationId:
-      title: filterrootCauseId
+    filterissueTypeId:
+      title: filterissueTypeId
       x-stoplight:
-        id: srhxvujb00n6a
+        id: wiudkmxcv9nbu
       type: array
       items:
         x-stoplight:
-          id: isppzqxf1r4c9
+          id: oes0op5k8yucv
         type: string
+    fields:
+      title: fields
+      x-stoplight:
+        id: hf9u470q32dn5
+      type: string
+      enum:
+      - id
+      - displayId
+      - title
+      - description
+      - issueTypeId
+      - issueSubtypeId
+      - status
+      - assignedTo
+      - assignedToType
+      - dueDate
+      - startDate
+      - locationId
+      - locationDetails
+      - rootCauseTitle
+      - rootCauseId
+      - permittedStatuses
+      - permittedAttributes
+      - permittedActions
+      - published
+      - commentCount
+      - openedBy
+      - openedAt
+      - closedBy
+      - closedAt
+      - createdBy
+      - createdAt
+      - updatedBy
+      - updatedAt
+      - customAttributes
     Issue:
       title: issue
       type: object
@@ -830,6 +890,33 @@ components:
           description: 'Not relevant
 
             '
+    filterid:
+      title: filterid
+      x-stoplight:
+        id: az48o4u31pbvt
+      type: array
+      items:
+        x-stoplight:
+          id: 9dnhirox70yde
+        type: string
+    filtersubLocationId:
+      title: filterrootCauseId
+      x-stoplight:
+        id: srhxvujb00n6a
+      type: array
+      items:
+        x-stoplight:
+          id: isppzqxf1r4c9
+        type: string
+    filterclosedBy:
+      title: filterrootCauseId
+      x-stoplight:
+        id: jiz1hji0gp0o5
+      type: array
+      items:
+        x-stoplight:
+          id: isppzqxf1r4c9
+        type: string
     sortBy:
       title: sortBy
       x-stoplight:
@@ -854,93 +941,6 @@ components:
       - issueType
       - customAttributes
       - startDate
-    filtercreatedBy:
-      title: filtercreatedBy
-      x-stoplight:
-        id: 2drtvpglpzdg5
-      type: array
-      items:
-        type: string
-    filterid:
-      title: filterid
-      x-stoplight:
-        id: az48o4u31pbvt
-      type: array
-      items:
-        x-stoplight:
-          id: 9dnhirox70yde
-        type: string
-    region:
-      title: region
-      x-stoplight:
-        id: pvg574irwjt8w
-      type: string
-      enum:
-      - US
-      - EMEA
-      - AUS
-      - CAN
-      - DEU
-      - IND
-      - JPN
-      - GBR
-      description: "Specifies where the bucket containing the object is stored. Possible values are:\n            - ``US`` - (Default) Data center for the US region.\n            - ``EMEA`` - Data center for the European Union, Middle East, and Africa.\n            - ``AUS`` -  Data center for Australia.\n            - ``CAN`` - Data center for the Canada region.\n            - ``DEU`` - Data center for the Germany region.\n            - ``IND`` - Data center for the India region.\n            - ``JPN`` - Data center for the Japan region.\n            - ``GBR`` - Data center for the United Kingdom region.\n**Note:** Beta features are subject to change. Please do not use in production environments."
-    filtercustomAttributes:
-      title: filtercustomAttributes
-      x-stoplight:
-        id: ja16zkxz19t3s
-      type: array
-      items:
-        x-stoplight:
-          id: nq5ihyumsc9l3
-        type: string
-    filterissueSubtypeId:
-      title: filterissueSubtypeId
-      x-stoplight:
-        id: kbtr780g1ioa3
-      type: array
-      items:
-        x-stoplight:
-          id: zmn50bfqs15li
-        type: string
-    assignedToType:
-      title: assignedToType
-      x-stoplight:
-        id: b4ak99p50pp97
-      type: string
-      enum:
-      - user
-      - company
-      - role
-    filterassignedTo:
-      title: filterassignedTo
-      x-stoplight:
-        id: chrtdtj1ebfb3
-      type: array
-      items:
-        x-stoplight:
-          id: x44vzy9svtq9p
-        type: string
-    Pagination:
-      type: object
-      description: The pagination object.
-      properties:
-        limit:
-          type: integer
-          description: The number of items per page.
-        offset:
-          type: integer
-          description: The page number that the results begin from.
-        totalResults:
-          type: integer
-          description: The number of items in the response.
-    sortBy_internal:
-      title: sortBy_internal
-      x-stoplight:
-        id: jf3fxohnckp1q
-      type: array
-      items:
-        $ref: '#/components/schemas/sortBy'
   parameters:
     x-ads-region:
       name: x-ads-region

@@ -270,11 +270,16 @@ components:
           type: string
           format: date-time
           description: The expiration time of the service account
-    status:
-      type: string
-      enum:
-      - ENABLED
-      - DISABLED
+    service-accounts:
+      title: Service Accounts
+      description: ''
+      type: object
+      properties:
+        serviceAccounts:
+          type: array
+          description: Contains details of a list of service accounts
+          items:
+            $ref: '#/components/schemas/service-account-details'
     create-service-account-payload:
       title: Create Service Account Payload
       x-stoplight:
@@ -295,6 +300,11 @@ components:
       - name
       - firstName
       - lastName
+    status:
+      type: string
+      enum:
+      - ENABLED
+      - DISABLED
     enable-disable-service-account-payload:
       title: Enable or Disable Service Account Request
       x-stoplight:
@@ -321,16 +331,6 @@ components:
         email:
           type: string
           description: The email address of the service account. It is of the form <serviceAccountName>@<clientID>.adskserviceaccount.autodesk.com.
-    service-accounts:
-      title: Service Accounts
-      description: ''
-      type: object
-      properties:
-        serviceAccounts:
-          type: array
-          description: Contains details of a list of service accounts
-          items:
-            $ref: '#/components/schemas/service-account-details'
   securitySchemes:
     basic-authorization:
       type: http

@@ -82,22 +82,6 @@ paths:
         id: y6swq0s0v49xx
 components:
   schemas:
-    exchange-jwt-token:
-      title: Exchange JWT Token
-      type: object
-      description: The response for exchange JWT
-      properties:
-        access_token:
-          type: string
-          description: access token value
-        token_type:
-          type: string
-          description: type of token
-          enum:
-          - Bearer
-        expires_in:
-          type: integer
-          description: access token expiry time in seconds
     scope:
       title: Scope
       type: string
@@ -123,6 +107,22 @@ components:
       - application:service_account:read
       - application:service_account_key:write
       - application:service_account_key:read
+    exchange-jwt-token:
+      title: Exchange JWT Token
+      type: object
+      description: The response for exchange JWT
+      properties:
+        access_token:
+          type: string
+          description: access token value
+        token_type:
+          type: string
+          description: type of token
+          enum:
+          - Bearer
+        expires_in:
+          type: integer
+          description: access token expiry time in seconds
     grant_type:
       type: string
       description: Must be "urn:ietf:params:oauth:grant-type:jwt-bearer".

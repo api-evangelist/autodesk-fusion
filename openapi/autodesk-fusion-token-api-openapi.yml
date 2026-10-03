@@ -317,26 +317,6 @@ paths:
         description: "The URI to redirect your users to once logout is performed. If you do not specify this parameter your users are redirected to the Autodesk Sign-in page. \n\n**Note:**  You must provide a redirect URI that is pre-registered with APS. This precaution is taken to prevent unauthorized applications from hijacking the logout process.\n"
 components:
   schemas:
-    clientId:
-      title: clientId
-      x-stoplight:
-        id: j0qsjvxe873qp
-      type: string
-      description: 'The Client ID of the application making the request.
-
-
-        **Note** This is required only for Traditional Web Apps and Server-to-Server Apps. It is not required for Desktop, Mobile, and Single-Page Apps.'
-    tokenTypeHint:
-      title: tokenTypeHint
-      x-stoplight:
-        id: ygxy8lpuc8nuh
-      type: string
-      enum:
-      - access_token
-      - refresh_token
-      description: 'The type of token to revoke. Possible values are: ``access_token`` and ``refresh_token``.
-
-        '
     Scopes:
       title: Scopes
       x-stoplight:
@@ -363,42 +343,6 @@ components:
       - account:read
       - account:write
       - openid
-    responseType:
-      title: responseType
-      x-stoplight:
-        id: pzowclrc6omzd
-      type: string
-      enum:
-      - code
-      - id_token
-      description: "The type of response you want to receive. Possible values are: \n\n -  ``code`` - Authorization code grant.\n -  ``id_token`` - OpenID Connect ID token.\n"
-    jwksKey:
-      title: jwkskey
-      type: object
-      properties:
-        kid:
-          type: string
-          description: The ID of the key. Acts as a unique identifier for a specific key within the JWKS.
-        kty:
-          type: string
-          description: The cryptographic algorithm family used with the key. Currently, always ``RSA``.
-        use:
-          type: string
-          description: 'The intended use of the public key. Possible values:
-
-
-            - ``sig`` - Verify the signature on data.
-
-            '
-        n:
-          type: string
-          description: The RSA modulus value.
-        e:
-          type: string
-          description: The RSA exponent value.
-      x-stoplight:
-        id: wp3vjpqnp0rt9
-      description: Represents a JSON Web Key Set (JWKS).
     introspectToken:
       title: Introspect Token Response
       description: Represents the payload returned for an introspect token request.
@@ -431,6 +375,35 @@ components:
           description: The ID of the user who authorized the token.
       x-stoplight:
         id: ovhi8qyq55tzp
+    clientId:
+      title: clientId
+      x-stoplight:
+        id: j0qsjvxe873qp
+      type: string
+      description: 'The Client ID of the application making the request.
+
+
+        **Note** This is required only for Traditional Web Apps and Server-to-Server Apps. It is not required for Desktop, Mobile, and Single-Page Apps.'
+    responseType:
+      title: responseType
+      x-stoplight:
+        id: pzowclrc6omzd
+      type: string
+      enum:
+      - code
+      - id_token
+      description: "The type of response you want to receive. Possible values are: \n\n -  ``code`` - Authorization code grant.\n -  ``id_token`` - OpenID Connect ID token.\n"
+    tokenTypeHint:
+      title: tokenTypeHint
+      x-stoplight:
+        id: ygxy8lpuc8nuh
+      type: string
+      enum:
+      - access_token
+      - refresh_token
+      description: 'The type of token to revoke. Possible values are: ``access_token`` and ``refresh_token``.
+
+        '
     GrantType:
       title: grantType
       x-stoplight:
@@ -539,6 +512,33 @@ components:
           id_token_signing_alg_values_supported:
           - RS256
       description: Represents a successful response to a Get OIDC Specification operation.
+    jwksKey:
+      title: jwkskey
+      type: object
+      properties:
+        kid:
+          type: string
+          description: The ID of the key. Acts as a unique identifier for a specific key within the JWKS.
+        kty:
+          type: string
+          description: The cryptographic algorithm family used with the key. Currently, always ``RSA``.
+        use:
+          type: string
+          description: 'The intended use of the public key. Possible values:
+
+
+            - ``sig`` - Verify the signature on data.
+
+            '
+        n:
+          type: string
+          description: The RSA modulus value.
+        e:
+          type: string
+          description: The RSA exponent value.
+      x-stoplight:
+        id: wp3vjpqnp0rt9
+      description: Represents a JSON Web Key Set (JWKS).
     jwks:
       title: JWKS Payload
       x-stoplight:

@@ -180,22 +180,6 @@ paths:
         - application:service_account_key:write
 components:
   schemas:
-    status:
-      type: string
-      enum:
-      - ENABLED
-      - DISABLED
-    service-account-private-key:
-      title: Service Account Private Key
-      type: object
-      description: Describes a private key
-      properties:
-        kid:
-          type: string
-          description: The ID of the private key.
-        privateKey:
-          type: string
-          description: The private key value, in PEM format.
     enable-disable-service-account-key-payload:
       title: Enable or Disable Service Account key Request
       x-stoplight:
@@ -209,6 +193,17 @@ components:
           $ref: '#/components/schemas/status'
       required:
       - status
+    service-account-private-key:
+      title: Service Account Private Key
+      type: object
+      description: Describes a private key
+      properties:
+        kid:
+          type: string
+          description: The ID of the private key.
+        privateKey:
+          type: string
+          description: The private key value, in PEM format.
     service-account-key-details:
       title: Service Account Key Details
       description: ''
@@ -241,6 +236,11 @@ components:
           description: List of service account keys
           items:
             $ref: '#/components/schemas/service-account-key-details'
+    status:
+      type: string
+      enum:
+      - ENABLED
+      - DISABLED
   securitySchemes:
     basic-authorization:
       type: http
