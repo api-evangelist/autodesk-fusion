@@ -110,31 +110,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    commentsPayload:
-      title: commentsPayload
-      x-stoplight:
-        id: g2sp2gwd04hxi
-      type: object
-      properties:
-        body:
-          type: string
-          x-stoplight:
-            id: mqohbh0gr85g9
-      required:
-      - body
-    Pagination:
-      type: object
-      description: The pagination object.
-      properties:
-        limit:
-          type: integer
-          description: The number of items per page.
-        offset:
-          type: integer
-          description: The page number that the results begin from.
-        totalResults:
-          type: integer
-          description: The number of items in the response.
     comment:
       title: comment
       type: object
@@ -208,6 +183,31 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/sortBy'
+    Pagination:
+      type: object
+      description: The pagination object.
+      properties:
+        limit:
+          type: integer
+          description: The number of items per page.
+        offset:
+          type: integer
+          description: The page number that the results begin from.
+        totalResults:
+          type: integer
+          description: The number of items in the response.
+    commentsPayload:
+      title: commentsPayload
+      x-stoplight:
+        id: g2sp2gwd04hxi
+      type: object
+      properties:
+        body:
+          type: string
+          x-stoplight:
+            id: mqohbh0gr85g9
+      required:
+      - body
     region:
       title: region
       x-stoplight:

@@ -381,55 +381,14 @@ paths:
         - data:read
 components:
   schemas:
-    ModifyHookPayload:
-      type: object
-      x-examples:
-        example-1:
-          status: active
-          autoReactivateHook: false
-          filter: $[?(@.ext=='txt')]
-          hookAttribute:
-            myfoo: 34
-            projectId: someURN
-            myobject:
-              nested: true
-      title: ModifyHookPayload
-      description: 'Specifies the details of a webhook to be updated. '
-      properties:
-        status:
-          $ref: '#/components/schemas/StatusRequest'
-        autoReactivateHook:
-          type: boolean
-          description: '``true`` - Automatically reactivate the webhook if it becomes ``inactive``.
-
-
-            ``false`` - (Default) Do not reactivate the webhook if it becomes ``inactive``.
-
-
-            See [Event Delivery Guarantees](/en/docs/webhooks/v1/developers_guide/event-delivery-guarantees/) for more information on how the webhooks service handles reactivation.'
-        filter:
-          type: string
-          minLength: 1
-          description: 'A Jsonpath expression that you can use to filter the callbacks you receive.
-
-
-            See [Callback Filtering](/en/docs/webhooks/v1/developers_guide/callback-filtering/) for more information.'
-        hookAttribute:
-          type: object
-          description: Specifies the extent to which the event is monitored. For example, if the scope is folder, the webhooks service generates a notification for the specified event occurring in any sub folder or item within that folder.
-        token:
-          type: string
-          x-stoplight:
-            id: icxzgacs5blwe
-          description: 'A secret token that is used to generate a hash signature, which is passed along with notification requests to the callback URL.
-
-
-            See the [Secret Token](/en/docs/webhooks/v1/developers_guide/basics/#secret-token) section in API Basics for more information.'
-        hookExpiry:
-          type: string
-          x-stoplight:
-            id: vem2t2o5bdt9r
-          description: The date and time the webhook will expire, formatted as an ISO 8601 date/time string. If you set this to null, the webhook will never expire.
+    sort:
+      x-stoplight:
+        id: x0dbxqcegubv1
+      description: "Specifies the sorting order of the list of webhooks by their ``lastUpdatedDate`` attribute. \n\n- ``asc`` - Ascending order.\n- ``desc`` - (Default) Descending order.\n"
+      enum:
+      - asc
+      - desc
+      title: ''
     Hook:
       x-stoplight:
         id: b96631228222b
@@ -596,63 +555,6 @@ components:
           items:
             $ref: '#/components/schemas/HookDetails'
       description: Contains the response to a Create Webhooks for All Events request.
-    statusFilter:
-      type: string
-      x-stoplight:
-        id: b6sikyj6f62vu
-      enum:
-      - active
-      - inactive
-      description: "Filters retrieved webhooks by their current state. Possible values are \n\n- ``active`` - Successfully delivered most recent event notifications. \n- ``inactive`` - Failed to deliver most recent event notification and has been deactivated.\n\nIf this parameter is not specified, the filter is not applied. See [Event Delivery Guarantees](/en/docs/webhooks/v1/developers_guide/event-delivery-guarantees/) for more information on how the state of a webhook changes.\n"
-    region:
-      type: string
-      enum:
-      - US
-      - EMEA
-      - AUS
-      - CAN
-      - DEU
-      - IND
-      - JPN
-      - GBR
-      description: 'Specifies the geographical location (region) of the server a request must be executed on. This also corresponds to the region where the Webhook data is stored. It is also the location of the server that will make requests to your callback URL. Possible values:
-
-
-        - ``US`` - (Default) Data center dedicated to serve the United States region.
-
-        - ``EMEA`` - Data center dedicated to serve the European Union, Middle East, and Africa regions.
-
-        - ``AUS`` - (Beta) Data center dedicated to serve the Australia region.
-
-        - ``CAN`` - Data center dedicated to serve the Canada region.
-
-        - ``DEU`` - Data center dedicated to serve the Germany region.
-
-        - ``IND`` - Data center dedicated to serve the India region.
-
-        - ``JPN`` - Data center dedicated to serve the Japan region.
-
-        - ``GBR`` - Data center dedicated to serve the United Kingdom region.
-
-
-        **Note:** Beta features are subject to change. Please avoid using them in production environments.
-
-        '
-    sort:
-      x-stoplight:
-        id: x0dbxqcegubv1
-      description: "Specifies the sorting order of the list of webhooks by their ``lastUpdatedDate`` attribute. \n\n- ``asc`` - Ascending order.\n- ``desc`` - (Default) Descending order.\n"
-      enum:
-      - asc
-      - desc
-      title: ''
-    status:
-      type: string
-      enum:
-      - active
-      - inactive
-      - reactivated
-      description: "Indicates the current state of the webhook. Possible values are \n\n- ``active`` - Successfully delivered most recent event notifications. \n- ``inactive`` - Failed to deliver most recent event notification and has been deactivated.\n- ``reactivated`` - Previously inactive webhook that has been reactivated. No events have occurred since reactivation.\n\nSee [Event Delivery Guarantees](/en/docs/webhooks/v1/developers_guide/event-delivery-guarantees/) for more information on how the system deactivates webhooks and subsequently reactivates them.    \n"
     Hooks:
       description: 'A paginated list of webhooks. '
       x-stoplight:
@@ -711,6 +613,40 @@ components:
           description: An array of objects, where each object represents a webhook.
           items:
             $ref: '#/components/schemas/HookDetails'
+    x-ads-region:
+      type: string
+      enum:
+      - US
+      - EMEA
+      - AUS
+      - CAN
+      - DEU
+      - IND
+      - JPN
+      - GBR
+      description: 'Specifies the geographical location (region) of the server a request must be executed on. This also corresponds to the region where the Webhook data is stored. It is also the location of the server that will make requests to your callback URL. Possible values:
+
+
+        - ``US`` - (Default) Data center dedicated to serve the United States region.
+
+        - ``EMEA`` - Data center dedicated to serve the European Union, Middle East, and Africa regions.
+
+        - ``AUS`` - (Beta) Data center dedicated to serve the Australia region.
+
+        - ``CAN`` - Data center dedicated to serve the Canada region.
+
+        - ``DEU`` - Data center dedicated to serve the Germany region.
+
+        - ``IND`` - Data center dedicated to serve the India region.
+
+        - ``JPN`` - Data center dedicated to serve the Japan region.
+
+        - ``GBR`` - Data center dedicated to serve the United Kingdom region.
+
+
+        **Note:** Beta features are subject to change. Please avoid using them in production environments.
+
+        '
     StatusRequest:
       title: status
       x-stoplight:
@@ -726,7 +662,7 @@ components:
       enum:
       - active
       - inactive
-    x-ads-region:
+    region:
       type: string
       enum:
       - US
@@ -840,6 +776,70 @@ components:
       required:
       - callbackUrl
       - scope
+    statusFilter:
+      type: string
+      x-stoplight:
+        id: b6sikyj6f62vu
+      enum:
+      - active
+      - inactive
+      description: "Filters retrieved webhooks by their current state. Possible values are \n\n- ``active`` - Successfully delivered most recent event notifications. \n- ``inactive`` - Failed to deliver most recent event notification and has been deactivated.\n\nIf this parameter is not specified, the filter is not applied. See [Event Delivery Guarantees](/en/docs/webhooks/v1/developers_guide/event-delivery-guarantees/) for more information on how the state of a webhook changes.\n"
+    ModifyHookPayload:
+      type: object
+      x-examples:
+        example-1:
+          status: active
+          autoReactivateHook: false
+          filter: $[?(@.ext=='txt')]
+          hookAttribute:
+            myfoo: 34
+            projectId: someURN
+            myobject:
+              nested: true
+      title: ModifyHookPayload
+      description: 'Specifies the details of a webhook to be updated. '
+      properties:
+        status:
+          $ref: '#/components/schemas/StatusRequest'
+        autoReactivateHook:
+          type: boolean
+          description: '``true`` - Automatically reactivate the webhook if it becomes ``inactive``.
+
+
+            ``false`` - (Default) Do not reactivate the webhook if it becomes ``inactive``.
+
+
+            See [Event Delivery Guarantees](/en/docs/webhooks/v1/developers_guide/event-delivery-guarantees/) for more information on how the webhooks service handles reactivation.'
+        filter:
+          type: string
+          minLength: 1
+          description: 'A Jsonpath expression that you can use to filter the callbacks you receive.
+
+
+            See [Callback Filtering](/en/docs/webhooks/v1/developers_guide/callback-filtering/) for more information.'
+        hookAttribute:
+          type: object
+          description: Specifies the extent to which the event is monitored. For example, if the scope is folder, the webhooks service generates a notification for the specified event occurring in any sub folder or item within that folder.
+        token:
+          type: string
+          x-stoplight:
+            id: icxzgacs5blwe
+          description: 'A secret token that is used to generate a hash signature, which is passed along with notification requests to the callback URL.
+
+
+            See the [Secret Token](/en/docs/webhooks/v1/developers_guide/basics/#secret-token) section in API Basics for more information.'
+        hookExpiry:
+          type: string
+          x-stoplight:
+            id: vem2t2o5bdt9r
+          description: The date and time the webhook will expire, formatted as an ISO 8601 date/time string. If you set this to null, the webhook will never expire.
+    status:
+      type: string
+      enum:
+      - active
+      - inactive
+      - reactivated
+      description: "Indicates the current state of the webhook. Possible values are \n\n- ``active`` - Successfully delivered most recent event notifications. \n- ``inactive`` - Failed to deliver most recent event notification and has been deactivated.\n- ``reactivated`` - Previously inactive webhook that has been reactivated. No events have occurred since reactivation.\n\nSee [Event Delivery Guarantees](/en/docs/webhooks/v1/developers_guide/event-delivery-guarantees/) for more information on how the system deactivates webhooks and subsequently reactivates them.    \n"
     HookDetails:
       description: Contains the details of a webhook.
       x-stoplight:
@@ -962,6 +962,13 @@ components:
           minLength: 1
           description: A link to itself.
   parameters:
+    status:
+      name: status
+      in: query
+      required: false
+      schema:
+        $ref: '#/components/schemas/statusFilter'
+      description: "Filters retrieved webhooks by their current state. Possible values are \n\n- ``active`` - Successfully delivered most recent event notifications. \n- ``inactive`` - Failed to deliver most recent event notification and has been deactivated.\n- ``reactivated`` - Previously inactive but was reactivated. No events have occurred since reactivation.\n\nIf this parameter is not specified, the filter is not applied. See [Event Delivery Guarantees](/en/docs/webhooks/v1/developers_guide/event-delivery-guarantees/) for more information on how the state of a webhook changes.\n"
     x-ads-region:
       name: x-ads-region
       in: header
@@ -969,13 +976,13 @@ components:
       schema:
         $ref: '#/components/schemas/x-ads-region'
       description: "Specifies the geographical location (region) of the server the request must be executed on. This also corresponds to the region where the Webhook data is stored. It is also the location of the server that will make requests to your callback URL. Possible values:\n\n- ``US`` - (Default) Data center dedicated to serve the United States region.\n- ``EMEA`` - Data center dedicated to serve the European Union, Middle East, and Africa regions.\n- ``AUS`` - (Beta) Data center dedicated to serve the Australia region.\n- ``CAN`` - Data center dedicated to serve the Canada region.\n- ``DEU`` - Data center dedicated to serve the Germany region.\n- ``IND`` - Data center dedicated to serve the India region.\n- ``JPN`` - Data center dedicated to serve the Japan region.\n- ``GBR`` - Data center dedicated to serve the United Kingdom region.\n\n**Note:** \n\n1. Beta features are subject to change. Please avoid using them in production environments.\n2. You can also use the ``region`` query string parameter to specify the region. If you specify the ``region`` query string parameter as well as the ``x-ads-region`` header, the ``x-ads-region`` header takes precedence.\n"
-    event:
-      name: event
-      in: path
-      required: true
+    sort:
+      name: sort
+      in: query
+      required: false
       schema:
-        type: string
-      description: The ID of the event the webhook monitors.  See [Supported Events](/en/docs/webhooks/v1/reference/events/) for a full list of events.
+        $ref: '#/components/schemas/sort'
+      description: "Specifies the sorting order of the list of webhooks by their ``lastUpdatedDate`` attribute. \n\n- ``asc`` - Ascending order.\n- ``desc`` - (Default) Descending order. \n"
     system:
       name: system
       in: path
@@ -985,27 +992,6 @@ components:
       description: 'The ID of the system the webhook applies to. For example data for Data Management. See [Supported Events](/en/docs/webhooks/v1/reference/events/) for a full list of supported systems and their IDs.
 
         '
-    pageState:
-      name: pageState
-      in: query
-      required: false
-      schema:
-        type: string
-      description: Base64 encoded string to fetch the next page of the list of webhooks. If you do not provide this parameter, the first page of results is returned. Use the ``next`` value from the previous response to fetch subsequent pages.
-    status:
-      name: status
-      in: query
-      required: false
-      schema:
-        $ref: '#/components/schemas/statusFilter'
-      description: "Filters retrieved webhooks by their current state. Possible values are \n\n- ``active`` - Successfully delivered most recent event notifications. \n- ``inactive`` - Failed to deliver most recent event notification and has been deactivated.\n- ``reactivated`` - Previously inactive but was reactivated. No events have occurred since reactivation.\n\nIf this parameter is not specified, the filter is not applied. See [Event Delivery Guarantees](/en/docs/webhooks/v1/developers_guide/event-delivery-guarantees/) for more information on how the state of a webhook changes.\n"
-    sort:
-      name: sort
-      in: query
-      required: false
-      schema:
-        $ref: '#/components/schemas/sort'
-      description: "Specifies the sorting order of the list of webhooks by their ``lastUpdatedDate`` attribute. \n\n- ``asc`` - Ascending order.\n- ``desc`` - (Default) Descending order. \n"
     region:
       name: region
       in: query
@@ -1013,15 +999,21 @@ components:
       schema:
         $ref: '#/components/schemas/region'
       description: "Specifies the geographical location (region) of the server the request must be executed on. This also corresponds to the region where the Webhook data is stored. It is also the location of the server that will make request to your callback URL. Possible values:\n\n- ``US`` - (Default) Data center dedicated to serve the United States region.\n- ``EMEA`` - Data center dedicated to serve the European Union, Middle East, and Africa regions.\n- ``AUS`` - (Beta) Data center dedicated to serve the Australia region.\n- ``CAN`` - Data center dedicated to serve the Canada region.\n- ``DEU`` - Data center dedicated to serve the Germany region.\n- ``IND`` - Data center dedicated to serve the India region.\n- ``JPN`` - Data center dedicated to serve the Japan region.\n- ``GBR`` - Data center dedicated to serve the United Kingdom region.\n\n**Note:** \n\n1. Beta features are subject to change. Please avoid using them in production environments.\n2. You can also use the ``x-ads-region`` header to specify the region. If you specify the ``region`` query string parameter as well as the ``x-ads-region`` header, the ``x-ads-region`` header takes precedence.\n"
+    event:
+      name: event
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The ID of the event the webhook monitors.  See [Supported Events](/en/docs/webhooks/v1/reference/events/) for a full list of events.
+    pageState:
+      name: pageState
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Base64 encoded string to fetch the next page of the list of webhooks. If you do not provide this parameter, the first page of results is returned. Use the ``next`` value from the previous response to fetch subsequent pages.
   responses:
-    403-general:
-      description: Access denied regardless of authorization status.
-      content:
-        application/json:
-          schema:
-            properties:
-              id:
-                type: string
     404-general:
       description: The specified resource was not found.
       content:
@@ -1032,6 +1024,14 @@ components:
                 type: string
     400-general:
       description: The request is invalid.
+      content:
+        application/json:
+          schema:
+            properties:
+              id:
+                type: string
+    403-general:
+      description: Access denied regardless of authorization status.
       content:
         application/json:
           schema:

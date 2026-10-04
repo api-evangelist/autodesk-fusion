@@ -343,38 +343,6 @@ components:
       - account:read
       - account:write
       - openid
-    introspectToken:
-      title: Introspect Token Response
-      description: Represents the payload returned for an introspect token request.
-      required:
-      - active
-      - client_id
-      - exp
-      - scope
-      type: object
-      properties:
-        active:
-          type: boolean
-          description: '``true``: The token is active.
-
-
-            ``false``: The token is expired, invalid, or revoked.
-
-            '
-        scope:
-          type: string
-          description: A URL-encoded, space separated list of scopes associated with the token.
-        client_id:
-          type: string
-          description: The Client ID of the application associated with the token.
-        exp:
-          type: integer
-          description: The expiration time of the token, represented as a Unix timestamp.
-        userid:
-          type: string
-          description: The ID of the user who authorized the token.
-      x-stoplight:
-        id: ovhi8qyq55tzp
     clientId:
       title: clientId
       x-stoplight:
@@ -384,36 +352,6 @@ components:
 
 
         **Note** This is required only for Traditional Web Apps and Server-to-Server Apps. It is not required for Desktop, Mobile, and Single-Page Apps.'
-    responseType:
-      title: responseType
-      x-stoplight:
-        id: pzowclrc6omzd
-      type: string
-      enum:
-      - code
-      - id_token
-      description: "The type of response you want to receive. Possible values are: \n\n -  ``code`` - Authorization code grant.\n -  ``id_token`` - OpenID Connect ID token.\n"
-    tokenTypeHint:
-      title: tokenTypeHint
-      x-stoplight:
-        id: ygxy8lpuc8nuh
-      type: string
-      enum:
-      - access_token
-      - refresh_token
-      description: 'The type of token to revoke. Possible values are: ``access_token`` and ``refresh_token``.
-
-        '
-    GrantType:
-      title: grantType
-      x-stoplight:
-        id: qabq62fprc7su
-      type: string
-      enum:
-      - client_credentials
-      - authorization_code
-      - refresh_token
-      description: "Specifies the grant type you are requesting the code for. Possible values are: \n\n- ``client_credentials`` -  For a 2-legged access token.\n- ``authorization_code`` - For a 3-legged access token.\n- ``refresh_token`` - For a refresh token.\n"
     OidcSpec:
       title: OIDC Specification Response
       type: object
@@ -512,6 +450,73 @@ components:
           id_token_signing_alg_values_supported:
           - RS256
       description: Represents a successful response to a Get OIDC Specification operation.
+    introspectToken:
+      title: Introspect Token Response
+      description: Represents the payload returned for an introspect token request.
+      required:
+      - active
+      - client_id
+      - exp
+      - scope
+      type: object
+      properties:
+        active:
+          type: boolean
+          description: '``true``: The token is active.
+
+
+            ``false``: The token is expired, invalid, or revoked.
+
+            '
+        scope:
+          type: string
+          description: A URL-encoded, space separated list of scopes associated with the token.
+        client_id:
+          type: string
+          description: The Client ID of the application associated with the token.
+        exp:
+          type: integer
+          description: The expiration time of the token, represented as a Unix timestamp.
+        userid:
+          type: string
+          description: The ID of the user who authorized the token.
+      x-stoplight:
+        id: ovhi8qyq55tzp
+    GrantType:
+      title: grantType
+      x-stoplight:
+        id: qabq62fprc7su
+      type: string
+      enum:
+      - client_credentials
+      - authorization_code
+      - refresh_token
+      description: "Specifies the grant type you are requesting the code for. Possible values are: \n\n- ``client_credentials`` -  For a 2-legged access token.\n- ``authorization_code`` - For a 3-legged access token.\n- ``refresh_token`` - For a refresh token.\n"
+    jwks:
+      title: JWKS Payload
+      x-stoplight:
+        id: 54hqs1b4gv5fy
+      type: object
+      description: Represents a successful response to a Get JWKS operation.
+      properties:
+        keys:
+          type: array
+          x-stoplight:
+            id: mrc2tc7y5gded
+          description: An array of objects where each object represents a JSON Web Key Set (JWKS).
+          items:
+            $ref: '#/components/schemas/jwksKey'
+    tokenTypeHint:
+      title: tokenTypeHint
+      x-stoplight:
+        id: ygxy8lpuc8nuh
+      type: string
+      enum:
+      - access_token
+      - refresh_token
+      description: 'The type of token to revoke. Possible values are: ``access_token`` and ``refresh_token``.
+
+        '
     jwksKey:
       title: jwkskey
       type: object
@@ -539,20 +544,15 @@ components:
       x-stoplight:
         id: wp3vjpqnp0rt9
       description: Represents a JSON Web Key Set (JWKS).
-    jwks:
-      title: JWKS Payload
+    responseType:
+      title: responseType
       x-stoplight:
-        id: 54hqs1b4gv5fy
-      type: object
-      description: Represents a successful response to a Get JWKS operation.
-      properties:
-        keys:
-          type: array
-          x-stoplight:
-            id: mrc2tc7y5gded
-          description: An array of objects where each object represents a JSON Web Key Set (JWKS).
-          items:
-            $ref: '#/components/schemas/jwksKey'
+        id: pzowclrc6omzd
+      type: string
+      enum:
+      - code
+      - id_token
+      description: "The type of response you want to receive. Possible values are: \n\n -  ``code`` - Authorization code grant.\n -  ``id_token`` - OpenID Connect ID token.\n"
   parameters:
     Authorization:
       name: Authorization

@@ -148,6 +148,29 @@ paths:
         description: The record number to start returning results from, used for pagination. For example, if limit=20 and offset=20, the request retrieves the second page of results.
 components:
   schemas:
+    userProjectSortBy_internal:
+      title: userProjectSortBy_internal
+      x-stoplight:
+        id: lcab8shnq3bqn
+      type: array
+      items:
+        $ref: '#/components/schemas/userProjectSortBy'
+    userProjectAccessLevels_internal:
+      title: userProjectAccessLevels_internal
+      x-stoplight:
+        id: 6k9hozeod0uw9
+      type: array
+      items:
+        $ref: '#/components/schemas/filterUserProjectsAccessLevels'
+    filterPlatform_internal:
+      title: filterPlatform_internal
+      x-stoplight:
+        id: 07osm8uexhmzc
+      type: array
+      items:
+        $ref: '#/components/schemas/platform'
+        x-stoplight:
+          id: blbjael8tal1d
     filterTextMatch:
       title: filterTextMatch
       x-stoplight:
@@ -158,33 +181,11 @@ components:
       - startsWith
       - endsWith
       - equals
-    filterUserProjectsAccessLevels:
-      title: filterUserProjectsAccessLevels
-      x-stoplight:
-        id: puy9b77q6msat
-      enum:
-      - projectMember
-      - projectAdmin
-      description: ' Possible values: projectAdmin, projectMember.'
-    UserProjectsPage:
-      title: UserProjectsPage
-      x-stoplight:
-        id: 21k3qjv4voxsj
-      type: object
-      properties:
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-        results:
-          type: array
-          x-stoplight:
-            id: gfyprxttv09sa
-          items:
-            $ref: '#/components/schemas/UserProject'
-    filterClassification_internal:
-      title: filterClassification_internal
+    filterType:
+      title: filterType
       type: array
       items:
-        $ref: '#/components/schemas/classification'
+        type: string
     platform:
       title: platform
       x-stoplight:
@@ -193,6 +194,24 @@ components:
       enum:
       - acc
       - bim360
+    filterClassification_internal:
+      title: filterClassification_internal
+      type: array
+      items:
+        $ref: '#/components/schemas/classification'
+    filterID:
+      title: filterID
+      type: array
+      items:
+        type: string
+    filterUserProjectsAccessLevels:
+      title: filterUserProjectsAccessLevels
+      x-stoplight:
+        id: puy9b77q6msat
+      enum:
+      - projectMember
+      - projectAdmin
+      description: ' Possible values: projectAdmin, projectMember.'
     classification:
       title: classification
       x-stoplight:
@@ -234,16 +253,6 @@ components:
         - ``JPN`` - Data center for the Japan region.
 
         - ``GBR`` - Data center for the United Kingdom region.'
-    status:
-      title: status
-      x-stoplight:
-        id: 7imcqgahx8744
-      type: string
-      enum:
-      - active
-      - pending
-      - archived
-      - suspended
     Pagination:
       title: Pagination
       x-stoplight:
@@ -271,15 +280,6 @@ components:
           x-stoplight:
             id: rhoc949ms1w0p
       description: "\tContains pagination details for the records returned by the endpoint."
-    filterPlatform_internal:
-      title: filterPlatform_internal
-      x-stoplight:
-        id: 07osm8uexhmzc
-      type: array
-      items:
-        $ref: '#/components/schemas/platform'
-        x-stoplight:
-          id: blbjael8tal1d
     UserProject:
       title: UserProjects
       x-stoplight:
@@ -424,13 +424,6 @@ components:
               type: boolean
               x-stoplight:
                 id: mpbt2fkkr3l82
-    status_internal:
-      title: status_internal
-      type: array
-      items:
-        $ref: '#/components/schemas/status'
-        x-stoplight:
-          id: 3sxoqp01jo0t2
     userProjectFields:
       title: userProjectFields
       x-stoplight:
@@ -466,13 +459,44 @@ components:
       - contractType
       - currentPhase
       description: 'Possible values: accessLevels, accountId, addressLine1, addressLine2, city, constructionType, country, createdAt, classification, deliveryMethod, endDate, imageUrl, jobNumber, latitude, longitude, name, platform, postalCode, projectValue, sheetCount, startDate, stateOrProvince, status, thumbnailImageUrl, timezone, type, updatedAt, contractType and currentPhase.'
-    userProjectSortBy_internal:
-      title: userProjectSortBy_internal
+    UserProjectsPage:
+      title: UserProjectsPage
       x-stoplight:
-        id: lcab8shnq3bqn
+        id: 21k3qjv4voxsj
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        results:
+          type: array
+          x-stoplight:
+            id: gfyprxttv09sa
+          items:
+            $ref: '#/components/schemas/UserProject'
+    userProjectFields_internal:
+      title: userProjectFields_Internal
+      x-stoplight:
+        id: 05hzynqgt6ohg
       type: array
       items:
-        $ref: '#/components/schemas/userProjectSortBy'
+        $ref: '#/components/schemas/userProjectFields'
+    status_internal:
+      title: status_internal
+      type: array
+      items:
+        $ref: '#/components/schemas/status'
+        x-stoplight:
+          id: 3sxoqp01jo0t2
+    status:
+      title: status
+      x-stoplight:
+        id: 7imcqgahx8744
+      type: string
+      enum:
+      - active
+      - pending
+      - archived
+      - suspended
     userProjectSortBy:
       title: userProjectSortBy
       x-stoplight:
@@ -505,30 +529,6 @@ components:
       - createdAt desc
       - updatedAt desc
       - platform desc
-    userProjectFields_internal:
-      title: userProjectFields_Internal
-      x-stoplight:
-        id: 05hzynqgt6ohg
-      type: array
-      items:
-        $ref: '#/components/schemas/userProjectFields'
-    filterType:
-      title: filterType
-      type: array
-      items:
-        type: string
-    userProjectAccessLevels_internal:
-      title: userProjectAccessLevels_internal
-      x-stoplight:
-        id: 6k9hozeod0uw9
-      type: array
-      items:
-        $ref: '#/components/schemas/filterUserProjectsAccessLevels'
-    filterID:
-      title: filterID
-      type: array
-      items:
-        type: string
   securitySchemes:
     2-legged:
       type: oauth2

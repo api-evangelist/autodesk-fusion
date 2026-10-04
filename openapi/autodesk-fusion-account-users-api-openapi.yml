@@ -565,6 +565,108 @@ paths:
         description: 'The index of the first record to return. Used for pagination in combination with the limit parameter.  Example: limit=20 and offset=40 returns records 41–60.'
 components:
   schemas:
+    UserImport:
+      title: UserImportResponse
+      x-stoplight:
+        id: t8o0t7wpee7l3
+      type: object
+      properties:
+        success:
+          type: integer
+          x-stoplight:
+            id: vfh38q2zhm7vr
+          description: Import success user count
+        failure:
+          type: integer
+          x-stoplight:
+            id: wbnrw0ceazwkh
+          description: Import failure user count
+        success_items:
+          type: array
+          x-stoplight:
+            id: b91r3bdiu4916
+          description: Array of user objects that were successfully imported
+          items:
+            $ref: '#/components/schemas/User'
+            x-stoplight:
+              id: yreisjgu8c84e
+        failure_items:
+          type: array
+          x-stoplight:
+            id: spdgokc6tgfr3
+          description: Array of user objects that failed to import, along with content and error information
+          items:
+            $ref: '#/components/schemas/User'
+            x-stoplight:
+              id: h3qbrhrr4tpef
+    filterProductKey:
+      title: filterProductKey
+      x-stoplight:
+        id: ukcd26xywubto
+      description: 'Filters the list of products by product key — a machine-readable identifier for an ACC product (such as docs, build, or cost).
+
+        You can specify one or more keys to return only those products the user is associated with.
+
+
+        Example: filter[key]=docs,build
+
+
+        Possible values: accountAdministration, autoSpecs, build, buildingConnected, capitalPlanning, cloudWorksharing, cost, designCollaboration, docs, financials, insight, modelCoordination, projectAdministration, takeoff, and workshopxr.'
+      enum:
+      - accountAdministration
+      - autoSpecs
+      - build
+      - buildingConnected
+      - capitalPlanning
+      - cloudWorksharing
+      - cost
+      - designCollaboration
+      - docs
+      - financials
+      - insight
+      - modelCoordination
+      - projectAdministration
+      - takeoff
+      - workshopxr
+    UserPatchPayload:
+      title: UserPatchPayload
+      x-stoplight:
+        id: xw8ty4k0es17i
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/userPatchStatus'
+          x-stoplight:
+            id: n6e75bp9t1fl3
+          description: New status to set the user to (only if not currently pending or not_invited)
+        company_id:
+          type: string
+          x-stoplight:
+            id: f3n7hx18s62dv
+          description: The user’s default company ID in BIM 360
+    filterRoleStatus_internal:
+      title: filterRoleStatus_internal
+      x-stoplight:
+        id: unyj4odpflg05
+      type: array
+      items:
+        $ref: '#/components/schemas/filterRoleStatus'
+    filterProductSort:
+      title: filterProductSort
+      x-stoplight:
+        id: a3dgak2yoggvo
+      description: 'The list of fields to sort by.
+
+        Each property can be followed by a direction modifier of either asc (ascending) or desc (descending). The default is asc.
+
+
+        Possible values: name.
+
+
+        Default is the order in database.'
+      enum:
+      - name asc
+      - name desc
     filterTextMatch:
       title: filterTextMatch
       x-stoplight:
@@ -625,49 +727,11 @@ components:
               id: 15ubmz0q77t5g
             type: string
       description: The requested page of roles associated with the user.
-    filterProductField_internal:
-      title: filterProductField_internal
-      x-stoplight:
-        id: fbqg01p4ahszs
+    filterID:
+      title: filterID
       type: array
       items:
-        $ref: '#/components/schemas/filterProductField'
-    filterRoleSort:
-      title: filterRoleSort
-      x-stoplight:
-        id: xuzincefhreh7
-      description: 'Sorts the results by one or more fields.
-
-        Each field can be followed by a direction modifier:
-
-
-        asc – Ascending order (default)
-
-
-        desc – Descending order
-
-
-        Possible values: name, createdAt, updatedAt.
-
-
-        Default sort: name asc
-
-
-        Example: sort=name,updatedAt desc'
-      enum:
-      - name asc
-      - createdAt asc
-      - updatedAt asc
-      - name desc
-      - createdAt desc
-      - updatedAt desc
-    filterRoleField_internal:
-      title: filterRoleField_internal
-      x-stoplight:
-        id: yes8ynadosrxv
-      type: array
-      items:
-        $ref: '#/components/schemas/filterRoleField'
+        type: string
     filterProductSort_internal:
       title: filterProductSort_internal
       x-stoplight:
@@ -675,17 +739,63 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/filterProductSort'
-    filterProductField:
-      title: filterProductField
+    ProductsPage:
+      title: ProductsPage
       x-stoplight:
-        id: 3bm7y2gmfkzn9
-      description: 'List of fields to return in the response. Defaults to all fields.
+        id: xsphqarjuww5w
+      type: object
+      description: A list of products associated with the user
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        results:
+          type: array
+          x-stoplight:
+            id: 9a90u1uk439nr
+          items:
+            $ref: '#/components/schemas/Product'
+    filterRoleField:
+      title: filterRoleField
+      x-stoplight:
+        id: z2dxkedg44fnc
+      description: 'A comma-separated list of response fields to include. Defaults to all fields if not specified.
 
-        Possible values: projectIds, name and icon.'
+        Use this parameter to reduce the response size by retrieving only the fields you need.
+
+
+        Possible values:
+
+
+        projectIds – Projects where the user holds this role
+
+
+        name – Role name
+
+
+        status – Role status (active or inactive)
+
+
+        key – Internal key used to translate the role name
+
+
+        createdAt – Timestamp when the role was created
+
+
+        updatedAt – Timestamp when the role was last updated'
       enum:
       - projectIds
       - name
-      - icon
+      - status
+      - key
+      - createdAt
+      - updatedAt
+    filterProductField_internal:
+      title: filterProductField_internal
+      x-stoplight:
+        id: fbqg01p4ahszs
+      type: array
+      items:
+        $ref: '#/components/schemas/filterProductField'
     Region:
       title: Region
       x-stoplight:
@@ -717,89 +827,6 @@ components:
         - ``JPN`` - Data center for the Japan region.
 
         - ``GBR`` - Data center for the United Kingdom region.'
-    RolesPage:
-      title: RolesPage
-      x-stoplight:
-        id: 8kwl7yuzi534s
-      type: object
-      properties:
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-        results:
-          type: array
-          x-stoplight:
-            id: 2dyfcimzwbq83
-          items:
-            $ref: '#/components/schemas/Role'
-      description: A list of requested roles associated with the user
-    Pagination:
-      title: Pagination
-      x-stoplight:
-        id: q1bi13503pl18
-      type: object
-      properties:
-        limit:
-          type: integer
-          x-stoplight:
-            id: 8izi1f176ek68
-        offset:
-          type: integer
-          x-stoplight:
-            id: v1vdhhbk5vhtj
-        totalResults:
-          type: integer
-          x-stoplight:
-            id: o7y9s28pvovds
-        nextUrl:
-          type: string
-          x-stoplight:
-            id: egebyg74p2y51
-        previousUrl:
-          type: string
-          x-stoplight:
-            id: rhoc949ms1w0p
-      description: "\tContains pagination details for the records returned by the endpoint."
-    filterProductKey_internal:
-      title: filterProductKey_internal
-      x-stoplight:
-        id: ia0aei2c8mzor
-      type: array
-      items:
-        $ref: '#/components/schemas/filterProductKey'
-    UserImport:
-      title: UserImportResponse
-      x-stoplight:
-        id: t8o0t7wpee7l3
-      type: object
-      properties:
-        success:
-          type: integer
-          x-stoplight:
-            id: vfh38q2zhm7vr
-          description: Import success user count
-        failure:
-          type: integer
-          x-stoplight:
-            id: wbnrw0ceazwkh
-          description: Import failure user count
-        success_items:
-          type: array
-          x-stoplight:
-            id: b91r3bdiu4916
-          description: Array of user objects that were successfully imported
-          items:
-            $ref: '#/components/schemas/User'
-            x-stoplight:
-              id: yreisjgu8c84e
-        failure_items:
-          type: array
-          x-stoplight:
-            id: spdgokc6tgfr3
-          description: Array of user objects that failed to import, along with content and error information
-          items:
-            $ref: '#/components/schemas/User'
-            x-stoplight:
-              id: h3qbrhrr4tpef
     UserPayload:
       title: UserPayload
       x-stoplight:
@@ -862,29 +889,6 @@ components:
           description: Short description about the user
       required:
       - email
-    userPatchStatus:
-      title: userPatchStatus
-      x-stoplight:
-        id: vy3l7dr8yvvt4
-      type: string
-      enum:
-      - active
-      - inactive
-    ProductsPage:
-      title: ProductsPage
-      x-stoplight:
-        id: xsphqarjuww5w
-      type: object
-      description: A list of products associated with the user
-      properties:
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-        results:
-          type: array
-          x-stoplight:
-            id: 9a90u1uk439nr
-          items:
-            $ref: '#/components/schemas/Product'
     filterRoleStatus:
       title: filterRoleStatus
       x-stoplight:
@@ -898,13 +902,6 @@ components:
       enum:
       - active
       - inactive
-    filterRoleStatus_internal:
-      title: filterRoleStatus_internal
-      x-stoplight:
-        id: unyj4odpflg05
-      type: array
-      items:
-        $ref: '#/components/schemas/filterRoleStatus'
     Product:
       title: Product
       x-stoplight:
@@ -947,6 +944,63 @@ components:
             x-stoplight:
               id: 5it7z4q34r99z
             type: string
+    Pagination:
+      title: Pagination
+      x-stoplight:
+        id: q1bi13503pl18
+      type: object
+      properties:
+        limit:
+          type: integer
+          x-stoplight:
+            id: 8izi1f176ek68
+        offset:
+          type: integer
+          x-stoplight:
+            id: v1vdhhbk5vhtj
+        totalResults:
+          type: integer
+          x-stoplight:
+            id: o7y9s28pvovds
+        nextUrl:
+          type: string
+          x-stoplight:
+            id: egebyg74p2y51
+        previousUrl:
+          type: string
+          x-stoplight:
+            id: rhoc949ms1w0p
+      description: "\tContains pagination details for the records returned by the endpoint."
+    RolesPage:
+      title: RolesPage
+      x-stoplight:
+        id: 8kwl7yuzi534s
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        results:
+          type: array
+          x-stoplight:
+            id: 2dyfcimzwbq83
+          items:
+            $ref: '#/components/schemas/Role'
+      description: A list of requested roles associated with the user
+    userPatchStatus:
+      title: userPatchStatus
+      x-stoplight:
+        id: vy3l7dr8yvvt4
+      type: string
+      enum:
+      - active
+      - inactive
+    filterProductKey_internal:
+      title: filterProductKey_internal
+      x-stoplight:
+        id: ia0aei2c8mzor
+      type: array
+      items:
+        $ref: '#/components/schemas/filterProductKey'
     User:
       title: User
       x-stoplight:
@@ -1034,6 +1088,13 @@ components:
         updated_at:
           type: string
           description: YYYY-MM-DDThh:mm:ss.sssZ format
+    filterRoleField_internal:
+      title: filterRoleField_internal
+      x-stoplight:
+        id: yes8ynadosrxv
+      type: array
+      items:
+        $ref: '#/components/schemas/filterRoleField'
     filterRoleSort_internal:
       title: filterRoleSort_internal
       x-stoplight:
@@ -1041,107 +1102,46 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/filterRoleSort'
-    UserPatchPayload:
-      title: UserPatchPayload
+    filterRoleSort:
+      title: filterRoleSort
       x-stoplight:
-        id: xw8ty4k0es17i
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/userPatchStatus'
-          x-stoplight:
-            id: n6e75bp9t1fl3
-          description: New status to set the user to (only if not currently pending or not_invited)
-        company_id:
-          type: string
-          x-stoplight:
-            id: f3n7hx18s62dv
-          description: The user’s default company ID in BIM 360
-    filterProductSort:
-      title: filterProductSort
-      x-stoplight:
-        id: a3dgak2yoggvo
-      description: 'The list of fields to sort by.
+        id: xuzincefhreh7
+      description: 'Sorts the results by one or more fields.
 
-        Each property can be followed by a direction modifier of either asc (ascending) or desc (descending). The default is asc.
+        Each field can be followed by a direction modifier:
 
 
-        Possible values: name.
+        asc – Ascending order (default)
 
 
-        Default is the order in database.'
+        desc – Descending order
+
+
+        Possible values: name, createdAt, updatedAt.
+
+
+        Default sort: name asc
+
+
+        Example: sort=name,updatedAt desc'
       enum:
       - name asc
+      - createdAt asc
+      - updatedAt asc
       - name desc
-    filterID:
-      title: filterID
-      type: array
-      items:
-        type: string
-    filterProductKey:
-      title: filterProductKey
+      - createdAt desc
+      - updatedAt desc
+    filterProductField:
+      title: filterProductField
       x-stoplight:
-        id: ukcd26xywubto
-      description: 'Filters the list of products by product key — a machine-readable identifier for an ACC product (such as docs, build, or cost).
+        id: 3bm7y2gmfkzn9
+      description: 'List of fields to return in the response. Defaults to all fields.
 
-        You can specify one or more keys to return only those products the user is associated with.
-
-
-        Example: filter[key]=docs,build
-
-
-        Possible values: accountAdministration, autoSpecs, build, buildingConnected, capitalPlanning, cloudWorksharing, cost, designCollaboration, docs, financials, insight, modelCoordination, projectAdministration, takeoff, and workshopxr.'
-      enum:
-      - accountAdministration
-      - autoSpecs
-      - build
-      - buildingConnected
-      - capitalPlanning
-      - cloudWorksharing
-      - cost
-      - designCollaboration
-      - docs
-      - financials
-      - insight
-      - modelCoordination
-      - projectAdministration
-      - takeoff
-      - workshopxr
-    filterRoleField:
-      title: filterRoleField
-      x-stoplight:
-        id: z2dxkedg44fnc
-      description: 'A comma-separated list of response fields to include. Defaults to all fields if not specified.
-
-        Use this parameter to reduce the response size by retrieving only the fields you need.
-
-
-        Possible values:
-
-
-        projectIds – Projects where the user holds this role
-
-
-        name – Role name
-
-
-        status – Role status (active or inactive)
-
-
-        key – Internal key used to translate the role name
-
-
-        createdAt – Timestamp when the role was created
-
-
-        updatedAt – Timestamp when the role was last updated'
+        Possible values: projectIds, name and icon.'
       enum:
       - projectIds
       - name
-      - status
-      - key
-      - createdAt
-      - updatedAt
+      - icon
   securitySchemes:
     2-legged:
       type: oauth2

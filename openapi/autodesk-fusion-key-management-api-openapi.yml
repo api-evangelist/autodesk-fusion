@@ -193,17 +193,21 @@ components:
           $ref: '#/components/schemas/status'
       required:
       - status
-    service-account-private-key:
-      title: Service Account Private Key
+    service-account-keys:
+      title: Service Account Keys
       type: object
-      description: Describes a private key
+      description: Contains details of a list of service account keys
       properties:
-        kid:
-          type: string
-          description: The ID of the private key.
-        privateKey:
-          type: string
-          description: The private key value, in PEM format.
+        keys:
+          type: array
+          description: List of service account keys
+          items:
+            $ref: '#/components/schemas/service-account-key-details'
+    status:
+      type: string
+      enum:
+      - ENABLED
+      - DISABLED
     service-account-key-details:
       title: Service Account Key Details
       description: ''
@@ -226,21 +230,17 @@ components:
           type: string
           format: date-time
           description: This is the most recent time an access token was generated for this service account key, in UTC format
-    service-account-keys:
-      title: Service Account Keys
+    service-account-private-key:
+      title: Service Account Private Key
       type: object
-      description: Contains details of a list of service account keys
+      description: Describes a private key
       properties:
-        keys:
-          type: array
-          description: List of service account keys
-          items:
-            $ref: '#/components/schemas/service-account-key-details'
-    status:
-      type: string
-      enum:
-      - ENABLED
-      - DISABLED
+        kid:
+          type: string
+          description: The ID of the private key.
+        privateKey:
+          type: string
+          description: The private key value, in PEM format.
   securitySchemes:
     basic-authorization:
       type: http
