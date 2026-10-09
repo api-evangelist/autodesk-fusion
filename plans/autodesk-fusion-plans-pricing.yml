@@ -1,3 +1,8 @@
+# Provenance stamped 2026-10-07 (roadmap#943): written by an API Evangelist sweep (dated 2026-06-13 by the file itself), not
+# harvested from the provider. `method: generated` so the economics campaign may replace it with a
+# dated, verbatim transcription; every figure below is unverified until it does.
+method: generated
+generated: '2026-06-13'
 name: Autodesk Fusion Plans and Pricing
 description: >-
   Autodesk Fusion offers subscription-based pricing for its cloud CAD/CAM/CAE
@@ -105,3 +110,41 @@ notes: >-
   Automation API covers the full duration of job processing including file
   transfer time. Contact Autodesk sales for volume licensing or enterprise
   agreements.
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - free
+  - subscription
+  units: []
+  plans:
+  - name: Fusion Personal (Free)
+    access: other
+    model: free
+    model_how: derived
+    units: []
+    periods: []
+  - name: Fusion Subscription (Annual)
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: Fusion Subscription (Monthly)
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: Fusion Startup Program
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: Fusion Automation API (Flex Tokens)
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
