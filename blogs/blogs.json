@@ -9,6 +9,10 @@
       "method": "none"
     },
     {
+      "source": "https://www.autodesk.com/products/fusion-360/blog",
+      "error": "HTTPError"
+    },
+    {
       "source": "https://www.linkedin.com/company/autodesk",
       "feed_url": "https://www.linkedin.com/company/autodesk",
       "title": "",
@@ -16,7 +20,7 @@
       "method": "none"
     }
   ],
-  "fetched": "2026-10-03T12:30:02Z",
+  "fetched": "2026-10-10T13:15:00Z",
   "post_count": 0,
   "agent_pulled": "2026-07-04"
 }
