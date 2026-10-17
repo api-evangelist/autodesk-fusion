@@ -193,6 +193,11 @@ components:
           $ref: '#/components/schemas/status'
       required:
       - status
+    status:
+      type: string
+      enum:
+      - ENABLED
+      - DISABLED
     service-account-keys:
       title: Service Account Keys
       type: object
@@ -203,11 +208,6 @@ components:
           description: List of service account keys
           items:
             $ref: '#/components/schemas/service-account-key-details'
-    status:
-      type: string
-      enum:
-      - ENABLED
-      - DISABLED
     service-account-key-details:
       title: Service Account Key Details
       description: ''

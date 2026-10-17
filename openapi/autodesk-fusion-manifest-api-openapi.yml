@@ -108,112 +108,19 @@ paths:
       parameters:
       - $ref: '#/components/parameters/region'
 components:
-  headers:
-    x-ads-duration:
-      description: The amount of time spent servicing the request, in milliseconds.
-      schema:
-        type: string
-    x-ads-startup-time:
-      description: 'The service startup time, in the following date format: ``EEE MMM dd HH:mm:ss Z yyyy``.'
-      schema:
-        type: string
-    x-ads-app-identifier:
-      description: The service identifier. Comprises of the service name, version, and environment.
-      schema:
-        type: string
   schemas:
-    Region:
-      type: string
-      description: "Specifies where the referenced files are stored. Possible values are: \n    \n- ``US`` - Data center for the US region.\n- ``EMEA`` - Data center for the European Union, Middle East, and Africa. \n- ``AUS`` - (Beta) Data center for the Australia region.\n- ``CAN`` - Data center for the Canada region.\n- ``DEU`` - Data center for the Germany region.\n- ``IND`` - Data center for the India region.\n- ``JPN`` - Data center for the Japan region.\n- ``GBR``  - Data center for the United Kingdom region.\n"
-      enum:
-      - US
-      - EMEA
-      - AUS
-      - CAN
-      - DEU
-      - IND
-      - JPN
-      - GBR
-    ManifestDerivative:
+    DeleteManifest:
+      title: DeleteManifest
+      x-stoplight:
+        id: 7uai98fnb6fdc
       type: object
-      description: Represents a derivative generated for the source design.
-      required:
-      - name
-      - hasThumbnail
-      - progress
-      - outputType
-      - status
       properties:
-        name:
-          type: string
-          minLength: 1
-          description: The name of the source design.
-        hasThumbnail:
-          type: string
-          minLength: 1
-          description: '- ``true``: The derivative has a thumbnail.
-
-            - ``false``: The derivative does not have a thumbnail.
-
-            '
-        progress:
-          type: string
-          minLength: 1
-          description: Indicates the progress of the process generating this derivative, as a percentage. Once complete, the value changes to ``complete``.
-        outputType:
-          type: string
-          minLength: 1
-          description: 'The file type/format of the derivative. Possible values are: ``dwg``, ``fbx``, ``ifc``, ``iges``, ``obj`` , ``step``, ``stl``, ``svf``, ``svf2``,  ``thumbnail``.'
-        properties:
-          type: object
-          x-stoplight:
-            id: 67dws24oqffyw
-          description: 'A JSON object containing metadata extracted from the source design. This metadata provides valuable information about the model, such as its author, client name, project status, and other relevant details.
-
-
-            **Note:** This metadata is currently returned for the following source design types:
-
-
-            - RVT - Revit models
-
-            - NWD - Navisworks models
-
-            - DWG - AutoCAD models'
-        status:
-          type: string
-          minLength: 1
-          description: 'Status of the task generating this derivative. Possible values are: ``pending``, ``inprogress``, ``success``, ``failed``, ``timeout``.'
-        messages:
-          type: array
-          description: An array of objects where each object represents a message logged to the manifest during translation. For example, error messages and warning messages.
-          x-stoplight:
-            id: u09lec1rp7fpa
-          items:
-            $ref: '#/components/schemas/Messages'
-        children:
-          type: array
-          description: An array of objects, where each object represents a resource generated for the derivative. For example, a Model View (Viewable) of the source design.
-          items:
-            $ref: '#/components/schemas/ManifestResources'
-    Messages:
-      type: object
-      description: An array of objects where each object represents a message logged to the manifest during translation. For example, error messages and warning messages.
-      properties:
-        type:
+        result:
           type: string
           x-stoplight:
-            id: 4pk3t1bfk3fbl
-          description: Indicates the type of the message. For example, warning indicates a warning message and error indicates an error message.
-        code:
-          type: string
-          x-stoplight:
-            id: pbq08tk47dfru
-          description: The ID of the message. For example, the error code reported by an error message.
-        message:
-          type: object
-          x-stoplight:
-            id: ii9qdtechgkph
-          description: A human-readable explanation of the event being reported. Can be a string or an array of string.
+            id: nmoc4tg01iitw
+          description: A message describing outcome of the operation. Always ``success`` for status ``200``.
+      description: 'Represents the successful response of a Delete Manifest operation. '
     ManifestResources:
       type: object
       description: Represents a resource generated for a derivative.
@@ -292,18 +199,79 @@ components:
       - type
       - role
       - status
-    DeleteManifest:
-      title: DeleteManifest
-      x-stoplight:
-        id: 7uai98fnb6fdc
+    ManifestDerivative:
       type: object
+      description: Represents a derivative generated for the source design.
+      required:
+      - name
+      - hasThumbnail
+      - progress
+      - outputType
+      - status
       properties:
-        result:
+        name:
           type: string
+          minLength: 1
+          description: The name of the source design.
+        hasThumbnail:
+          type: string
+          minLength: 1
+          description: '- ``true``: The derivative has a thumbnail.
+
+            - ``false``: The derivative does not have a thumbnail.
+
+            '
+        progress:
+          type: string
+          minLength: 1
+          description: Indicates the progress of the process generating this derivative, as a percentage. Once complete, the value changes to ``complete``.
+        outputType:
+          type: string
+          minLength: 1
+          description: 'The file type/format of the derivative. Possible values are: ``dwg``, ``fbx``, ``ifc``, ``iges``, ``obj`` , ``step``, ``stl``, ``svf``, ``svf2``,  ``thumbnail``.'
+        properties:
+          type: object
           x-stoplight:
-            id: nmoc4tg01iitw
-          description: A message describing outcome of the operation. Always ``success`` for status ``200``.
-      description: 'Represents the successful response of a Delete Manifest operation. '
+            id: 67dws24oqffyw
+          description: 'A JSON object containing metadata extracted from the source design. This metadata provides valuable information about the model, such as its author, client name, project status, and other relevant details.
+
+
+            **Note:** This metadata is currently returned for the following source design types:
+
+
+            - RVT - Revit models
+
+            - NWD - Navisworks models
+
+            - DWG - AutoCAD models'
+        status:
+          type: string
+          minLength: 1
+          description: 'Status of the task generating this derivative. Possible values are: ``pending``, ``inprogress``, ``success``, ``failed``, ``timeout``.'
+        messages:
+          type: array
+          description: An array of objects where each object represents a message logged to the manifest during translation. For example, error messages and warning messages.
+          x-stoplight:
+            id: u09lec1rp7fpa
+          items:
+            $ref: '#/components/schemas/Messages'
+        children:
+          type: array
+          description: An array of objects, where each object represents a resource generated for the derivative. For example, a Model View (Viewable) of the source design.
+          items:
+            $ref: '#/components/schemas/ManifestResources'
+    Region:
+      type: string
+      description: "Specifies where the referenced files are stored. Possible values are: \n    \n- ``US`` - Data center for the US region.\n- ``EMEA`` - Data center for the European Union, Middle East, and Africa. \n- ``AUS`` - (Beta) Data center for the Australia region.\n- ``CAN`` - Data center for the Canada region.\n- ``DEU`` - Data center for the Germany region.\n- ``IND`` - Data center for the India region.\n- ``JPN`` - Data center for the Japan region.\n- ``GBR``  - Data center for the United Kingdom region.\n"
+      enum:
+      - US
+      - EMEA
+      - AUS
+      - CAN
+      - DEU
+      - IND
+      - JPN
+      - GBR
     Manifest:
       type: object
       properties:
@@ -473,6 +441,38 @@ components:
           version: '1.0'
           status: success
       description: Represents the successful response of a Fetch Manifest operation.
+    Messages:
+      type: object
+      description: An array of objects where each object represents a message logged to the manifest during translation. For example, error messages and warning messages.
+      properties:
+        type:
+          type: string
+          x-stoplight:
+            id: 4pk3t1bfk3fbl
+          description: Indicates the type of the message. For example, warning indicates a warning message and error indicates an error message.
+        code:
+          type: string
+          x-stoplight:
+            id: pbq08tk47dfru
+          description: The ID of the message. For example, the error code reported by an error message.
+        message:
+          type: object
+          x-stoplight:
+            id: ii9qdtechgkph
+          description: A human-readable explanation of the event being reported. Can be a string or an array of string.
+  headers:
+    x-ads-app-identifier:
+      description: The service identifier. Comprises of the service name, version, and environment.
+      schema:
+        type: string
+    x-ads-duration:
+      description: The amount of time spent servicing the request, in milliseconds.
+      schema:
+        type: string
+    x-ads-startup-time:
+      description: 'The service startup time, in the following date format: ``EEE MMM dd HH:mm:ss Z yyyy``.'
+      schema:
+        type: string
   parameters:
     source-design-urn:
       name: urn

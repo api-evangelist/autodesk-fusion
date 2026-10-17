@@ -110,6 +110,51 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    Pagination:
+      type: object
+      description: The pagination object.
+      properties:
+        limit:
+          type: integer
+          description: The number of items per page.
+        offset:
+          type: integer
+          description: The page number that the results begin from.
+        totalResults:
+          type: integer
+          description: The number of items in the response.
+    commentsPage:
+      title: issue-comments
+      type: object
+      description: The pagination object.
+      x-stoplight:
+        id: 4nxzq972zdl5h
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/comment'
+    commentsPayload:
+      title: commentsPayload
+      x-stoplight:
+        id: g2sp2gwd04hxi
+      type: object
+      properties:
+        body:
+          type: string
+          x-stoplight:
+            id: mqohbh0gr85g9
+      required:
+      - body
+    sortBy_internal:
+      title: sortBy_internal
+      x-stoplight:
+        id: jf3fxohnckp1q
+      type: array
+      items:
+        $ref: '#/components/schemas/sortBy'
     comment:
       title: comment
       type: object
@@ -152,6 +197,21 @@ components:
           description: Not relevant
           items:
             type: string
+    region:
+      title: region
+      x-stoplight:
+        id: pvg574irwjt8w
+      type: string
+      enum:
+      - US
+      - EMEA
+      - AUS
+      - CAN
+      - DEU
+      - IND
+      - JPN
+      - GBR
+      description: "Specifies where the bucket containing the object is stored. Possible values are:\n            - ``US`` - (Default) Data center for the US region.\n            - ``EMEA`` - Data center for the European Union, Middle East, and Africa.\n            - ``AUS`` -  Data center for Australia.\n            - ``CAN`` - Data center for the Canada region.\n            - ``DEU`` - Data center for the Germany region.\n            - ``IND`` - Data center for the India region.\n            - ``JPN`` - Data center for the Japan region.\n            - ``GBR`` - Data center for the United Kingdom region.\n**Note:** Beta features are subject to change. Please do not use in production environments."
     sortBy:
       title: sortBy
       x-stoplight:
@@ -176,66 +236,6 @@ components:
       - issueType
       - customAttributes
       - startDate
-    sortBy_internal:
-      title: sortBy_internal
-      x-stoplight:
-        id: jf3fxohnckp1q
-      type: array
-      items:
-        $ref: '#/components/schemas/sortBy'
-    Pagination:
-      type: object
-      description: The pagination object.
-      properties:
-        limit:
-          type: integer
-          description: The number of items per page.
-        offset:
-          type: integer
-          description: The page number that the results begin from.
-        totalResults:
-          type: integer
-          description: The number of items in the response.
-    commentsPayload:
-      title: commentsPayload
-      x-stoplight:
-        id: g2sp2gwd04hxi
-      type: object
-      properties:
-        body:
-          type: string
-          x-stoplight:
-            id: mqohbh0gr85g9
-      required:
-      - body
-    region:
-      title: region
-      x-stoplight:
-        id: pvg574irwjt8w
-      type: string
-      enum:
-      - US
-      - EMEA
-      - AUS
-      - CAN
-      - DEU
-      - IND
-      - JPN
-      - GBR
-      description: "Specifies where the bucket containing the object is stored. Possible values are:\n            - ``US`` - (Default) Data center for the US region.\n            - ``EMEA`` - Data center for the European Union, Middle East, and Africa.\n            - ``AUS`` -  Data center for Australia.\n            - ``CAN`` - Data center for the Canada region.\n            - ``DEU`` - Data center for the Germany region.\n            - ``IND`` - Data center for the India region.\n            - ``JPN`` - Data center for the Japan region.\n            - ``GBR`` - Data center for the United Kingdom region.\n**Note:** Beta features are subject to change. Please do not use in production environments."
-    commentsPage:
-      title: issue-comments
-      type: object
-      description: The pagination object.
-      x-stoplight:
-        id: 4nxzq972zdl5h
-      properties:
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/comment'
   parameters:
     x-ads-region:
       name: x-ads-region

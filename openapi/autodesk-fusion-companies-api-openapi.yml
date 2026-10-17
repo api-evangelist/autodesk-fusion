@@ -614,54 +614,6 @@ paths:
       - 3-legged: []
 components:
   schemas:
-    filterTextMatch:
-      title: filterTextMatch
-      x-stoplight:
-        id: l613i9qr8h8a6
-      type: string
-      enum:
-      - contains
-      - startsWith
-      - endsWith
-      - equals
-    AccountCompanyAddress:
-      title: AccountCompanyAddress
-      x-stoplight:
-        id: w83g4phsegjmc
-      type: object
-      properties:
-        type:
-          type: string
-          x-stoplight:
-            id: vta9ily9vtev0
-        addressLine1:
-          type: string
-          x-stoplight:
-            id: dibe53qdw3a5a
-        addressLine2:
-          type: string
-          x-stoplight:
-            id: 5cudpup7l7yoy
-        city:
-          type: string
-          x-stoplight:
-            id: awsdybgl6g2qh
-        stateOrProvince:
-          type: string
-          x-stoplight:
-            id: 98sc9ieedaak8
-        postalCode:
-          type: string
-          x-stoplight:
-            id: 1mz7lqqjcnvqo
-        country:
-          type: string
-          x-stoplight:
-            id: t9pw98u1logv2
-        phone:
-          type: string
-          x-stoplight:
-            id: m4r6utt1gzmnb
     Company:
       title: Company
       x-stoplight:
@@ -741,158 +693,92 @@ components:
           x-stoplight:
             id: k6ponb7ozqs5j
           description: Used to associate a company in BIM 360 with the company data from public and industry sources
-    Region:
-      title: Region
+    companyOrFilters_internal:
+      title: companyOrFilters_internal
       x-stoplight:
-        id: 5rz8jxdpgo4zq
-      type: string
-      enum:
-      - US
-      - EMEA
-      - AUS
-      - CAN
-      - DEU
-      - IND
-      - JPN
-      - GBR
-      description: 'Specifies the region where your request should be routed. Possible values are:
-
-        - ``US`` - Data center for the US region.
-
-        - ``EMEA`` - Data center for the European Union, Middle East, and Africa regions.
-
-        - ``AUS`` - Data center for the Australia region.
-
-        - ``CAN`` - Data center for the Canada region.
-
-        - ``DEU`` - Data center for the Germany region.
-
-        - ``IND`` - Data center for the India region.
-
-        - ``JPN`` - Data center for the Japan region.
-
-        - ``GBR`` - Data center for the United Kingdom region.'
-    companyOrFilters:
-      title: companyOrFilters
+        id: wopm3nw7uinr6
+      type: array
+      items:
+        $ref: '#/components/schemas/companyOrFilters'
+    Pagination:
+      title: Pagination
       x-stoplight:
-        id: f204luot495u0
-      enum:
-      - erpId
-      - name
-      - taxId
-      - trade
-      - updatedAt
-    trade:
-      title: trade
-      x-stoplight:
-        id: l2gbhaf1mw5jg
-      type: string
-      enum:
-      - Architecture
-      - Communications
-      - Communications | Data
-      - Concrete
-      - Concrete | Cast-in-Place
-      - Concrete | Precast
-      - Construction Management
-      - Conveying Equipment
-      - Conveying Equipment | Elevators
-      - Demolition
-      - Earthwork
-      - Earthwork | Site Excavation & Grading
-      - Electrical
-      - Electrical Power Generation
-      - Electronic Safety & Security
-      - Equipment
-      - Equipment | Kitchen Appliances
-      - Exterior Improvements
-      - Exterior | Fences & Gates
-      - Exterior | Landscaping
-      - Exterior | Irrigation
-      - Finishes
-      - Finishes | Carpeting
-      - Finishes | Ceiling
-      - Finishes | Drywall
-      - Finishes | Flooring
-      - Finishes | Painting & Coating
-      - Finishes | Tile
-      - Fire Suppression
-      - Furnishings
-      - Furnishings | Casework & Cabinets
-      - Furnishings | Countertops
-      - Furnishings | Window Treatments
-      - General Contractor
-      - HVAC Heating, Ventilating, & Air Conditioning
-      - Industry-Specific Manufacturing Processing
-      - Integrated Automation
-      - Masonry
-      - Material Processing & Handling Equipment
-      - Metals
-      - Metals | Structural Steel / Framing
-      - Moisture Protection
-      - Moisture Protection | Roofing
-      - Moisture Protection | Waterproofing
-      - Openings
-      - Openings | Doors & Frames
-      - Openings | Entrances & Storefronts
-      - Openings | Glazing
-      - Openings | Roof Windows & Skylights
-      - Openings | Windows
-      - Owner
-      - Plumbing
-      - Pollution & Waste Control Equipment
-      - Process Gas & Liquid Handling, Purification, & Storage Equipment
-      - Process Heating, Cooling, & Drying Equipment
-      - Process Integration
-      - Process Integration | Piping
-      - Special Construction
-      - Specialties
-      - Specialties | Signage
-      - Utilities
-      - Water & Wastewater Equipment
-      - Waterway & Marine Construction
-      - Wood & Plastics
-      - Wood & Plastics | Millwork
-      - Wood & Plastics | Rough Carpentry
-    CompanyImport:
-      title: CompanyImportResponse
-      x-stoplight:
-        id: w1u6pqi8dlrys
+        id: q1bi13503pl18
       type: object
       properties:
-        success:
+        limit:
           type: integer
           x-stoplight:
-            id: vfh38q2zhm7vr
-          description: Import success company count
-        failure:
+            id: 8izi1f176ek68
+        offset:
           type: integer
           x-stoplight:
-            id: wbnrw0ceazwkh
-          description: Import failure company count
-        success_items:
-          type: array
+            id: v1vdhhbk5vhtj
+        totalResults:
+          type: integer
           x-stoplight:
-            id: b91r3bdiu4916
-          description: Array of company objects that were successfully imported
-          items:
-            $ref: '#/components/schemas/Company'
-            x-stoplight:
-              id: yreisjgu8c84e
-        failure_items:
-          type: array
+            id: o7y9s28pvovds
+        nextUrl:
+          type: string
           x-stoplight:
-            id: spdgokc6tgfr3
-          description: Array of company objects that failed to import, along with content and error information
-          items:
-            $ref: '#/components/schemas/Company'
-            x-stoplight:
-              id: h3qbrhrr4tpef
-      description: ''
-    CompanyPayload:
-      title: CompanyPayload
+            id: egebyg74p2y51
+        previousUrl:
+          type: string
+          x-stoplight:
+            id: rhoc949ms1w0p
+      description: "\tContains pagination details for the records returned by the endpoint."
+    AccountCompanyAddress:
+      title: AccountCompanyAddress
       x-stoplight:
-        id: z8zjhylvl5py0
+        id: w83g4phsegjmc
+      type: object
+      properties:
+        type:
+          type: string
+          x-stoplight:
+            id: vta9ily9vtev0
+        addressLine1:
+          type: string
+          x-stoplight:
+            id: dibe53qdw3a5a
+        addressLine2:
+          type: string
+          x-stoplight:
+            id: 5cudpup7l7yoy
+        city:
+          type: string
+          x-stoplight:
+            id: awsdybgl6g2qh
+        stateOrProvince:
+          type: string
+          x-stoplight:
+            id: 98sc9ieedaak8
+        postalCode:
+          type: string
+          x-stoplight:
+            id: 1mz7lqqjcnvqo
+        country:
+          type: string
+          x-stoplight:
+            id: t9pw98u1logv2
+        phone:
+          type: string
+          x-stoplight:
+            id: m4r6utt1gzmnb
+    filterTextMatch:
+      title: filterTextMatch
+      x-stoplight:
+        id: l613i9qr8h8a6
+      type: string
+      enum:
+      - contains
+      - startsWith
+      - endsWith
+      - equals
+    CompanyPatchPayload:
+      title: CompanyPatchPayload
+      x-stoplight:
+        id: 3w00n26opiju3
       type: object
       properties:
         name:
@@ -960,16 +846,29 @@ components:
           x-stoplight:
             id: k6ponb7ozqs5j
           description: Used to associate a company in BIM 360 with the company data from public and industry sources
-      required:
-      - name
-      - trade
-    filterCompanySort_internal:
-      title: filterCompanySort_internal
+    filterCompanySort:
+      title: filterCompanySort
       x-stoplight:
-        id: 6rvwix917rwby
-      type: array
-      items:
-        $ref: '#/components/schemas/filterCompanySort'
+        id: 5yrds3d69hbdb
+      enum:
+      - name asc
+      - trade asc
+      - erpId asc
+      - taxId asc
+      - status asc
+      - createdAt asc
+      - updatedAt asc
+      - projectSize asc
+      - userSize asc
+      - name desc
+      - trade desc
+      - erpId desc
+      - taxId desc
+      - status desc
+      - createdAt desc
+      - updatedAt desc
+      - projectSize desc
+      - userSize desc
     CompaniesPage:
       title: AccountCompaniesPage
       x-stoplight:
@@ -984,83 +883,109 @@ components:
             id: ivk9ommljka7z
           items:
             $ref: '#/components/schemas/AccountCompany'
-    AccountCompany:
-      title: AccountCompany
+    filterCompanySort_internal:
+      title: filterCompanySort_internal
       x-stoplight:
-        id: dakt3mogkiqky
-      type: object
-      properties:
-        id:
-          type: string
-          x-stoplight:
-            id: ugixz7bx82y2w
-        accountId:
-          type: string
-          x-stoplight:
-            id: 726lpvp41ydqw
-        name:
-          type: string
-          x-stoplight:
-            id: e0gc4yiblj4sv
-        trade:
-          type: string
-          x-stoplight:
-            id: zmuamaitunhm3
-        addresses:
-          type: array
-          x-stoplight:
-            id: 8kkwb15qm8yiu
-          items:
-            $ref: '#/components/schemas/AccountCompanyAddress'
-        websiteUrl:
-          type: string
-          x-stoplight:
-            id: fvtvf2kxtu9c2
-        description:
-          type: string
-          x-stoplight:
-            id: qmcsqg0cptopm
-        erpId:
-          type: string
-          x-stoplight:
-            id: u7ixxmf1zmzmy
-        taxId:
-          type: string
-          x-stoplight:
-            id: jefyyyzhm87wo
-        imageUrl:
-          type: string
-          x-stoplight:
-            id: c7pk6958k6a3t
-        status:
-          type: string
-        createdAt:
-          type: string
-          x-stoplight:
-            id: pzy21nq11aest
-        updatedAt:
-          type: string
-          x-stoplight:
-            id: orpi3lguftr9n
-        originalName:
-          type: string
-          x-stoplight:
-            id: fgsaidhu4mqvh
-        projectSize:
-          type: integer
-          x-stoplight:
-            id: n3d4f06fgayfp
-        userSize:
-          type: integer
-          x-stoplight:
-            id: z0yopb69ae5er
-    filterCompanyFields_internal:
-      title: filterCompanyFields_internal
-      x-stoplight:
-        id: n29a18k9ziwif
+        id: 6rvwix917rwby
       type: array
       items:
-        $ref: '#/components/schemas/filterCompanyFields'
+        $ref: '#/components/schemas/filterCompanySort'
+    Region:
+      title: Region
+      x-stoplight:
+        id: 5rz8jxdpgo4zq
+      type: string
+      enum:
+      - US
+      - EMEA
+      - AUS
+      - CAN
+      - DEU
+      - IND
+      - JPN
+      - GBR
+      description: 'Specifies the region where your request should be routed. Possible values are:
+
+        - ``US`` - Data center for the US region.
+
+        - ``EMEA`` - Data center for the European Union, Middle East, and Africa regions.
+
+        - ``AUS`` - Data center for the Australia region.
+
+        - ``CAN`` - Data center for the Canada region.
+
+        - ``DEU`` - Data center for the Germany region.
+
+        - ``IND`` - Data center for the India region.
+
+        - ``JPN`` - Data center for the Japan region.
+
+        - ``GBR`` - Data center for the United Kingdom region.'
+    companyOrFilters:
+      title: companyOrFilters
+      x-stoplight:
+        id: f204luot495u0
+      enum:
+      - erpId
+      - name
+      - taxId
+      - trade
+      - updatedAt
+    filterCompanyFields:
+      title: filterCompanyFields
+      x-stoplight:
+        id: hp5r12lpjjgfa
+      enum:
+      - accountId
+      - name
+      - trade
+      - addresses
+      - websiteUrl
+      - description
+      - erpId
+      - taxId
+      - imageUrl
+      - status
+      - createdAt
+      - updatedAt
+      - projectSize
+      - userSize
+      - originalName
+    CompanyImport:
+      title: CompanyImportResponse
+      x-stoplight:
+        id: w1u6pqi8dlrys
+      type: object
+      properties:
+        success:
+          type: integer
+          x-stoplight:
+            id: vfh38q2zhm7vr
+          description: Import success company count
+        failure:
+          type: integer
+          x-stoplight:
+            id: wbnrw0ceazwkh
+          description: Import failure company count
+        success_items:
+          type: array
+          x-stoplight:
+            id: b91r3bdiu4916
+          description: Array of company objects that were successfully imported
+          items:
+            $ref: '#/components/schemas/Company'
+            x-stoplight:
+              id: yreisjgu8c84e
+        failure_items:
+          type: array
+          x-stoplight:
+            id: spdgokc6tgfr3
+          description: Array of company objects that failed to import, along with content and error information
+          items:
+            $ref: '#/components/schemas/Company'
+            x-stoplight:
+              id: h3qbrhrr4tpef
+      description: ''
     ProjectCompanies:
       title: Companies
       x-stoplight:
@@ -1150,37 +1075,80 @@ components:
           x-stoplight:
             id: dgnf1q93x7ydp
           description: The Autodesk ID of the company; used to identify which company is assigned to an RFI or Issue.
-    Pagination:
-      title: Pagination
+    AccountCompany:
+      title: AccountCompany
       x-stoplight:
-        id: q1bi13503pl18
+        id: dakt3mogkiqky
       type: object
       properties:
-        limit:
-          type: integer
-          x-stoplight:
-            id: 8izi1f176ek68
-        offset:
-          type: integer
-          x-stoplight:
-            id: v1vdhhbk5vhtj
-        totalResults:
-          type: integer
-          x-stoplight:
-            id: o7y9s28pvovds
-        nextUrl:
+        id:
           type: string
           x-stoplight:
-            id: egebyg74p2y51
-        previousUrl:
+            id: ugixz7bx82y2w
+        accountId:
           type: string
           x-stoplight:
-            id: rhoc949ms1w0p
-      description: "\tContains pagination details for the records returned by the endpoint."
-    CompanyPatchPayload:
-      title: CompanyPatchPayload
+            id: 726lpvp41ydqw
+        name:
+          type: string
+          x-stoplight:
+            id: e0gc4yiblj4sv
+        trade:
+          type: string
+          x-stoplight:
+            id: zmuamaitunhm3
+        addresses:
+          type: array
+          x-stoplight:
+            id: 8kkwb15qm8yiu
+          items:
+            $ref: '#/components/schemas/AccountCompanyAddress'
+        websiteUrl:
+          type: string
+          x-stoplight:
+            id: fvtvf2kxtu9c2
+        description:
+          type: string
+          x-stoplight:
+            id: qmcsqg0cptopm
+        erpId:
+          type: string
+          x-stoplight:
+            id: u7ixxmf1zmzmy
+        taxId:
+          type: string
+          x-stoplight:
+            id: jefyyyzhm87wo
+        imageUrl:
+          type: string
+          x-stoplight:
+            id: c7pk6958k6a3t
+        status:
+          type: string
+        createdAt:
+          type: string
+          x-stoplight:
+            id: pzy21nq11aest
+        updatedAt:
+          type: string
+          x-stoplight:
+            id: orpi3lguftr9n
+        originalName:
+          type: string
+          x-stoplight:
+            id: fgsaidhu4mqvh
+        projectSize:
+          type: integer
+          x-stoplight:
+            id: n3d4f06fgayfp
+        userSize:
+          type: integer
+          x-stoplight:
+            id: z0yopb69ae5er
+    CompanyPayload:
+      title: CompanyPayload
       x-stoplight:
-        id: 3w00n26opiju3
+        id: z8zjhylvl5py0
       type: object
       properties:
         name:
@@ -1248,56 +1216,88 @@ components:
           x-stoplight:
             id: k6ponb7ozqs5j
           description: Used to associate a company in BIM 360 with the company data from public and industry sources
-    filterCompanyFields:
-      title: filterCompanyFields
-      x-stoplight:
-        id: hp5r12lpjjgfa
-      enum:
-      - accountId
+      required:
       - name
       - trade
-      - addresses
-      - websiteUrl
-      - description
-      - erpId
-      - taxId
-      - imageUrl
-      - status
-      - createdAt
-      - updatedAt
-      - projectSize
-      - userSize
-      - originalName
-    filterCompanySort:
-      title: filterCompanySort
+    filterCompanyFields_internal:
+      title: filterCompanyFields_internal
       x-stoplight:
-        id: 5yrds3d69hbdb
-      enum:
-      - name asc
-      - trade asc
-      - erpId asc
-      - taxId asc
-      - status asc
-      - createdAt asc
-      - updatedAt asc
-      - projectSize asc
-      - userSize asc
-      - name desc
-      - trade desc
-      - erpId desc
-      - taxId desc
-      - status desc
-      - createdAt desc
-      - updatedAt desc
-      - projectSize desc
-      - userSize desc
-    companyOrFilters_internal:
-      title: companyOrFilters_internal
-      x-stoplight:
-        id: wopm3nw7uinr6
+        id: n29a18k9ziwif
       type: array
       items:
-        $ref: '#/components/schemas/companyOrFilters'
+        $ref: '#/components/schemas/filterCompanyFields'
+    trade:
+      title: trade
+      x-stoplight:
+        id: l2gbhaf1mw5jg
+      type: string
+      enum:
+      - Architecture
+      - Communications
+      - Communications | Data
+      - Concrete
+      - Concrete | Cast-in-Place
+      - Concrete | Precast
+      - Construction Management
+      - Conveying Equipment
+      - Conveying Equipment | Elevators
+      - Demolition
+      - Earthwork
+      - Earthwork | Site Excavation & Grading
+      - Electrical
+      - Electrical Power Generation
+      - Electronic Safety & Security
+      - Equipment
+      - Equipment | Kitchen Appliances
+      - Exterior Improvements
+      - Exterior | Fences & Gates
+      - Exterior | Landscaping
+      - Exterior | Irrigation
+      - Finishes
+      - Finishes | Carpeting
+      - Finishes | Ceiling
+      - Finishes | Drywall
+      - Finishes | Flooring
+      - Finishes | Painting & Coating
+      - Finishes | Tile
+      - Fire Suppression
+      - Furnishings
+      - Furnishings | Casework & Cabinets
+      - Furnishings | Countertops
+      - Furnishings | Window Treatments
+      - General Contractor
+      - HVAC Heating, Ventilating, & Air Conditioning
+      - Industry-Specific Manufacturing Processing
+      - Integrated Automation
+      - Masonry
+      - Material Processing & Handling Equipment
+      - Metals
+      - Metals | Structural Steel / Framing
+      - Moisture Protection
+      - Moisture Protection | Roofing
+      - Moisture Protection | Waterproofing
+      - Openings
+      - Openings | Doors & Frames
+      - Openings | Entrances & Storefronts
+      - Openings | Glazing
+      - Openings | Roof Windows & Skylights
+      - Openings | Windows
+      - Owner
+      - Plumbing
+      - Pollution & Waste Control Equipment
+      - Process Gas & Liquid Handling, Purification, & Storage Equipment
+      - Process Heating, Cooling, & Drying Equipment
+      - Process Integration
+      - Process Integration | Piping
+      - Special Construction
+      - Specialties
+      - Specialties | Signage
+      - Utilities
+      - Water & Wastewater Equipment
+      - Waterway & Marine Construction
+      - Wood & Plastics
+      - Wood & Plastics | Millwork
+      - Wood & Plastics | Rough Carpentry
   securitySchemes:
     2-legged:
       type: oauth2
