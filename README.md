@@ -1,4 +1,4 @@
-# Autodesk Fusion (autodesk-fusion)
+# Autodesk Fusion
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,128 +66,189 @@
 
 Autodesk Fusion is a cloud-based CAD/CAM/CAE/PCB platform that provides REST and GraphQL APIs for design data access, manufacturing automation, simulation, and shop-floor operations within the Autodesk Platform Services (APS) ecosystem. Developers can build scripts, add-ins, and integrations that automate workflows, sync production data, and connect Fusion with ERP, PLM, and BI systems.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/autodesk-fusion/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/autodesk-fusion/refs/heads/main/apis.yml)
+**Areas:** CAD · CAM · CAE · Manufacturing · Design Automation · GraphQL · REST · Autodesk Platform Services
 
-## Tags
+## Autodesk Fusion on APIs.io
 
-- CAD
-- CAM
-- CAE
-- Manufacturing
-- Design Automation
-- GraphQL
-- REST
-- Autodesk Platform Services
+Everything profiled for Autodesk Fusion is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/autodesk-fusion/](https://apis.io/providers/autodesk-fusion/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (37)
 
-- **Created:** 2026-06-13
-- **Modified:** 2026-06-13
+- [Fusion Automation API (Design Automation)](https://apis.io/apis/autodesk-fusion/fusion-automation-api/) — The Fusion Automation API is a cloud-based Premium API that runs Fusion scripts and automation jobs at scale without requiring desktop software. It supports…
+- [Fusion Operations API](https://apis.io/apis/autodesk-fusion/fusion-operations-api/) — The Fusion Operations API provides REST endpoints to integrate Autodesk Fusion Operations (manufacturing execution system) production data with external…
+- [Manufacturing Data Model API (Fusion Data API)](https://apis.io/apis/autodesk-fusion/manufacturing-data-model-api/) — The Manufacturing Data Model API exposes Fusion design and manufacturing data through a GraphQL interface, enabling cloud-based read and write access to…
+- [Autodesk Fusion Account Management API](https://apis.io/apis/autodesk-fusion/autodesk-fusion-account-management-api/) — The Account Management API from Autodesk Fusion — 2 operation(s) for account management.
+- [Autodesk Fusion Account Users API](https://apis.io/apis/autodesk-fusion/autodesk-fusion-account-users-api/) — The Account Users API from Autodesk Fusion — 6 operation(s) for account users.
+- [Autodesk Fusion Buckets API](https://apis.io/apis/autodesk-fusion/autodesk-fusion-buckets-api/) — Bucket related operations
+- [Autodesk Fusion Business Units API](https://apis.io/apis/autodesk-fusion/autodesk-fusion-business-units-api/) — The Business Units API from Autodesk Fusion — 1 operation(s) for business units.
+- [Autodesk Fusion Commands API](https://apis.io/apis/autodesk-fusion/autodesk-fusion-commands-api/) — The Commands API from Autodesk Fusion — 1 operation(s) for commands.
+- [Autodesk Fusion Companies API](https://apis.io/apis/autodesk-fusion/autodesk-fusion-companies-api/) — The Companies API from Autodesk Fusion — 7 operation(s) for companies.
+- [Autodesk Fusion Derivatives API](https://apis.io/apis/autodesk-fusion/autodesk-fusion-derivatives-api/) — The Derivatives API from Autodesk Fusion — 2 operation(s) for derivatives.
+- [Autodesk Fusion Exchange Token API](https://apis.io/apis/autodesk-fusion/autodesk-fusion-exchange-token-api/) — The Exchange Token API from Autodesk Fusion — 1 operation(s) for exchange token.
+- [Autodesk Fusion Folders API](https://apis.io/apis/autodesk-fusion/autodesk-fusion-folders-api/) — The Folders API from Autodesk Fusion — 8 operation(s) for folders.
+- [Autodesk Fusion Hooks API](https://apis.io/apis/autodesk-fusion/autodesk-fusion-hooks-api/) — The Hooks API from Autodesk Fusion — 5 operation(s) for hooks.
+- [Autodesk Fusion Hubs API](https://apis.io/apis/autodesk-fusion/autodesk-fusion-hubs-api/) — The Hubs API from Autodesk Fusion — 2 operation(s) for hubs.
+- [Autodesk Fusion Informational API](https://apis.io/apis/autodesk-fusion/autodesk-fusion-informational-api/) — The Informational API from Autodesk Fusion — 1 operation(s) for informational.
+- [Autodesk Fusion Issue Attachments API](https://apis.io/apis/autodesk-fusion/autodesk-fusion-issue-attachments-api/) — The Issue Attachments API from Autodesk Fusion — 3 operation(s) for issue attachments.
+- [Autodesk Fusion Issue Attribute Definitions API](https://apis.io/apis/autodesk-fusion/autodesk-fusion-issue-attribute-definitions-api/) — The Issue Attribute Definitions API from Autodesk Fusion — 1 operation(s) for issue attribute definitions.
+- [Autodesk Fusion Issue Attribute Mappings API](https://apis.io/apis/autodesk-fusion/autodesk-fusion-issue-attribute-mappings-api/) — The Issue Attribute Mappings API from Autodesk Fusion — 1 operation(s) for issue attribute mappings.
+- [Autodesk Fusion Issue Comments API](https://apis.io/apis/autodesk-fusion/autodesk-fusion-issue-comments-api/) — The Issue Comments API from Autodesk Fusion — 1 operation(s) for issue comments.
+- [Autodesk Fusion Issue Root Cause Categories API](https://apis.io/apis/autodesk-fusion/autodesk-fusion-issue-root-cause-categories-api/) — The Issue Root Cause Categories API from Autodesk Fusion — 1 operation(s) for issue root cause categories.
+- [Autodesk Fusion Issue Types API](https://apis.io/apis/autodesk-fusion/autodesk-fusion-issue-types-api/) — The Issue Types API from Autodesk Fusion — 1 operation(s) for issue types.
+- [Autodesk Fusion Issues API](https://apis.io/apis/autodesk-fusion/autodesk-fusion-issues-api/) — The Issues API from Autodesk Fusion — 2 operation(s) for issues.
+- [Autodesk Fusion Issues Profile API](https://apis.io/apis/autodesk-fusion/autodesk-fusion-issues-profile-api/) — The Issues Profile API from Autodesk Fusion — 1 operation(s) for issues profile.
+- [Autodesk Fusion Items API](https://apis.io/apis/autodesk-fusion/autodesk-fusion-items-api/) — The Items API from Autodesk Fusion — 8 operation(s) for items.
+- [Autodesk Fusion Jobs API](https://apis.io/apis/autodesk-fusion/autodesk-fusion-jobs-api/) — The Jobs API from Autodesk Fusion — 2 operation(s) for jobs.
+- [Autodesk Fusion Key Management API](https://apis.io/apis/autodesk-fusion/autodesk-fusion-key-management-api/) — The Key Management API from Autodesk Fusion — 2 operation(s) for key management.
+- [Autodesk Fusion Manifest API](https://apis.io/apis/autodesk-fusion/autodesk-fusion-manifest-api/) — The Manifest API from Autodesk Fusion — 1 operation(s) for manifest.
+- [Autodesk Fusion Metadata API](https://apis.io/apis/autodesk-fusion/autodesk-fusion-metadata-api/) — The Metadata API from Autodesk Fusion — 4 operation(s) for metadata.
+- [Autodesk Fusion Objects API](https://apis.io/apis/autodesk-fusion/autodesk-fusion-objects-api/) — Object related operations
+- [Autodesk Fusion Project Users API](https://apis.io/apis/autodesk-fusion/autodesk-fusion-project-users-api/) — The Project Users API from Autodesk Fusion — 3 operation(s) for project users.
+- [Autodesk Fusion Projects API](https://apis.io/apis/autodesk-fusion/autodesk-fusion-projects-api/) — The Projects API from Autodesk Fusion — 11 operation(s) for projects.
+- [Autodesk Fusion Thumbnails API](https://apis.io/apis/autodesk-fusion/autodesk-fusion-thumbnails-api/) — The Thumbnails API from Autodesk Fusion — 1 operation(s) for thumbnails.
+- [Autodesk Fusion Token API](https://apis.io/apis/autodesk-fusion/autodesk-fusion-token-api/) — The Token API from Autodesk Fusion — 7 operation(s) for token.
+- [Autodesk Fusion Tokens API](https://apis.io/apis/autodesk-fusion/autodesk-fusion-tokens-api/) — The Tokens API from Autodesk Fusion — 2 operation(s) for tokens.
+- [Autodesk Fusion User Projects API](https://apis.io/apis/autodesk-fusion/autodesk-fusion-user-projects-api/) — The User Projects API from Autodesk Fusion — 1 operation(s) for user projects.
+- [Autodesk Fusion Users API](https://apis.io/apis/autodesk-fusion/autodesk-fusion-users-api/) — The Users API from Autodesk Fusion — 1 operation(s) for users.
+- [Autodesk Fusion Versions API](https://apis.io/apis/autodesk-fusion/autodesk-fusion-versions-api/) — The Versions API from Autodesk Fusion — 8 operation(s) for versions.
 
-## APIs
+### Published properties
 
-### Autodesk Fusion API
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-The Autodesk Fusion API enables developers to create scripts, add-ins, and cloud-connected applications that extend and automate Fusion design and manufacturing workflows. Built on Autodesk Platform Services, it supports OAuth 2.0 authentication and covers the entire design-to-manufacturing process including parametric modeling, simulation, and toolpath generation.
+#### GraphQL (1)
 
-- **Human URL:** [https://aps.autodesk.com/developer/overview/autodesk-fusion-api](https://aps.autodesk.com/developer/overview/autodesk-fusion-api)
-- **Base URL:** `https://developer.api.autodesk.com`
+GraphQL schemas.
 
-#### Tags
+- [Autodesk Fusion GraphQL API](https://apis.io/graphqls/autodesk-fusion/autodesk-fusion-graphql/)
 
-- CAD
-- Scripting
-- Design
-- Automation
+#### Agentic access (1)
 
-#### Properties
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- [Documentation](https://aps.autodesk.com/developer/overview/autodesk-fusion-api)
-- [Documentation](https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-A92A4B10-3781-4925-94C6-47DA85A4F65A)
-- [Authentication](https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics)
-- [OpenAPI](https://github.com/autodesk-platform-services/aps-sdk-openapi) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Graph Q L](graphql/autodesk-fusion-graphql.md)
+- [Autodesk Fusion Agentic Access](https://apis.io/agentic-access/autodesk-fusion/autodesk-fusion-agentic-access/)
 
-### Fusion Automation API (Design Automation)
+#### Collections (34)
 
-The Fusion Automation API is a cloud-based Premium API that runs Fusion scripts and automation jobs at scale without requiring desktop software. It supports parametric design customization, advanced manufacturing algorithms (packing, toolpath generation), and end-to-end workflow integration. Priced at 3.0 Flex tokens per processing hour on a pay-per-use basis.
+Postman and Open Collection request collections.
 
-- **Human URL:** [https://aps.autodesk.com/blog/design-automation-api-fusion-now-generally-available](https://aps.autodesk.com/blog/design-automation-api-fusion-now-generally-available)
-- **Base URL:** `https://developer.api.autodesk.com`
+- [Construction.Account.Admin Account Management API](https://apis.io/collections/autodesk-fusion/open-autodesk-fusion-account-management-api/)
+- [Construction.Account.Admin Account Management Account Users API](https://apis.io/collections/autodesk-fusion/open-autodesk-fusion-account-users-api/)
+- [Construction.Account.Admin Account Management Buckets API](https://apis.io/collections/autodesk-fusion/open-autodesk-fusion-buckets-api/)
+- [Construction.Account.Admin Account Management Business Units API](https://apis.io/collections/autodesk-fusion/open-autodesk-fusion-business-units-api/)
+- [Construction.Account.Admin Account Management Commands API](https://apis.io/collections/autodesk-fusion/open-autodesk-fusion-commands-api/)
+- [Construction.Account.Admin Account Management Companies API](https://apis.io/collections/autodesk-fusion/open-autodesk-fusion-companies-api/)
+- [Construction.Account.Admin Account Management Derivatives API](https://apis.io/collections/autodesk-fusion/open-autodesk-fusion-derivatives-api/)
+- [Construction.Account.Admin Account Management Exchange Token API](https://apis.io/collections/autodesk-fusion/open-autodesk-fusion-exchange-token-api/)
+- [Construction.Account.Admin Account Management Folders API](https://apis.io/collections/autodesk-fusion/open-autodesk-fusion-folders-api/)
+- [Construction.Account.Admin Account Management Hooks API](https://apis.io/collections/autodesk-fusion/open-autodesk-fusion-hooks-api/)
+- [Construction.Account.Admin Account Management Hubs API](https://apis.io/collections/autodesk-fusion/open-autodesk-fusion-hubs-api/)
+- [Construction.Account.Admin Account Management Informational API](https://apis.io/collections/autodesk-fusion/open-autodesk-fusion-informational-api/)
+- [Construction.Account.Admin Account Management Issue Attachments API](https://apis.io/collections/autodesk-fusion/open-autodesk-fusion-issue-attachments-api/)
+- [Construction.Account.Admin Account Management Issue Attribute Definitions API](https://apis.io/collections/autodesk-fusion/open-autodesk-fusion-issue-attribute-definitions-api/)
+- [Construction.Account.Admin Account Management Issue Attribute Mappings API](https://apis.io/collections/autodesk-fusion/open-autodesk-fusion-issue-attribute-mappings-api/)
+- [Construction.Account.Admin Account Management Issue Comments API](https://apis.io/collections/autodesk-fusion/open-autodesk-fusion-issue-comments-api/)
+- [Construction.Account.Admin Account Management Issue Root Cause Categories API](https://apis.io/collections/autodesk-fusion/open-autodesk-fusion-issue-root-cause-categories-api/)
+- [Construction.Account.Admin Account Management Issue Types API](https://apis.io/collections/autodesk-fusion/open-autodesk-fusion-issue-types-api/)
+- [Construction.Account.Admin Account Management Issues API](https://apis.io/collections/autodesk-fusion/open-autodesk-fusion-issues-api/)
+- [Construction.Account.Admin Account Management Issues Profile API](https://apis.io/collections/autodesk-fusion/open-autodesk-fusion-issues-profile-api/)
+- [Construction.Account.Admin Account Management Items API](https://apis.io/collections/autodesk-fusion/open-autodesk-fusion-items-api/)
+- [Construction.Account.Admin Account Management Jobs API](https://apis.io/collections/autodesk-fusion/open-autodesk-fusion-jobs-api/)
+- [Construction.Account.Admin Account Management Key Management API](https://apis.io/collections/autodesk-fusion/open-autodesk-fusion-key-management-api/)
+- [Construction.Account.Admin Account Management Manifest API](https://apis.io/collections/autodesk-fusion/open-autodesk-fusion-manifest-api/)
+- [Construction.Account.Admin Account Management Metadata API](https://apis.io/collections/autodesk-fusion/open-autodesk-fusion-metadata-api/)
+- …and 9 more published on APIs.io
 
-#### Tags
+#### Security (2)
 
-- Design Automation
-- Cloud
-- Manufacturing
-- Flex Tokens
+Authentication, trust centre, and vulnerability disclosure.
 
-#### Properties
+- [Autodesk Fusion Authentication](https://apis.io/security/autodesk-fusion/autodesk-fusion-authentication/)
+- [Autodesk Fusion Domain Security](https://apis.io/security/autodesk-fusion/autodesk-fusion-domain-security/)
 
-- [Documentation](https://aps.autodesk.com/en/docs/design-automation/v3/developers_guide/overview/)
-- [Authentication](https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics)
-- [Pricing](https://aps.autodesk.com/pricing)
+#### OAuth scopes (1)
 
-### Fusion Operations API
+The permissions the API asks for.
 
-The Fusion Operations API provides REST endpoints to integrate Autodesk Fusion Operations (manufacturing execution system) production data with external enterprise systems. Supports bidirectional sync of production orders, inventory, machine status, downtime records, punch clock entries, workers, and operations with ERP, PLM, accounting, and BI platforms. Currently in Public Beta (V2).
+- [Autodesk Fusion Scopes](https://apis.io/scopes/autodesk-fusion/autodesk-fusion-scopes/)
 
-- **Human URL:** [https://aps.autodesk.com/developer/overview/fusion-operations-api](https://aps.autodesk.com/developer/overview/fusion-operations-api)
-- **Base URL:** `https://developer.api.autodesk.com`
+#### Plans and pricing (1)
 
-#### Tags
+Published plans, tiers and prices.
 
-- Manufacturing Execution
-- ERP Integration
-- Production Data
-- Shop Floor
+- [Autodesk Fusion Plans Pricing](https://apis.io/plans/autodesk-fusion/autodesk-fusion-plans-pricing/)
 
-#### Properties
+#### Rate limits (1)
 
-- [Documentation](https://aps.autodesk.com/developer/overview/fusion-operations-api)
-- [Documentation](https://aps.autodesk.com/en/docs/fusion-operations/v2/developers_guide/overview/)
-- [Authentication](https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics)
+Published request limits.
 
-### Manufacturing Data Model API (Fusion Data API)
+- [Autodesk Fusion Rate Limits](https://apis.io/rate-limits/autodesk-fusion/autodesk-fusion-rate-limits/)
 
-The Manufacturing Data Model API exposes Fusion design and manufacturing data through a GraphQL interface, enabling cloud-based read and write access to component properties, Bill of Materials, model hierarchy, and thumbnail assets. Allows programmatic access to granular design data without requiring the Fusion desktop application. Generally available since 2022.
+#### FinOps (1)
 
-- **Human URL:** [https://aps.autodesk.com/en/docs/mfgdataapi/v2/developers_guide/explorer/](https://aps.autodesk.com/en/docs/mfgdataapi/v2/developers_guide/explorer/)
-- **Base URL:** `https://developer.api.autodesk.com/mfg/v3/graphql/public`
+What the API costs to run, by operation.
 
-#### Tags
+- [Autodesk Fusion Finops](https://apis.io/finops/autodesk-fusion/autodesk-fusion-finops/)
 
-- GraphQL
-- Manufacturing Data
-- Design Data
-- Bill of Materials
+## Where to find this API
 
-#### Properties
-
-- [Documentation](https://aps.autodesk.com/en/docs/mfgdataapi/v1/developers_guide/about-graphql)
-- [Documentation](https://aps.autodesk.com/en/docs/mfgdataapi/v2/developers_guide/explorer/)
-- [Authentication](https://aps.autodesk.com/en/docs/oauth/v2/developers_guide/basics)
-- [GitHub Repository](https://github.com/autodesk-platform-services/aps-fusion-data-samples)
-
-## Common Properties
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://www.autodesk.com/products/fusion-360/overview)
 - [Documentation](https://aps.autodesk.com/developer/documentation)
-- [Git Hub Org](https://github.com/autodesk-platform-services)
-- [LinkedIn](https://www.linkedin.com/company/autodesk)
-- [Blog](https://aps.autodesk.com/blog)
-- [Blog](https://www.autodesk.com/products/fusion-360/blog)
 - [Pricing](https://www.autodesk.com/products/fusion-360/overview)
-- [Status Page](https://health.autodesk.com)
-- [X (Twitter)](https://x.com/autodeskaps)
-- [Plans](plans/autodesk-fusion-plans-pricing.yml)
-- [Rate Limits](rate-limits/autodesk-fusion-rate-limits.yml)
-- [Fin Ops](finops/autodesk-fusion-finops.yml)
-- [Authentication](https://aps.autodesk.com/developer/overview/authentication-api)
-- [Forum](https://forums.autodesk.com/t5/fusion-api-and-scripts-forum/bd-p/22)
-- [OpenAPI](https://github.com/autodesk-platform-services/aps-sdk-openapi) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Blog](https://aps.autodesk.com/blog)
+- [Status](https://health.autodesk.com)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 34.9** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 71.4 |
+| Contract quality | 50.0 |
+| Contract governance | 0.0 |
+| Operational transparency | 26.3 |
+| Developer ergonomics | 28.6 |
+| Access clarity | 18.4 |
+
+**Agent readiness 31.2** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | negotiable (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | documented (partial credit) |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 21.6** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/autodesk-fusion/](https://apis.io/providers/autodesk-fusion/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Autodesk Fusion: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/autodesk-fusion/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
